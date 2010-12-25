@@ -120,13 +120,15 @@
 
 
 (defun dispatcher ()
-  (let ((switch))
+  (let ((switch (make-hash-table :test #'equal)))
     #'(lambda (request)
         (if (equal 'cons (type-of request))
-            (push request switch)
-            (let ((output (loop :for item :in switch :do
-                             (when (eval (car item))
-                               (return (funcall (cadr item)))))))
+            (progn
+              (setf (gethash (car request) switch) (cadr request))
+              switch)
+            (let ((output (loop :for p :being the hash-key :in switch :using (hash-value h) :do
+                             (when (eval p)
+                               (return (funcall h))))))
               (when (null output)
                 (setf output (service:default-page request request-list)))
               (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
