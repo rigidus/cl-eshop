@@ -138,7 +138,10 @@
 (defparameter *dispatcher* (dispatcher))
 (export '*dispatcher*)
 
-;; (funcall *dispatcher* `(t ,#'(lambda () (service:default-page  "Диспетчер временно в разобранном состоянии - ждите!"))))
+(funcall *dispatcher*
+         `((string= "" (service:request-str))
+           ,#'(lambda ()
+                (service:default-page "Главная. <a href=\"/noutbuki-i-netbuki\">Ноутбуки и нетбуки</a>"))))
 
 
 (defun request-dispatcher (request)
