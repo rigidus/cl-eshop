@@ -141,7 +141,16 @@
 (funcall *dispatcher*
          `((string= "" (service:request-str))
            ,#'(lambda ()
-                (service:default-page "Главная. <a href=\"/noutbuki-i-netbuki\">Ноутбуки и нетбуки</a>"))))
+                (service:default-page (root:content (list :menu (service:menu (service:request-str))
+                                                          :dayly (root:dayly)
+                                                          :banner (root:banner)
+                                                          :olist (root:olist)
+                                                          :lastreview (root:lastreview)
+                                                          :best (root:best)
+                                                          :hit (root:hit)
+                                                          :new (root:new)
+                                                          :post (root:post)
+                                                          :plus (root:plus)))))))
 
 
 (defun request-dispatcher (request)

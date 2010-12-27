@@ -389,7 +389,20 @@
 
 (funcall *dispatcher*
          `((equal 'group:group (type-of (gethash (cadr (service:request-list)) trans:*group*)))
-           ,#'(lambda () (service:default-page
+           ,#'(lambda ()
+                (let* ((request-list (service:request-list))
+                       (request-get-plist (service:request-get-plist))
+                       (object (gethash (cadr request-list) trans:*group*))
+                       (type   (type-of object))
+                       (filter-1-click-name (caddr request-list)))
+                  (cond ((and (not (null filter-1-click-name))
+                              (equal 'filter:filter (type-of (gethash filter-1-click-name trans:*filter*)))
+                              (equal object (filter:parent (gethash filter-1-click-name trans:*filter*))))
+                         (service:default-page
                              (catalog:content
-                              (group:show (gethash (cadr (service::request-list)) trans:*group*)
-                                          (service:request-get-plist)))))))
+                              (filter:show (gethash filter-1-click-name trans:*filter*) request-get-plist))))
+                        ;; group
+                        ((equal type 'group:group)
+                         (service:default-page
+                             (catalog:content (group:show object request-get-plist))))
+                        (t "dispatcher: unk object"))))))
