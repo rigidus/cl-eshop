@@ -136,7 +136,9 @@
 
 
 (defparameter *dispatcher* (dispatcher))
-(funcall *dispatcher* `(t ,#'(lambda () (service:default-page  "Диспетчер временно в разобранном состоянии - ждите!"))))
+(export '*dispatcher*)
+
+;; (funcall *dispatcher* `(t ,#'(lambda () (service:default-page  "Диспетчер временно в разобранном состоянии - ждите!"))))
 
 
 (defun request-dispatcher (request)
