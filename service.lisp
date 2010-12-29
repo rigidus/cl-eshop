@@ -159,6 +159,7 @@
                :subcontent  (funcall (find-symbol (string-upcase "subcontent") ∆))
                :rightblock  (funcall (find-symbol (string-upcase "rightblock") ∆)))))))
 
+
 (defun request-str ()
   (let* ((request-full-str (hunchentoot:request-uri hunchentoot:*request*))
          (request-parted-list (split-sequence:split-sequence #\? request-full-str))

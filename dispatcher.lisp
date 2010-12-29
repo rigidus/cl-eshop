@@ -181,7 +181,8 @@
               "warranty"         "moneyback"         "article"         "news1"
               "news2"            "news3"             "news4"           "news5"
               "news6"            "dillers"           "corporate"       "vacancy"
-              "bonus"))
+              "bonus")
+        nil)
 
 (defparameter *tmp* (funcall *dispatcher*
                              `((string= ∆ (service:request-str))
