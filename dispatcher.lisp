@@ -184,16 +184,6 @@
               "bonus")
         nil)
 
-(defparameter *tmp* (funcall *dispatcher*
-                             `((string= ∆ (service:request-str))
-                               ,#(lambda ()
-                                  (service:default-page "wdwe")))))
-
-(maphash #'(lambda (k v)
-             (print (list k v)))
-         *tmp*)
-
-
 
 (defun request-dispatcher (request)
   (funcall *dispatcher* request))
