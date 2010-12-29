@@ -37,7 +37,7 @@
                                                               9999999
                                                               (group:id (group:parent group))))))
 
-                               :offers
+                               :offers (format nil "~{~a~}"
                                (loop
                                   ;; :repeat 50
                                   :for product
@@ -52,4 +52,4 @@
                                                                         (if (null pics) nil (car pics)))
                                                             :name (product:name product)
                                                             :description (product:descr product)
-                                                            ))))))))
+                                                            )))))))))
