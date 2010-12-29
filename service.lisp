@@ -139,15 +139,12 @@
                                         (hunchentoot:header-in* "User-Agent"))))))
 
 
-(defun checkout-page (request request-str &optional (content nil))
+(defun checkout-page (&optional (content nil))
   (root:main (list :header (root:shortheader)
                    :footer (root:footer)
                    :content (if content
                                 content
-                                (format nil  "<pre>'~a' ~%'~a' ~%'~a'</pre>"
-                                        request-str
-                                        (hunchentoot:request-uri request)
-                                        (hunchentoot:header-in* "User-Agent"))))))
+                                "test page"))))
 
 
 (defun static-page ()
