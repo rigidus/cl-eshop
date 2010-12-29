@@ -150,14 +150,14 @@
                                         (hunchentoot:header-in* "User-Agent"))))))
 
 
-(defun static-page (request request-list package-symbol)
-  (default-page
-    (static:main
-     (list :menu (menu)
-           :breadcrumbs  (funcall (find-symbol "BREADCRUMBS" (find-package package-symbol)))
-           :subcontent (funcall (find-symbol "SUBCONTENT" (find-package package-symbol)))
-           :rightblock (funcall (find-symbol "RIGHTBLOCK" (find-package package-symbol)))))))
-
+(defun static-page ()
+  (let ((∆ (find-package (intern (string-upcase (subseq (service:request-str) 1)) :keyword))))
+    (service:default-page
+        (static:main
+         (list :menu (service:menu)
+               :breadcrumbs (funcall (find-symbol (string-upcase "breadcrumbs") ∆))
+               :subcontent  (funcall (find-symbol (string-upcase "subcontent") ∆))
+               :rightblock  (funcall (find-symbol (string-upcase "rightblock") ∆)))))))
 
 (defun request-str ()
   (let* ((request-full-str (hunchentoot:request-uri hunchentoot:*request*))

@@ -153,6 +153,47 @@
                                                           :plus (root:plus)))))))
 
 
+;; catalog
+(funcall *dispatcher*
+         `((string= "/catalog" (service:request-str))
+           ,#'(lambda ()
+                (service:default-page (catalog:main (list :menu (service:menu "")))))))
+
+(funcall *dispatcher*
+         `((string= "/about" (service:request-str))
+           ,#'(lambda ()
+                (let ((∆ (find-package (intern (string-upcase (subseq (service:request-str) 1)) :keyword))))
+                  (service:default-page
+                      (static:main
+                       (list :menu (service:menu)
+                             :breadcrumbs (funcall (find-symbol (string-upcase "breadcrumbs") ∆))
+                             :subcontent  (funcall (find-symbol (string-upcase "subcontent") ∆))
+                             :rightblock  (funcall (find-symbol (string-upcase "rightblock") ∆)))))))))
+
+;; static
+(mapcar #'(lambda (∆)
+            (funcall *dispatcher*
+                     `((string= ,(concatenate 'string "/" ∆) (service:request-str))
+                       ,#'service:static-page)))
+        (list "delivery"         "about"             "faq"             "kakdobratsja"
+              "kaksvjazatsja"    "levashovsky"       "Partners"        "payment"
+              "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
+              "warranty"         "moneyback"         "article"         "news1"
+              "news2"            "news3"             "news4"           "news5"
+              "news6"            "dillers"           "corporate"       "vacancy"
+              "bonus"))
+
+(defparameter *tmp* (funcall *dispatcher*
+                             `((string= ∆ (service:request-str))
+                               ,#(lambda ()
+                                  (service:default-page "wdwe")))))
+
+(maphash #'(lambda (k v)
+             (print (list k v)))
+         *tmp*)
+
+
+
 (defun request-dispatcher (request)
   (funcall *dispatcher* request))
 
