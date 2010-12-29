@@ -3,76 +3,76 @@
 (funcall *dispatcher*
          `((string= "/cart" (service:request-str))
            ,#'(lambda ()
-                (when (null (cookie-in "cart"))
-                  (return-from dispatcher "null cart"))
-                (let* ((cart (json:decode-json-from-string (cookie-in "cart")))
-                       (out
-                        (remove-if #'null
-                                   (loop :for item :in  cart
-                                      :collect (let* ((articul   (parse-integer (cdr (assoc :ID item)) :junk-allowed t))
-                                                      (group-id  (cdr (assoc :GROUP--ID item)))
-                                                      (name      (cdr (assoc :NAME item)))
-                                                      (price     (cdr (assoc :PRICE item)))
-                                                      (count     (cdr (assoc :COUNT item)))
-                                                      (item-link (cdr (assoc :ITEM--LINK item)))
-                                                      (img-link  (cdr (assoc :IMG--LINK item)))
-                                                      (object    (gethash articul trans:*product*))
-                                                      )
-                                                 (if (null object)
-                                                     nil
-                                                     ;; else
-                                                     (let ((pics (product:get-pics (product:articul object))))
-                                                       (list :count count
-                                                             :itemlink item-link
-                                                             :firstpic (if (null pics) "" (car pics))
-                                                             :articul (product:articul object)
-                                                             :name (product:name object)
-                                                             :siteprice (product:siteprice object)
-                                                             :price (product:price object)
-                                                             ))))))))
-                  (service::default-page
-                      (cart:content (list :accessories (product:accessories)
-                                          :products (mapcar #'(lambda (x)
-                                                                (cart:product x))
-                                                            out))))
-                  ))))
+                (if (null (cookie-in "cart"))
+                    "null cart"
+                    (let* ((cart (json:decode-json-from-string (cookie-in "cart")))
+                           (out
+                            (remove-if #'null
+                                       (loop :for item :in  cart
+                                          :collect (let* ((articul   (parse-integer (cdr (assoc :ID item)) :junk-allowed t))
+                                                          (group-id  (cdr (assoc :GROUP--ID item)))
+                                                          (name      (cdr (assoc :NAME item)))
+                                                          (price     (cdr (assoc :PRICE item)))
+                                                          (count     (cdr (assoc :COUNT item)))
+                                                          (item-link (cdr (assoc :ITEM--LINK item)))
+                                                          (img-link  (cdr (assoc :IMG--LINK item)))
+                                                          (object    (gethash articul trans:*product*))
+                                                          )
+                                                     (if (null object)
+                                                         nil
+                                                         ;; else
+                                                         (let ((pics (product:get-pics (product:articul object))))
+                                                           (list :count count
+                                                                 :itemlink item-link
+                                                                 :firstpic (if (null pics) "" (car pics))
+                                                                 :articul (product:articul object)
+                                                                 :name (product:name object)
+                                                                 :siteprice (product:siteprice object)
+                                                                 :price (product:price object)
+                                                                 ))))))))
+                      (service::default-page
+                          (cart:content (list :accessories (product:accessories)
+                                              :products (mapcar #'(lambda (x)
+                                                                    (cart:product x))
+                                                                out))))
+                      )))))
 
 
 (funcall *dispatcher*
          `((string= "/checkout0" (service:request-str))
            ,#'(lambda ()
-                (when (null (cookie-in "cart"))
-                  (return "null cart"))
-                (service:checkout-page (checkout:content0 (list :accessories (product:accessories)
-                                                                :order (checkout:order)
-                                                                ))))))
+                (if (null (cookie-in "cart"))
+                    "null cart"
+                    (service:checkout-page (checkout:content0 (list :accessories (product:accessories)
+                                                                    :order (checkout:order)
+                                                                    )))))))
 
 (funcall *dispatcher*
          `((string= "/checkout1" (service:request-str))
            ,#'(lambda ()
-                (when (null (cookie-in "cart"))
-                  (return "null cart"))
-                (service:checkout-page (checkout:content1 (list :accessories (product:accessories)
-                                                                :order (checkout:order)
-                                                                ))))))
+                (if (null (cookie-in "cart"))
+                    "null cart"
+                    (service:checkout-page (checkout:content1 (list :accessories (product:accessories)
+                                                                    :order (checkout:order)
+                                                                    )))))))
 
 (funcall *dispatcher*
          `((string= "/checkout2" (service:request-str))
            ,#'(lambda ()
-                (when (null (cookie-in "cart"))
-                  (return "null cart"))
-                (service:checkout-page (checkout:content2 (list :accessories (product:accessories)
-                                                                :order (checkout:order)
-                                                                ))))))
+                (if (null (cookie-in "cart"))
+                    "null cart"
+                    (service:checkout-page (checkout:content2 (list :accessories (product:accessories)
+                                                                    :order (checkout:order)
+                                                                    )))))))
 
 (funcall *dispatcher*
          `((string= "/checkout3" (service:request-str))
            ,#'(lambda ()
                 (when (null (cookie-in "cart"))
-                  (return-from dispatcher3 "null cart"))
-                (service:checkout-page (checkout:content3 (list :accessories (product:accessories)
-                                                                :order (checkout:order)
-                                                                ))))))
+                  "null cart"
+                  (service:checkout-page (checkout:content3 (list :accessories (product:accessories)
+                                                                  :order (checkout:order)
+                                                                  )))))))
 
 
 (funcall *dispatcher*
@@ -84,7 +84,7 @@
                   (mapcar #'(lambda (cookie)
                               (cond ((string= (car cookie) "cart") (setf cart (json:decode-json-from-string (cdr cookie))))
                                     ((string= (car cookie) "user") (setf user (json:decode-json-from-string (cdr cookie))))
-                                    (t (return-from dispatcher4 "error"))))
+                                    (t (error "tranks error"))))
                           (hunchentoot:cookies-in hunchentoot:*request*))
                   (setf products (mapcar #'(lambda (product)
                                              (let* ((articul (parse-integer (cdr (assoc :id    product)) :junk-allowed t))

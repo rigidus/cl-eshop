@@ -196,7 +196,8 @@
 
 
 (defpackage #:gateway
-  (:use #:cl)
+  (:use #:cl
+        #:cl-user)
   (:export :dispatcher
            :load-from-conf))
 
