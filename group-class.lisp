@@ -52,12 +52,12 @@
 
 
 (defun product-sort (products operation getter)
-  (sort products #'(lambda (a b)
-                     (if (funcall operation
-                                  (funcall getter a)
-                                  (funcall getter b))
-                         t
-                         nil))))
+  (sort (copy-list products) #'(lambda (a b)
+                                 (if (funcall operation
+                                              (funcall getter a)
+                                              (funcall getter b))
+                                     t
+                                     nil))))
 
 
 (defmethod show ((object group) request-get-plist)
@@ -115,13 +115,14 @@
                                                            (vendor-controller object request-get-plist))
                                                           (t (copy-list (products object))))))
                                (sorting  (getf request-get-plist :sort))
-                               (sorted   (cond ((string= sorting "pt")
+                               (sorted-products   (cond ((string= sorting "pt")
                                                 (product-sort products #'< #'product:price))
                                                ((string= sorting "pb")
                                                 (product-sort products #'> #'product:price))
+                                               ((string= sorting "pt1") products)
                                                (t products))))
                           (multiple-value-bind (paginated pager)
-                              (service:paginator request-get-plist products)
+                              (service:paginator request-get-plist sorted-products)
                             (catalog:centerproduct
                              (list
                               :sorts (let ((variants '(:pt "увеличению цены" :pb "уменьшению цены")))
