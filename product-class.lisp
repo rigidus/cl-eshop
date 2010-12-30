@@ -318,7 +318,8 @@
 
 (funcall *dispatcher*
          `((let ((articul (cadr (service:request-list))))
-             (and (not (null (parse-integer articul :junk-allowed t)))
+             (and (not (null articul))
+                  (not (null (parse-integer articul :junk-allowed t)))
                   (string= articul
                            (format nil "~a" (parse-integer articul :junk-allowed t)))))
            ,#'(lambda ()
@@ -326,3 +327,5 @@
                   (if (null product)
                       "product not found"
                       (product:show product))))))
+
+

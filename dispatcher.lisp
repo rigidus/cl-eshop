@@ -72,6 +72,24 @@
 
 
 (load "packages.lisp")
+(load "service.lisp")
+
+
+(defun dispatcher ()
+  (let ((₤ (make-hash-table :test #'equal)))
+    #'(lambda (×)
+        (if (equal 'cons (type-of ×))
+            (progn (setf (gethash (car ×) ₤) (cadr ×)) ₤)
+            (let ((¤ (loop :for ¿ :being the hash-key :in ₤ :using (hash-value Ł) :do
+                        (when (eval ¿) (return (funcall Ł))))))
+              (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
+              (when (null ¤)
+                (setf (hunchentoot:return-code*) 404)
+                (setf ¤ "404 Not Found"))
+              (babel:string-to-octets ¤ :encoding :utf-8))))))
+
+(defparameter *dispatcher* (dispatcher))
+(export '*dispatcher*)
 
 
 (load "my.lisp")
@@ -81,62 +99,18 @@
 (load "product-class.lisp")
 (load "filter-class.lisp")
 (load "group-class.lisp")
-(load "xls.lisp")
 (load "trans.lisp")
-(load "service.lisp")
 (load "cart.lisp")
-(load "checkout.lisp")
 (load "gateway.lisp")
 (load "search.lisp")
-(load "html.lisp")
-(load "conditions.lisp")
-(load "actions.lisp")
-(load "rule-class.lisp")
-(load "agent-class.lisp")
-(load "parser.lisp")
-(load "data.lisp")
-(load "update.lisp")
-(load "outload.lisp")
-(load "admin.lisp")
-
-(defvar *catch-errors-p* nil)
-
-(defun err-on ()
-  (setf *catch-errors-p* nil))
-(defun err-off ()
-  (setf *catch-errors-p* t))
+(load "wolfor-stuff.lisp")
 
 
-(defclass debuggable-acceptor (hunchentoot:acceptor) ())
-
-(defmethod hunchentoot:acceptor-request-dispatcher ((acceptor debuggable-acceptor))
-  (if *catch-errors-p*
-	  (call-next-method)
-	  (let ((dispatcher (handler-bind ((error #'invoke-debugger))
-						  (call-next-method))))
-		(lambda (request)
-		  (handler-bind ((error #'invoke-debugger))
-			(funcall dispatcher request))))))
-
-
-
-(defun dispatcher ()
-  (let ((₤ (make-hash-table :test #'equal)))
-    #'(lambda (×)
-        (if (equal 'cons (type-of ×))
-            (progn
-              (setf (gethash (car ×) ₤) (cadr ×))
-              ₤)
-            (loop :for ¿ :being the hash-key :in ₤ :using (hash-value Ł) :do
-               (when (eval ¿)
-                 (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
-                 (let ((¤ (return (funcall Ł))))
-                   (babel:string-to-octets
-                    (if (null ¤) (service:default-page × request-list) ¤) :encoding :utf-8))))))))
-
-
-(defparameter *dispatcher* (dispatcher))
-(export '*dispatcher*)
+(maphash #'(lambda (k v) (print (list k v)))
+         (funcall *dispatcher*
+                  `((nil)
+                    ,#'(lambda ()
+                         "123"))))
 
 (funcall *dispatcher*
          `((string= "" (service:request-str))
@@ -159,17 +133,6 @@
            ,#'(lambda ()
                 (service:default-page (catalog:main (list :menu (service:menu "")))))))
 
-(funcall *dispatcher*
-         `((string= "/about" (service:request-str))
-           ,#'(lambda ()
-                (let ((∆ (find-package (intern (string-upcase (subseq (service:request-str) 1)) :keyword))))
-                  (service:default-page
-                      (static:main
-                       (list :menu (service:menu)
-                             :breadcrumbs (funcall (find-symbol (string-upcase "breadcrumbs") ∆))
-                             :subcontent  (funcall (find-symbol (string-upcase "subcontent") ∆))
-                             :rightblock  (funcall (find-symbol (string-upcase "rightblock") ∆)))))))))
-
 ;; static
 (mapcar #'(lambda (∆)
             (funcall *dispatcher*
@@ -181,8 +144,27 @@
               "warranty"         "moneyback"         "article"         "news1"
               "news2"            "news3"             "news4"           "news5"
               "news6"            "dillers"           "corporate"       "vacancy"
-              "bonus")
-        nil)
+              "bonus"))
+
+
+(defvar *catch-errors-p* nil)
+
+(defun err-on ()
+  (setf *catch-errors-p* nil))
+(defun err-off ()
+  (setf *catch-errors-p* t))
+
+
+(defclass debuggable-acceptor (hunchentoot:acceptor) ())
+
+(defmethod hunchentoot:acceptor-request-dispatcher ((acceptor debuggable-acceptor))
+  (if *catch-errors-p*
+	  (call-next-method)
+	  (let ((dispatcher (handler-bind ((error #'invoke-debugger))
+						  (call-next-method))))
+		(lambda (request)
+		  (handler-bind ((error #'invoke-debugger))
+			(funcall dispatcher request))))))
 
 
 (defun request-dispatcher (request)
