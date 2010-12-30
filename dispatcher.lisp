@@ -19,6 +19,8 @@
 (asdf:operate 'asdf:load-op '#:clon)
 (asdf:operate 'asdf:load-op '#:arnesi)
 (asdf:operate 'asdf:load-op '#:cl-fad)
+(asdf:operate 'asdf:load-op '#:drakma)
+
 
 ;; SERVER
 (defparameter *user* "webadmin")
@@ -105,12 +107,6 @@
 (load "search.lisp")
 (load "wolfor-stuff.lisp")
 
-
-(maphash #'(lambda (k v) (print (list k v)))
-         (funcall *dispatcher*
-                  `((nil)
-                    ,#'(lambda ()
-                         "123"))))
 
 (funcall *dispatcher*
          `((string= "" (service:request-str))

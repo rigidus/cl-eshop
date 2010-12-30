@@ -272,7 +272,9 @@
   (sb-ext:gc :full t)
   (print "...} finish ok"))
 
-(restore-from-files)
+(ignore-errors
+  (restore-from-files)
+  )
 
 
 (defun store-unlinked-products ()
