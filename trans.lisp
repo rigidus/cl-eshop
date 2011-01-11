@@ -285,3 +285,13 @@
              trans:*product*)
     (mapcar #'product:serialize
             a)))
+
+(defun realname-from-name ()
+  (let ((cnt 0))
+    (maphash #'(lambda (k v)
+                 (when (string= "" (product:realname v))
+                   (incf cnt)
+                   (setf (product:realname v) (product:name v))
+                   ))
+             trans:*product*)
+    cnt))
