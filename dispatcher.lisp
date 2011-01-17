@@ -12,26 +12,21 @@
 (asdf:operate 'asdf:load-op '#:cl-store)
 (asdf:operate 'asdf:load-op '#:cl-ppcre)
 (asdf:operate 'asdf:load-op '#:ironclad)
-(asdf:operate 'asdf:load-op '#:html-entities)
+;; (asdf:operate 'asdf:load-op '#:html-entities)
 (asdf:operate 'asdf:load-op '#:uffi)
 (asdf:operate 'asdf:load-op '#:mel-base)
 (asdf:operate 'asdf:load-op '#:cl-base64)
-(asdf:operate 'asdf:load-op '#:clon)
+;; (asdf:operate 'asdf:load-op '#:clon)
 (asdf:operate 'asdf:load-op '#:arnesi)
 (asdf:operate 'asdf:load-op '#:cl-fad)
 
-;; SERVER
-(defparameter *user* "webadmin")
-
-;; LOCAL
-;; (defparameter *user* "rigidus")
 
 ;; PATH
-(defparameter *path-to-tpls* (format nil "/home/~a/Dropbox/httpls" *user*))
-(defparameter *path-to-bkps* (format nil "/home/~a/Dropbox/htbkps" *user*))
-;; (defparameter *path-to-bkps* (format nil "/home/~a/migra" *user*))
-(defparameter *path-to-conf* (format nil "/home/~a/Dropbox/htconf" *user*))
-(defparameter *path-to-pics* (format nil "/home/~a/Dropbox/htpics-big" *user*))
+(defparameter *path-to-tpls* (format nil "~aDropbox/httpls" (user-homedir-pathname)))
+(defparameter *path-to-bkps* (format nil "~aDropbox/htbkps" (user-homedir-pathname)))
+;; (defparameter *path-to-bkps* (format nil "/home/~a/migra" (user-homedir-pathname)))
+(defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
+(defparameter *path-to-pics* (format nil "~aDropbox/htpics-big" (user-homedir-pathname)))
 
 
 (defun compile-templates ()
@@ -179,7 +174,7 @@
 (setf hunchentoot:*hunchentoot-default-external-format* (flexi-streams:make-external-format :utf-8 :eol-style :lf))
 
 (setq swank:*log-events* t)
-(setq swank:*log-output* (open (format nil "/home/~a/dropbox.lisp" *user*)
+(setq swank:*log-output* (open (format nil "~adropbox.lisp" (user-homedir-pathname))
                                :direction :output
                                :if-exists :append
                                :if-does-not-exist :create))
