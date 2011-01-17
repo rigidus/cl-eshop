@@ -57,7 +57,7 @@
             "news1.html"            "news2.html"              "vacancy.html"
             "news3.html"            "news4.html"              "bonus.html"
             "news5.html"            "news6.html"              "corporate.html"
-            "dillers.html"          "sendmail.html"
+            "dillers.html"          "sendmail.html"           "404.html"
             )))
 
 (compile-templates)
@@ -82,7 +82,8 @@
               (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
               (when (null ¤)
                 (setf (hunchentoot:return-code*) 404)
-                (setf ¤ "404 Not Found"))
+                (setf ¤ (service:default-page
+                            (static:main (list :menu (service:menu "") :subcontent (error-404:content))))))
               (babel:string-to-octets ¤ :encoding :utf-8))))))
 
 (defparameter *dispatcher* (dispatcher))
@@ -130,7 +131,7 @@
                      `((string= ,(concatenate 'string "/" ∆) (service:request-str))
                        ,#'service:static-page)))
         (list "delivery"         "about"             "faq"             "kakdobratsja"
-              "kaksvjazatsja"    "levashovsky"       "Partners"        "payment"
+              "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
               "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
               "warranty"         "moneyback"         "article"         "news1"
               "news2"            "news3"             "news4"           "news5"
