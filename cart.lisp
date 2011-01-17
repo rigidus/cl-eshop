@@ -68,12 +68,11 @@
 (funcall *dispatcher*
          `((string= "/checkout3" (service:request-str))
            ,#'(lambda ()
-                (when (null (cookie-in "cart"))
-                  "null cart"
+                (if (null (cookie-in "cart"))
+                    "null cart"
                   (service:checkout-page (checkout:content3 (list :accessories (product:accessories)
                                                                   :order (checkout:order)
                                                                   )))))))
-
 
 (funcall *dispatcher*
          `((string= "/thanks" (service:request-str))
@@ -84,7 +83,7 @@
                   (mapcar #'(lambda (cookie)
                               (cond ((string= (car cookie) "cart") (setf cart (json:decode-json-from-string (cdr cookie))))
                                     ((string= (car cookie) "user") (setf user (json:decode-json-from-string (cdr cookie))))
-                                    (t (error "tranks error"))))
+                                    (t nil)))
                           (hunchentoot:cookies-in hunchentoot:*request*))
                   (setf products (mapcar #'(lambda (product)
                                              (let* ((articul (parse-integer (cdr (assoc :id    product)) :junk-allowed t))
@@ -102,23 +101,33 @@
                   (setf auth     (cdr (assoc :auth user)))
                   (setf delivery (cdr (assoc :delivery user)))
                   (setf pay      (cdr (assoc :pay user)))
-                  (setf client-mail (sendmail:clientmail (list :datetime (get-date-time)
-                                                               :order_id order-id
-                                                               :name (cdr (assoc :name auth))
-                                                               :family (cdr (assoc :family auth))
-                                                               :paytype (cdr (assoc :paytype pay))
-                                                               :deliverytype (cdr (assoc :deliverytype delivery))
-                                                               :addr (cdr (assoc :addr delivery))
-                                                               :bankaccount (let ((bankaccount (cdr (assoc :bankaccount pay))))
-                                                                              (if (null bankaccount)
-                                                                                  ""
-                                                                                  bankaccount))
-                                                               :phone (cdr (assoc :phone auth))
-                                                               :email (cdr (assoc :email auth))
-                                                               :comment (cdr (assoc :comment delivery))
-                                                               :products products
-                                                               :itogo itogo
-                                                               )))
+                  (setf client-mail
+                        (sendmail:clientmail
+                         (list :datetime (get-date-time)
+                               :order_id order-id
+                               :name (cdr (assoc :name auth))
+                               :family (cdr (assoc :family auth))
+                               :paytype (let ((tmp (cdr (assoc :paytype pay))))
+                                          (cond ((string= tmp "cash") "Наличными")
+                                                ((string= tmp "card") "Кредитной картой")
+                                                ((string= tmp "credit") "Безналичный расчет")
+                                                ((string= tmp "bank") "банковским переводом")
+                                                (t tmp)))
+                               :deliverytype (let ((tmp (cdr (assoc :deliverytype delivery))))
+                                               (cond ((string= tmp "auto") "Самовывоз")
+                                                     ((string= tmp "courier") "Курьер")
+                                                     (t tmp)))
+                                                   :addr (cdr (assoc :addr delivery))
+                                                   :bankaccount (let ((bankaccount (cdr (assoc :bankaccount pay))))
+                                                                  (if (null bankaccount)
+                                                                      ""
+                                                                      bankaccount))
+                                                   :phone (cdr (assoc :phone auth))
+                                                   :email (cdr (assoc :email auth))
+                                                   :comment (cdr (assoc :comment delivery))
+                                                   :products products
+                                                   :itogo itogo
+                                                   )))
                   (setf mail-file (list :order_id order-id
                                         :ekk ""
                                         :name (cdr (assoc :name auth))
@@ -139,6 +148,8 @@
                                            )))
                   (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
                   (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
+                  (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+                  (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
                   (send-client-mail (list (cdr (assoc :email auth))) client-mail order-id)
                   (service:checkout-page (checkout:thanks (list :order (checkout:order))))))))
 
