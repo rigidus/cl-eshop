@@ -12,11 +12,9 @@
 (asdf:operate 'asdf:load-op '#:cl-store)
 (asdf:operate 'asdf:load-op '#:cl-ppcre)
 (asdf:operate 'asdf:load-op '#:ironclad)
-;; (asdf:operate 'asdf:load-op '#:html-entities)
 (asdf:operate 'asdf:load-op '#:uffi)
 (asdf:operate 'asdf:load-op '#:mel-base)
 (asdf:operate 'asdf:load-op '#:cl-base64)
-;; (asdf:operate 'asdf:load-op '#:clon)
 (asdf:operate 'asdf:load-op '#:arnesi)
 (asdf:operate 'asdf:load-op '#:cl-fad)
 (asdf:operate 'asdf:load-op '#:drakma)
@@ -26,7 +24,6 @@
 ;; PATH
 (defparameter *path-to-tpls* (format nil "~aDropbox/httpls" (user-homedir-pathname)))
 (defparameter *path-to-bkps* (format nil "~aDropbox/htbkps" (user-homedir-pathname)))
-;; (defparameter *path-to-bkps* (format nil "/home/~a/migra" (user-homedir-pathname)))
 (defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
 (defparameter *path-to-pics* (format nil "~aDropbox/htpics-big" (user-homedir-pathname)))
 
