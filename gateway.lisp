@@ -83,7 +83,7 @@
                                   :price          price
                                   :siteprice      (parse-integer (cdr (assoc :price--site elt)))
                                   :ekkprice       (parse-integer (cdr (assoc :price--ekk elt)))
-                                  :active         t
+                                  :active         (if (= count-total 0 ) nil t)
                                   :newbie	      (if (string= "0" isnew) nil t)
                                   :sale           (if (string= "0" isspec) nil t)
                                   :count-total    count-total
@@ -95,7 +95,7 @@
                (setf (product:price product)          price)
                (setf (product:siteprice product)      (parse-integer (cdr (assoc :price--site elt))))
                (setf (product:ekkprice product)       (parse-integer (cdr (assoc :price--ekk elt))))
-               (setf (product:active product)         t)
+               (setf (product:active product)         (if (= count-total 0 ) nil t))
                (setf (product:newbie product)         (if (string= "0" isnew) nil t))
                (setf (product:sale product)           (if (string= "0" isspec) nil t))
                :count-total    count-total
