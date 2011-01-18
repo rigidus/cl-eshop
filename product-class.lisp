@@ -82,6 +82,7 @@
                                :simular (product:simulars)
                                :others (product:others)
                                :keyoptions (get-keyoptions object)
+                               :active (active object)
                                ))))))
 
 (defmethod get-keyoptions ((object product))
