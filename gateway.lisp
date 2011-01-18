@@ -71,7 +71,7 @@
              (count-transit  (parse-integer (cdr (assoc :count--transit elt)))))
          ;; Нам не нужны продукты с нулевой ценой (вероятно это группы продуктов)
          (when (equal 0 price)
-           (print elt)
+           ;; (print elt)
            (return-from iteration))
          ;; Проверяем, есть ли у нас уже этот продукт
          (if (null (gethash articul trans:*product*))

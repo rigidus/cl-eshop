@@ -5,7 +5,7 @@
   (setf (symbol-value symbol) value))
 
 (defun sql-start ()
-  (clsql:connect '("localhost" "www320" "root" "bi0Biukou") :database-type :mysql :if-exists :new)
+  (clsql:connect '("localhost" "bd" "user" "password") :database-type :mysql :if-exists :new)
   (clsql:execute-command "SET NAMES utf8"))
 
 (defun sql-query (sql)
