@@ -144,6 +144,8 @@
            #:childs
            #:show
            #:products
+           #:active
+           #:empty
            #:ymlshow
            #:filters
            #:fullfilter
