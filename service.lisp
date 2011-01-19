@@ -76,7 +76,10 @@
                            (getf (getf breadcrumbs :breadcrumbtail) :key)
                            ))))
     (maphash #'(lambda (key val)
-                 (when (null (group:parent val))
+                 (when (and
+                        (null (group:parent val))
+                        (group:active val)
+                        (not (group:empty val)))
                    (push val root-groups)))
              trans:*group*)
     (let ((src-lst (mapcar #'(lambda (val)
@@ -87,7 +90,12 @@
                                           :name (group:name val)
                                           :subs (loop
                                                    :for child
-                                                   :in (sort (copy-list (group:childs val)) #'menu-sort)
+                                                   :in (sort
+                                                        (remove-if #'(lambda (g)
+                                                                       (or
+                                                                        (group:empty g)
+                                                                        (not (group:active g)) ))
+                                                                   (group:childs val)) #'menu-sort)
                                                    :collect
                                                    (list :key  (group:key child) :name (group:name child)))
                                           ))
