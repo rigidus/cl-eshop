@@ -83,6 +83,8 @@
                                :others (product:others)
                                :keyoptions (get-keyoptions object)
                                :active (active object)
+                               :descr (descr object)
+                               :shortdescr (shortdescr object)
                                ))))))
 
 (defmethod get-keyoptions ((object product))
@@ -273,6 +275,45 @@
                             (getf raw-breadcrumbs :breadcrumbelts)))
          (current-dir (format nil "~a~a/" cl-user::*path-to-bkps*
                               (format nil "~{/~a~}" path-list)))
+         (pathname (format nil "~a~a" current-dir (articul object))))
+    ;; Создаем директорию, если ее нет
+    (ensure-directories-exist current-dir)
+    ;; Сохраняем файл продукта
+    (let* ((json-string (format nil "{~%   \"id\": ~a,~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"ekkprice\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"options\": ~a~%}"
+                                (encode-json-to-string (id object))
+                                (encode-json-to-string (articul object))
+                                (format nil "\"~a\"" (stripper (name object)))
+                                (format nil "\"~a\"" (stripper (realname object)))
+                                (encode-json-to-string (price object))
+                                (encode-json-to-string (siteprice object))
+                                (encode-json-to-string (ekkprice object))
+                                (encode-json-to-string (active object))
+                                (encode-json-to-string (newbie object))
+                                (encode-json-to-string (sale object))
+                                (format nil "\"~a\"" (stripper (descr object)))
+                                (format nil "\"~a\""(stripper (shortdescr object)))
+                                (encode-json-to-string (count-transit object))
+                                (encode-json-to-string (count-total object))
+                                (if (null (product:options object))
+                                    (format nil " null")
+                                    (optlist:serialize (options object)))
+                                )))
+      ;; (print (descr object))
+      (with-open-file (file pathname
+                            :direction :output
+                            :if-exists :supersede
+                            :external-format :utf-8)
+        ;; (format t json-string)
+        (format file json-string)
+        ))
+    pathname))
+
+
+
+(defmethod serialize2 ((object product))
+  (let* ((current-dir (format nil "~a/~a/"
+                              cl-user::*path-to-bkps*
+                              (parent object)))
          (pathname (format nil "~a~a" current-dir (articul object))))
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)

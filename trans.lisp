@@ -103,8 +103,6 @@
                                                                                        :name  (getf option :name)
                                                                                        :value (getf option :value)))))))
 
-
-
 (defun trans-products (r-group-id)
   (let ((h-product (cl-store:restore (format nil "~a/h-product" cl-user::*path-to-bkps*)))
         (r-product (make-hash-table :test #'equal)))
@@ -295,3 +293,50 @@
                    ))
              trans:*product*)
     cnt))
+
+
+;; (let ((data (cl-store:restore "#h-product"))
+;;       (old 0)
+;;       (new 0)
+;;       (grp (make-hash-table :test #'equal)))
+;;   (maphash #'(lambda (k v)
+;;                (let* ((articul (getf v :articul))
+;;                       (product (gethash articul *product*)))
+;;                  (if product
+;;                      (progn
+;;                        (incf old)
+;;                        (setf (product:descr product)
+;;                              (getf v :descr))
+;;                        (setf (product:shortdescr product)
+;;                              (getf v :shortdescr))
+;;                        (setf (product:options product)
+;;                              (trans-options (getf v :result-options))))
+;;                      (let* ((group-id (getf v :group_id))
+;;                             (grp-lst (gethash group-id grp nil)))
+;;                        (product::serialize2
+;;                         ;; (ignore-errors
+;;                         (make-instance 'product:product
+;;                                        :id (getf v :id)
+;;                                        :articul articul
+;;                                        :parent group-id
+;;                                        :name (getf v :name)
+;;                                        :realname (getf v :realname)
+;;                                        :price (getf v :price)
+;;                                        :siteprice (getf v :siteprice)
+;;                                        :ekkprice (getf v :ekkprice)
+;;                                        :active (getf v :active)
+;;                                        :newbie (getf v :newbie)
+;;                                        :sale (getf v :special)
+;;                                        :descr (getf v :descr)
+;;                                        :shortdescr (getf v :shortdescr)
+;;                                        :options (trans-options (getf v :result-options))
+;;                                        ))
+;;                        (push articul grp-lst)
+;;                        (setf (gethash group-id grp) grp-lst)
+;;                        (incf new)))))
+;;            data)
+;;   (print (list new old (hash-table-count grp))))
+
+
+
+(sb-ext:gc :full t)
