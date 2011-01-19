@@ -7,8 +7,9 @@
 
 (defparameter *loadlist* nil)
 
-(require 'cl-store)
-(cl-store:store *loadlist* "loadlist")
+;; Для сохранения выгрузок
+;; (require 'cl-store)
+;; (cl-store:store *loadlist* "loadlist")
 
 
 (defun store-seans (raw)
