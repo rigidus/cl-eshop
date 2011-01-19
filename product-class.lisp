@@ -227,14 +227,14 @@
 
 ;; Проверка корректности полей после инициализации instance
 (defmethod initialize-instance :after ((item product) &key)
-  (with-slots ((articul articul) (group group)
+  (with-slots ((articul articul)
+               (group group)
                (count-transit count-transit)
-               (count-total count-total)) item
-    (unless (typep articul 'integer)       (setf (articul item) articul))
+               (count-total count-total))
+      item
     (unless (typep articul 'integer)       (setf (articul item) articul))
     (unless (typep count-transit 'integer) (setf (count-transit item) count-transit))
-    (unless (typep count-total 'integer)   (setf (count-total item) count-total))
-    ))
+    (unless (typep count-total 'integer)   (setf (count-total item) count-total))))
 
 
 (defun unserialize (pathname)
@@ -308,8 +308,7 @@
                             :if-exists :supersede
                             :external-format :utf-8)
         ;; (format t json-string)
-        (format file json-string)
-        ))
+        (format file json-string)))
     pathname))
 
 
@@ -333,3 +332,4 @@
                   (if (null product)
                       "product not found"
                       (product:show product))))))
+
