@@ -243,36 +243,37 @@
   (let* ((file-content (alexandria:read-file-into-string pathname))
          (raw (decode-json-from-string file-content))
          (articul (cdr (assoc :articul raw)))
-         (active (cdr (assoc :active raw)))
          (count-total (cdr (assoc :count-total raw)))
          (parent (gethash (nth 1 (reverse (split-sequence #\/ pathname))) trans:*group*))
-         (new))
-    (if (not (null articul))
-        (progn
-          ;; Если количество товара равно нулю то флаг active сбрасывается
-          (if (or (null count-total) (= count-total 0)) (setf active nil))
-          (setf new  (make-instance 'product
-                                   :id (cdr (assoc :articul raw))
-                                   :articul articul
-                                   :parent parent
-                                   :name (cdr (assoc :name raw))
-                                   :realname (cdr (assoc :realname raw))
-                                   :price (cdr (assoc :price raw))
-                                   :siteprice (cdr (assoc :siteprice raw))
-                                   :ekkprice (cdr (assoc :ekkprice raw))
-                                   :active active
-                                   :newbie (cdr (assoc :newbie raw))
-                                   :sale (cdr (assoc :sale raw))
-                                   :descr (cdr (assoc :descr raw))
-                                   :shortdescr (cdr (assoc :shortdescr raw))
-                                   :count-transit (cdr (assoc :count-transit raw))
-                                   :count-total count-total
-                                   :options (optlist:unserialize (cdr (assoc :options raw)))))
-         (when (equal 'group:group (type-of parent))
-           (push new (group:products parent)))
-         (setf (gethash articul trans:*product*) new)))
-        articul
-        ))
+         (new (make-instance 'product
+                             :id (cdr (assoc :articul raw))
+                             :articul articul
+                             :parent parent
+                             :name (cdr (assoc :name raw))
+                             :realname (cdr (assoc :realname raw))
+                             :price (cdr (assoc :price raw))
+                             :siteprice (cdr (assoc :siteprice raw))
+                             :ekkprice (cdr (assoc :ekkprice raw))
+                             :active (let ((active (cdr (assoc :active raw))))
+                                       ;; Если количество товара равно нулю то флаг active сбрасывается
+                                       (if (or (null count-total)
+                                               (= count-total 0))
+                                           (setf active nil))
+                                       active)
+                             :newbie (cdr (assoc :newbie raw))
+                             :sale (cdr (assoc :sale raw))
+                             :descr (cdr (assoc :descr raw))
+                             :shortdescr (cdr (assoc :shortdescr raw))
+                             :count-transit (cdr (assoc :count-transit raw))
+                             :count-total count-total
+                             :options (optlist:unserialize (cdr (assoc :options raw))))))
+    ;; Если родитель продукта — группа, связать группу с этим продуктом
+    (when (equal 'group:group (type-of parent))
+      (push new (group:products parent)))
+    ;; Сохраняем продукт в хэш-таблице продуктов
+    (setf (gethash articul trans:*product*) new)
+    ;; Возвращаем артикул продукта
+    articul))
 
 
 (defmethod serialize ((object product))
