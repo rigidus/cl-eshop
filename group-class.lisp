@@ -182,6 +182,13 @@
          (pathname (format nil "~a~a" current-dir (key object))))
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)
+
+    #| TODO:
+       Если файл с группой присутствует, то
+        прочитать его, разобрать json и сохранять только те поля
+        которые требуется, а остальное записывать как было.
+    |#
+
     ;; Сохраняем файл группы
     (let* ((json-string (format nil "{~%\"id\":~a,~%\"key\":~a,~%\"name\":~a,~%\"active\":~a,~%\"empty\":~a~%}"
                                (encode-json-to-string (id object))
