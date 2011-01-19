@@ -3,8 +3,7 @@
 ;; special in now know as sale
 
 (defclass product ()
-  ((id             :initarg :id              :initform nil       :reader   id) ;; nil запрещен!
-   (articul        :initarg :articul         :initform nil       :reader   articul) ;; nil запрещен!
+  ((articul        :initarg :articul         :initform nil       :reader   articul) ;; nil запрещен!
    (parent         :initarg :parent          :initform nil       :accessor parent)
 
    (name           :initarg :name            :initform ""        :accessor name)
@@ -187,7 +186,6 @@
 
 
 ;; Создаем WRITER-ы для числовых полей
-(make-integer-writer id)
 (make-integer-writer articul)
 (make-integer-writer count-transit)
 (make-integer-writer count-total)
@@ -246,7 +244,6 @@
          (count-total (cdr (assoc :count-total raw)))
          (parent (gethash (nth 1 (reverse (split-sequence #\/ pathname))) trans:*group*))
          (new (make-instance 'product
-                             :id (cdr (assoc :articul raw))
                              :articul articul
                              :parent parent
                              :name (cdr (assoc :name raw))
@@ -287,8 +284,7 @@
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)
     ;; Сохраняем файл продукта
-    (let* ((json-string (format nil "{~%   \"id\": ~a,~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"ekkprice\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"options\": ~a~%}"
-                                (encode-json-to-string (id object))
+    (let* ((json-string (format nil "{~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"ekkprice\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"options\": ~a~%}"
                                 (encode-json-to-string (articul object))
                                 (format nil "\"~a\"" (stripper (name object)))
                                 (format nil "\"~a\"" (stripper (realname object)))

@@ -87,7 +87,6 @@
         #:my
         #:split-sequence)
   (:export #:product
-           #:id
            #:articul
            #:parent
            #:name

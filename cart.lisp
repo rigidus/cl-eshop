@@ -86,7 +86,7 @@
                                     (t nil)))
                           (hunchentoot:cookies-in hunchentoot:*request*))
                   (setf products (mapcar #'(lambda (product)
-                                             (let* ((articul (parse-integer (cdr (assoc :id    product)) :junk-allowed t))
+                                             (let* ((articul (parse-integer (cdr (assoc :id  product)) :junk-allowed t))
                                                     (cnt     (cdr (assoc :count product)))
                                                     (plist   (product:plist-representation (gethash articul trans:*product*)
                                                                                            :articul

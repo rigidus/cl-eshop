@@ -113,7 +113,6 @@
                         (group    (gethash (getf v :group_id) r-group-id))
                         ;; (presence (getf v :presence))
                         (object (make-instance 'product:product
-                                                :id (getf v :id)
                                                 :articul articul
                                                 :parent group
                                                 :name (getf v :name)
