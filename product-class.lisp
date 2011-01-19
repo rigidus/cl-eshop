@@ -93,12 +93,12 @@
                     (optname  (getf pair :optname))
                     (optvalue))
                 (mapcar #'(lambda (option)
-                          (if (string= (optgroup::name option) optgroup)
-                              (let ((options (optgroup::options option)))
-                                (mapcar #'(lambda (opt)
-                                            (if (string= (option::name opt) optname)
-                                                (setf optvalue (option::value opt))))
-                                        options))))
+                            (if (string= (optgroup::name option) optgroup)
+                                (let ((options (optgroup::options option)))
+                                  (mapcar #'(lambda (opt)
+                                              (if (string= (option::name opt) optname)
+                                                  (setf optvalue (option::value opt))))
+                                          options))))
                         (optlist:optlist (product:options object)))
                 (list :optgroup optgroup
                       :optname optname
@@ -111,20 +111,20 @@
   (let ((pics (get-pics (articul object))))
     (let ((group (parent object)))
       ;; (when (not (null group))
-        (list :articul (articul object)
-              :name (realname object)
-              :groupname (if (null group)
-                             "group not found"
-                             (group:name group))
-              :groupkey  (if (null group)
-                             ""
-                             (group:key  group))
-              :price (price object)
-              :firstpic (car pics)
-              :group_id (if (null group)
-                            ""
-                            (group:id group))
-              ))))
+      (list :articul (articul object)
+            :name (realname object)
+            :groupname (if (null group)
+                           "group not found"
+                           (group:name group))
+            :groupkey  (if (null group)
+                           ""
+                           (group:key  group))
+            :price (price object)
+            :firstpic (car pics)
+            :group_id (if (null group)
+                          ""
+                          (group:id group))
+            ))))
 
 
 ;; Внутреннее условие, сигнализирующее о неверном значении поля класса
@@ -243,29 +243,36 @@
   (let* ((file-content (alexandria:read-file-into-string pathname))
          (raw (decode-json-from-string file-content))
          (articul (cdr (assoc :articul raw)))
+         (active (cdr (assoc :active raw)))
+         (count-total (cdr (assoc :count-total raw)))
          (parent (gethash (nth 1 (reverse (split-sequence #\/ pathname))) trans:*group*))
-         (new (make-instance 'product
-                             :id (cdr (assoc :id raw))
-                             :articul articul
-                             :parent parent
-                             :name (cdr (assoc :name raw))
-                             :realname (cdr (assoc :realname raw))
-                             :price (cdr (assoc :price raw))
-                             :siteprice (cdr (assoc :siteprice raw))
-                             :ekkprice (cdr (assoc :ekkprice raw))
-                             :active (cdr (assoc :active raw))
-                             :newbie (cdr (assoc :newbie raw))
-                             :sale (cdr (assoc :sale raw))
-                             :descr (cdr (assoc :descr raw))
-                             :shortdescr (cdr (assoc :shortdescr raw))
-                             :count-transit (cdr (assoc :count-transit raw))
-                             :count-total (cdr (assoc :count-total raw))
-                             :options (optlist:unserialize (cdr (assoc :options raw))))))
-    (when (equal 'group:group (type-of parent))
-      (push new (group:products parent)))
-    (setf (gethash articul trans:*product*) new)
-    articul
-    ))
+         (new))
+    (if (not (null articul))
+        (progn
+          ;; Если количество товара равно нулю то флаг active сбрасывается
+          (if (or (null count-total) (= count-total 0)) (setf active nil))
+          (setf new  (make-instance 'product
+                                   :id (cdr (assoc :articul raw))
+                                   :articul articul
+                                   :parent parent
+                                   :name (cdr (assoc :name raw))
+                                   :realname (cdr (assoc :realname raw))
+                                   :price (cdr (assoc :price raw))
+                                   :siteprice (cdr (assoc :siteprice raw))
+                                   :ekkprice (cdr (assoc :ekkprice raw))
+                                   :active active
+                                   :newbie (cdr (assoc :newbie raw))
+                                   :sale (cdr (assoc :sale raw))
+                                   :descr (cdr (assoc :descr raw))
+                                   :shortdescr (cdr (assoc :shortdescr raw))
+                                   :count-transit (cdr (assoc :count-transit raw))
+                                   :count-total count-total
+                                   :options (optlist:unserialize (cdr (assoc :options raw)))))
+         (when (equal 'group:group (type-of parent))
+           (push new (group:products parent)))
+         (setf (gethash articul trans:*product*) new)))
+        articul
+        ))
 
 
 (defmethod serialize ((object product))
@@ -309,46 +316,6 @@
     pathname))
 
 
-
-(defmethod serialize2 ((object product))
-  (let* ((current-dir (format nil "~a/~a/"
-                              cl-user::*path-to-bkps*
-                              (parent object)))
-         (pathname (format nil "~a~a" current-dir (articul object))))
-    ;; Создаем директорию, если ее нет
-    (ensure-directories-exist current-dir)
-    ;; Сохраняем файл продукта
-    (let* ((json-string (format nil "{~%   \"id\": ~a,~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"ekkprice\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"options\": ~a~%}"
-                                (encode-json-to-string (id object))
-                                (encode-json-to-string (articul object))
-                                (format nil "\"~a\"" (stripper (name object)))
-                                (format nil "\"~a\"" (stripper (realname object)))
-                                (encode-json-to-string (price object))
-                                (encode-json-to-string (siteprice object))
-                                (encode-json-to-string (ekkprice object))
-                                (encode-json-to-string (active object))
-                                (encode-json-to-string (newbie object))
-                                (encode-json-to-string (sale object))
-                                (format nil "\"~a\"" (stripper (descr object)))
-                                (format nil "\"~a\""(stripper (shortdescr object)))
-                                (encode-json-to-string (count-transit object))
-                                (encode-json-to-string (count-total object))
-                                (if (null (product:options object))
-                                    (format nil " null")
-                                    (optlist:serialize (options object)))
-                                )))
-      ;; (print (descr object))
-      (with-open-file (file pathname
-                            :direction :output
-                            :if-exists :supersede
-                            :external-format :utf-8)
-        ;; (format t json-string)
-        (format file json-string)
-        ))
-    pathname))
-
-
-
 (defmethod plist-representation ((object product) &rest fields)
   (let ((result))
     (loop :for item :in fields do
@@ -369,5 +336,3 @@
                   (if (null product)
                       "product not found"
                       (product:show product))))))
-
-
