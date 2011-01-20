@@ -263,13 +263,15 @@
            (count-total (cdr (assoc :count-total raw)))
            (parent (gethash (nth 1 (reverse (split-sequence #\/ pathname))) trans:*group*))
            (name (cdr (assoc :name raw)))
+           (realname (cdr (assoc :realname2 raw)))
            (new (make-instance 'product
                                :articul articul
                                :parent parent
                                :name name
-                               :realname (let ((realname (cdr (assoc :realname raw))))
-                                           (when (string= realname "")
-                                             name))
+                               :realname (if (or (null realname)
+                                                 (string= "" realname))
+                                             name
+                                             realname)
                                :price (cdr (assoc :price raw))
                                :siteprice (cdr (assoc :siteprice raw))
                                :ekkprice (cdr (assoc :ekkprice raw))
