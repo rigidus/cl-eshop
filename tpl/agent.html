@@ -1,0 +1,213 @@
+{namespace tpl}
+
+{template agent}
+
+<div style="display: none;">
+  <form method="post" id="delfieldform">
+	<input type="text" name="delfieldnum" id="delfieldnum" value="" />
+  </form>
+  <form method="post" id="addfieldform">
+	<input type="text" name="addfieldnum" id="addfieldnum" value="addfieldnum" />
+  </form>
+
+  <form method="post" id="delruleform">
+	<input type="text" name="delrulenum" id="delrulenum" value="" />
+  </form>
+  <form method="post" id="addruleform">
+	<input type="text" name="addrulenum" id="addrulenum" value="addrulenum" />
+  </form>
+</div>
+
+<h1>{$name}</h1>{\n}
+<div style="font-size: 12px;">{\n}
+  {\n}
+  <table width="1" cellspacing="1" cellpadding="1" border="0">{\n}
+    <tr>{\n}
+      <td>{\n}
+        <div style="padding: 10px; border-right: 1px solid #BBBBBB">
+          <h2>Загрузка файлов вручную</h2>{\n}
+          <form method="POST" enctype="multipart/form-data">{\n}
+            <table width="400">{\n}
+	          <tr>{\n}
+	            <td>Дата (ДД.ММ.ГГ)</td>{\n}
+	            <td><input type="text" name="date" value="{$date}" /></td>{\n}
+	          </tr>{\n}
+	          <tr>{\n}
+	            <td>Файл</td>{\n}
+	            <td><input type="file" name="file" value="" /></td>{\n}
+	          </tr>{\n}
+	          <tr>{\n}
+	            <td colspan="2">{\n}
+		          <table width="1" cellspacing="0" cellpadding="0" border="0">
+		            <tr>{\n}
+			          <td>{\n}
+			            <div style="padding: 10px 10px 10px 10px; border: 1px solid red;">{\n}
+				          <input type="submit" value="Загрузить" />{\n}
+			            </div>{\n}
+			          </td>{\n}
+		            </tr>{\n}
+		          </table>
+	            </td>{\n}
+	          </tr>{\n}
+            </table>{\n}
+          </form>{\n}
+        </div>{\n}
+      </td>{\n}
+      <td>{\n}
+        <div style="padding: 10px 10px 10px 20px">
+          <h2>Загрузка из почты по таймеру</h2>{\n}
+          <form method="POST">{\n}
+            <table width="1">{\n}
+	          <tr>{\n}
+	            <td><input type="text" name="email" value="{$email}" /></td>{\n}
+              </tr>
+              <tr>
+	            <td>
+                  <br />
+			      <div style="padding: 10px 10px 10px 10px; border: 1px solid red;">{\n}
+                    <input type="submit" value="Сохранить email" />
+                  </div>
+                </td>{\n}
+	          </tr>{\n}
+            </table>{\n}
+          </form>{\n}
+        </div>
+      </td>{\n}
+    </tr>{\n}
+  </table>{\n}
+
+  <br /><br />
+
+  <div style="padding-top: 20px; border-top: 1px solid #BBBBBB">
+    <h2>Правила обработки</h2>{\n}
+    <form method="POST" enctype="multipart/form-data">{\n}
+      <table>
+        <tr>{\n}
+          <td colspan="2">{\n}
+            <h3 style="padding: 10px 10px 10px 0px; font-size: 14px;">Поля:</h3>{\n}
+          </td>{\n}
+        </tr>{\n}
+	    <tr>{\n}
+	      <td width="300">Код партнера</td>{\n}
+	      <td><input type="text" name="supplier" value="{$supplier}" /></td>{\n}
+	    </tr>{\n}
+	    <tr>{\n}
+	      <td>Код склада партнера</td>{\n}
+	      <td><input type="text" name="warehouse" value="{$warehouse}" /></td>{\n}
+	    </tr>{\n}
+	    <tr>{\n}
+	      <td>Тип файла</td>{\n}
+	      <td>{$typefile |noAutoescape}</td>{\n}
+	    </tr>{\n}
+	    <tr>{\n}
+	      <td>Ожидаемое кол-во колонок</td>{\n}
+	      <td><input type="text" name="len" value="{$len}" /></td>{\n}
+	    </tr>{\n}
+	    <tr>{\n}
+	      <td>Пропустить строк с начала файла:</td>{\n}
+	      <td><input type="text" name="skip" value="{$skip}" /></td>{\n}
+	    </tr>{\n}
+
+        <tr>{\n}
+          <td colspan="2">{\n}
+            <h3 style="padding: 10px 10px 10px 0px; font-size: 14px;">Колонки в файле:</h3>{\n}
+	        {$fields |noAutoescape}
+	        <input type="button" value="Добавить колонку"
+		           onclick="javascript: document.getElementById('addfieldform').submit();" />
+          </td>{\n}
+        </tr>{\n}
+
+	    <tr>{\n}
+	      <td colspan="2">
+		    <h3 style="padding: 10px 10px 10px 0px; font-size: 14px;">Правила обработки:</h3>{\n}
+	      </td>{\n}
+	    </tr>{\n}
+	    {$rules |noAutoescape}{\n}
+	    <tr>
+	      <td colspan="2">
+		    <input type="button" value="Добавить правило"
+				   onclick="javascript: document.getElementById('addruleform').submit();" />
+	      </td>
+	    </tr>{\n}
+	    <tr>{\n}
+	      <td colspan="2">{\n}
+		    <table width="1" cellspacing="0" cellpadding="0" border="0"
+                   style="margin-top: 10px">
+		      <tr>{\n}
+			    <td>{\n}
+			      <div style="padding: 10px 10px 10px 10px; border: 1px solid red;">{\n}
+		            <input type="submit" value="Сохранить правила"/>{\n}
+			      </div>{\n}
+			    </td>{\n}
+		      </tr>{\n}
+		    </table>
+	      </td>{\n}
+	    </tr>{\n}
+      </table>{\n}
+    </form>{\n}
+  </div>{\n}
+
+</div>
+{/template}
+
+
+{template rule}
+<tr>{\n}
+  <td colspan="2">{\n}
+    <nobr>
+	  <input type="button" value="×"
+		     onclick="javascript: document.getElementById('delrulenum').value = {$num};
+					  document.getElementById('delruleform').submit()" />
+      Если {$column |noAutoescape}{\n}
+      {$conditio  |noAutoescape}{\n}
+      {$condval |noAutoescape}{\n}
+      то {$action |noAutoescape} в поле{\n}
+      {$subject |noAutoescape} на{\n}
+      {$inputval |noAutoescape}{\n}
+    </nobr>
+  </td>{\n}
+</tr>{\n}
+{/template}
+
+
+{template add-agent}
+<form method="POST" enctype="multipart/form-data">{\n}
+  <table>{\n}
+	<tr>{\n}
+	  <td>
+		<div style="padding: 0px 20px 8px 20px;">
+		  Наименование агента
+		</div>
+	  </td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>
+		<div style="padding: 0px 20px 8px 50px;">
+		  <input type="text" name="name" value="" />
+		</div>
+	  </td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>
+		<div style="padding: 0px 20px 8px 20px;">
+		  Ключ агента
+		</div>
+	  </td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>
+		<div style="padding: 0px 20px 8px 50px;">
+		  <input type="text" name="key" value="" />
+		</div>
+	  </td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>{\n}
+		<div style="padding: 0px 20px 8px 50px;">
+		  <input type="submit" value="Добавить агента" />{\n}
+		</div>
+	  </td>{\n}
+	</tr>{\n}
+  </table>
+</form>
+{/template}

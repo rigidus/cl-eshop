@@ -1,0 +1,129 @@
+{namespace backend}
+
+{template main}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">{\n}
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">{\n}
+  <head>{\n}
+	<title>Админка</title>{\n}
+	<link rel="stylesheet" type="text/css" media="all" href="/css/styles.css" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />{\n}
+  </head>{\n}
+  <body>{\n}
+  <body>{\n}
+	<table width="100%" cellspacing="1" cellpadding="1" border="0">{\n}
+	  <tr>{\n}
+		<td>{\n}
+          <div style="padding: 3px; color: red">{\n}
+		    {$header |noAutoescape} {$message |noAutoescape}{\n}
+          </div>{\n}
+		</td>{\n}
+	  </tr>{\n}
+	  <tr>{\n}
+		<td>{\n}
+		  <table width="100%" cellspacing="1" cellpadding="1" border="1">{\n}
+			<tr>{\n}
+			  <td valign="top" width="180">{$menu |noAutoescape}</td>{\n}
+			  <td valign="top">
+				<div style="padding: 20px 20px 20px 20px;">
+				  {$content |noAutoescape}
+				</div>
+				</td>{\n}
+			</tr>{\n}
+		  </table>{\n}
+		</td>{\n}
+	  </tr>{\n}
+	</table>{\n}
+  </body>{\n}
+</html>{\n}
+
+{/template}
+
+
+{template authform}
+  <form method="post">{\n}
+	<table width="300" cellspacing="1" cellpadding="1" border="0">{\n}
+	  <tr>{\n}
+		<td>
+		<div style="padding: 10px 10px 10px 0px; font-size: 14px; color:red">
+		  Логин: </td>{\n}
+		</div>
+	  </tr>
+	  <tr>
+		<td>
+		<div style="padding: 10px 10px 10px 30px; font-size: 14px; color:red">
+		  <input type="text" name="login" value="{$lastlogin}" /></td>{\n}
+		</div>
+	  </tr>{\n}
+	  <tr>{\n}
+		<td>
+		  <div style="padding: 10px 10px 10px 0px; font-size: 14px; color:red">
+			Пароль:
+		  </div>
+		</td>{\n}
+	  </tr>
+	  <tr>
+		<td>
+		<div style="padding: 10px 10px 10px 30px; font-size: 14px; color:red">
+		  <input type="password" name="password" value="" />
+		</div>
+		</td>{\n}
+	  </tr>{\n}
+	  <tr>
+		<td>
+		  <div style="padding: 10px 10px 10px 30px; font-size: 14px; color:red">
+			<input type="submit" value="войти" />
+		  </div>
+		  </td>{\n}
+	  </tr>{\n}
+	</table>{\n}
+  </form>{\n}
+{/template}
+
+
+{template logoutform}
+  <form method="post" style="display: inline">{\n}
+	<input type="submit" name="logout" value="выйти" />{\n}
+  </form>{\n}
+{/template}
+
+
+{template menu}
+<div style="display: none;">
+	 <form method="post" id="delagentform">
+	   <input type="text" name="delagent" id="delagent" value="" />
+	 </form>
+</div>
+
+<div style="padding: 20px 20px 20px 20px;">
+  <table width="100%" cellspacing="1" cellpadding="1" border="0">
+	<tr>
+	  <td valign="top" class="menu" width="1">
+		<a href="/admin/update">Обновление&nbsp;прайсов</a>
+		<br />
+		<br />
+		<a href="/admin/add-agent">Добавить&nbsp;партнера</a>
+		<br />
+		<br />
+		<a href="/admin/outload">Выгрузка&nbsp;в&nbsp;базу</a>
+		<br />
+		<br />
+		Загрузка прайсов:
+		<br />
+		{foreach $agent in $agents}
+		{call menuagent data="$agent" /}{\n}
+		{/foreach}
+	  </td>
+	</tr>
+  </table>
+</div>
+{/template}
+
+{template menuagent}
+  <br />
+<nobr>
+  <input type="button" value="×" onclick="javascript: document.getElementById('delagent').value = '{$key}';
+										  document.getElementById('delagentform').submit()" />
+  <a href="/admin/{$key}">{$val}</a>
+</nobr>
+{/template}
