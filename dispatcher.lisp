@@ -149,8 +149,8 @@
 
 (setf hunchentoot:*hunchentoot-default-external-format* (flexi-streams:make-external-format :utf-8 :eol-style :lf))
 
-(restas:define-route main ("/" :requirement (lambda () t))
-  (funcall *dispatcher* request))
+(restas:define-route main ("/:get" :requirement (lambda () t))
+  (funcall *dispatcher* hunchentoot:*request*))
 
 (restas:start '#:cl-eshop :port 4242)
 (restas:debug-mode-on)
