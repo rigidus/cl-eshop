@@ -83,7 +83,7 @@
                    (push val root-groups)))
              trans:*group*)
     (let ((src-lst (mapcar #'(lambda (val)
-                               (if (string= current-key (group:key val))
+                               (if (string= (format nil "~a" current-key) (group:key val))
                                    ;; This is current
                                    (leftmenu:selected
                                     (list :key (group:key val)

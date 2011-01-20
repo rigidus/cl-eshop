@@ -88,23 +88,26 @@
 
 
 (defmethod get-keyoptions ((object product))
-  (mapcar #'(lambda (pair)
-              (let ((optgroup (getf pair :optgroup))
-                    (optname  (getf pair :optname))
-                    (optvalue))
-                (mapcar #'(lambda (option)
-                            (if (string= (optgroup::name option) optgroup)
-                                (let ((options (optgroup::options option)))
-                                  (mapcar #'(lambda (opt)
-                                              (if (string= (option::name opt) optname)
-                                                  (setf optvalue (option::value opt))))
-                                          options))))
-                        (optlist:optlist (product:options object)))
-                (list :optgroup optgroup
-                      :optname optname
-                      :optvalue optvalue)
-                ))
-          (group:keyoptions (product:parent object))))
+  (let ((parent (parent object)))
+    (when (null parent)
+      (return-from get-keyoptions nil))
+    (mapcar #'(lambda (pair)
+                (let ((optgroup (getf pair :optgroup))
+                      (optname  (getf pair :optname))
+                      (optvalue))
+                  (mapcar #'(lambda (option)
+                              (if (string= (optgroup::name option) optgroup)
+                                  (let ((options (optgroup::options option)))
+                                    (mapcar #'(lambda (opt)
+                                                (if (string= (option::name opt) optname)
+                                                    (setf optvalue (option::value opt))))
+                                            options))))
+                          (optlist:optlist (product:options object)))
+                  (list :optgroup optgroup
+                        :optname optname
+                        :optvalue optvalue)
+                  ))
+            (group:keyoptions parent))))
 
 
 (defmethod view ((object product))
