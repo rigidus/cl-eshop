@@ -13,6 +13,12 @@
 
 
 (defun store-seans (raw)
+  ;; Сохраняем в файле последнюю выгрузку
+  (with-open-file (file "last-gateway-string"
+                        :direction :output
+                        :if-exists :supersede
+                        :external-format :utf-8)
+    (format file "~a" raw))
   (push (make-instance 'seans :raw raw) *loadlist*)
   "DONE")
 
