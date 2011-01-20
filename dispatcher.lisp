@@ -89,9 +89,13 @@
                         (when (eval ¿) (return (funcall Ł))))))
               (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
               (when (null ¤)
-                (setf (hunchentoot:return-code*) 404)
-                (setf ¤ (service:default-page
-                            (static:main (list :menu (service:menu "") :subcontent (error-404:content))))))
+                (restas:abort-route-handler
+                 (babel:string-to-octets
+                  (service:default-page
+                      (static:main (list :menu (service:menu "") :subcontent (error-404:content))))
+                  :encoding :utf-8)
+                 :return-code hunchentoot:+http-not-found+
+                 :content-type "text/html"))
               (babel:string-to-octets ¤ :encoding :utf-8))))))
 
 (defparameter *dispatcher* (dispatcher))
