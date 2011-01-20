@@ -171,8 +171,6 @@
     key))
 
 
-
-
 (defmethod serialize ((object group))
   (let* ((raw-breadcrumbs (service:breadcrumbs object))
          (path-list (mapcar #'(lambda (elt)
