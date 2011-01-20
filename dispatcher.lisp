@@ -35,7 +35,7 @@
 (export '*path-to-bkps*)
 (defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
 (export '*path-to-conf*)
-(defparameter *path-to-pics* (format nil "~aDropbox/htpics-big" (user-homedir-pathname)))
+(defparameter *path-to-pics* (format nil "~ahtpics" (user-homedir-pathname)))
 (export '*path-to-pics*)
 
 

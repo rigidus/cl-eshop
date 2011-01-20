@@ -37,7 +37,7 @@
 
 
 (defun get-pics (articul)
-  (let ((path (format nil "~a/~a/*.jpg" *path-to-pics* articul)))
+  (let ((path (format nil "~a/big/~a/*.jpg" *path-to-pics* articul)))
     (loop
        :for pic
        :in (ignore-errors (directory path))
@@ -85,6 +85,7 @@
                                :descr (descr object)
                                :shortdescr (shortdescr object)
                                ))))))
+
 
 (defmethod get-keyoptions ((object product))
   (mapcar #'(lambda (pair)
