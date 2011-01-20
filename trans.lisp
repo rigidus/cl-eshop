@@ -340,3 +340,23 @@
 ;;                        (incf new)))))
 ;;            data)
 ;;   (print (list new old (hash-table-count grp))))
+
+;; [v.2]
+;; (let ((tmp (cl-store:restore "#h-product")))
+;;   (maphash #'(lambda (k v)
+;;                (let* ((articul (getf v :articul))
+;;                       (new-opt (trans-options (getf (gethash articul tmp) :result-options))))
+;;                  (if (and (equal 'optlist:optlist (type-of new-opt))
+;;                           (not (null (gethash articul trans:*product*))))
+;;                      (progn
+;;                        (setf (product:options (gethash articul trans:*product*))
+;;                              new-opt)
+;;                        (setf (product:descr (gethash articul trans:*product*))
+;;                              (getf v :descr))
+;;                        (setf (product:shortdescr (gethash articul trans:*product*))
+;;                              (getf v :shortdescr))
+;;                        (product:serialize (gethash articul trans:*product*))
+;;                      (print "err!"))
+;;                  articul))
+;;            tmp)
+;;   (sb-ext:gc :full t))

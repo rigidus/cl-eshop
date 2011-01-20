@@ -326,7 +326,7 @@
                             :if-exists :supersede
                             :external-format :utf-8)
         ;; (format t json-string)
-        (format file json-string)))
+        (format file "~a" json-string)))
     pathname))
 
 
