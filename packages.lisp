@@ -152,6 +152,7 @@
            #:active
            #:empty
            #:ymlshow
+           #:pic
            #:filters
            #:fullfilter
            #:order

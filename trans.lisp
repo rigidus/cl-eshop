@@ -360,3 +360,6 @@
 ;;                  articul))
 ;;            tmp)
 ;;   (sb-ext:gc :full t))
+
+
+;; (print (group:pic (gethash "noutbuki" trans:*group*)))

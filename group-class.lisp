@@ -12,6 +12,7 @@
    (order             :initarg :order          :initform nil       :accessor order)
    (keyoptions        :initarg :keyoptions     :initform nil       :accessor keyoptions)
    (ymlshow           :initarg :ymlshow        :initform nil       :accessor ymlshow)
+   (pic               :initarg :pic            :initform nil       :accessor pic)
    (childs            :initarg :childs         :initform nil       :accessor childs)
    (filters           :initarg :filters        :initform nil       :accessor filters)
    (fullfilter        :initarg :fullfilter     :initform nil       :accessor fullfilter)
@@ -35,13 +36,6 @@
         :user "Тамара"
         :text "Не плохой ноутбук, рабочая лошадка. Хорошие углы обзора, шустрый проц, без подзарядки работает часа 3, легкий и удобный в переноске. В общем, советую."
         :more "Еще 12 отзывов о ноутбуке"))
-
-(defmethod get-typical-product ((object group))
-  (loop :for product :in (products object) :do
-     (let ((pics (product:get-pics (product:articul product))))
-       (if (not (null pics))
-           (return-from get-typical-product (values product (first pics)))
-           nil))))
 
 
 (defmethod get-recursive-products ((object group))
@@ -84,27 +78,21 @@
                                    #'(lambda (x)
                                        (equal 0 (getf x :cnt)))
                                    (loop :for child :in (sort (copy-list (childs object)) #'service:menu-sort) :collect
-                                     (multiple-value-bind (tupical middle)
-                                         (get-typical-product child)
-                                       (list :name (name child)
-                                             :key (key child)
-                                             :group_id (group:id child)
-                                             :cnt (let ((products (group:products child)))
-                                                    (if (null products)
-                                                        "-"
-                                                        (length (remove-if-not #'(lambda (product)
-                                                                                   (product:active product))
-                                                                               (group:products child)))))
-                                             :articul (if (null tupical) 0 (product:articul tupical))
-                                             :price  (if (null tupical) 0 (product:price tupical))
-                                             :pic (if (null tupical)
-                                                      "/img/temp/i17.jpg"
-                                                      (format nil "/pic/middle/~a/~a" (product:articul tupical) middle))
-                                             :filters (loop :for filter :in (filters child) :collect
-                                                         (list :name (filter:name filter)
-                                                               :groupkey (group:key child)
-                                                               :key (filter:key filter)
-                                                               :cnt 999))))))))
+                                      (list :name (name child)
+                                            :key (key child)
+                                            :group_id (group:id child)
+                                            :cnt (let ((products (group:products child)))
+                                                   (if (null products)
+                                                       "-"
+                                                       (length (remove-if-not #'(lambda (product)
+                                                                                  (product:active product))
+                                                                              (group:products child)))))
+                                            :pic (pic child)
+                                            :filters (loop :for filter :in (filters child) :collect
+                                                        (list :name (filter:name filter)
+                                                              :groupkey (group:key child)
+                                                              :key (filter:key filter)
+                                                              :cnt 999)))))))
                         ;; else
                         (let* ((products (remove-if-not #'(lambda (product)
                                                             (product:active product))
@@ -164,6 +152,7 @@
                                                nil
                                                (read-from-string (cdr (assoc :fullfilter raw)))))
                              :keyoptions keyoptions
+                             :pic (cdr (assoc :pic raw))
                              :ymlshow (cdr (assoc :ymlshow raw)))))
     (when (equal 'group:group (type-of parent))
         (push new (group:childs parent)))
@@ -188,7 +177,8 @@
                  (:keyoptions . nil)
                  (:fullfilter . nil)
                  (:order . 1)
-                 (:ymlshow . 1)))
+                 (:ymlshow . 1)
+                 (:pic . "")))
          (json-string))
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)
@@ -201,6 +191,7 @@
     (setf (cdr (assoc :name dumb)) (name object))
     (setf (cdr (assoc :active dumb)) (active object))
     (setf (cdr (assoc :empty dumb)) (empty object))
+    (setf (cdr (assoc :pic dumb)) (pic object))
     ;; keyoptions - json array or null
     (setf (cdr (assoc :keyoptions dumb))
           (if (null (keyoptions object))
