@@ -176,7 +176,7 @@
          (path-list (mapcar #'(lambda (elt)
                                 (getf elt :key))
                             (getf raw-breadcrumbs :breadcrumbelts)))
-         (current-dir (format nil "~a~a/~a/" cl-user::*path-to-bkps*
+         (current-dir (format nil "~a~a/~a/" *path-to-bkps*
                               (format nil "~{/~a~}" path-list)
                               (key object)))
          (pathname (format nil "~a~a" current-dir (key object))))

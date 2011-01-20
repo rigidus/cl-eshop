@@ -1,16 +1,15 @@
-(defpackage #:my
+(defpackage #:cl-eshop
   (:use #:cl
         #:cl-user)
-  (:export :setvar
-           :sql-start
-		   :sql-query
-		   :sql-rows
-		   :to-hash
-		   :hash-elt
-		   :foreach
-		   :iterate
-		   :cross
-		   :parse-id
+  (:export :dispatcher
+		   :compile-templates))
+
+
+(defpackage #:my
+  (:use #:cl
+        #:cl-user
+        #:cl-eshop)
+  (:export :parse-id
 		   :strip
            :stripper
 		   :get-file-length
@@ -27,6 +26,7 @@
 (defpackage #:service
   (:use #:cl
         #:cl-user
+        #:cl-eshop
         #:hunchentoot)
   (:export :paginator
            :menu
@@ -46,6 +46,7 @@
 (defpackage #:option
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:json
         #:my)
   (:export #:option
@@ -61,6 +62,7 @@
 (defpackage #:optgroup
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:json
         #:my)
   (:export #:optgroup
@@ -73,7 +75,8 @@
 
 (defpackage #:optlist
   (:use #:cl
-		#:cl-user)
+		#:cl-user
+        #:cl-eshop)
   (:export #:optlist
            #:show
            #:serialize
@@ -83,6 +86,7 @@
 (defpackage #:product
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:json
         #:my
         #:split-sequence)
@@ -114,6 +118,7 @@
 (defpackage #:filter
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:json
         #:split-sequence
         #:alexandria)
@@ -131,6 +136,7 @@
 (defpackage #:group
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:json
         #:split-sequence)
   (:export #:group
@@ -159,6 +165,7 @@
 (defpackage #:xls
   (:use #:cl
         #:cl-user
+        #:cl-eshop
         #:split-sequence
 		#:cl-ppcre)
   (:export #:parse-xls))
@@ -167,6 +174,7 @@
 (defpackage #:trans
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:split-sequence
         #:cl-fad)
   (:export #:*product*
@@ -180,6 +188,7 @@
 (defpackage #:cart
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:hunchentoot)
   (:export #:dispatcher))
 
@@ -187,6 +196,7 @@
 (defpackage #:checkout
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:hunchentoot)
   (:export #:dispatcher0
            #:dispatcher1
@@ -198,7 +208,8 @@
 
 (defpackage #:gateway
   (:use #:cl
-        #:cl-user)
+        #:cl-user
+        #:cl-eshop)
   (:export :dispatcher
            :load-from-conf))
 
@@ -206,19 +217,21 @@
 (defpackage #:search
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:split-sequence)
   (:export #:dispatcher))
 
 
 (defpackage #:html
   (:use #:cl
-		#:cl-user)
+		#:cl-user
+        #:cl-eshop)
   (:export #:select))
 
 
 (defpackage #:conditions
   (:use #:cl
-		#:cl-user)
+		#:cl-user #:cl-eshop)
   (:export :c-test
 		   :c-equal
 		   :c-notequal
@@ -238,7 +251,8 @@
 
 (defpackage #:actions
   (:use #:cl
-		#:cl-user)
+		#:cl-user
+        #:cl-eshop)
   (:export :a-test
 		   :a-head-substr
 		   :a-str-append
@@ -257,7 +271,8 @@
 
 (defpackage #:data
   (:use #:cl
-		#:cl-user)
+		#:cl-user
+        #:cl-eshop)
   (:export #:*options*
            #:*typefile*
            #:*agents*
@@ -269,7 +284,8 @@
 
 (defpackage #:rule
   (:use #:cl
-		#:cl-user)
+		#:cl-user
+        #:cl-eshop)
   (:export #:rule
            #:show
            #:get-lambda)
@@ -279,6 +295,7 @@
 (defpackage #:agent
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
         #:split-sequence
 		#:cl-ppcre
 		#:hunchentoot
@@ -294,17 +311,18 @@
 (defpackage #:update
   (:use #:cl
         #:hunchentoot
-		#:cl-user)
+		#:cl-user
+        #:cl-eshop)
   (:export :update))
 
 
 (defpackage #:outload
   (:use #:cl
 		#:cl-user
+        #:cl-eshop
 		#:split-sequence
 		#:cl-ppcre
 		#:hunchentoot
-		#:clsql
         #:bordeaux-threads)
   (:export :outload))
 
@@ -312,8 +330,8 @@
 (defpackage #:admin
   (:use #:cl
         #:cl-user
-		#:hunchentoot
-		#:clsql)
+        #:cl-eshop
+		#:hunchentoot)
   (:export :dispatcher
            :admin-main-page
 		   :admin-page
@@ -323,6 +341,7 @@
 (defpackage #:yml
   (:use #:cl
         #:cl-user
+        #:cl-eshop
 		#:my)
   (:export :dispatcher))
 

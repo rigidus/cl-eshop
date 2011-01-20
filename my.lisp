@@ -1,75 +1,5 @@
 (in-package #:my)
 
-(defun setvar (symbol value)
-  (proclaim `(special ,symbol))
-  (setf (symbol-value symbol) value))
-
-(defun sql-start ()
-  (clsql:connect '("localhost" "bd" "user" "password") :database-type :mysql :if-exists :new)
-  (clsql:execute-command "SET NAMES utf8"))
-
-(defun sql-query (sql)
-  (handler-bind ((CLSQL-SYS:SQL-DATABASE-DATA-ERROR
-				  #'(lambda (c)
-					  (invoke-restart 'restart-mysql-connection))))
-	(restart-case (clsql:query sql)
-	  (restart-mysql-connection ()
-		(sql-start)
-		(clsql:query sql))))
-  )
-
-(defun sql-rows (sql)
-  (let ((result nil))
-	(multiple-value-bind (rows meta)
-		(sql-query sql)
-	  (eval
-	   (read-from-string
-		(format nil
-				"'~a"
-				(mapcar #'(lambda (row)
-							(loop
-							   for key in meta
-							   for val in row
-							   collect (typecase val
-										 (string  (format nil ":~a \"~a\"" key (my:strip val)))
-										 (integer (format nil ":~a ~a"     key val))
-										 (real    (format nil ":~a \"~$\"" key val))
-										 (t       (format nil ":~a ~a"     key val))
-										 )))
-						rows)))))))
-
-(defmacro to-hash (-hash -sql)
-  `(progn
-	 (clrhash ,-hash)
-	 (iterate ,-sql
-			(lambda ($record)
-			  (setf (gethash (car $record) ,-hash) $record)))))
-
-(defmacro hash-elt (-hash -key -field-list)
-  `(let ((elt (gethash ,-key ,-hash)))
-	 (eval
-	  (read-from-string
-	   (format nil "'~a"
-			   (loop
-				  for key in ',-field-list
-				  for val in elt
-				  collect (typecase val
-							(string  (format nil ":~a \"~a\"" key (my:strip val)))
-							(integer (format nil ":~a ~a"     key val))
-							(real    (format nil ":~a \"~$\"" key val))
-							(t       (format nil ":~a ~a"     key val))
-							)))))))
-
-(defmacro foreach (-hash -field-list -body)
-  (let (($ret nil)
-		($i 0))
-	(dolist ($field -field-list 'nil)
-	  (push `(,$field (nth ,$i $record)) $ret)
-	  (setf $i (+ 1 $i)))
-	`(maphash #'(lambda ($id $record)
-				  (let (,@$ret) ,-body))
-			  ,-hash)))
-
 (defun parse-id (id-string)
   (let ((group_id (handler-bind ((SB-INT:SIMPLE-PARSE-ERROR
 								  #'(lambda (c)
@@ -84,43 +14,6 @@
 					  (set-nil ()
 						nil)))))
 	group_id))
-
-(defun iterate ($sql $func)
-  "Итерирование по таблице базы данных"
-  (let (($step 50))
-	(do (
-		 ($n $step (+ $n $step))
-		 ($records
-		  (sql-query (format nil "~a LIMIT 0,~a" $sql $step))
-		  (sql-query (format nil "~a LIMIT ~a,~a" $sql $n $step))))
-		;((or
-		;  (null $records)
-		;  (>= $n 110)) 'finish)
-		((null $records) 'finish)
-	  (loop
-		 for $record in $records collect $record
-		 do (apply $func (list $record))))))
-
-(defun cross ($sql $func)
-  (let (($step 50))
-	(let (($plist
-		   (loop for $n from 0 by $step append
-				(multiple-value-bind ($records $fields)
-					(my:sql-query (format nil "~a LIMIT ~a,~a" $sql $n $step))
-				  ;; (format t "~%~a LIMIT ~a,~a" $sql $n $step)
-				  ;; (format t "~%|= ~a,~a" $records $fields)
-				  (when (null $records)
-					(loop-finish))
-				  (loop for $record in $records collect
-					   (let (($fld 0))
-						 (loop for $value in $record append
-							  (prog1
-								  (list
-								   (intern (string-upcase (nth $fld $fields)) :keyword)
-								   $value)
-								(setf $fld (+ $fld 1))))))))))
-	  (loop for $record in $plist collect $record
-		 do (apply $func (list $record))))))
 
 (defun strip ($string)
   (cond ((vectorp $string) (let (($ret nil))

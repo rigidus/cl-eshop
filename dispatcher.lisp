@@ -1,16 +1,13 @@
-(in-package #:cl-user)
-
 (asdf:operate 'asdf:load-op '#:alexandria)
+(asdf:operate 'asdf:load-op '#:anaphora)
 (asdf:operate 'asdf:load-op '#:hunchentoot)
 (setf ppcre:*use-bmh-matchers* nil)
-(asdf:operate 'asdf:load-op '#:clsql)
 (asdf:operate 'asdf:load-op '#:closure-template)
 (asdf:operate 'asdf:load-op '#:split-sequence)
 (asdf:operate 'asdf:load-op '#:babel)
 (asdf:operate 'asdf:load-op '#:cl-json)
 (asdf:operate 'asdf:load-op '#:postmodern)
 (asdf:operate 'asdf:load-op '#:cl-store)
-(asdf:operate 'asdf:load-op '#:cl-ppcre)
 (asdf:operate 'asdf:load-op '#:ironclad)
 (asdf:operate 'asdf:load-op '#:uffi)
 (asdf:operate 'asdf:load-op '#:mel-base)
@@ -18,14 +15,28 @@
 (asdf:operate 'asdf:load-op '#:arnesi)
 (asdf:operate 'asdf:load-op '#:cl-fad)
 (asdf:operate 'asdf:load-op '#:drakma)
+(asdf:operate 'asdf:load-op '#:restas)
 
+(restas:define-module #:cl-eshop
+    (:use :cl
+          :closure-template
+          :anaphora
+          :split-sequence
+          :cl-ppcre
+          :alexandria
+          ))
 
+(in-package #:cl-eshop)
 
 ;; PATH
 (defparameter *path-to-tpls* (format nil "~aDropbox/httpls" (user-homedir-pathname)))
+(export '*path-to-tpls*)
 (defparameter *path-to-bkps* (format nil "~aDropbox/htbkps" (user-homedir-pathname)))
+(export '*path-to-bkps*)
 (defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
+(export '*path-to-conf*)
 (defparameter *path-to-pics* (format nil "~aDropbox/htpics-big" (user-homedir-pathname)))
+(export '*path-to-pics*)
 
 
 (defun compile-templates ()
@@ -136,36 +147,14 @@
               "bonus"))
 
 
-(defvar *catch-errors-p* nil)
+(setf hunchentoot:*hunchentoot-default-external-format* (flexi-streams:make-external-format :utf-8 :eol-style :lf))
 
-(defun err-on ()
-  (setf *catch-errors-p* nil))
-(defun err-off ()
-  (setf *catch-errors-p* t))
-
-
-(defclass debuggable-acceptor (hunchentoot:acceptor) ())
-
-(defmethod hunchentoot:acceptor-request-dispatcher ((acceptor debuggable-acceptor))
-  (if *catch-errors-p*
-	  (call-next-method)
-	  (let ((dispatcher (handler-bind ((error #'invoke-debugger))
-						  (call-next-method))))
-		(lambda (request)
-		  (handler-bind ((error #'invoke-debugger))
-			(funcall dispatcher request))))))
-
-
-(defun request-dispatcher (request)
+(restas:define-route main ("/" :requirement (lambda () t))
   (funcall *dispatcher* request))
 
-(defparameter *debuggable-acceptor* (make-instance 'debuggable-acceptor
-                                                   :request-dispatcher 'request-dispatcher
-                                                   :port 4242))
+(restas:start '#:cl-eshop :port 4242)
+(restas:debug-mode-on)
 
-(hunchentoot:start *debuggable-acceptor*)
-(setf hunchentoot:*handle-http-errors-p* nil)
-(setf hunchentoot:*hunchentoot-default-external-format* (flexi-streams:make-external-format :utf-8 :eol-style :lf))
 
 (setq swank:*log-events* t)
 (setq swank:*log-output* (open (format nil "~adropbox.lisp" (user-homedir-pathname))

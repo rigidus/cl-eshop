@@ -37,7 +37,7 @@
 
 
 (defun get-pics (articul)
-  (let ((path (format nil "~a/~a/*.jpg" cl-user::*path-to-pics* articul)))
+  (let ((path (format nil "~a/~a/*.jpg" *path-to-pics* articul)))
     (loop
        :for pic
        :in (ignore-errors (directory path))
@@ -132,15 +132,9 @@
 
 ;; Внешнее условие некорректного поля
 (define-condition wrong-product-slot-value (error)
-  ((text
-    :initarg :text
-    :accessor text)
-   (value
-    :initarg :value
-    :accessor value)
-   (product
-    :initarg :product
-    :accessor product))
+  ((text      :initarg :text     :accessor text)
+   (value     :initarg :value    :accessor value)
+   (product   :initarg :product  :accessor product))
   (:report (lambda (condition stream)
              (format stream "Incorrect value of product slot ~a ~%[value: '~a']~%[type '~a']"
                      (text condition)
@@ -148,9 +142,22 @@
                      (type-of (value condition))))))
 
 
+;; Внешнее условие ошибки десериализации
+(define-condition wrong-product-file (error)
+  ((filepath       :initarg  :filepath       :accessor filepath)
+   (in-condition   :initarg  :in-condition   :accessor in-condition))
+  (:report (lambda (condition stream)
+             (format stream "Unable unserialize product:  ~a ~% Reason: ~a"
+                     (filepath condition)
+                     (format nil "Incorrect value of product slot ~a ~%   [value: '~a']~%   [type '~a']"
+                             (text (in-condition condition))
+                             (value (in-condition condition))
+                             (type-of (value (in-condition condition))))))))
+
+
 ;; Метод ввода числовых значений при коррекции ошибок
 (defun read-new-integer-value ()
-  (format t "Enter a new value: ")
+  (format t "Enter a new integer value: ")
   (multiple-value-list (eval (read))))
 
 
@@ -208,10 +215,6 @@
            (set-t ()
              :report "Set value as T"
              (setf (slot-value item ',field) nil))
-           (enter-value (new)
-             :report "Enter a new value"
-             :interactive read-new-integer-value
-             (setf (slot-value item ',field) new))
            (ignore ()
              :report "Ignore error, save current value"
              (setf (slot-value item ',field) value))
@@ -238,39 +241,51 @@
 
 
 (defun unserialize (pathname)
-  (let* ((file-content (alexandria:read-file-into-string pathname))
-         (raw (decode-json-from-string file-content))
-         (articul (cdr (assoc :articul raw)))
-         (count-total (cdr (assoc :count-total raw)))
-         (parent (gethash (nth 1 (reverse (split-sequence #\/ pathname))) trans:*group*))
-         (new (make-instance 'product
-                             :articul articul
-                             :parent parent
-                             :name (cdr (assoc :name raw))
-                             :realname (cdr (assoc :realname raw))
-                             :price (cdr (assoc :price raw))
-                             :siteprice (cdr (assoc :siteprice raw))
-                             :ekkprice (cdr (assoc :ekkprice raw))
-                             :active (let ((active (cdr (assoc :active raw))))
-                                       ;; Если количество товара равно нулю то флаг active сбрасывается
-                                       (if (or (null count-total)
-                                               (= count-total 0))
-                                           (setf active nil))
-                                       active)
-                             :newbie (cdr (assoc :newbie raw))
-                             :sale (cdr (assoc :sale raw))
-                             :descr (cdr (assoc :descr raw))
-                             :shortdescr (cdr (assoc :shortdescr raw))
-                             :count-transit (cdr (assoc :count-transit raw))
-                             :count-total count-total
-                             :options (optlist:unserialize (cdr (assoc :options raw))))))
-    ;; Если родитель продукта — группа, связать группу с этим продуктом
-    (when (equal 'group:group (type-of parent))
-      (push new (group:products parent)))
-    ;; Сохраняем продукт в хэш-таблице продуктов
-    (setf (gethash articul trans:*product*) new)
-    ;; Возвращаем артикул продукта
-    articul))
+  (handler-bind ((PRODUCT::WRONG-PRODUCT-SLOT-VALUE
+                  #'(lambda (in-condition)
+                      (restart-case
+                          (error 'wrong-product-file
+                                 :filepath pathname
+                                 :in-condition in-condition)
+                        (ignore ()
+                          :report "Ignore error, save current value"
+                          (invoke-restart 'ignore))
+                        (set-null ()
+                          :report "Set value as NIL"
+                          (invoke-restart 'set-null))))))
+    (let* ((file-content (alexandria:read-file-into-string pathname))
+           (raw (decode-json-from-string file-content))
+           (articul (cdr (assoc :articul raw)))
+           (count-total (cdr (assoc :count-total raw)))
+           (parent (gethash (nth 1 (reverse (split-sequence #\/ pathname))) trans:*group*))
+           (new (make-instance 'product
+                               :articul articul
+                               :parent parent
+                               :name (cdr (assoc :name raw))
+                               :realname (cdr (assoc :realname raw))
+                               :price (cdr (assoc :price raw))
+                               :siteprice (cdr (assoc :siteprice raw))
+                               :ekkprice (cdr (assoc :ekkprice raw))
+                               :active (let ((active (cdr (assoc :active raw))))
+                                         ;; Если количество товара равно нулю то флаг active сбрасывается
+                                         (if (or (null count-total)
+                                                 (= count-total 0))
+                                             (setf active nil))
+                                         active)
+                               :newbie (cdr (assoc :newbie raw))
+                               :sale (cdr (assoc :sale raw))
+                               :descr (cdr (assoc :descr raw))
+                               :shortdescr (cdr (assoc :shortdescr raw))
+                               :count-transit (cdr (assoc :count-transit raw))
+                               :count-total count-total
+                               :options (optlist:unserialize (cdr (assoc :options raw))))))
+      ;; Если родитель продукта — группа, связать группу с этим продуктом
+      (when (equal 'group:group (type-of parent))
+        (push new (group:products parent)))
+      ;; Сохраняем продукт в хэш-таблице продуктов
+      (setf (gethash articul trans:*product*) new)
+      ;; Возвращаем артикул продукта
+      articul)))
 
 
 (defmethod serialize ((object product))
@@ -278,7 +293,7 @@
          (path-list (mapcar #'(lambda (elt)
                                 (getf elt :key))
                             (getf raw-breadcrumbs :breadcrumbelts)))
-         (current-dir (format nil "~a~a/" cl-user::*path-to-bkps*
+         (current-dir (format nil "~a~a/" *path-to-bkps*
                               (format nil "~{/~a~}" path-list)))
          (pathname (format nil "~a~a" current-dir (articul object))))
     ;; Создаем директорию, если ее нет

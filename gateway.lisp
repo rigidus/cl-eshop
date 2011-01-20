@@ -40,7 +40,7 @@
 
 (defun load-from-conf ()
   (store-seans (alexandria:read-file-into-string
-                (format nil "~a/last-gateway-string.txt" cl-user::*path-to-conf*))))
+                (format nil "~a/last-gateway-string.txt" *path-to-conf*))))
 
 
 ;; Представление объекта в консоли

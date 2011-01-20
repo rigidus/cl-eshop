@@ -21,8 +21,8 @@
   ;;           "filter"
   ;;           "name"
   ;;           "active")
-    (let ((h-group    (cl-store:restore (format nil "~a/h-group" cl-user::*path-to-bkps*)))
-          (n-group    (xls:parse-xls (format nil "~a/url.xls" cl-user::*path-to-conf*)
+    (let ((h-group    (cl-store:restore (format nil "~a/h-group" *path-to-bkps*)))
+          (n-group    (xls:parse-xls (format nil "~a/url.xls" *path-to-conf*)
                                    (list :id-old :id-new :parent :filter :name :active) 2))
           (r-group    (make-hash-table :test #'equal))
           (r-group-id (make-hash-table :test #'equal))
@@ -104,7 +104,7 @@
                                                                                        :value (getf option :value)))))))
 
 (defun trans-products (r-group-id)
-  (let ((h-product (cl-store:restore (format nil "~a/h-product" cl-user::*path-to-bkps*)))
+  (let ((h-product (cl-store:restore (format nil "~a/h-product" *path-to-bkps*)))
         (r-product (make-hash-table :test #'equal)))
     (maphash #'(lambda (k v)
                  (declare (ignore k))
@@ -248,8 +248,7 @@
                                   :parent (gethash (car (last (split-sequence #\/ string-filename) 3)) trans:*group*)
                                   :name name)))
         (format t "~%warn: NO-FILE-GROUP: ~a" string-filename)
-        (group:serialize dymmy)
-        ))
+        (group:serialize dymmy)))
     (group:unserialize target)
     (recursive-explore file)))
 
@@ -261,17 +260,6 @@
      (mapcar #'process-dir dirs)
      (mapcar #'process-file files)
      (mapcar #'process-filter filters))))
-
-(defun restore-from-files ()
-  (print "start restore....{")
-  (sb-ext:gc :full t)
-  (recursive-explore cl-user::*path-to-bkps*)
-  (sb-ext:gc :full t)
-  (print "...} finish ok"))
-
-(ignore-errors
-  (restore-from-files)
-  )
 
 
 (defun store-unlinked-products ()
@@ -294,6 +282,23 @@
     cnt))
 
 
+(defun restore-from-files ()
+  (handler-bind ((PRODUCT::WRONG-PRODUCT-FILE
+                  #'(lambda (e)
+                      (format t "~%warn: WRONG-PRODUCT-FILE: ~a"
+                              (product::filepath e))
+                      (invoke-restart 'ignore)
+                      )))
+    (print "start restore....{")
+    (sb-ext:gc :full t)
+    (recursive-explore *path-to-bkps*)
+    (sb-ext:gc :full t)
+    (print "...} finish ok")))
+
+(restore-from-files)
+
+
+;; Кое-какие заготовки для переноса данных - удалить после завершения
 ;; (let ((data (cl-store:restore "#h-product"))
 ;;       (old 0)
 ;;       (new 0)
@@ -335,7 +340,3 @@
 ;;                        (incf new)))))
 ;;            data)
 ;;   (print (list new old (hash-table-count grp))))
-
-
-
-(sb-ext:gc :full t)
