@@ -105,7 +105,9 @@
 (load "product-class.lisp")
 (load "filter-class.lisp")
 (load "group-class.lisp")
+
 (load "trans.lisp")
+
 (load "cart.lisp")
 (load "gateway.lisp")
 (load "search.lisp")

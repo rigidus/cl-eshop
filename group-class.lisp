@@ -171,6 +171,8 @@
     key))
 
 
+
+
 (defmethod serialize ((object group))
   (let* ((raw-breadcrumbs (service:breadcrumbs object))
          (path-list (mapcar #'(lambda (elt)
@@ -179,31 +181,81 @@
          (current-dir (format nil "~a~a/~a/" *path-to-bkps*
                               (format nil "~{/~a~}" path-list)
                               (key object)))
-         (pathname (format nil "~a~a" current-dir (key object))))
+         (pathname (format nil "~a~a" current-dir (key object)))
+         (dumb '((:id . 0)
+                 (:key . "-")
+                 (:name . "-")
+                 (:active . nil)
+                 (:empty . nil)
+                 (:keyoptions . nil)
+                 (:fullfilter . nil)
+                 (:order . 1)
+                 (:ymlshow . 1)))
+         (json-string))
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)
-
-    #| TODO:
-       Если файл с группой присутствует, то
-        прочитать его, разобрать json и сохранять только те поля
-        которые требуется, а остальное записывать как было.
-    |#
-
-    ;; Сохраняем файл группы
-    (let* ((json-string (format nil "{~%\"id\":~a,~%\"key\":~a,~%\"name\":~a,~%\"active\":~a,~%\"empty\":~a~%}"
-                               (encode-json-to-string (id object))
-                               (encode-json-to-string (key object))
-                               (format nil "\"~a\"" (name object))
-                               (encode-json-to-string (active object))
-                               (encode-json-to-string (empty object))
-                               )))
-      (with-open-file (file pathname
-                            :direction :output
-                            :if-exists :supersede
-                            :external-format :utf-8)
-        ;; (format t json-string)
-        (format file json-string)))
+    ;; Подтягиваем данные из файла, если он есть
+    (when (probe-file pathname)
+      (setf dumb (union dumb (decode-json-from-string (alexandria:read-file-into-string pathname)) :key #'car)))
+    ;; Сохраняем только те поля, которые нам известны, неизвестные сохраняем без изменений
+    (setf (cdr (assoc :id dumb)) (id object))
+    (setf (cdr (assoc :key dumb)) (key object))
+    (setf (cdr (assoc :name dumb)) (name object))
+    (setf (cdr (assoc :active dumb)) (active object))
+    (setf (cdr (assoc :empty dumb)) (empty object))
+    ;; keyoptions - json array or null
+    (setf (cdr (assoc :keyoptions dumb))
+          (if (null (keyoptions object))
+              "null"
+              (let ((json-string (format nil "~{~a~}"
+                                         (loop :for item :in (keyoptions object) :collect
+                                            (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\"},~%"
+                                                    (getf item :optgroup)
+                                                    (getf item :optname))))))
+                (format nil "[~a]" (subseq  json-string 0 (- (length json-string) 2))))))
+    ;; assembly json-string
+    (setf json-string
+          (format nil "~{~a~}"
+                  (remove-if #'null
+                             (loop :for item :in dumb :collect
+                                (let ((field (string-downcase (format nil "~a" (car item))))
+                                      (value (cdr item)))
+                                  (cond ((equal t   value) (format nil "\"~a\":true,~%" field))
+                                        ((equal nil value) (format nil "\"~a\":null,~%" field))
+                                        ((or (subtypep (type-of value) 'number)
+                                             (equal 'null (type-of value)))
+                                         (format nil "\"~a\":~a,~%" field value))
+                                        ((string= "keyoptions" field)
+                                         (format nil "\"~a\":~a,~%" field value))
+                                        ((subtypep (type-of value) 'string)
+                                         (format nil "\"~a\":\"~a\",~%"
+                                                 field
+                                                 (my:replace-all value "\"" "\\\"")))
+                                        ;; for debug
+                                        ;; (t (format nil "\"~a\":[~a][~a],~%"
+                                        ;;            field
+                                        ;;            (type-of value)
+                                        ;;            value))
+                                        ))))))
+    ;; correction
+    (setf json-string (subseq  json-string 0 (- (length json-string) 2)))
+    (setf json-string (format nil "{~%~a~%}~%" json-string))
+    ;; for debug
+    ;; (format t "~a" json-string)
+    ;; save file
+    (with-open-file (file pathname
+                          :direction :output
+                          :if-exists :supersede
+                          :external-format :utf-8)
+      (format file json-string))
+    ;; return pathname
     pathname))
+
+
+;; test for serialize
+;; (serialize (gethash "netbuki" trans:*group*))
+;; (unserialize "/home/webadmin/Dropbox/htbkps/noutbuki-i-netbuki/netbuki/netbuki")
+;; (print (keyoptions (gethash "netbuki" trans:*group*)))
 
 
 (defmethod plist-representation ((object group) &rest fields)
