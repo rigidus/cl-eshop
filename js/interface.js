@@ -240,7 +240,7 @@ function rCalc() {
 	var rUser = eval("("+rGetCookie('user')+")");
 	var sum = 0;
 	var cnt = 0;
-	if (rCart) {
+ 	if (rCart) {
 		for (i = 0; i < rCart.length; i++) {
 			sum += rCart[i].price * rCart[i].count;
 			cnt += rCart[i].count;
@@ -260,9 +260,11 @@ function rCalc() {
 					$(current).html('<i class="count"></i>&nbsp;товара на <big class="sum"></big> руб.');
 				}
 			$(current).find('.sum').html(sum);
-			if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
-				$(this).find('.delivery-price big').text('200');
-			}
+            if(rUser) {
+			   if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
+				   $(this).find('.delivery-price big').text('200');
+			   }
+            }
 			$(current).find('.count').html(cnt);
 		} else {
 			$(current).html('Нет товаров');
@@ -546,7 +548,7 @@ function checkoutFinish(current) {
 		}
 		temp += rUser.auth.phone;
 	}
-	else 
+	else
 		if (rUser.auth.authtype == 'newbuyer') {
 			if (rUser.auth.name) {
 				temp += rUser.auth.name + ' ';
@@ -573,28 +575,28 @@ function checkoutFinish(current) {
 		}
 		temp += '<br/><a href="checkout2.html">Изменить способ доставки</a>'
 	}
-	else 
+	else
 		if (rUser.delivery.deliverytype == 'auto') {
 			where.append('<p class="h2">Забрать самостоятельно</p>');
 			temp += rUser.delivery.addr;
 			temp += '<br/><a href="checkout2.html">Изменить способ доставки</a>'
 		}
 	where.append('<p>' + temp + '</p>');
-	
-	
+
+
 	temp = '';
 	if (rUser.pay.paytype == 'cash') {
 		where.append('<p class="h2">Оплата наличными</p><p>Курьеру при получении товара. Вы получите товарный чек</p>');
 	}
-	else 
+	else
 		if (rUser.pay.paytype == 'card') {
 			where.append('<p class="h2">Оплата кредитной картой</p>');
 		}
-		else 
+		else
 			if (rUser.pay.paytype == 'credit') {
 				where.append('<p class="h2">Покупка в кредит</p>');
 			}
-			else 
+			else
 				if (rUser.pay.paytype == 'bank') {
 					where.append('<p class="h2">Оплата по безналичному расчету</p>');
 					where.append('<p>Реквизиты:<br/>' + rUser.pay.bankaccount + '</p>');

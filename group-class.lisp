@@ -374,7 +374,6 @@
                                        (getf (group:fullfilter object) :advanced)))))))
 
 
-
 (defmethod make-vendor-filter ((object group))
   (let ((vendors (make-hash-table :test #'equal)))
     (loop :for product :in (remove-if-not #'(lambda (product)

@@ -12,50 +12,66 @@
     (unless (and (numberp page)
                  (plusp page))
       (setf page 1))
-    (loop :for elt :in sequence :do
-       (if (< i (* (- page 1) pagesize))
-           (progn
-             (setf head (cdr head))
-             (incf i))
-           (return)))
-    (setf i 0)
-    (loop :for elt :in head :do
-       (if (> pagesize i)
-           (progn
-             (push elt ret)
-             (incf i))
-           (return)))
-    (let* ((size (floor (length sequence) pagesize))
-           (show-pages
-            (sort
-             (remove-if #'(lambda (x)
-                            (or (not (plusp x))
-                                (< size  x)))
-                        (remove-duplicates
-                         (append '(1 2 3) (list (- page 1) page (+ page 1)) (list (- size 2) (- size 1) size))))
-             #'(lambda (a b)
-                 (< a b))))
-           (tmp 0)
-           (res))
-      (loop :for i :in show-pages :do
-         (let ((plist request-get-plist))
-           (when (not (equal tmp (- i 1)))
-             (push "<span>&hellip;</span>" res))
-           (setf tmp i)
-           (setf (getf plist :page) (format nil "~a" i))
-           (push (if (equal page i)
-                     (format nil "<a class=\"active\" href=\"?~a\">~a</a>"
-                             (make-get-str plist)
-                             i)
-                     ;; else
-                     (format nil "<a href=\"?~a\">~a</a>"
-                             (make-get-str plist)
-                             i))
-                 res)))
-      (values
-       (reverse ret)
-       (format nil "~{~a&nbsp;&nbsp;&nbsp;&nbsp;~}" (reverse res))
-       ))))
+    (let* ((result (let ((tmp (ignore-errors (subseq sequence (* pagesize (- page 1))))))
+                     (when (> (length tmp) pagesize)
+                       (setf tmp (subseq tmp 0 pagesize)))
+                     tmp))
+           (page-count (ceiling (length sequence) pagesize))
+
+           (page-line  (loop :for i from 1 :to page-count :collect
+                          (let ((plist request-get-plist))
+                            (setf (getf plist :page) (format nil "~a" i))
+                            (format nil "<a href=\"?~a\">~a</a>"
+                                    (make-get-str plist)
+                                    i)))))
+      (values result (format nil "~{~a&nbsp;&nbsp;&nbsp;&nbsp;~}"page-line))
+      )))
+
+
+    ;; (loop :for elt :in sequence :do
+    ;;    (if (< i (* (- page 1) pagesize))
+    ;;        (progn
+    ;;          (setf head (cdr head))
+    ;;          (incf i))
+    ;;        (return)))
+    ;; (setf i 0)
+    ;; (loop :for elt :in head :do
+    ;;    (if (> pagesize i)
+    ;;        (progn
+    ;;          (push elt ret)
+    ;;          (incf i))
+    ;;        (return)))
+    ;; (let* ((size (floor (length sequence) pagesize))
+    ;;        (show-pages
+    ;;         (sort
+    ;;          (remove-if #'(lambda (x)
+    ;;                         (or (not (plusp x))
+    ;;                             (< size  x)))
+    ;;                     (remove-duplicates
+    ;;                      (append '(1 2 3) (list (- page 1) page (+ page 1)) (list (- size 2) (- size 1) size))))
+    ;;          #'(lambda (a b)
+    ;;              (< a b))))
+    ;;        (tmp 0)
+    ;;        (res))
+    ;;   (loop :for i :in show-pages :do
+    ;;      (let ((plist request-get-plist))
+    ;;        (when (not (equal tmp (- i 1)))
+    ;;          (push "<span>&hellip;</span>" res))
+    ;;        (setf tmp i)
+    ;;        (setf (getf plist :page) (format nil "~a" i))
+    ;;        (push (if (equal page i)
+    ;;                  (format nil "<a class=\"active\" href=\"?~a\">~a</a>"
+    ;;                          (make-get-str plist)
+    ;;                          i)
+    ;;                  ;; else
+    ;;                  (format nil "<a href=\"?~a\">~a</a>"
+    ;;                          (make-get-str plist)
+    ;;                          i))
+    ;;              res)))
+    ;;   (values
+    ;;    (reverse ret)
+    ;;    (format nil "~{~a&nbsp;&nbsp;&nbsp;&nbsp;~}" (reverse res))
+    ;;    ))))
 
 
 (defun menu-sort (a b)
