@@ -252,7 +252,7 @@ function rCalc() {
 			if (cnt == 1) {
 				$(current).html('<i class="count"></i>&nbsp;товар на <big class="sum"></big> руб.');
 			}
-			else 
+			else
 				if (cnt > 4) {
 					$(current).html('<i class="count"></i>&nbsp;товаров на <big class="sum"></big> руб.');
 				}
@@ -260,10 +260,15 @@ function rCalc() {
 					$(current).html('<i class="count"></i>&nbsp;товара на <big class="sum"></big> руб.');
 				}
 			$(current).find('.sum').html(sum);
-            if(rUser) {
-			   if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
-				   $(this).find('.delivery-price big').text('200');
-			   }
+
+            // ->> жеский костыль для случая, когда rUser не определен в куках или определен странных образом
+            if(rUser){
+                if('delivery' in rUser){
+                    // ->>
+			        if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
+				        $(this).find('.delivery-price big').text('200');
+			        }
+                }
             }
 			$(current).find('.count').html(cnt);
 		} else {
@@ -398,7 +403,7 @@ function rCartReDraw2() {
 			if (cnt == 1) {
 				$(current).html('Всего '+cnt+' товар на сумму');
 			}
-			else 
+			else
 				if (cnt > 3) {
 					$(current).html('Всего '+cnt+' товаров на сумму');
 				}
@@ -461,7 +466,7 @@ function initRCartReDraw2 () {
 			$(this).parents('.item').find('.prices p.count span.count').text($(this).val());
 			rCartReDraw2();
 		}).change();
-		
+
 		$(tmp).find('.accs .acc input.checkbox').click(function(){
 			rCartReDraw2();
 		});
@@ -624,7 +629,7 @@ function checkoutThanks(current) {
 	if (rUser.auth.authtype == 'anonym') {
 		temp += '<div class="checkout-green"><p class="h2">Мы получили ваш заказ.</p><p>В течение часа с вами свяжется наш менеджер и уточнит детали заказа. На ваш адрес <b>'+rUser.auth.mail+'</b> отправлено письмо с информацией о заказе.</p></div>';
 	}
-	else 
+	else
 		if (rUser.auth.authtype == 'newbuyer') {
 			temp += '<div class="checkout-green"><p class="h2">' + rUser.auth.name + ' ' + rUser.auth.family + ', мы получили ваш заказ.</p><p>В течение часа с вами свяжется наш менеджер и уточнит детали заказа.</p></div>';
 		}
@@ -638,14 +643,14 @@ function checkoutThanks(current) {
 		} else {
 			where.append('<p class="h2">Бесплатная доставка курьером <strong class="gray">завтра в течение дня</strong></p>');
 		}
-		
+
 		temp += rUser.delivery.city + '<br/>';
 		temp += rUser.delivery.addr;
 		if (rUser.delivery.comment) {
 			temp += '<br/>' + rUser.delivery.comment;
 		}
 	}
-	else 
+	else
 		if (rUser.delivery.deliverytype == 'auto') {
 			where.append('<p class="h2">Забрать самостоятельно</p>');
 			temp += rUser.delivery.addr;
@@ -655,15 +660,15 @@ function checkoutThanks(current) {
 	if (rUser.pay.paytype == 'cash') {
 		where.append('<p class="h2">Оплата наличными</p><p>Курьеру при получении товара. Вы получите товарный чек</p>');
 	}
-	else 
+	else
 		if (rUser.pay.paytype == 'card') {
 			where.append('<p class="h2">Оплата кредитной картой</p>');
 		}
-		else 
+		else
 			if (rUser.pay.paytype == 'credit') {
 				where.append('<p class="h2">Покупка в кредит</p>');
 			}
-			else 
+			else
 				if (rUser.pay.paytype == 'bank') {
 					where.append('<p class="h2">Оплата по безналичному расчету</p>');
 					where.append('<p>Реквизиты:<br/>' + rUser.pay.bankaccount + '</p>');
@@ -846,13 +851,13 @@ $(document).ready(function() {
 			}
 		});
 	})
-	
+
 
 	/* Слайдер мелкие картинки в товаре */
 	$(".block-item-pics ul").jcarousel({
 		scroll: 1
 	});
-	
+
 	$('.rating a').hover(function(){
 		var attr = $(this).attr("href").replace(/^.*#(.*)/, "$1");
 		$(this).parents('.rating').addClass('h-rating'+attr);
@@ -873,7 +878,7 @@ $(document).ready(function() {
 		}
 		return false;
 	});
-	
+
 
 	initPriceAcc();
 	refreshPriceAcc();
@@ -892,7 +897,7 @@ $(document).ready(function() {
 		$(this).wrapInner('<div class="mid"></div>').prepend('<div class="top"></div>').append('<div class="bottom"></div>');
 		$(this).find(".top,.bottom").append(pre);
 	});
-	
+
 	/* === Клик по линке на попап === */
 	$("a[rel='popup']").unbind('click').click(function() {
 		var attr = $(this).attr("href").replace(/^.*#(.*)/, "$1");
@@ -907,7 +912,7 @@ $(document).ready(function() {
 		showTooltip($(this),attr);
 		return false;
 	});
-	
+
 	/* === Клик линке на закрыть === */
 	$("a[rel='popup-close']").unbind('click').click(function() {
 		hidePopup($(this).parents(".popup"));
@@ -939,7 +944,7 @@ $(document).ready(function() {
 	rCalc();
 	rCartReDraw();
 	initRCartReDraw2();
-	
+
 	/* Переключалка в корзине */
 	$(".more-link a[rel='switch'],.go-checkout a[rel='switch']").click(function(){
 		var where = $(this).attr("href").replace(/^.*#(.*)/, "$1");
@@ -957,8 +962,8 @@ $(document).ready(function() {
 		if (!$(this).parents('p').hasClass('questions')) {
 			return false;
 		}
-	});	
-	
+	});
+
 	/* Переключалка в скидках */
 	$(".discount-show").click(function(){
 		$('.discount-block').slideDown(300,function(){
@@ -968,7 +973,7 @@ $(document).ready(function() {
 			$(this).addClass('discount-show-hidden');
 		});
 		return false;
-	});	
+	});
 	$(".discount-hide").click(function(){
 		$('.discount-block').slideUp(300,function(){
 			$(this).addClass('discount-block-hidden');
@@ -978,7 +983,7 @@ $(document).ready(function() {
 		});
 		return false;
 	});
-	
+
 	/* купить в кредит */
 	$(".buy-credit label").unbind('change').change(function() {
 		if ($(this).find(':checked').length > 0) {
@@ -1050,7 +1055,7 @@ $(document).ready(function() {
 		checkoutProceed(this);
 		return false;
 	});
-	
+
 	$('.your-order').each(function(){
 		rCalc();
 		rCartReDraw3();
