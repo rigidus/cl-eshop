@@ -82,18 +82,6 @@ is replaced with replacement."
     result))
 
 
-(defun get-date-time ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-    (declare (ignore second))
-    (format nil
-            "~d-~2,'0d-~2,'0d ~2,'0d:~2,'0d"
-            year
-            month
-            date
-            hour
-            minute)))
-
-
 (defun numerizable (param)
   (coerce (loop for i across param when (parse-integer (string i) :junk-allowed t) collect i) 'string))
 

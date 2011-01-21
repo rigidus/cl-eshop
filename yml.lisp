@@ -1,16 +1,5 @@
 (in-package #:yml)
 
-(defun get-date-time ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-    (declare (ignore second))
-    (format nil
-            "~d-~2,'0d-~2,'0d ~2,'0d:~2,'0d"
-            year
-            month
-            date
-            hour
-            minute)))
-
 (funcall cl-user:*dispatcher*
          `((string= "/yml" (service:request-str))
            ,#'(lambda ()
