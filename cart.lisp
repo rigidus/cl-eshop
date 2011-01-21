@@ -32,9 +32,9 @@
                                                                  ))))))))
                       (service::default-page
                           (cart:content (list :accessories (product:accessories)
-                                              :products (mapcar #'(lambda (x)
+                                              :products (format nil "~{~a~}" (mapcar #'(lambda (x)
                                                                     (cart:product x))
-                                                                out))))
+                                                                out)))))
                       )))))
 
 
