@@ -212,7 +212,8 @@
   (:use #:cl
         #:cl-user
         #:cl-eshop
-        #:service)
+        #:service
+        #:arnesi)
   (:export :dispatcher
            :load-from-conf))
 
