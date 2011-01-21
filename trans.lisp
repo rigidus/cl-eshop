@@ -342,21 +342,38 @@
 ;;   (print (list new old (hash-table-count grp))))
 
 ;; [v.2]
-;; (let ((tmp (cl-store:restore "#h-product")))
-;;   (maphash #'(lambda (k v)
-;;                (let* ((articul (getf v :articul))
-;;                       (new-opt (trans-options (getf (gethash articul tmp) :result-options))))
-;;                  (if (and (equal 'optlist:optlist (type-of new-opt))
-;;                           (not (null (gethash articul trans:*product*))))
-;;                      (progn
-;;                        (setf (product:options (gethash articul trans:*product*))
-;;                              new-opt)
-;;                        (setf (product:descr (gethash articul trans:*product*))
-;;                              (getf v :descr))
-;;                        (setf (product:shortdescr (gethash articul trans:*product*))
-;;                              (getf v :shortdescr))
-;;                        (product:serialize (gethash articul trans:*product*))
-;;                      (print "err!"))
-;;                  articul))
-;;            tmp)
-;;   (sb-ext:gc :full t))
+(let ((tmp (cl-store:restore "#h-product")))
+  (maphash #'(lambda (k v)
+               (let* ((articul (getf v :articul))
+                      (new-opt (trans-options (getf v :result-options))))
+                 (when (equal articul 142715)
+                   (print "YES")
+                   (print (optlist:optlist new-opt))
+                   (print v)
+                   )
+                 ;; name
+                 (setf (product:name (gethash articul trans:*product*))
+                       (getf v :name))
+                 ;; realname
+                 (setf (product:realname (gethash articul trans:*product*))
+                       (getf v :realname))
+                 ;; descr
+                 (setf (product:descr (gethash articul trans:*product*))
+                       (getf v :descr))
+                 ;; shortdescr
+                 (setf (product:shortdescr (gethash articul trans:*product*))
+                       (getf v :shortdescr))
+                 ;; options
+                 (if (and (equal 'optlist:optlist (type-of new-opt))
+                          (not (null (gethash articul trans:*product*))))
+                     (progn
+                       (setf (product:options (gethash articul trans:*product*))
+                             new-opt))
+                     ;; else
+                     (print "err!"))
+                 ;; save
+                 (product:serialize (gethash articul trans:*product*))
+                 articul))
+           tmp)
+  (sb-ext:gc :full t)
+  'finish)
