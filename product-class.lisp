@@ -263,7 +263,7 @@
            (count-total (cdr (assoc :count-total raw)))
            (parent (gethash (nth 1 (reverse (split-sequence #\/ pathname))) trans:*group*))
            (name (cdr (assoc :name raw)))
-           (realname (cdr (assoc :realname2 raw)))
+           (realname (cdr (assoc :realname raw)))
            (new (make-instance 'product
                                :articul articul
                                :parent parent

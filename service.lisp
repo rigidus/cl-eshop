@@ -1,6 +1,18 @@
 (in-package #:service)
 
 
+(defun get-date-time ()
+  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+    (declare (ignore second))
+    (format nil
+            "~d-~2,'0d-~2,'0d ~2,'0d:~2,'0d"
+            year
+            month
+            date
+            hour
+            minute)))
+
+
 (defun paginator (request-get-plist sequence &optional (pagesize 15))
   (let ((page (getf request-get-plist :page))
         (head sequence)

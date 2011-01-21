@@ -158,6 +158,11 @@
 (restas:define-route main ("/:get" :requirement (lambda () t))
   (funcall *dispatcher* hunchentoot:*request*))
 
+(restas:define-route main/post ("/:get" :requirement (lambda () t)
+                                        :method :post)
+  (funcall *dispatcher* hunchentoot:*request*))
+
+
 (restas:start '#:cl-eshop :port 4242)
 (restas:debug-mode-on)
 

@@ -17,7 +17,6 @@
 		   :replace-all
 		   :merge-plists
            :reverse-plist
-           :get-date-time
            :numerizable
            :slice
            :cut))
@@ -28,7 +27,8 @@
         #:cl-user
         #:cl-eshop
         #:hunchentoot)
-  (:export :paginator
+  (:export :get-date-time
+           :paginator
            :menu
            :menu-sort
            :breadcrumbs
@@ -190,7 +190,8 @@
   (:use #:cl
 		#:cl-user
         #:cl-eshop
-        #:hunchentoot)
+        #:hunchentoot
+        #:service)
   (:export #:dispatcher))
 
 
@@ -210,7 +211,9 @@
 (defpackage #:gateway
   (:use #:cl
         #:cl-user
-        #:cl-eshop)
+        #:cl-eshop
+        #:service
+        #:arnesi)
   (:export :dispatcher
            :load-from-conf))
 
@@ -343,6 +346,7 @@
   (:use #:cl
         #:cl-user
         #:cl-eshop
+        #:service
 		#:my)
   (:export :dispatcher))
 
