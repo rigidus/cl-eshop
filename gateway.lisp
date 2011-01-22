@@ -1,6 +1,5 @@
 (in-package #:gateway)
 
-
 (funcall *dispatcher*
          `((string= "/gateway" (service:request-str))
            ,#'(lambda ()
@@ -64,7 +63,7 @@
           (product:price product)           price
           (product:siteprice product)       siteprice
           (product:ekkprice product)        ekkprice
-          (product:active product)          t ;;(if (= count-total 0 ) nil t)
+          (product:active product)          (if (= count-total 0 ) nil t)
           (product:newbie product)	        (if (string= "0" isnew) nil t)
           (product:sale product)            (if (string= "0" isspec) nil t)
           (product:count-total product)     count-total
@@ -73,4 +72,3 @@
     (if (= articul 147421)
         (product:plist-representation product :articul :name :realname :count-total :active)
         "")))
-
