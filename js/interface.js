@@ -265,9 +265,17 @@ function rCalc() {
             if(rUser){
                 if('delivery' in rUser){
                     // ->>
+	  //   	        if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
+	  //   		        $(this).find('.delivery-price big').text('Стоимость курьерской доставки —
+      // <big>200</big> руб. в пределах КАД, от 10 000 руб. доставляем бесплатно! <br> Самовывоз — бесплатно!');
+	  //   	        } else {
+      //                   $(this).find('.delivery-price big').text('Доставка — <big>бесплатно</big>');
+      //               }
 			        if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
-				        $(this).find('.delivery-price big').text('200');
-			        }
+				        $(this).find('.delivery-price').html('Стоимость курьерской доставки — <big>200</big> руб. в пределах КАД, от 10 000 руб. доставляем бесплатно! <br> Самовывоз — бесплатно!');
+			        } else {
+                        $(this).find('.delivery-price').html('Доставка — <big>бесплатно</big>');
+                    }
                 }
             }
 			$(current).find('.count').html(cnt);
@@ -569,11 +577,11 @@ function checkoutFinish(current) {
 	temp = '';
 	if (rUser.delivery.deliverytype == 'courier') {
 		if (sum < 10000) {
-			where.append('<p class="h2">Доставка курьером</p><p class="discount discount-shipping"><strong>200 руб.,</strong> завтра в течение дня</p>');
+			where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping">Стоимость <strong>200 руб.,</strong> завтра в течение дня</p>');
 		} else {
-			where.append('<p class="h2">Доставка курьером</p><p class="discount discount-shipping"><strong>бесплатно,</strong> завтра в течение дня</p>');
+			where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping"><strong>бесплатно,</strong> завтра в течение дня</p>');
 		}
-		temp += rUser.delivery.city + '<br/>';
+		// temp += rUser.delivery.city + '<br/>';
 		temp += rUser.delivery.addr;
 		if (rUser.delivery.comment) {
 			temp += '<br/>' + rUser.delivery.comment;
