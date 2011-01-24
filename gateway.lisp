@@ -4,10 +4,10 @@
 (defparameter *load-list* nil)
 (defparameter *order* nil)
 
-(length *history*)
+;; (length *history*)
 
-(length (json:decode-json-from-string
-         (sb-ext:octets-to-string (car *load-list*) :external-format :cp1251)))
+;; (length (json:decode-json-from-string
+;;          (sb-ext:octets-to-string (cadr *load-list*) :external-format :cp1251)))
 
 
 (funcall *dispatcher*
