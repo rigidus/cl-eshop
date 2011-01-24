@@ -281,6 +281,11 @@
              trans:*product*)
     cnt))
 
+(defun store-to-files ()
+  "Сериализуем все продукты"
+  (maphash #'(lambda (k v)
+               (product:serialize v))
+           trans:*product*))
 
 (defun restore-from-files ()
   (handler-bind ((PRODUCT::WRONG-PRODUCT-FILE

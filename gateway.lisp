@@ -47,13 +47,7 @@
            ;; Нам не нужны продукты с нулевой ценой (вероятно это группы продуктов)
            (when (equal 0 price)
              (return-from iteration))
-           (process-product articul price siteprice ekkprice isnew isspec name realname count-total count-transit))))
-
-    ;; Сериализуем все продукты - это надо делать здесь, так как
-    ;; возможно у продукта изменилось только active (стало nil)
-    (maphash #'(lambda (k v)
-                 (product:serialize v))
-             trans:*product*)))
+           (process-product articul price siteprice ekkprice isnew isspec name realname count-total count-transit))))))
 
 
 (defun process-product (articul price siteprice ekkprice isnew isspec name realname count-total count-transit)
