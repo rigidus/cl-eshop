@@ -51,6 +51,19 @@
 
 
 (defun process-product (articul price siteprice ekkprice isnew isspec name realname count-total count-transit)
+  (if (equal articul 147421)
+      (setf *tmp* (list
+                   :articul articul
+                   :price price
+                   :siteprice siteprice
+                   :ekkprice ekkprice
+                   :isnew isnew
+                   :isspec isspec
+                   :name name
+                   :realname realname
+                   :count-total count-total
+                   :count-transit count-transit
+                   )))
   (let ((product (aif (gethash articul trans:*product*)
                       it
                       (make-instance 'product:product :articul articul))))
@@ -63,7 +76,7 @@
           (product:price product)           price
           (product:siteprice product)       siteprice
           (product:ekkprice product)        ekkprice
-          (product:active product)          (if (= count-total 0 ) nil t)
+          (product:active product)          (if (= count-total 0) nil t)
           (product:newbie product)	        (if (string= "0" isnew) nil t)
           (product:sale product)            (if (string= "0" isspec) nil t)
           (product:count-total product)     count-total
