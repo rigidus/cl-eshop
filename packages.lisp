@@ -181,6 +181,7 @@
   (:export #:*product*
            #:*group*
            #:*filter*
+           #:store-to-files
            #:restore-from-files
            #:store-unlinked-products
            ))

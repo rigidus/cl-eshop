@@ -197,7 +197,6 @@
 
 
 ;; Создаем WRITER-ы для числовых полей
-(make-integer-writer articul)
 (make-integer-writer count-transit)
 (make-integer-writer count-total)
 
@@ -206,23 +205,25 @@
 (defmacro make-boolean-writer (field)
   `(defmethod (setf ,field) (value (item product))
      (with-slots (,field) item
-       (unless (or (equal ,field nil)
-                   (equal ,field t))
-         (restart-case
-             (error 'wrong-product-slot-value
-                    :text (symbol-name ',field)
-                    :value value
-                    :product item)
-           (set-null ()
-             :report "Set value as NIL"
-             (setf (slot-value item ',field) nil))
-           (set-t ()
-             :report "Set value as T"
-             (setf (slot-value item ',field) nil))
-           (ignore ()
-             :report "Ignore error, save current value"
-             (setf (slot-value item ',field) value))
-           )))))
+       (handler-case
+           (cond ((typep value 'boolean) (setf (slot-value item ',field) value))
+                 (t (error 'WRONG-TYPE-OF-SLOT )))
+         (WRONG-TYPE-OF-SLOT ()
+           (restart-case
+               (error 'wrong-product-slot-value
+                      :text (symbol-name ',field)
+                      :value value
+                      :product item)
+             (ignore ()
+               :report "Ignore error, save current value"
+               (setf (slot-value item ',field) value))
+             (set-null ()
+               :report "Set value as NIL"
+               (setf (slot-value item ',field) nil))
+             (set-t ()
+               :report "Set value as T"
+               (setf (slot-value item ',field) t))
+             ))))))
 
 
 ;; Создаем WRITER-ы для логических полей
@@ -235,7 +236,6 @@
 ;; Проверка корректности полей после инициализации instance
 (defmethod initialize-instance :after ((item product) &key)
   (with-slots ((articul articul)
-               (group group)
                (count-transit count-transit)
                (count-total count-total))
       item

@@ -1,22 +1,60 @@
 (in-package #:gateway)
 
+(defparameter *history* nil)
+(defparameter *load-list* nil)
+(defparameter *order* nil)
+
+;; (length *history*)
+
+;; (length (json:decode-json-from-string
+;;          (sb-ext:octets-to-string (cadr *load-list*) :external-format :cp1251)))
+
+
 (funcall *dispatcher*
-         `((string= "/gateway" (service:request-str))
+         `((string= "gateway" (cadr (service:request-list)))
            ,#'(lambda ()
                 (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
                 (let ((raw (hunchentoot:raw-post-data)))
                   (if (null raw)
                       "NIL"
                       (progn
-                        ;; Сохраняем в файле
-                        (with-open-file (file (format nil "~a/~a" *path-to-conf* "last-gateway-string")
-                                              :direction :output
-                                              :if-exists :supersede
-                                              :external-format :utf-8)
-                          (format file "~a" raw))
-                        ;; Обработка
-                        (format nil "~a" (process raw))
-                        ))))))
+                        (cond ((string= "0" (hunchentoot:get-parameter "num"))
+
+                               ;; Обработка последнего пакета
+                               (progn
+                                 ;; Делаем все продукты неактивными
+                                 (maphash #'(lambda (k v)
+                                              (setf (product:active v ) nil))
+                                          trans:*product*)
+                                 ;; Засылаем последний пакет в *load-list* и *order*
+                                 (push raw *load-list*)
+                                 (push (hunchentoot:get-parameter "num") *order*)
+                                 ;; Обрабатываем все сохраненные пакеты
+                                 (loop :for packet :in (reverse *load-list*) :do
+                                    (process packet))
+                                 ;; Сохраняем *load-list* и *order* для истории
+                                 (push (list (get-date-time) *order* *load-list*) *history*)
+                                 "last"))
+
+                              ((string= "1" (hunchentoot:get-parameter "num"))
+                               ;; Обработка первого пакета
+                               (progn
+                                 ;; Обнуляем *load-list* и *order*
+                                 (setf *load-list* nil)
+                                 (setf *order* nil)
+                                 ;; Засылаем первый пакет в *load-list*
+                                 (push raw *load-list*)
+                                 (push (hunchentoot:get-parameter "num") *order*)
+                                 "first"))
+
+                              (t
+                               ;; Обработка промежуточных пакетов
+                               (progn
+                                   ;; Засылаем первый пакет в *load-list*
+                                   (push raw *load-list*)
+                                   (push (hunchentoot:get-parameter "num") *order*)
+                                   "ordinal"))
+                              )))))))
 
 
 (defun process (raw)
@@ -25,11 +63,6 @@
                (sb-ext:octets-to-string raw :external-format :cp1251))))
     ;; dbg
     ;; (format nil "~a" data)
-
-    ;; Делаем все продукты неактивными
-    (maphash #'(lambda (k v)
-                 (setf (product:active v ) nil))
-             trans:*product*)
 
     ;; Перебираем продукты
     (loop :for elt  :in data :collect
@@ -57,18 +90,16 @@
     (setf (product:articul product)         articul
           (product:name product)            name
           (product:realname product)        (if (or (null realname)
+                                                    (null (product:realname product))
                                                     (string= "" realname))
                                                 name
                                                 realname)
           (product:price product)           price
           (product:siteprice product)       siteprice
           (product:ekkprice product)        ekkprice
-          (product:active product)          (if (= count-total 0 ) nil t)
+          (product:active product)          (if (= count-total 0) nil t)
           (product:newbie product)	        (if (string= "0" isnew) nil t)
           (product:sale product)            (if (string= "0" isspec) nil t)
           (product:count-total product)     count-total
           (product:count-transit  product)  count-transit)
-    (setf (gethash articul trans:*product*) product)
-    (if (= articul 147421)
-        (product:plist-representation product :articul :name :realname :count-total :active)
-        "")))
+    (setf (gethash articul trans:*product*) product)))
