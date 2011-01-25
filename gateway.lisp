@@ -64,7 +64,6 @@
     ;; dbg
     ;; (format nil "~a" data)
 
-
     ;; Перебираем продукты
     (loop :for elt  :in data :collect
        (block iteration
@@ -85,25 +84,13 @@
 
 
 (defun process-product (articul price siteprice ekkprice isnew isspec name realname count-total count-transit)
-  (if (equal articul 147421)
-      (setf *tmp* (list
-                   :articul articul
-                   :price price
-                   :siteprice siteprice
-                   :ekkprice ekkprice
-                   :isnew isnew
-                   :isspec isspec
-                   :name name
-                   :realname realname
-                   :count-total count-total
-                   :count-transit count-transit
-                   )))
   (let ((product (aif (gethash articul trans:*product*)
                       it
                       (make-instance 'product:product :articul articul))))
     (setf (product:articul product)         articul
           (product:name product)            name
           (product:realname product)        (if (or (null realname)
+                                                    (null (product:realname product))
                                                     (string= "" realname))
                                                 name
                                                 realname)
@@ -115,7 +102,4 @@
           (product:sale product)            (if (string= "0" isspec) nil t)
           (product:count-total product)     count-total
           (product:count-transit  product)  count-transit)
-    (setf (gethash articul trans:*product*) product)
-    (if (= articul 147421)
-        (product:plist-representation product :articul :name :realname :count-total :active)
-        "")))
+    (setf (gethash articul trans:*product*) product)))
