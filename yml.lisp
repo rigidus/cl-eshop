@@ -4,13 +4,17 @@
 ;; группы маркированные для выгрузки но и их родители
 ;; На самом деле нам нужно минимальные оставные деревья,
 ;; но будем выгружать полные деревья исключая только листья, если это нужно
+(defparameter *yml-group-ids* (make-hash-table))
+
 (defun yml-groups ()
-(let ((groups))
-  (maphash #'(lambda(k g) (if (or
+ (let ((current-id 1))
+  (clrhash *yml-group-ids*)
+  (maphash #'(lambda(k g) (when (or
                                (not (null (group:childs g)))
                                (group:ymlshow g))
-                            (setf groups (cons g groups)))) trans:*group*)
-  groups))
+                            (setf (gethash current *yml-group-ids*) current-id )
+                            (incf current-id))) trans:*group*)
+  *yml-group-ids*))
 
 
 (funcall cl-eshop:*dispatcher*
@@ -23,15 +27,18 @@
                                :marketurl "http://www.320-8080.ru/"
                                :categoryes
                                (loop
-                                  :for g
+                                  :for key
+                                  :being :the hash-key
+                                  :using (hash-value id)
                                   :in (yml-groups)
-                                  :collect (list :id (group:id g)
-                                                 :name (group:name g)
-                                                 :parent (if (null (group:parent g))
-                                                             -1 ;; если это вершина дерева
-                                                             (group:id (group:parent g)))))
-
-
+                                  :collect (list :id id
+                                                 :name (group:name (gethash key trans:*group*))
+                                                 :parent (if (null (group:parent (gethash key trans:*group*)))
+                                                             0 ;; если это вершина дерева
+                                                             (gethash
+                                                              (group:key
+                                                               (group:parent (gethash key trans:*group*)))
+                                                              *yml-group-ids*))))
                                :offers (format nil "~{~a~}"
                                (loop
                                   :for product
@@ -46,7 +53,9 @@
                                              (> (product:price product) 0))
                                   :collect (yml:offer (list :articul (product:articul product)
                                                             :price (product:price product)
-                                                            :category (group:id (product:parent product))
+                                                            :category (gethash
+                                                                       (group:key (product:parent product))
+                                                                       *yml-group-ids*)
                                                             :picture  (let ((pics (product:get-pics product)))
                                                                         (if (null pics) nil (car pics)))
                                                             :name (product:name product)

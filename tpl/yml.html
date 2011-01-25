@@ -27,7 +27,7 @@
 {/template}
 
 {template category}
-<category id="{$id}"{if $parent != -1} parentId="{$parent}"{/if}>{$name |noAutoescape}</category>{\n}
+<category id="{$id}"{if $parent != 0} parentId="{$parent}"{/if}>{$name |noAutoescape}</category>{\n}
 {/template}
 
 {template offer}
