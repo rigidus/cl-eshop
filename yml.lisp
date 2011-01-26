@@ -12,7 +12,7 @@
   (maphash #'(lambda(k g) (when (or
                                (not (null (group:childs g)))
                                (group:ymlshow g))
-                            (setf (gethash current *yml-group-ids*) current-id )
+                            (setf (gethash current-id *yml-group-ids*) current-id )
                             (incf current-id))) trans:*group*)
   *yml-group-ids*))
 
@@ -61,3 +61,4 @@
                                                             :name (product:name product)
                                                             :description (product:descr product)
                                                             )))))))))
+
