@@ -24,7 +24,7 @@
                                (progn
                                  ;; Делаем все продукты неактивными
                                  (maphash #'(lambda (k v)
-                                              (setf (product:active v ) nil))
+                                              (setf (product:active v) nil))
                                           trans:*product*)
                                  ;; Засылаем последний пакет в *load-list* и *order*
                                  (push raw *load-list*)
@@ -103,3 +103,11 @@
           (product:count-total product)     count-total
           (product:count-transit  product)  count-transit)
     (setf (gethash articul trans:*product*) product)))
+
+
+;; (let ((a 0))
+;;   (maphash #'(lambda (k v)
+;;                (when (product:active v)
+;;                  (incf a)))
+;;            trans:*product*)
+;;   a)

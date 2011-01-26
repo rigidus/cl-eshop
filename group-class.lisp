@@ -155,7 +155,8 @@
                              :pic (cdr (assoc :pic raw))
                              :ymlshow (cdr (assoc :ymlshow raw)))))
     (when (equal 'group:group (type-of parent))
-        (push new (group:childs parent)))
+        (push new (group:childs parent))
+        (setf (group:childs parent) (remove-duplicates (group:childs parent))))
     (setf (gethash key trans:*group*) new)
     key))
 
@@ -178,8 +179,7 @@
                  (:fullfilter . nil)
                  (:order . 1)
                  (:ymlshow . 1)
-                 (:pic . "")))
-         (json-string))
+                 (:pic . ""))))
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)
     ;; Подтягиваем данные из файла, если он есть
@@ -203,47 +203,47 @@
                                                     (getf item :optname))))))
                 (format nil "[~a]" (subseq  json-string 0 (- (length json-string) 2))))))
     ;; assembly json-string
-    (setf json-string
-          (format nil "~{~a~}"
-                  (remove-if #'null
-                             (loop :for item :in dumb :collect
-                                (let ((field (string-downcase (format nil "~a" (car item))))
-                                      (value (cdr item)))
-                                  (cond ((equal t   value) (format nil "\"~a\":true,~%" field))
-                                        ((equal nil value) (format nil "\"~a\":null,~%" field))
-                                        ((or (subtypep (type-of value) 'number)
-                                             (equal 'null (type-of value)))
-                                         (format nil "\"~a\":~a,~%" field value))
-                                        ((string= "keyoptions" field)
-                                         (format nil "\"~a\":~a,~%" field value))
-                                        ((subtypep (type-of value) 'string)
-                                         (format nil "\"~a\":\"~a\",~%"
-                                                 field
-                                                 (my:replace-all value "\"" "\\\"")))
-                                        ;; for debug
-                                        ;; (t (format nil "\"~a\":[~a][~a],~%"
-                                        ;;            field
-                                        ;;            (type-of value)
-                                        ;;            value))
-                                        ))))))
-    ;; correction
-    (setf json-string (subseq  json-string 0 (- (length json-string) 2)))
-    (setf json-string (format nil "{~%~a~%}~%" json-string))
-    ;; for debug
-    ;; (format t "~a" json-string)
-    ;; save file
-    (with-open-file (file pathname
-                          :direction :output
-                          :if-exists :supersede
-                          :external-format :utf-8)
-      (format file json-string))
-    ;; return pathname
-    pathname))
-
+    (let ((json-string
+           (format nil "~{~a~}"
+                   (remove-if #'null
+                              (loop :for item :in dumb :collect
+                                 (let ((field (string-downcase (format nil "~a" (car item))))
+                                       (value (cdr item)))
+                                   (cond ((equal t   value) (format nil "\"~a\":true,~%" field))
+                                         ((equal nil value) (format nil "\"~a\":null,~%" field))
+                                         ((or (subtypep (type-of value) 'number)
+                                              (equal 'null (type-of value)))
+                                          (format nil "\"~a\":~a,~%" field value))
+                                         ((string= "keyoptions" field)
+                                          (format nil "\"~a\":~a,~%" field value))
+                                         ((subtypep (type-of value) 'string)
+                                          (format nil "\"~a\":\"~a\",~%"
+                                                  field
+                                                  (my:replace-all value "\"" "\\\"")))
+                                         ;; ;; for debug
+                                         ;; (t (format nil "\"~a\":[~a][~a],~%"
+                                         ;;            field
+                                         ;;            (type-of value)
+                                         ;;            value))
+                                         )))))))
+      ;; correction
+      (setf json-string (subseq  json-string 0 (- (length json-string) 2)))
+      (setf json-string (format nil "{~%~a~%}~%" json-string))
+      ;; ;; dbg
+      ;; (format t "~a---" json-string)
+      ;; save file
+      (with-open-file (file pathname
+                            :direction :output
+                            :if-exists :supersede
+                            :external-format :utf-8)
+        (format file json-string))
+      ;; return pathname
+      pathname)))
 
 ;; test for serialize
-;; (serialize (gethash "netbuki" trans:*group*))
-;; (unserialize "/home/webadmin/Dropbox/htbkps/noutbuki-i-netbuki/netbuki/netbuki")
+;; (keyoptions (gethash "netbuki" trans:*group*))
+;; (print (serialize (gethash "netbuki" trans:*group*)))
+;; (print (unserialize "/home/webadmin/Dropbox/htbkps/noutbuki-i-netbuki/netbuki/netbuki-test"))
 ;; (print (keyoptions (gethash "netbuki" trans:*group*)))
 
 
