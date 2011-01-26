@@ -4,17 +4,23 @@
 ;; группы маркированные для выгрузки но и их родители
 ;; На самом деле нам нужно минимальные оставные деревья,
 ;; но будем выгружать полные деревья исключая только листья, если это нужно
+
+
 (defparameter *yml-group-ids* (make-hash-table))
 
 (defun yml-groups ()
- (let ((current-id 1))
-  (clrhash *yml-group-ids*)
-  (maphash #'(lambda(k g) (when (or
-                               (not (null (group:childs g)))
-                               (group:ymlshow g))
-                            (setf (gethash current *yml-group-ids*) current-id )
-                            (incf current-id))) trans:*group*)
-  *yml-group-ids*))
+  "Строим *yml-group-ids*"
+  (let ((current-id 1))
+    (clrhash *yml-group-ids*)
+    (maphash #'(lambda(k g)
+                 ;; Если группа имеет дочерние группы ИЛИ yml-show == true
+                 (when (or (not (null (group:childs g)))
+                           (group:ymlshow g))
+                   ;; Кладем ее в *yml-group-ids* и увеличиваем current-id
+                   (setf (gethash current *yml-group-ids*) current-id)
+                   (incf current-id)))
+             trans:*group*)
+    *yml-group-ids*))
 
 
 (funcall cl-eshop:*dispatcher*
