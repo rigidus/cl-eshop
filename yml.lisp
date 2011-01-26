@@ -14,10 +14,11 @@
     (clrhash *yml-group-ids*)
     (maphash #'(lambda(k g)
                  ;; Если группа имеет дочерние группы ИЛИ yml-show == true
-                 (when (or (not (null (group:childs g)))
-                           (group:ymlshow g))
+                 (when (or
+                        (not (null (group:childs g)))
+                        (group:ymlshow g))
                    ;; Кладем ее в *yml-group-ids* и увеличиваем current-id
-                   (setf (gethash current *yml-group-ids*) current-id)
+                   (setf (gethash current-id *yml-group-ids*) current-id )
                    (incf current-id)))
              trans:*group*)
     *yml-group-ids*))
@@ -67,3 +68,4 @@
                                                             :name (product:name product)
                                                             :description (product:descr product)
                                                             )))))))))
+

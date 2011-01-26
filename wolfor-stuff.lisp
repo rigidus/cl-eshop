@@ -116,3 +116,33 @@
   (format t "~&Количество активных товаров с нулевой ценой: ~a" (num-active-product-with-bad-price))
   (format t "~&~a" "")
   )
+
+
+(let ((num 0)) (maphash #'(lambda (k product) (if (and (not (null (product:parent product)))
+                                              (group:ymlshow (product:parent product))
+                                              (product:active product)
+                                              (not (null (product:price product)))
+                                              (> (product:price product) 0)) (incf num))) trans:*product*) num)
+
+
+(defun num-products-in-group (g)
+  (let ((cnt 0))
+    (maphash #'(lambda (k v)
+                 (if (equal g (product:parent v))
+                     (incf cnt)))
+             trans:*product*)
+    cnt))
+
+(maphash #'(lambda (k v)
+             (if (not (= (num-products-in-group v)
+                         (length (group:products v))))
+                 (format t "~&~a  ~a:~a"
+                         (group:key v)
+                         (num-products-in-group v)
+                         (length (group:products v)))))
+         trans:*group*)
+
+(length
+ (mapcar #'(lambda (v)
+             (format nil "> ~a" (product:parent v)))
+         (group:products (gethash "pamyat-dlya-noutbukov" trans:*group*))))
