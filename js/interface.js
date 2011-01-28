@@ -1074,4 +1074,17 @@ $(document).ready(function() {
 	$('.checkout-thanks').each(function(){
 		checkoutThanks(this);
 	});
+    $(".block-item-pics ul li a,.item-info-left .pic a").fancybox({
+		'transitionIn'	:	'fade',
+		'transitionOut'	:	'fade',
+		'speedIn'		:	300,
+		'speedOut'		:	200,
+		'overlayShow'	:	true,
+		'hideOnOverlayClick':	true,
+		'showNavArrows'	:	true,
+		'overlayOpacity':	0.4,
+		'overlayColor'	:	'#000',
+		'titleShow'		: true,
+		'titlePosition'	: 'over'
+	});
 });
