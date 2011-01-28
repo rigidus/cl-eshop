@@ -12,31 +12,55 @@
             hour
             minute)))
 
+(defun paginator-page-line (request-get-plist start stop current)
+  (loop :for i from start :to stop :collect
+     (let ((plist request-get-plist)
+           (is-current-page nil))
+       (setf (getf plist :page) (format nil "~a" i))
+       (setf is-current-page (= current i))
+       (format nil "<a href=\"?~a\">~:[~;<big><b>~]~a~:[~;</b></big>~]</a>"
+               (make-get-str plist)
+               is-current-page
+               i
+               is-current-page))))
 
 (defun paginator (request-get-plist sequence &optional (pagesize 15))
   (let ((page (getf request-get-plist :page))
-        (head sequence)
-        (ret)
-        (i 1))
+        (page-count (ceiling (length sequence) pagesize)))
     (when (null page)
       (setf page "1"))
     (setf page (parse-integer page :junk-allowed t))
     (unless (and (numberp page)
                  (plusp page))
       (setf page 1))
+    (if (> page page-count)
+        (setf page page-count))
     (let* ((result (let ((tmp (ignore-errors (subseq sequence (* pagesize (- page 1))))))
                      (when (> (length tmp) pagesize)
                        (setf tmp (subseq tmp 0 pagesize)))
                      tmp))
-           (page-count (ceiling (length sequence) pagesize))
-
-           (page-line  (loop :for i from 1 :to page-count :collect
-                          (let ((plist request-get-plist))
-                            (setf (getf plist :page) (format nil "~a" i))
-                            (format nil "<a href=\"?~a\">~a</a>"
-                                    (make-get-str plist)
-                                    i)))))
-      (values result (format nil "~{~a&nbsp;&nbsp;&nbsp;&nbsp;~}"page-line))
+           (start-page-line nil)
+           (cur-page-line nil)
+           (stop-page-line nil)
+           (start-number 1)
+           (stop-number page-count)
+           (page-line-string ""))
+      (if (> page 5)
+          (progn
+            (setf start-number (- page 2))
+            (setf start-page-line (paginator-page-line request-get-plist 1 2 0))))
+      (if (> (- page-count page) 5)
+          (progn
+            (setf stop-number (+ page 2))
+            (setf stop-page-line (paginator-page-line request-get-plist (- page-count 1) page-count 0))))
+      (setf cur-page-line (paginator-page-line request-get-plist start-number stop-number page))
+      (if (> page-count 1)
+          (setf page-line-string
+                (format nil "~@[~{~a~}...~] ~{~a ~} ~@[...~{~a~}~]"
+                        start-page-line
+                        cur-page-line
+                        stop-page-line)))
+      (values result page-line-string)
       )))
 
 
