@@ -34,7 +34,7 @@
                                     (process packet))
                                  ;; Сохраняем *load-list* и *order* для истории
                                  (push (list (get-date-time) *order* *load-list*) *history*)
-                                 ;; Обнуляем *load-list* и *order*
+                                 ;; Обнуляем *load-list* и *order* (если приходит 1 пакет, то он num=0)
                                  (setf *load-list* nil)
                                  (setf *order* nil)
                                  "last"))

@@ -99,7 +99,7 @@
 <!--		  <p class="badge"><img src="/img/bestprice.png" alt="Лучшая цена"/></p>-->
 
 		  <div class="pic">
-		    <a href="#bigImage0" rel="popup">
+		    <a title="{$name}" href="/pic/big/{$articul}/{$firstpic}">
 			  <img src="/pic/goods/{$articul}/{$firstpic}" width="225" alt="Фото"/>
 			  <var class="zoom"></var>
 		    </a>
@@ -109,7 +109,7 @@
 		    <ul>
 		      {foreach $pic in $pics}
               <li>{\n}
-                <a href="#bigImage{index($pic)}" rel="popup">{\n}
+                <a title="{$name}" href="/pic/big/{$articul}/{$pic}">{\n}
                   <img src="/pic/minigoods/{$articul}/{$pic}" alt=""/>{\n}
                 </a>{\n}
               </li>{\n}

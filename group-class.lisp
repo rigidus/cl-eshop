@@ -2,9 +2,7 @@
 
 
 (defclass group ()
-  ((id                :initarg :id             :initform nil       :reader   id)
-   (key               :initarg :key            :initform nil       :accessor key)
-   (parent-id         :initarg :parent-id      :initform nil       :accessor parent-id)
+  ((key               :initarg :key            :initform nil       :accessor key)
    (parent            :initarg :parent         :initform nil       :accessor parent)
    (name              :initarg :name           :initform nil       :accessor name)
    (active            :initarg :active         :initform nil       :accessor active)
@@ -80,7 +78,6 @@
                                    (loop :for child :in (sort (copy-list (childs object)) #'service:menu-sort) :collect
                                       (list :name (name child)
                                             :key (key child)
-                                            :group_id (group:id child)
                                             :cnt (let ((products (group:products child)))
                                                    (if (null products)
                                                        "-"
@@ -140,7 +137,6 @@
                              (cdr (assoc :keyoptions raw))))
          (parent (gethash (nth 2 (reverse (split-sequence #\/ pathname))) trans:*group*))
          (new (make-instance 'group
-                             :id (cdr (assoc :id raw))
                              :key key
                              :parent parent
                              :name (cdr (assoc :name raw))
@@ -170,8 +166,7 @@
                               (format nil "~{/~a~}" path-list)
                               (key object)))
          (pathname (format nil "~a~a" current-dir (key object)))
-         (dumb '((:id . 0)
-                 (:key . "-")
+         (dumb '((:key . "-")
                  (:name . "-")
                  (:active . nil)
                  (:empty . nil)
@@ -186,7 +181,6 @@
     (when (probe-file pathname)
       (setf dumb (union dumb (decode-json-from-string (alexandria:read-file-into-string pathname)) :key #'car)))
     ;; Сохраняем только те поля, которые нам известны, неизвестные сохраняем без изменений
-    (setf (cdr (assoc :id dumb)) (id object))
     (setf (cdr (assoc :key dumb)) (key object))
     (setf (cdr (assoc :name dumb)) (name object))
     (setf (cdr (assoc :active dumb)) (active object))
