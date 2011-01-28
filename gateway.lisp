@@ -34,6 +34,9 @@
                                     (process packet))
                                  ;; Сохраняем *load-list* и *order* для истории
                                  (push (list (get-date-time) *order* *load-list*) *history*)
+                                 ;; Обнуляем *load-list* и *order*
+                                 (setf *load-list* nil)
+                                 (setf *order* nil)
                                  "last"))
 
                               ((string= "1" (hunchentoot:get-parameter "num"))
@@ -64,7 +67,7 @@
     ;; dbg
     ;; (format nil "~a" data)
 
-    ;; Перебираем продукты
+     ;; Перебираем продукты
     (loop :for elt  :in data :collect
        (block iteration
          (let ((articul   (ceiling (parse-float (cdr (assoc :id elt)))))
