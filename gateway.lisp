@@ -81,7 +81,6 @@
                (count-total    (ceiling (parse-float (cdr (assoc :count--total elt)))))
                (count-transit  (ceiling (parse-float (cdr (assoc :count--transit elt))))))
            ;; Нам не нужны продукты с нулевой ценой (вероятно это группы продуктов)
-           (if (and (> price 0) (> count-total 0)) (incf cnt)) ;;dbg
            (when (equal 0 price)
              (return-from iteration))
            (process-product articul price siteprice ekkprice isnew isspec name realname count-total count-transit))))))
