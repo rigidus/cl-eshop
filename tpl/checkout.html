@@ -378,6 +378,8 @@
 	<div class="left2">
 	  <div class="checkout-thanks">
 		<div class="temparea">
+          <p class="h2">Номер заказа — №{$orderid}</p>
+	      <p>Этот номер вам пригодится, если вы захотите сами позвонить в службу доставки. Вы сможете сделать это по телефону <big>(812) 320-80-80</big></p>
 		</div>
       <p>Если вы хотите забрать товар самостоятельно, то сделать это вы можете в нашем центральном
       магазине на Левашовском пр, 12</p>
@@ -423,6 +425,24 @@
 	</div>
 
 	{$order |noAutoescape}
+
+  </div>
+</div>
+{/template}
+
+{template thankserror}
+<div class="content">
+  <div class="full">
+	<div class="full2">
+	  <p class="h1">Для совершения покупки положите товары в корзину.</p>
+    </div>
+
+	<div class="left2">
+	  <div class="checkout-thanks">
+		<hr/>
+		<p><a href="catalog">&larr; Вернуться к каталогу</a></p>
+	  </div>
+	</div>
 
   </div>
 </div>

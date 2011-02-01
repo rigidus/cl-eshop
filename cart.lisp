@@ -1,5 +1,32 @@
 (in-package #:cart)
 
+(defvar *order-id* nil)
+
+;;генерирует псевдоуникальный номер заказа
+(defun get-order-id ()
+  (let ((current-order-id *order-id*)
+        (order-id-pathname (format nil "~a/~a" *path-to-conf* "order-id.txt")))
+    (if (not (null *order-id*))
+        (progn
+          (incf *order-id*)
+          (with-open-file (file order-id-pathname
+                                :direction :output
+                                :if-exists :supersede
+                                :external-format :utf-8)
+            (format file "~a" *order-id*))
+           current-order-id)
+         (progn
+           ;;если в файле шлак, то сбрасываем счетчик заказов до 1
+           (setf *order-id*
+                 (handler-case
+                     (parse-integer
+                      (alexandria:read-file-into-string
+                       order-id-pathname))
+                   (SB-INT:SIMPLE-PARSE-ERROR () 1)
+                   (SB-INT:SIMPLE-FILE-ERROR () 1)))
+           (get-order-id)))))
+
+
 (funcall *dispatcher*
          `((string= "/cart" (service:request-str))
            ,#'(lambda ()
@@ -73,13 +100,17 @@
                   (service:checkout-page (checkout:content3 (list :accessories (product:accessories)
                                                                   :order (checkout:order)
                                                                   )))))))
+;;проверка заказа на валидность
+;;TODO сделать полную проверку
+(defun if-order-valid(products)
+  (not (null products)))
 
 (funcall *dispatcher*
          `((string= "/thanks" (service:request-str))
            ,#'(lambda ()
                 (let ((cart) (user) (products) (auth) (delivery) (pay) (client-mail) (mail-file)
                       (itogo 0)
-                      (order-id 311337))
+                      (order-id))
                   (mapcar #'(lambda (cookie)
                               (cond ((string= (car cookie) "cart") (setf cart (json:decode-json-from-string (cdr cookie))))
                                     ((string= (car cookie) "user") (setf user (json:decode-json-from-string (cdr cookie))))
@@ -101,57 +132,67 @@
                   (setf auth     (cdr (assoc :auth user)))
                   (setf delivery (cdr (assoc :delivery user)))
                   (setf pay      (cdr (assoc :pay user)))
-                  (setf client-mail
-                        (sendmail:clientmail
-                         (list :datetime (get-date-time)
-                               :order_id order-id
-                               :name (cdr (assoc :name auth))
-                               :family (cdr (assoc :family auth))
-                               :paytype (let ((tmp (cdr (assoc :paytype pay))))
-                                          (cond ((string= tmp "cash") "Наличными")
-                                                ((string= tmp "card") "Кредитной картой")
-                                                ((string= tmp "credit") "Безналичный расчет")
-                                                ((string= tmp "bank") "банковским переводом")
-                                                (t tmp)))
-                               :deliverytype (let ((tmp (cdr (assoc :deliverytype delivery))))
-                                               (cond ((string= tmp "auto") "Самовывоз")
-                                                     ((string= tmp "courier") "Курьер")
-                                                     (t tmp)))
-                                                   :addr (cdr (assoc :addr delivery))
-                                                   :bankaccount (let ((bankaccount (cdr (assoc :bankaccount pay))))
-                                                                  (if (null bankaccount)
-                                                                      ""
-                                                                      bankaccount))
-                                                   :phone (cdr (assoc :phone auth))
-                                                   :email (cdr (assoc :email auth))
-                                                   :comment (cdr (assoc :comment delivery))
-                                                   :products products
-                                                   :itogo itogo
-                                                   )))
-                  (setf mail-file (list :order_id order-id
-                                        :ekk ""
-                                        :name (cdr (assoc :name auth))
-                                        :family (cdr (assoc :family auth))
-                                        :addr (cdr (assoc :addr delivery))
-                                        :phone (cdr (assoc :phone auth))
-                                        :email (cdr (assoc :email auth))
-                                        :date (get-date-time)
-                                        :products products))
-                  (setf filename (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-                                   (declare (ignore second))
-                                   (format nil
-                                           "~d~2,'0d~2,'0d_~a.txt"
-                                           year
-                                           month
-                                           date
-                                           order-id
-                                           )))
-                  (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-                  (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
-                  (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-                  (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-                  (send-client-mail (list (cdr (assoc :email auth))) client-mail order-id)
-                  (service:checkout-page (checkout:thanks (list :order (checkout:order))))))))
+                  (if (if-order-valid products)
+                      (progn
+                        (setf order-id (get-order-id)) ;;генерация идентификатора заказа происходит только если заказ валиден
+                        (setf client-mail
+                              (sendmail:clientmail
+                               (list :datetime (get-date-time)
+                                     :order_id order-id
+                                     :name (cdr (assoc :name auth))
+                                     :family (cdr (assoc :family auth))
+                                     :paytype (let ((tmp (cdr (assoc :paytype pay))))
+                                                (cond ((string= tmp "cash") "Наличными")
+                                                      ((string= tmp "card") "Кредитной картой")
+                                                      ((string= tmp "credit") "Безналичный расчет")
+                                                      ((string= tmp "bank") "банковским переводом")
+                                                      (t tmp)))
+                                     :deliverytype (let ((tmp (cdr (assoc :deliverytype delivery))))
+                                                     (cond ((string= tmp "auto") "Самовывоз")
+                                                           ((string= tmp "courier") "Курьер")
+                                                           (t tmp)))
+                                     :addr (cdr (assoc :addr delivery))
+                                     :bankaccount (let ((bankaccount (cdr (assoc :bankaccount pay))))
+                                                    (if (null bankaccount)
+                                                        ""
+                                                        bankaccount))
+                                     :phone (cdr (assoc :phone auth))
+                                     :email (cdr (assoc :email auth))
+                                     :comment (cdr (assoc :comment delivery))
+                                     :products products
+                                     :itogo itogo
+                                     )))
+                        (setf mail-file (list :order_id order-id
+                                              :ekk ""
+                                              :name (cdr (assoc :name auth))
+                                              :family (cdr (assoc :family auth))
+                                              :addr (cdr (assoc :addr delivery))
+                                              :phone (cdr (assoc :phone auth))
+                                              :email (cdr (assoc :email auth))
+                                              :date (get-date-time)
+                                              :products products))
+                        (setf filename (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+                                         (declare (ignore second))
+                                         (format nil
+                                                 "~d~2,'0d~2,'0d_~a.txt"
+                                                 year
+                                                 month
+                                                 date
+                                                 order-id
+                                                 )))
+                        ;; (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        ;; (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        ;; (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        ;; (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        ;; (send-mail (list "wolforus@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        (send-client-mail (list (cdr (assoc :email auth))) client-mail order-id)
+                        ;; (send-client-mail (list "wolforus@gmail.com") client-mail order-id)
+                        (service:checkout-page (checkout:thanks (list
+                                                                 :order (checkout:order)
+                                                                 :orderid order-id)))))
+                      (progn
+                        (service:checkout-page
+                         (checkout:thankserror)))))))
 
 
 
@@ -260,3 +301,5 @@ Content-Transfer-Encoding: base64
 				(push x $ret))
 			  (push x $ret)))
 	(coerce (reverse $ret) 'string)))
+
+
