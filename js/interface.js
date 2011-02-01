@@ -686,6 +686,8 @@ function checkoutThanks(current) {
 	} else {
 		where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
 	}
+    rCart = new Array();
+    rSetCookie('cart', JSON.stringify(rCart));
 }
 
 

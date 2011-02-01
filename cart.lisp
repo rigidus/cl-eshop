@@ -180,11 +180,11 @@
                                                  date
                                                  order-id
                                                  )))
-                        ;; (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-                        ;; (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
-                        ;; (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-                        ;; (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-                        ;; (send-mail (list "wolforus@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+                        (send-mail (list "wolforus@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
                         (send-client-mail (list (cdr (assoc :email auth))) client-mail order-id)
                         ;; (send-client-mail (list "wolforus@gmail.com") client-mail order-id)
                         (service:checkout-page (checkout:thanks (list
