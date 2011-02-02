@@ -57,42 +57,75 @@
 
 (defun num-active-product (products)
   (let ((num 0))
-    (mapcar #'(lambda (p) (if (product:active p) (incf num))) products)
+    (mapcar #'(lambda (p)
+                (if (product:active p)
+                    (incf num)))
+            products)
     num))
 
 (defun sum-prices-product (products)
   (let ((sum 0))
-    (mapcar #'(lambda (p) (if (product:active p) (setf sum (+ (product:price p) sum)))) products)
+    (mapcar #'(lambda (p)
+                (if (product:active p)
+                    (setf sum (+
+                               (product:price p)
+                               sum))))
+            products)
     sum))
 
 (defun get-products-list ()
   (let ((product-list))
-    (maphash #'(lambda (k v) (setf product-list (cons v product-list ))) trans:*product* )
+    (maphash #'(lambda (k v)
+                 (setf product-list (cons v product-list )))
+             trans:*product* )
     product-list))
 
 (defun get-group-routs ()
   (let ((routs))
-    (maphash #'(lambda (k g) (if (null (group:parent g)) (setf routs (cons g routs)))) trans:*group*)
+    (maphash #'(lambda (k g)
+                 (if (null (group:parent g))
+                     (setf routs (cons g routs))))
+             trans:*group*)
     routs))
 
 (defun get-group-active ()
   (let ((routs))
-    (maphash #'(lambda (k g) (if (group:active g) (setf routs (cons g routs)))) trans:*group*)
+    (maphash #'(lambda (k g)
+                 (if (group:active g)
+                     (setf routs (cons g routs))))
+             trans:*group*)
     routs))
 
 (defun get-group-ymlshow ()
   (let ((routs))
-    (maphash #'(lambda (k g) (if (group:ymlshow g) (setf routs (cons g routs)))) trans:*group*)
+    (maphash #'(lambda (k g)
+                 (if (group:ymlshow g)
+                     (setf routs (cons g routs))))
+             trans:*group*)
     routs))
 
 (defun show-group (g n)
-  (format t "~&~Va~a: ~a  | yml:~a active:~a  продуктов:~a  (key:~a)" n "" (group:id g) (group:name g) (group:ymlshow g) (group:active g) (length (group:get-recursive-products g)) (group:key g))
-  (mapcar #'(lambda (g) (show-group g (+ n 5))) (group:childs g))
-  )
+  (format t "~&~Va~a: ~a  | yml:~a active:~a  продуктов:~a  (key:~a)"
+          n
+          ""
+          (group:id g)
+          (group:name g)
+          (group:ymlshow g)
+          (group:active g)
+          (length (group:get-recursive-products g))
+          (group:key g))
+  (mapcar #'(lambda (g)
+              (show-group g (+ n 5)))
+          (group:childs g)))
 
 (defun num-product-in-groups (groups)
   (let ((num 0))
-    (mapcar #'(lambda (g) (setf num (+ num (length (remove-if #'(lambda(g) (not (group:active g))) (group:products g)))))) groups)
+    (mapcar #'(lambda (g)
+                (setf num (+ num
+                             (length (remove-if
+                                      #'(lambda(g) (not (group:active g)))
+                                      (group:products g))))))
+            groups)
     num))
 
 
@@ -120,11 +153,16 @@
   )
 
 
-  (let ((num 0)) (maphash #'(lambda (k product) (if (and (not (null (product:parent product)))
-                                                         (group:ymlshow (product:parent product))
-                                                         (product:active product)
-                                                         (not (null (product:price product)))
-                                                         (> (product:price product) 0)) (incf num))) trans:*product*) num)
+  ;; (let ((num 0))
+  ;;   (maphash
+  ;;    #'(lambda (k product)
+  ;;        (if (and (not (null (product:parent product)))
+  ;;                 (group:ymlshow (product:parent product))
+  ;;                 (product:active product)
+  ;;                 (not (null (product:price product)))
+  ;;                 (> (product:price product) 0))
+  ;;            (incf num)))
+  ;;    trans:*product*) num)
 
 
   (defun num-products-in-group (g)
