@@ -102,6 +102,31 @@
 ;;         '("sendmail.html" "checkout.html"))
 
 
+(load "packages.lisp")
+(load "service.lisp")
+
+
+(defun dispatcher ()
+  (let ((₤ (make-hash-table :test #'equal)))
+    #'(lambda (×)
+        (if (equal 'cons (type-of ×))
+            (progn (setf (gethash (car ×) ₤) (cadr ×)) ₤)
+            (let ((¤ (loop :for ¿ :being the hash-key :in ₤ :using (hash-value Ł) :do
+                        (when (eval ¿) (return (funcall Ł))))))
+              (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
+              (when (null ¤)
+                (restas:abort-route-handler
+                 (babel:string-to-octets
+                  (service:default-page
+                      (static:main (list :menu (service:menu "") :subcontent (error-404:content))))
+                  :encoding :utf-8)
+                 :return-code hunchentoot:+http-not-found+
+                 :content-type "text/html"))
+              (babel:string-to-octets ¤ :encoding :utf-8))))))
+
+(defparameter *dispatcher* (dispatcher))
+(export '*dispatcher*)
+
 
 ;; FILTER
 

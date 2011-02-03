@@ -48,7 +48,7 @@
 	(if (null articul)
         (search-engine q 50)
         ;; else
-		(let ((result (gethash articul *storage*)))
+		(let ((result (gethash (format nil "~a" articul) *storage*)))
           (if (null result)
               (search-engine q 50)
               (list result))))))

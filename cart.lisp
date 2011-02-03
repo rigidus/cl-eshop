@@ -35,69 +35,69 @@
 
 
 
+(defun cart-processor (alist)
+   (loop :for item :in alist :collect (item-processor item)))
+
+
+(defun item-processor (item)
+  (let* ((articul   (parse-integer (cdr (assoc :ID item)) :junk-allowed t))
+         (group-id  (cdr (assoc :GROUP--ID item)))
+         (name      (cdr (assoc :NAME item)))
+         (price     (cdr (assoc :PRICE item)))
+         (count     (cdr (assoc :COUNT item)))
+         (item-link (cdr (assoc :ITEM--LINK item)))
+         (img-link  (cdr (assoc :IMG--LINK item)))
+         (object    (gethash (format nil "~a" articul) *storage*)))
+    (if (null object)
+        nil
+        (let ((pics (get-pics (articul object))))
+          (list :count count
+                :itemlink item-link
+                :firstpic (if (null pics) "" (car pics))
+                :articul (articul object)
+                :name (name object)
+                :siteprice (siteprice object)
+                :price (price object)
+                )))))
+
+
+
 (defun cart-page ()
   (if (null (hunchentoot:cookie-in "cart"))
       "null cart"
       (let* ((cart (json:decode-json-from-string (hunchentoot:cookie-in "cart")))
-             (out
-              (remove-if #'null
-                         (loop :for item :in  cart
-                            :collect (let* ((articul   (parse-integer (cdr (assoc :ID item)) :junk-allowed t))
-                                            (group-id  (cdr (assoc :GROUP--ID item)))
-                                            (name      (cdr (assoc :NAME item)))
-                                            (price     (cdr (assoc :PRICE item)))
-                                            (count     (cdr (assoc :COUNT item)))
-                                            (item-link (cdr (assoc :ITEM--LINK item)))
-                                            (img-link  (cdr (assoc :IMG--LINK item)))
-                                            (object    (gethash articul *storage*))
-                                            )
-                                       (if (null object)
-                                           nil
-                                           ;; else
-                                           (let ((pics (get-pics (articul object))))
-                                             (list :count count
-                                                   :itemlink item-link
-                                                   :firstpic (if (null pics) "" (car pics))
-                                                   :articul (articul object)
-                                                   :name (name object)
-                                                   :siteprice (siteprice object)
-                                                   :price (price object)
-                                                   ))))))))
+             (out  (cart-processor cart)))
         (default-page
-            (cart:content (list :accessories (accessories)
+            (cart:content (list :accessories (product:accessories)
                                 :products (format nil "~{~a~}" (mapcar #'(lambda (x)
                                                                            (cart:product x))
-                                                                       out)))))
-        )))
-
-
+                                                                       out))))))))
 
 
 (defun checkout-page-0 ()
   (if (null (hunchentoot:cookie-in "cart"))
       "null cart"
-      (checkout-page (checkout:content0 (list :accessories (accessories)
-                                                      :order (checkout:order)
-                                                      )))))
+      (checkout-page (checkout:content0 (list :accessories (product:accessories)
+                                              :order (checkout:order))))))
 
 (defun checkout-page-1 ()
   (if (null (hunchentoot:cookie-in "cart"))
       "null cart"
-      (checkout-page (checkout:content1 (list :accessories (accessories)
-                                                      :order (checkout:order)
-                                                      )))))
+      (checkout-page (checkout:content1 (list :accessories (product:accessories)
+                                              :order (checkout:order)
+                                              )))))
 
 (defun checkout-page-2 ()
   (if (null (hunchentoot:cookie-in "cart"))
       "null cart"
-      (checkout-page (checkout:content2 (list :accessories (accessories)
+      (checkout-page (checkout:content2 (list :accessories (product:accessories)
                                                       :order (checkout:order)
                                                       )))))
 
 (defun checkout-page-3 ()
   (if (null (hunchentoot:cookie-in "cart"))
       "null cart"
-      (checkout-page (checkout:content3 (list :accessories (accessories)
+      (checkout-page (checkout:content3 (list :accessories (product:accessories)
                                                       :order (checkout:order)
                                                       )))))
 
@@ -120,7 +120,7 @@
     (setf products (mapcar #'(lambda (product)
                                (let* ((articul (parse-integer (cdr (assoc :id  product)) :junk-allowed t))
                                       (cnt     (cdr (assoc :count product)))
-                                      (plist   (plist-representation (gethash articul *storage*)
+                                      (plist   (plist-representation (gethash (format nil "~a" articul) *storage*)
                                                                              :articul
                                                                              :name
                                                                              :price))

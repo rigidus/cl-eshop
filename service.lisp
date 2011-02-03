@@ -195,14 +195,17 @@
   (breadcrumbs in out))
 
 
-(defun default-page (&optional (content nil))
-  (root:main (list :header (root:header (list :logged (root:notlogged)
+(defun default-page (&optional (content nil) &key keywords description title)
+  (root:main (list :keywords keywords
+                   :description description
+                   :title title
+                   :header (root:header (list :logged (root:notlogged)
                                               :cart (root:cart)))
                    :footer (root:footer)
                    :content (if content
                                 content
                                 (format nil  "<pre>'~a' ~%'~a' ~%'~a'</pre>"
-                                        (get-request-str)
+                                        (request-str)
                                         (hunchentoot:request-uri *request*)
                                         (hunchentoot:header-in* "User-Agent"))))))
 
