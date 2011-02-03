@@ -641,8 +641,8 @@ function checkoutThanks(current) {
 		if (rUser.auth.authtype == 'newbuyer') {
 			temp += '<div class="checkout-green"><p class="h2">' + rUser.auth.name + ' ' + rUser.auth.family + ', мы получили ваш заказ.</p><p>В течение часа с вами свяжется наш менеджер и уточнит детали заказа.</p></div>';
 		}
-	temp += '<p class="h2">Номер заказа — №9595454</p>';
-	temp += '<p>Этот номер вам пригодится, если вы захотите сами позвонить в службу доставки. Вы сможете сделать это по телефону <big>(812) 320-80-80</big></p>';
+	// temp += '<p class="h2">Номер заказа — №9595454</p>';
+	// temp += '<p>Этот номер вам пригодится, если вы захотите сами позвонить в службу доставки. Вы сможете сделать это по телефону <big>(812) 320-80-80</big></p>';
 	where.append(temp);
 	temp = '';
 	if (rUser.delivery.deliverytype == 'courier') {
@@ -652,7 +652,7 @@ function checkoutThanks(current) {
 			where.append('<p class="h2">Бесплатная доставка курьером <strong class="gray">завтра в течение дня</strong></p>');
 		}
 
-		temp += rUser.delivery.city + '<br/>';
+		// temp += rUser.delivery.city + '<br/>';
 		temp += rUser.delivery.addr;
 		if (rUser.delivery.comment) {
 			temp += '<br/>' + rUser.delivery.comment;
@@ -686,6 +686,8 @@ function checkoutThanks(current) {
 	} else {
 		where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
 	}
+    rCart = new Array();
+    rSetCookie('cart', JSON.stringify(rCart));
 }
 
 
@@ -1073,5 +1075,18 @@ $(document).ready(function() {
 	});
 	$('.checkout-thanks').each(function(){
 		checkoutThanks(this);
+	});
+    $(".block-item-pics ul li a,.item-info-left .pic a").fancybox({
+		'transitionIn'	:	'fade',
+		'transitionOut'	:	'fade',
+		'speedIn'		:	300,
+		'speedOut'		:	200,
+		'overlayShow'	:	true,
+		'hideOnOverlayClick':	true,
+		'showNavArrows'	:	true,
+		'overlayOpacity':	0.4,
+		'overlayColor'	:	'#000',
+		'titleShow'		: true,
+		'titlePosition'	: 'over'
 	});
 });

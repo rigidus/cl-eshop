@@ -59,7 +59,7 @@
         (product:content (list :menu (service:menu object)
                                :breadcrumbs (product:breadcrumbs (service:breadcrumbs object))
                                :articul (articul object)
-                               :group_id "999" ;;(group:id (group object))
+                               :group_id "999" ;;(group:id (group object));; 999 но зачем? Почему не 666?
                                :name (realname object)
                                :siteprice (siteprice object)
                                :storeprice (price object)
@@ -84,7 +84,14 @@
                                :active (active object)
                                :descr (descr object)
                                :shortdescr (shortdescr object)
-                               ))))))
+                               ))
+          :keywords (format nil "~a"
+                         (realname object))
+          :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
+                         (realname object))
+          :title (format nil "~a купить в ЦиFры - цена, фотография и описание, продажа ~a с гарантией и доставкой в ЦиFры 320-8080"
+                         (realname object)
+                         (realname object))))))
 
 
 (defmethod get-keyoptions ((object product))
