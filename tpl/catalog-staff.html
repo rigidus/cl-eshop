@@ -191,7 +191,7 @@
 {template vendorblock}
 <li class="item">
   <ul class="catalog-in-list">
-    {foreach $vendorelt in $vendorelts}
+    {foreach $vendorelt in $vendorblock}
     {call vendorelt data="$vendorelt" /}
     {/foreach}
   </ul>
@@ -202,14 +202,10 @@
 <div class="producer-block">
   <p class="h2">Производители<span class="switch switch-full"><a rel="switch" href="#full">Полный список</a></span></p>
   <ul class="producer-list">
-    {foreach $vendorblock in $vendorblocks}
-    {call vendorelt data="$vendorblock" /}
-    {/foreach}
+     {call vendorblock data="$vendorblocks" /}
   </ul>
   <ul class="producer-list producer-list-collapsed">
-    {foreach $vendorblock in $vendorhiddenblocks}
-    {call vendorelt data="$vendorblock" /}
-    {/foreach}
+     {call vendorblock data="$vendorhiddenblocks" /}
   </ul>
 </div>
 {/template}
