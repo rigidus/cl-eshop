@@ -186,3 +186,13 @@
   ;;  (mapcar #'(lambda (v)
   ;;              (format nil "> ~a" (product:parent v)))
   ;;          (group:products (gethash "pamyat-dlya-noutbukov" trans:*group*))))
+
+(defun lists-form-list (list &optional (num 4))
+ (let ((start list)
+       (result))
+   (loop for i from 0 to num
+      do (setf result
+               (append result
+                       ())))
+  result)
+)
