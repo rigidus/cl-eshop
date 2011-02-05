@@ -1,6 +1,6 @@
 ;;;; serializers.lisp
 ;;;;
-;;;; This file is part of the eshop project,
+;;;; This file is part of the eshop project, released under GNU Affero General Public License, Version 3.0
 ;;;; See file COPYING for details.
 ;;;;
 ;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
@@ -184,14 +184,9 @@
                                :shortdescr (cdr (assoc :shortdescr raw))
                                :count-transit (cdr (assoc :count-transit raw))
                                :count-total count-total
-                               :optgroups (if (not (null (cdr (assoc :options raw))))
-                                              (let* ((raw (cdr (assoc :options raw)))
-                                                     (optlist (cdr (assoc :optlist raw))))
-                                                (loop :for optgroup-elt :in optlist :collect
-                                                   (unserialize optgroup-elt (make-instance 'optgroup))))
-                                              (let* ((optgroups (cdr (assoc :optgroups raw))))
-                                                (loop :for optgroup-elt :in optgroups :collect
-                                                   (unserialize optgroup-elt (make-instance 'optgroup))))))))
+                               :optgroups (let* ((optgroups (cdr (assoc :optgroups raw))))
+                                            (loop :for optgroup-elt :in optgroups :collect
+                                               (unserialize optgroup-elt (make-instance 'optgroup)))))))
       ;; Если родитель продукта — группа, связать группу с этим продуктом
       (when (equal 'group (type-of parent))
         (push new (products parent)))
@@ -269,24 +264,19 @@
     ))
 
 
-;; (unserialize "/home/rigidus/Dropbox/htbkps/noutbuki-i-netbuki/noutbuki/noutbuki-vremya-raboty-4chasa.filter"
-;;              (make-instance 'filter))
-
-
-
 ;; OPTGROUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 
 (defmethod unserialize (in-list (dummy optgroup))
   (let* ((name (nth 1 in-list))
          (options (nth 2 in-list)))
     (make-instance 'optgroup
-                   :name (cdr name)
+                   :name (cdr (assoc :name in-list))
                    :options (loop
                                :for option-elt
-                               :in (cdr options)
+                               :in (cdr (assoc :options in-list))
                                :collect (unserialize option-elt (make-instance 'option))))))
+
 
 
 (defmethod serialize ((object optgroup))
