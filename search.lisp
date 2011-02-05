@@ -1,4 +1,11 @@
-(in-package #:search)
+;;;; search.lisp
+;;;;
+;;;; This file is part of the eshop project,
+;;;; See file COPYING for details.
+;;;;
+;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
+
+(in-package #:eshop)
 
 
 (defun search-engine (q size)
@@ -7,9 +14,10 @@
 		 (result-list nil)
 		 (sorted-list nil))
 	(maphash #'(lambda (key val)
-                 (when (and (product:active val)
-                            (not (null (product:parent val))))
-                   (let ((name (string-downcase (format nil "~a" (product:name val)))))
+                 (when (and (equal (type-of val) 'product)
+                            (active val)
+                            (not (null (parent val))))
+                   (let ((name (string-downcase (format nil "~a" (name val)))))
                      (mapcar #'(lambda (word)
                                  (let* ((search-result (search word name))
                                         (tmp (gethash key results (list :name name :rel 0))))
@@ -17,7 +25,7 @@
                                      (setf (getf tmp :rel) (+ 1 (getf tmp :rel)))
                                      (setf (gethash key results) tmp))))
                              wordlist))))
-             trans::*product*)
+             *storage*)
     ;; Преобразуем хэш с элементами вида (list :name "xxx" :rel "yyy") в список для сортировки
 	(maphash #'(lambda (key val)
 				 (push (list* :id key val) result-list))
@@ -29,7 +37,7 @@
 	  (setf sorted-list (subseq sorted-list 0 size)))
     ;; Возвращаем список продуктов
 	(mapcar #'(lambda (x)
-				(gethash (getf x :id) trans:*product*))
+				(gethash (getf x :id) *storage*))
 			sorted-list)))
 
 
@@ -40,7 +48,7 @@
 	(if (null articul)
         (search-engine q 50)
         ;; else
-		(let ((result (gethash articul trans:*product*)))
+		(let ((result (gethash (format nil "~a" articul) *storage*)))
           (if (null result)
               (search-engine q 50)
               (list result))))))
@@ -52,22 +60,19 @@
   param)
 
 
-(funcall *dispatcher*
-         `((string= "/search" (service:request-str))
-           ,#'(lambda ()
-                (let* ((q (hunchentoot:get-parameter "q"))
-                       (search-string (my:strip q))
-                       (url-decoded (get-safe-url-decode-value search-string)))
-                  (cond ((string= q "")              (make-output "Введите поисковый запрос!"))
-                        ((null url-decoded)          (make-output))
-                        ((> 3 (length url-decoded))  (make-output "Слишком короткий поисковый запрос"))
-                        (t  (let ((search-result (get-match-products (my:strip url-decoded))))
-                              (if (null search-result)
-                                  (make-output)
-                                  (make-output (prefer search-result))))))))))
+(defun search-page ()
+  (let* ((q (hunchentoot:get-parameter "q"))
+         (search-string (strip q))
+         (url-decoded (get-safe-url-decode-value search-string)))
+    (cond ((string= q "")              (make-output "Введите поисковый запрос!"))
+          ((null url-decoded)          (make-output))
+          ((> 3 (length url-decoded))  (make-output "Слишком короткий поисковый запрос"))
+          (t  (let ((search-result (get-match-products (strip url-decoded))))
+                (if (null search-result)
+                    (make-output)
+                    (make-output (prefer search-result))))))))
 
 (defun prefer (products)
-  (setf test products)
   (catalog:centerproduct
    (list
     ;; :producers (group:make-vendor-filter (parent object))
@@ -75,23 +80,20 @@
     :products (loop
                  :for product
                  :in (remove-if #'(lambda (x)
-                                    (null (product:active x)))
+                                    (null (active x)))
                                 products)
-                 :collect (product:view product)
+                 :collect (view product)
                  ))))
 
 
-;; (product:parent (gethash 149759 trans:*product*))
 
 (defun make-output (&optional (centercontent nil))
-  (service::default-page
+  (default-page
     (catalog:content
      (list :name "Поиск мысли..."
            :breadcrumbs "<a href=\"/catalog\">Каталог</a> / Поиск"
-           :menu (service:menu)
-           :rightblocks (list (catalog:rightblock1)
-                              (catalog:rightblock2)
-                              (catalog:rightblock3))
+           :menu (menu)
+           :rightblocks (rightblocks)
            :subcontent (if (null centercontent)
                            "Ничего не найдено"
                            (format nil "~a" centercontent))))))

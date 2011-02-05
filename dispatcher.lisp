@@ -1,3 +1,11 @@
+;;;; dispatcher.lisp
+;;;;
+;;;; This file is part of the eshop project,
+;;;; See file COPYING for details.
+;;;;
+;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
+
+
 (asdf:operate 'asdf:load-op '#:alexandria)
 (asdf:operate 'asdf:load-op '#:anaphora)
 (asdf:operate 'asdf:load-op '#:hunchentoot)
@@ -17,16 +25,33 @@
 (asdf:operate 'asdf:load-op '#:drakma)
 (asdf:operate 'asdf:load-op '#:restas)
 
-(restas:define-module #:cl-eshop
+
+(defpackage #:wolfor-stuff
+  (:use #:cl)
+  (:export :range-filter
+           :checkbox-filter
+           :price-filter
+           :radio-filter
+           ))
+
+
+(restas:define-module #:eshop
     (:use :cl
           :closure-template
           :anaphora
           :split-sequence
           :cl-ppcre
-          :alexandria
-          ))
+          :json
+          :cl-fad)
+  (:import-from :arnesi :parse-float)
+  (:export :compile-templates
+		   :*storage*
+           :name
+           :unserialize
+           :plist-representation))
 
-(in-package #:cl-eshop)
+
+(in-package #:eshop)
 
 ;; PATH
 (defparameter *path-to-tpls* (format nil "~aDropbox/httpls" (user-homedir-pathname)))
@@ -35,6 +60,7 @@
 (export '*path-to-bkps*)
 (defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
 (export '*path-to-conf*)
+
 (defparameter *path-to-pics* (format nil "~ahtpics" (user-homedir-pathname)))
 (export '*path-to-pics*)
 
@@ -102,72 +128,147 @@
 (export '*dispatcher*)
 
 
-(load "my.lisp")
-(load "option-class.lisp")
-(load "optgroup-class.lisp")
-(load "optlist-class.lisp")
-(load "product-class.lisp")
-(load "filter-class.lisp")
-(load "group-class.lisp")
+;; FILTER
 
-(load "trans.lisp")
+(defun test-route-filter ()
+  (let* ((request-list (request-list))
+         (key (cadr request-list))
+         (filter (caddr request-list)))
+    (and (not (null (gethash key *storage*)))
+         (not (null (gethash filter *storage*))))))
 
-(load "cart.lisp")
-(load "gateway.lisp")
-(load "search.lisp")
-(load "wolfor-stuff.lisp")
+(defun route-filter (filter)
+  (gethash filter *storage*))
 
+(restas:define-route filter/-route ("/:key/:filter/" :requirement #'test-route-filter)
+  (route-filter filter))
 
-(funcall *dispatcher*
-         `((string= "" (service:request-str))
-           ,#'(lambda ()
-                (service:default-page (root:content (list :menu (service:menu (service:request-str))
-                                                          :dayly (root:dayly)
-                                                          :banner (root:banner)
-                                                          :olist (root:olist)
-                                                          :lastreview (root:lastreview)
-                                                          :best (root:best)
-                                                          :hit (root:hit)
-                                                          :new (root:new)
-                                                          :post (root:post)
-                                                          :plus (root:plus)))
-                    :KEYWORDS "компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
-                    :DESCRIPTION "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
-                    :TITLE "Интернет-магазин: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"
-                  ))))
+(restas:define-route filter-route ("/:key/:filter" :requirement #'test-route-filter)
+  (route-filter filter))
 
 
-;; catalog
-(funcall *dispatcher*
-         `((string= "/catalog" (service:request-str))
-           ,#'(lambda ()
-                (service:default-page (catalog:main (list :menu (service:menu "")))))))
+;; STORAGE OBJECT
 
-;; static
-(mapcar #'(lambda (∆)
-            (funcall *dispatcher*
-                     `((string= ,(concatenate 'string "/" ∆) (service:request-str))
-                       ,#'service:static-page)))
-        (list "delivery"         "about"             "faq"             "kakdobratsja"
-              "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
-              "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
-              "warranty"         "moneyback"         "article"         "news1"
-              "news2"            "news3"             "news4"           "news5"
-              "news6"            "dillers"           "corporate"       "vacancy"
-              "bonus"))
+(defun test-route-storage-object ()
+  (not (null (gethash (cadr (request-list)) *storage*))))
+
+(defun route-storage-object (key)
+  (gethash key *storage*))
+
+(restas:define-route storage-object-route  ("/:key" :requirement #'test-route-storage-object)
+  (route-storage-object key))
+
+(restas:define-route storage-object/-route  ("/:key/" :requirement #'test-route-storage-object)
+  (route-storage-object key))
+
+
+;; MAIN
+
+(restas:define-route main-route ("/")
+  (default-page (root:content (list :menu (menu (request-str))
+                                    :dayly (root:dayly)
+                                    :banner (root:banner)
+                                    :olist (root:olist)
+                                    :lastreview (root:lastreview)
+                                    :best (root:best)
+                                    :hit (root:hit)
+                                    :new (root:new)
+                                    :post (root:post)
+                                    :plus (root:plus)))))
+
+
+;; CATALOG
+
+(restas:define-route catalog-route ("/catalog")
+  (default-page (catalog:main (list :menu (menu "")))))
+
+
+;; STATIC
+
+(defmacro static ()
+  `(progn ,@(mapcar #'(lambda (x)
+                        `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
+                           (static-page)))
+                    (list "delivery"         "about"             "faq"             "kakdobratsja"
+                          "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
+                          "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
+                          "warranty"         "moneyback"         "article"         "news1"
+                          "news2"            "news3"             "news4"           "news5"
+                          "news6"            "dillers"           "corporate"       "vacancy"
+                          "bonus"))))
+
+(static)
+
+
+;; CART & CHECKOUTS & THANKS
+
+(restas:define-route cart-route ("/cart")
+  (cart-page))
+
+(restas:define-route checkout0-route ("/checkout0")
+  (checkout-page-0))
+
+(restas:define-route checkout1-route ("/checkout1")
+  (checkout-page-1))
+
+(restas:define-route checkout2-route ("/checkout2")
+  (checkout-page-2))
+
+(restas:define-route checkout3-route ("/checkout3")
+  (checkout-page-3))
+
+(restas:define-route thanks-route ("/thanks")
+  (thanks-page))
+
+
+;; GATEWAY
+
+(restas:define-route gateway-route ("/gateway")
+  (gateway-page))
+
+(restas:define-route gateway/post-route ("/gateway" :method :post)
+  (gateway-page))
+
+(restas:define-route gateway/-route ("/gateway/")
+  (gateway-page))
+
+(restas:define-route gateway/post/-route ("/gateway/" :method :post)
+  (gateway-page))
+
+
+;; SEARCH
+
+(restas:define-route search-route ("/search")
+  (search-page))
+
+
+;; YML
+
+(restas:define-route yml-route ("/yml")
+  (yml-page))
+
+(restas:define-route yml/-route ("/yml/")
+  (yml-page))
+
+;; 404
+
+(restas:define-route not-found-route (":any")
+  (restas:abort-route-handler
+   (babel:string-to-octets
+    (default-page
+        (static:main (list :menu (menu "") :subcontent (error-404:content))))
+    :encoding :utf-8)
+   :return-code hunchentoot:+http-not-found+
+   :content-type "text/html"))
+
+
 
 
 (setf hunchentoot:*hunchentoot-default-external-format* (flexi-streams:make-external-format :utf-8 :eol-style :lf))
-
-(restas:define-route main ("/:get" :requirement (lambda () t))
-  (funcall *dispatcher* hunchentoot:*request*))
-
-(restas:define-route main/post ("/:get" :requirement (lambda () t)
-                                        :method :post)
-  (funcall *dispatcher* hunchentoot:*request*))
+(setf hunchentoot:*handle-http-errors-p* nil)
 
 
-(restas:start '#:cl-eshop :port 4242)
+(restas:start '#:eshop :port 4243)
 (restas:debug-mode-on)
 
 
