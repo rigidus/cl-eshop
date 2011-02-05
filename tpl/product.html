@@ -44,7 +44,8 @@
 {foreach $breadcrumbelt in $breadcrumbelts}
 {call breadcrumbelt data="$breadcrumbelt" /}
 {/foreach}
-{call breadcrumbtail data="$breadcrumbtail" /}
+<h1>test1</h1>
+<!-- {call breadcrumbtail data="$breadcrumbtail" /} -->
 {/template}
 
 {template keyoptions}
@@ -64,6 +65,7 @@
     <div class="right2">
 	  <p class="breadcrumbs">
         {$breadcrumbs |noAutoescape}
+        <h1>Test</h1>
       </p>
 
 
