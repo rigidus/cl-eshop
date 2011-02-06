@@ -67,7 +67,11 @@
                                  :pager pager
                                  :products
                                  (loop
-                                    :for product :in  paginated :collect (view product))))))))))
+                                    :for product :in  paginated :collect (view product))))))))
+      :keywords (format nil "~a" (name object))
+      :description (format nil "~a" (name object))
+      :title (format nil "~a - купить ноутбуки  по низкой цене, продажа ноутбуков  с доставкой и гарантией в ЦиFры 320-8080"
+                     (name object))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object group-filter))
@@ -94,7 +98,7 @@
     (let ((pics (get-pics (articul object))))
       (default-page
           (product:content (list :menu (menu object)
-                         :breadcrumbs (catalog:breadcrumbs (breadcrumbs object))
+                         :breadcrumbs (product:breadcrumbs (breadcrumbs object))
                          :articul (articul object)
                          :name (realname object)
                          :siteprice (siteprice object)
@@ -118,7 +122,14 @@
                          :active (active object)
                          :descr (descr object)
                          :shortdescr (shortdescr object)
-                         ))))))
+                         ))
+          :keywords (format nil "~a"
+                            (realname object))
+          :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
+                               (realname object))
+          :title (format nil "~a купить в ЦиFры - цена, фотография и описание, продажа ~a с гарантией и доставкой в ЦиFры 320-8080"
+                         (realname object)
+                         (realname object))))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object producers))
@@ -171,3 +182,5 @@
                                         (boolflag object))
                                    (format nil "~a ~a" "<img src=\"img/ok.png\" alt=\"*\"/>" (value object))
                                    (value object)))))
+
+

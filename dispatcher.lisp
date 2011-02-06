@@ -156,7 +156,9 @@
   (gethash key *storage*))
 
 (restas:define-route storage-object-route  ("/:key" :requirement #'test-route-storage-object)
-  (route-storage-object key))
+  (route-storage-object key)
+  ;; (format nil "Test")
+)
 
 (restas:define-route storage-object/-route  ("/:key/" :requirement #'test-route-storage-object)
   (route-storage-object key))
@@ -174,7 +176,11 @@
                                     :hit (root:hit)
                                     :new (root:new)
                                     :post (root:post)
-                                    :plus (root:plus)))))
+                                    :plus (root:plus)))
+                    :keywords "компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
+                    :description "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
+                    :title "Интернет-магазин: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"
+                    ))
 
 
 ;; CATALOG

@@ -185,3 +185,21 @@
 ;;  (mapcar #'(lambda (v)
 ;;              (format nil "> ~a" (product:parent v)))
 ;;          (group:products (gethash "pamyat-dlya-noutbukov" trans:*group*))))
+
+
+(defun store-products ()
+  (let ((cnt 0))
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (if (equal (type-of v) 'eshop::product)
+                     (progn
+                       (incf cnt)
+                       (eshop::serialize v))))
+             eshop:*storage*)
+    (format t "~& Num of products was serializes: ~a" cnt)))
+
+;; :keywords (format nil "" )
+;; :description (format nil "")
+;; :title (format nil "")
+
+;; (defvar *test-request*)
