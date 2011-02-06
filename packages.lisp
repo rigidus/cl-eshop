@@ -26,3 +26,8 @@
            :price-filter
            :radio-filter
            ))
+
+(defpackage #:eshop-test
+  (:use #:cl
+        #:eshop
+        #:wolfor-stuff))

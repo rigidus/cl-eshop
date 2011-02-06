@@ -110,6 +110,7 @@
 
 (defun thanks-page ()
   (let ((cart) (user) (products) (auth) (delivery) (pay) (client-mail) (mail-file)
+        (deliverysum 0)
         (itogo 0)
         (order-id))
     (mapcar #'(lambda (cookie)
@@ -130,13 +131,16 @@
                                         :sum sum
                                         plist)))
                            cart))
-    (setf auth     (cdr (assoc :auth user)))
-    (setf delivery (cdr (assoc :delivery user)))
-    (setf pay      (cdr (assoc :pay user)))
     (if (if-order-valid products)
         (progn
-          (setf order-id (get-order-id)) ;;генерация идентификатора заказа происходит только если заказ валиден
-          (setf client-mail
+             (setf auth     (cdr (assoc :auth user)))
+             (setf delivery (cdr (assoc :delivery user)))
+             (setf pay      (cdr (assoc :pay user)))
+             (setf order-id (get-order-id)) ;;генерация идентификатора заказа происходит только если заказ валиден
+             (if (string= (cdr (assoc :deliverytype delivery))
+                          "courier")
+                 (setf deliverysum 200))
+             (setf client-mail
                 (sendmail:clientmail
                  (list :datetime (get-date-time)
                        :order_id order-id
@@ -161,7 +165,8 @@
                        :email (cdr (assoc :email auth))
                        :comment (cdr (assoc :comment delivery))
                        :products products
-                       :itogo itogo
+                       :deliverysum deliverysum
+                       :itogo (+ itogo deliverysum)
                        )))
           (setf mail-file (list :order_id order-id
                                 :ekk ""
@@ -299,3 +304,5 @@ Content-Transfer-Encoding: base64
 				(push x $ret))
 			  (push x $ret)))
 	(coerce (reverse $ret) 'string)))
+
+
