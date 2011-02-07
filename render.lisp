@@ -1,6 +1,6 @@
 ;;;; render.lisp
 ;;;;
-;;;; This file is part of the cl-eshop project,
+;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
 ;;;; See file COPYING for details.
 ;;;;
 ;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
@@ -67,7 +67,11 @@
                                  :pager pager
                                  :products
                                  (loop
-                                    :for product :in  paginated :collect (view product))))))))))
+                                    :for product :in  paginated :collect (view product))))))))
+      :keywords (format nil "~a" (name object))
+      :description (format nil "~a" (name object))
+      :title (format nil "~a - купить ноутбуки  по низкой цене, продажа ноутбуков  с доставкой и гарантией в ЦиFры 320-8080"
+                     (name object))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object group-filter))
@@ -88,13 +92,14 @@
                                    (advanced object))))))
 
 
+
 (defmethod restas:render-object ((designer eshop-render) (object product))
   (multiple-value-bind (diffprice procent)
       (get-procent (price object) (siteprice object))
     (let ((pics (get-pics (articul object))))
       (default-page
           (product:content (list :menu (menu object)
-                         :breadcrumbs (catalog:breadcrumbs (breadcrumbs object))
+                         :breadcrumbs (product:breadcrumbs (breadcrumbs object))
                          :articul (articul object)
                          :name (realname object)
                          :siteprice (siteprice object)
@@ -113,12 +118,28 @@
                          :accessories (product:accessories)
                          :reviews (product:reviews)
                          :simular (product:simulars)
-                         :others (product:others)
+                         :others (product:others
+                                  (list :others (mapcar #'(lambda (x)
+                                                            (if (equal 'product (type-of x))
+                                                                (view x)
+                                                                (list :aricul "0"
+                                                                      :name ""
+                                                                      :pic "/img/temp/i6.jpg"
+                                                                      :price "0"
+                                                                      :siteprice "0" :subst ""
+                                                                      :firstpic "/img/temp/i6.jpg")))
+                                                        (relink object))))
                          :keyoptions (get-keyoptions object)
                          :active (active object)
                          :descr (descr object)
                          :shortdescr (shortdescr object)
-                         ))))))
+                         ))
+          :keywords (format nil "~a" (realname object))
+          :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
+                               (realname object))
+          :title (format nil "~a купить в ЦиFры - цена, фотография и описание, продажа ~a с гарантией и доставкой в ЦиFры 320-8080"
+                         (realname object)
+                         (realname object))))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object producers))

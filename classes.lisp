@@ -1,6 +1,6 @@
 ;;;; classes.lisp
 ;;;;
-;;;; This file is part of the cl-eshop project,
+;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
 ;;;; See file COPYING for details.
 ;;;;
 ;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
@@ -21,7 +21,10 @@
    (childs            :initarg :childs          :initform nil       :accessor childs)
    (filters           :initarg :filters         :initform nil       :accessor filters)
    (fullfilter        :initarg :fullfilter      :initform nil       :accessor fullfilter)
-   (products          :initarg :products        :initform nil       :accessor products)))
+   (products          :initarg :products        :initform nil       :accessor products)
+   (vendors           :initarg :vendors         :initform (make-hash-table :test #'equal) :accessor vendors)
+   (descr             :initarg :descr           :initform nil       :accessor descr)
+   ))
 
 
 (defclass product ()

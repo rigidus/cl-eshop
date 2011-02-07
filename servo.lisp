@@ -1,6 +1,6 @@
 ;;;; servo.lisp
 ;;;;
-;;;; This file is part of the cl-eshop project,
+;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
 ;;;; See file COPYING for details.
 ;;;;
 ;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
@@ -37,7 +37,22 @@
 (defmacro rightblocks ()
   `(list (catalog:rightblock1)
          (catalog:rightblock2)
-         (catalog:rightblock3)))
+         (if (not (equal 'group (type-of object)))
+             ""
+             (progn
+               (let ((vndr (getf (request-get-plist) :vendor)))
+                 (if (null vndr)
+                     ;; show group descr
+                     (let ((descr (descr object)))
+                       (if (null descr)
+                           ""
+                           (catalog:seotext (list :text descr))))
+                     ;; show vendor descr
+                     (let ((descr (gethash vndr (vendors object))))
+                       (if (null descr)
+                           ""
+                           (catalog:seotext (list :text descr))))))))))
+
 
 
 (defmacro tradehits ()
@@ -488,6 +503,35 @@ is replaced with replacement."
             ))))
 
 
+(defmethod relink ((object product))
+  (let ((rs (list nil nil nil nil)))
+    (unless (active object)
+      (return-from relink rs))
+    (let* ((base-vendor) (tmp))
+      (with-option object "Общие характеристики" "Производитель"
+                   (setf base-vendor (value option)))
+      (setf tmp (remove-if-not
+                 #'(lambda (x)
+                     (and (active x)
+                          (let ((vendor))
+                            (with-option x "Общие характеристики" "Производитель"
+                                         (setf vendor (value option)))
+                            (equal vendor base-vendor))))
+                 (products (parent object))))
+      (setf tmp (append tmp tmp))
+      (let ((pos (position object tmp)))
+        (setf (nth 0 rs) (nth pos tmp))
+        (setf (nth 1 rs) (nth (+ 1 pos) tmp))))
+    (let ((all) (len) (two))
+      (maphash #'(lambda (k v)
+                   (when (and (equal 'product (type-of v))
+                              (active v))
+                     (push k all)))
+               *storage*)
+      (setf len (length all))
+      (setf (nth 2 rs) (gethash (nth (random len) all) *storage*))
+      (setf (nth 3 rs) (gethash (nth (random len) all) *storage*)))
+    rs))
 
 
 
@@ -624,14 +668,8 @@ is replaced with replacement."
   (let* ((result-products))
     (mapcar #'(lambda (product)
                 (let ((vendor))
-                  (mapcar #'(lambda (optgroup)
-                              (if (string= (name optgroup) "Общие характеристики")
-                                  (let ((options (options optgroup)))
-                                    (mapcar #'(lambda (opt)
-                                                (if (string= (name opt) "Производитель")
-                                                    (setf vendor (value opt))))
-                                            options))))
-                          (optgroups product))
+                  (with-option product "Общие характеристики" "Производитель"
+                               (setf vendor (value option)))
                   ;; (format t "~%[~a] : [~a] : [~a]"
                   ;;         (string-downcase (string-trim '(#\Space #\Tab #\Newline) vendor))
                   ;;         (string-downcase (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " "))
