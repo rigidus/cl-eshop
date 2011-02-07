@@ -198,10 +198,10 @@
           (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "wolforus@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-client-mail (list (cdr (assoc :email auth))) client-mail order-id)
-          (checkout-page (checkout:thanks (list :order (checkout:order)
+          (checkout-thankes-page (checkout:thanks (list :order (checkout:order)
                                                 :orderid order-id))))
         (progn
-          (checkout-page (checkout:thankserror))))))
+          (checkout-thankes-page (checkout:thankserror))))))
 
 
 

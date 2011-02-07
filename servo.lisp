@@ -269,6 +269,12 @@
                                 content
                                 "test page"))))
 
+(defun checkout-thankes-page (&optional (content nil))
+  (root:main (list :header (root:short-linked-header)
+                   :footer (root:footer)
+                   :content (if content
+                                content
+                                "test page"))))
 
 (defun static-page ()
   (let ((∆ (find-package (intern (string-upcase (subseq (request-str) 1)) :keyword))))

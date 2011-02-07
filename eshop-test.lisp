@@ -24,6 +24,24 @@
                             ))))
           (eshop::products group)))
 
-(test-filter (gethash "noutbuki" *storage*))
+;; (test-filter (gethash "noutbuki" *storage*))
 ;; (test-filter (gethash "komputery" *storage*))
 
+
+
+;; (let* ((articul 97115)
+;;        (cnt     2)
+;;        (plist   (eshop::plist-representation (gethash (format nil "~a" articul) eshop::*storage*)
+;;                                       :articul
+;;                                       :name
+;;                                       :price
+;;                                       :siteprice))
+;;          (product-real-price (if
+;;                               (= (getf plist :siteprice)
+;;                                  0)
+;;                               (getf plist :price)
+;;                               (getf plist :siteprice)))
+;;        (sum (* product-real-price cnt)))
+;;   (list* :cnt cnt
+;;          :sum sum
+;;          plist))
