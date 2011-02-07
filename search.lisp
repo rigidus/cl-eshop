@@ -1,6 +1,6 @@
 ;;;; search.lisp
 ;;;;
-;;;; This file is part of the eshop project,
+;;;; This file is part of the eshop project, released under GNU Affero General Public License, Version 3.0
 ;;;; See file COPYING for details.
 ;;;;
 ;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
@@ -93,7 +93,9 @@
      (list :name "Поиск мысли..."
            :breadcrumbs "<a href=\"/catalog\">Каталог</a> / Поиск"
            :menu (menu)
-           :rightblocks (rightblocks)
+           :rightblocks (list (catalog:rightblock1)
+                              (catalog:rightblock2)
+                              (catalog:rightblock3))
            :subcontent (if (null centercontent)
                            "Ничего не найдено"
                            (format nil "~a" centercontent))))))

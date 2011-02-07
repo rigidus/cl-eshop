@@ -1,6 +1,6 @@
 ;;;; trans.lisp
 ;;;;
-;;;; This file is part of the eshop project,
+;;;; This file is part of the eshop project, released under GNU Affero General Public License, Version 3.0
 ;;;; See file COPYING for details.
 ;;;;
 ;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
@@ -18,18 +18,32 @@
                     (push x dirs)
                     (push x files)))
             (directory (format nil "~a/*" path)))
-    (values dirs files (directory (format nil "~a/*.filter" path)))))
+    (values dirs
+            files
+            (directory (format nil "~a/*.filter" path))
+            (directory (format nil "~a/*.vendor" path))
+            )))
 
 
 (defun recursive-explore (path)
-  (multiple-value-bind (dirs files filters)
+  (multiple-value-bind (dirs files filters vendors)
       (explore-dir path)
     (values
      (mapcar #'process-dir dirs)
      (mapcar #'process-file files)
      (mapcar #'process-filter filters)
+     (mapcar #'process-vendor vendors)
      )))
 
+(defun process-vendor (file)
+  (let* ((string-filename (format nil "~a" file))
+         (group (car (last (split-sequence #\/ string-filename) 2)))
+         (vendor (regex-replace-all ".vendor" (pathname-name file) "")))
+    (setf (gethash vendor (vendors (gethash group *storage*)))
+        (read-file-into-string file))))
+
+
+;; (maphash
 
 (defun process-filter (file)
   (unserialize (format nil "~a" file) (make-instance 'filter)))

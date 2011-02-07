@@ -1,6 +1,6 @@
 ;;;; render.lisp
 ;;;;
-;;;; This file is part of the cl-eshop project,
+;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
 ;;;; See file COPYING for details.
 ;;;;
 ;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
@@ -94,6 +94,7 @@
                                    (advanced object))))))
 
 
+
 (defmethod restas:render-object ((designer eshop-render) (object product))
   (multiple-value-bind (diffprice procent)
       (get-procent (price object) (siteprice object))
@@ -119,7 +120,17 @@
                          :accessories (product:accessories)
                          :reviews (product:reviews)
                          :simular (product:simulars)
-                         :others (product:others)
+                         :others (product:others
+                                  (list :others (mapcar #'(lambda (x)
+                                                            (if (equal 'product (type-of x))
+                                                                (view x)
+                                                                (list :aricul "0"
+                                                                      :name ""
+                                                                      :pic "/img/temp/i6.jpg"
+                                                                      :price "0"
+                                                                      :siteprice "0" :subst ""
+                                                                      :firstpic "/img/temp/i6.jpg")))
+                                                        (relink object))))
                          :keyoptions (get-keyoptions object)
                          :active (active object)
                          :descr (descr object)

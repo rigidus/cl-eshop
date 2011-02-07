@@ -37,7 +37,8 @@
                              :fullfilter (unserialize (cdr (assoc :fullfilter raw)) (make-instance 'group-filter))
                              :keyoptions keyoptions
                              :pic (cdr (assoc :pic raw))
-                             :ymlshow (cdr (assoc :ymlshow raw)))))
+                             :ymlshow (cdr (assoc :ymlshow raw))
+                             :descr (cdr (assoc :descr raw)))))
     (when (equal 'group (type-of parent))
       (push new (childs parent))
       (setf (childs parent) (remove-duplicates (childs parent))))
