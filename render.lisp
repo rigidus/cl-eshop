@@ -168,7 +168,13 @@
                                :products (loop
                                             :for product
                                             :in  paginated
-                                            :collect (view product)))))))))
+                                            :collect (view product))))))
+          :keywords (format nil "~a" (name object))
+          :description (format nil "~a" (name object))
+          :title (format nil "~a - купить ~a по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
+                         (name object)
+                         (name object)
+                         (name object)))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object optgroup))
