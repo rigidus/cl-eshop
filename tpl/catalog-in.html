@@ -12,7 +12,12 @@
 	<p class="rating rating4"><i></i></p>
   </div>
 -->
-  <div class="pic block"><a href="/{$articul}"><img src="/pic/middle/{$articul}/{$firstpic}" alt="Фото"/></a></div>
+  <div class="pic block"><a href="/{$articul}"><img {if $firstpic}
+                                                    src="/pic/middle/{$articul}/{$firstpic}"
+                                                    {else}
+                                                    src="/img/temp/empty-middle-foto.jpg"
+                                                    {/if}
+                                                    alt="Фото"/></a></div>
 
 <!--
  <label class="compare"><input class="checkbox" type="checkbox"/>сравнить</label>

@@ -99,13 +99,24 @@
 <!--		  <p class="badge"><img src="/img/bestprice.png" alt="Лучшая цена"/></p>-->
 
 		  <div class="pic">
-		    <a title="{$name}" href="/pic/big/{$articul}/{$firstpic}">
-			  <img src="/pic/goods/{$articul}/{$firstpic}" width="225" alt="Фото"/>
-			  <var class="zoom"></var>
-		    </a>
+            {if $firstpic}
+               <a title="{$name}"
+                  href="/pic/big/{$articul}/{$firstpic}">
+               <img src="/pic/goods/{$articul}/{$firstpic}"
+                   width="225" alt="Фото"/>
+            {else}
+               <img src="/img/temp/empty-foto.jpg"
+                   width="225" alt="Фото"/>
+            {/if}
+              <var class="zoom"></var>
+            {if $firstpic}
+		        </a>
+            {/if}
 		  </div>
 
-		  <div class="block block-item-pics">
+          {if $firstpic}
+          {if length($pics) > 1}
+          <div class="block block-item-pics">
 		    <ul>
 		      {foreach $pic in $pics}
               <li>{\n}
@@ -116,6 +127,8 @@
 		      {/foreach}
 		    </ul>
 		  </div>
+          {/if}
+          {/if}
 
 <!--
 

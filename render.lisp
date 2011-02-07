@@ -110,7 +110,7 @@
                          :procent procent
                          :subst (format nil "/~a" (articul object))
                          :pics pics
-                         :firstpic (if (null pics) "" (car pics))
+                         :firstpic (if (null pics) nil (car pics))
                          :optlist (if (null (optgroups object))
                                       ""
                                       (product:optlist
