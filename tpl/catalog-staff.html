@@ -195,7 +195,13 @@
 
 {template producers}
 <div class="producer-block">
-  <p class="h2">Производители<span class="switch switch-full"><a rel="switch" href="#full">Полный список</a></span></p>
+  <p class="h2">Производители
+    {if $vendorhiddenblocks}
+    <span class="switch switch-full">
+      <a rel="switch" href="#full">Полный список</a>
+    </span>
+    {/if}
+  </p>
   <ul class="producer-list">
      {foreach $vendorblock in $vendorblocks}
      <li class="item">
