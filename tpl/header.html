@@ -1,5 +1,12 @@
 {namespace root}
 
+{template short-linked-header}
+<div class="header header-short">
+  <div class="logo"><a href="/"><img src="img/logo.jpg" alt="ЦиFры"/></a></div>
+  <div class="phone"><img src="img/phone.png" alt="320-8080"/></div>
+</div>
+{/template}
+
 {template shortheader}
 <div class="header header-short">
   <div class="logo"><img src="img/logo.jpg" alt="ЦиFры"/></div>
@@ -17,7 +24,7 @@
   звоните:</p>{\n}
 -->
 
-	<p class="nav"><a href="kakdobratsja">Адреса магазинов</a><a href="about">О компании</a><a href="delivery">Доставка и оплата</a><a href="service-center">Сервис-центр</a><a href="warranty">Гарантия</a><a href="corporate">Корпоративным клиентам</a></p>{\n}
+	<p class="nav"><a href="kakdobratsja">Адреса магазинов</a><a href="about">О компании</a><a href="delivery">Доставка и оплата</a><a href="servicecenter">Сервис-центр</a><a href="warranty">Гарантия</a><a href="corporate">Корпоративным клиентам</a></p>{\n}
 
 <!--
 <div class="dropdown city"><span><a href="#city"
@@ -40,10 +47,9 @@
 	<div class="search">{\n}
 	  <form action="/search" method="get">{\n}
 		<p>{\n}
-		  <input name="q" class="text" type="text" value="ноутбук
-		  Asus" onfocus="if(this.value == 'ноутбук Asus')
+		  <input name="q" class="text" type="text" value="Acer Aspire" onfocus="if(this.value == 'Acer Aspire')
 		  {this.value='';};"  onblur="if(this.value == '')
-		  {this.value='ноутбук Asus';};"/>{\n}
+		  {this.value='Acer Aspire';};"/>{\n}
 		  <input class="submit" type="submit" value="Найти"/>{\n}
 		</p>{\n}
 	  </form>{\n}
