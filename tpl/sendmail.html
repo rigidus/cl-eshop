@@ -4,7 +4,11 @@
 <tr>{\n}
   <td>{$articul}</td>{\n}
   <td>{$name}</td>{\n}
-  <td>{$price}</td>{\n}
+  <td>{if $siteprice == 0}
+            {$price}
+      {esle}
+            {$siteprice}
+      {/if}</td>{\n}
   <td>{$cnt}</td>{\n}
   <td>{$sum}</td>{\n}
 </tr>{\n}

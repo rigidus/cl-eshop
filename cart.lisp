@@ -124,8 +124,14 @@
                                       (plist   (plist-representation (gethash (format nil "~a" articul) *storage*)
                                                                              :articul
                                                                              :name
-                                                                             :price))
-                                      (sum     (* (getf plist :price) cnt)))
+                                                                             :price
+                                                                             :siteprice))
+                                      (product-real-price (if
+                                                           (= (getf plist :siteprice)
+                                                              0)
+                                                           (getf plist :price)
+                                                           (getf plist :siteprice)))
+                                      (sum (* product-real-price cnt)))
                                  (setf itogo (+ itogo sum))
                                  (list* :cnt cnt
                                         :sum sum
