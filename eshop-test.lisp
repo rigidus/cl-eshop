@@ -1,8 +1,6 @@
 (in-package #:eshop-test)
 
 
-
-
 (defun test-filter(group)
   (mapcar #'(lambda(p)
               (eshop::with-option p
@@ -45,3 +43,17 @@
 ;;   (list* :cnt cnt
 ;;          :sum sum
 ;;          plist))
+
+(defun get-producter (product)
+  (let ((result))
+   (mapcar #'(lambda (optgroup)
+               (if (string= (eshop::name optgroup) "Общие характеристики")
+                   (let ((options (eshop::options optgroup)))
+                     (mapcar #'(lambda (opt)
+                                 (if (string= (eshop::name opt) "Производитель")
+                                     (setf result (eshop::value opt))))
+                             options))))
+           (eshop::optgroups product))
+   result))
+
+;; (get-producter (gethash "138938" eshop::*storage*))
