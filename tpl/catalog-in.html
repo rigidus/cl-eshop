@@ -1,12 +1,12 @@
 {namespace catalog}
 
 {template filter}
-<li><a href="/{$groupkey}/{$key}">{$name}</a>&nbsp;</li>
+<li><a href="/{$groupkey}/{$key}">{$name}</a>&nbsp;</li>{\n}
 {/template}
 
 {template product}
-<li class="item block">
-  <p class="place"><a href="/{$groupkey}">{$groupname}</a></p>
+<li class="item block">{\n}
+  <p class="place"><a href="/{$groupkey}">{$groupname}</a></p>{\n}
 <!--
   <div class="area">
 	<p class="rating rating4"><i></i></p>
@@ -17,14 +17,14 @@
                                                     {else}
                                                     src="/img/temp/empty-middle-foto.jpg"
                                                     {/if}
-                                                    alt="Фото"/></a></div>
+                                                    alt="Фото"/></a></div>{\n}
 
 <!--
  <label class="compare"><input class="checkbox" type="checkbox"/>сравнить</label>
 -->
 
-  <div class="info">
-	<p class="h2"><a href="/{$articul}">{$name}</a></p>
+  <div class="info">{\n}
+	<p class="h2"><a href="/{$articul}">{$name}</a></p>{\n}
 
 <!--
 	<p><em>Рабочий инструмент с мультимедийными возможностями</em></p>
@@ -34,22 +34,22 @@
 	<p>Экран 15,6" (1366x788), диск 250 ГБ, память 3 ГБ, процессор
 	2,16 ГГц, работа от батареи 3 часа, вес 2,6 кг</p>
 -->
-	<big class="price">{$price} <var>руб.</var></big>
-	<span class="add"><a href="#add" onclick="return rAddCart('{$articul}', '{$group_id}', '{$name}', {$price}, 1,'/{$articul}','{$pic}');"><img src="/img/cart-add.png" alt="В корзину"/></a></span>
-  </div>
-</li>
+	<big class="price">{$price} <var>руб.</var></big>{\n}
+	<span class="add"><a href="#add" onclick="return rAddCart('{$articul}', '{$group_id}', '{$name}', {$price}, 1,'/{$articul}','{$pic}');"><img src="/img/cart-add.png" alt="В корзину"/></a></span>{\n}
+  </div>{\n}
+</li>{\n}
 {/template}
 
 
 {template group}
-<li class="item block">
-  <p class="place"><a href="{$key}">{$name}</a>&nbsp;({$cnt})</p>
+<li class="item block">{\n}
+  <p class="place"><a href="{$key}">{$name}</a>&nbsp;({$cnt})</p>{\n}
 <!--
   <div class="area">
 	<p class="rating rating3"><i></i></p>
   </div>
 -->
-  <div class="pic"><a href="/{$key}"><img src="{$pic}" alt="$name"/></a></div>
+  <div class="pic"><a href="/{$key}"><img src="{$pic}" alt="$name"/></a></div>{\n}
 <!--
   <div class="info">
 	<p class="h2"><a href="{$key}">{$name}</a></p>
@@ -61,8 +61,8 @@
   </div>
 -->
 
-  <hr/>
-  <ul class="filters-list">
+  <hr/>{\n}
+  <ul class="filters-list">{\n}
     {foreach $filter in $filters}
     {call filter data="$filter" /}
     {/foreach}
@@ -73,18 +73,18 @@
 
 -->
 
-  </ul>
-</li>
+  </ul>{\n}
+</li>{\n}
 {/template}
 
 
 {template centergroup}
 {$producers |noAutoescape}
-<ul class="catalog">
+<ul class="catalog">{\n}
   {foreach $group in $groups}
   {call group data="$group" /}
   {/foreach}
-</ul>
+</ul>{\n}
 {$accessories |noAutoescape}
 {/template}
 
@@ -103,48 +103,48 @@
 <p class="maybe">Возможно, вы имели в виду «<strong>toshiba за 30 тысяч</strong>»? В этом случае будет гораздо больше - <strong><a href="#">241 модель</a></strong></p>
 
 -->
-<div class="pager">
+<div class="pager">{\n}
  <p>{$pager |noAutoescape}</p>
-</div>
+</div>{\n}
 
-<p class="sort-on">
+<p class="sort-on">{\n}
   Сортировать по:
   {foreach $sort in $sorts}
   {call sortelt data="$sort" /}
   {/foreach}
-</p>
-<ul class="catalog catalog-2">
+</p>{\n}
+<ul class="catalog catalog-2">{\n}
   {foreach $product in $products}
   {call product data="$product" /}
   {/foreach}
-</ul>
-  <p class="sort-on">
+</ul>{\n}
+  <p class="sort-on">{\n}
   Сортировать по:
   {foreach $sort in $sorts}
   {call sortelt data="$sort" /}
   {/foreach}
-  </p>
-<div class="pager">
+  </p>{\n}
+<div class="pager">{\n}
   <p>{$pager |noAutoescape}</p>
 <!--
   <p>Страница:<a href="#">&larr;Ctrl Предыдущая</a><a href="#">Следующая Ctrl&rarr;</a></p>
   <p><a href="#">1</a><a href="#">2</a><a href="#">3</a><span>&hellip;</span><a class="active"
   href="#">8</a><a href="#">9</a><a href="#">10</a><span>&hellip;</span><a href="#">20</a></p>
 -->
-</div>
+</div>{\n}
 {$accessories |noAutoescape}
 {/template}
 
 {template breadcrumbtail}
-&nbsp;<span class="h1">{$val}</span>
+&nbsp;<span class="h1">{$val}</span>{\n}
 {/template}
 
 {template breadcrumbelt}
-<a href="/{$key}">{$val}</a>&nbsp;/&nbsp;
+<a href="/{$key}">{$val}</a>&nbsp;/&nbsp;{\n}
 {/template}
 
 {template breadcrumbs}
-<a href="/catalog">Каталог</a>&nbsp;/&nbsp;
+<a href="/catalog">Каталог</a>&nbsp;/&nbsp;{\n}
 {foreach $breadcrumbelt in $breadcrumbelts}
 {call breadcrumbelt data="$breadcrumbelt" /}
 {/foreach}
@@ -152,30 +152,30 @@
 {/template}
 
 {template content}
-<div class="content">
-  <div class="full">
-	<div class="left">
+<div class="content">{\n}
+  <div class="full">{\n}
+	<div class="left">{\n}
 	  {$menu |noAutoescape}
-	</div>
-	<div class="right2">
-	  <p class="breadcrumbs">
+	</div>{\n}
+	<div class="right2">{\n}
+	  <p class="breadcrumbs">{\n}
         {$breadcrumbs |noAutoescape}
-      </p>
+      </p>{\n}
 
 <!--
 	  <p class="catalog-count"><strong>1471 моделей</strong> и аксессуары к ним</p>
 -->
 
-	</div>
-	<div class="center">
+	</div>{\n}
+	<div class="center">{\n}
       {$subcontent |noAutoescape}
-	</div>
-	<div class="right">
+	</div>{\n}
+	<div class="right">{\n}
       {foreach $rightblock in $rightblocks}
       {$rightblock |noAutoescape}
       {/foreach}
-	</div>
-  </div>
+	</div>{\n}
+  </div>{\n}
   {$tradehits |noAutoescape}
-</div>
+</div>{\n}
 {/template}
