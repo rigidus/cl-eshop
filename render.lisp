@@ -110,7 +110,7 @@
                          :procent procent
                          :subst (format nil "/~a" (articul object))
                          :pics pics
-                         :firstpic (if (null pics) "" (car pics))
+                         :firstpic (if (null pics) nil (car pics))
                          :optlist (if (null (optgroups object))
                                       ""
                                       (product:optlist
@@ -145,15 +145,28 @@
                          (realname object))))))
 
 
+(defun make-producters-lists(list &optional (column-number 4))
+  (loop
+     for current-list on list
+     for i from 1 to column-number
+     collect (loop for item in current-list
+                by #'(lambda (list)
+                       (let ((result-list list))
+                         (loop for j from 1 to column-number
+                            do (setf result-list (cdr result-list)))
+                         result-list))
+                collect item)))
+
+
 (defmethod restas:render-object ((designer eshop-render) (object producers))
   (multiple-value-bind (base hidden)
-      (cut 7 (mapcar #'(lambda (x)
+      (cut 12 (mapcar #'(lambda (x)
                           (list :vendor (car x)
                                 :cnt (cadr x)
                                 :link (format nil "?vendor=~a" (car x))))
                       (producers object)))
-    (catalog:producers (list :vendorblocks (list :vendorblock base)
-                             :vendorhiddenblocks (list :vendorblock hidden)))))
+    (catalog:producers (list :vendorblocks (make-producters-lists base)
+                             :vendorhiddenblocks (make-producters-lists hidden)))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object filter))
