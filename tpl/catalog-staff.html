@@ -183,24 +183,36 @@
 <li><a href="{$link}">{$vendor}</a>&nbsp;({$cnt})</li>
 {/template}
 
-{template vendorblock}
-<li class="item">
-  <ul class="catalog-in-list">
-    {foreach $vendorelt in $vendorblock}
-    {call vendorelt data="$vendorelt" /}
-    {/foreach}
-  </ul>
-</li>
-{/template}
-
 {template producers}
 <div class="producer-block">
-  <p class="h2">Производители<span class="switch switch-full"><a rel="switch" href="#full">Полный список</a></span></p>
+  <p class="h2">Производители
+    {if $vendorhiddenblocks}
+    <span class="switch switch-full">
+      <a rel="switch" href="#full">Полный список</a>
+</span>
+    {/if}
+  </p>
   <ul class="producer-list">
-     {call vendorblock data="$vendorblocks" /}
+     {foreach $vendorblock in $vendorblocks}
+     <li class="item">
+       <ul class="catalog-in-list">
+         {foreach $vendorelt in $vendorblock}
+         {call vendorelt data="$vendorelt" /}
+         {/foreach}
+       </ul>
+     </li>
+     {/foreach}
   </ul>
   <ul class="producer-list producer-list-collapsed">
-     {call vendorblock data="$vendorhiddenblocks" /}
+    {foreach $vendorblock in $vendorhiddenblocks}
+    <li class="item">
+      <ul class="catalog-in-list">
+        {foreach $vendorelt in $vendorblock}
+        {call vendorelt data="$vendorelt" /}
+        {/foreach}
+      </ul>
+    </li>
+    {/foreach}
   </ul>
 </div>
 {/template}

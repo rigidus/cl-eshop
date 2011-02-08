@@ -74,7 +74,7 @@
             "cart-widget.html"      "cart.html"               "checkout.html"
             "admin.html"            "article.html"            "search.html"
             "agent.html"            "update.html"             "outload.html"
-            "header.html"                    "static.html"
+            "header.html"           "static.html"
             "delivery.html"         "about.html"
             "faq.html"              "kakdobratsja.html"       "kaksvjazatsja.html"
             "levashovsky.html"      "partners.html"           "payment.html"
@@ -86,13 +86,13 @@
             "news5.html"            "news6.html"              "corporate.html"
             "dillers.html"          "sendmail.html"           "404.html"
             )))
-;;
+
 (compile-templates)
 
-(mapcar #'(lambda (fname)
-            (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
-              (closure-template:compile-template :common-lisp-backend pathname)))
-        '("fullfilter.html" "product-others.html"))
+;; (mapcar #'(lambda (fname)
+;;             (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
+;;               (closure-template:compile-template :common-lisp-backend pathname)))
+;;         '("fullfilter.html" "product-others.html"))
 
 
 (load "errors.lisp")
