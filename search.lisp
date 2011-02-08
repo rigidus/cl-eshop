@@ -94,8 +94,7 @@
            :breadcrumbs "<a href=\"/catalog\">Каталог</a> / Поиск"
            :menu (menu)
            :rightblocks (list (catalog:rightblock1)
-                              (catalog:rightblock2)
-                              (catalog:rightblock3))
+                              (catalog:rightblock2))
            :subcontent (if (null centercontent)
                            "Ничего не найдено"
                            (format nil "~a" centercontent))))))
