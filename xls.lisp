@@ -78,7 +78,7 @@
                            (setf cur-options nil))
                          (push (list :name field :value val) cur-options))))))
     (push (list :optgroup_name cur-optgroup :options (reverse cur-options)) rs)
-    (append flt (list :rs-options (reverse rs)))))
+    (append flt (list :result-options (reverse rs)))))
 
 
 (defmethod ƒ ((ifl pathname) (obn nko))
@@ -135,7 +135,8 @@
                  (product (gethash (format nil "~a" articul) *storage*)))
             (if (null product)
                 (format nil "warn: product ~a (articul ~a) not found, ignore (file: ~a)" realname articul file)
-                (setf (optgroups product) optgroups)))))
+                (setf (optgroups product) optgroups))
+            )))
     (format t "~%...} successfully processed ~a files" cnt)))
 
 

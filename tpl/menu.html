@@ -5,12 +5,12 @@
 {/template}
 
 {template sub}
-  <li><a href="{$key}">{$name}</a></li>
+  <li><a href="/{$key}">{$name}</a></li>
 {/template}
 
 {template selected}
   <li class="active">
-	<p class="block menu-p3 menu-level1"><a href="{$keu}">{$name}</a><var></var></p>
+	<p class="block menu-p3 menu-level1"><a href="{$key}">{$name}</a><var></var></p>
 	<div class="block menu-level2">
 	  <ul>
         {foreach $sub in $subs}{\n}

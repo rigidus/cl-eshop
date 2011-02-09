@@ -511,7 +511,8 @@ is replaced with replacement."
 
 (defmethod relink ((object product))
   (let ((rs (list nil nil nil nil)))
-    (unless (active object)
+    (when (or (not (active object))
+              (not (equal 'group (type-of (parent object)))))
       (return-from relink rs))
     (let* ((base-vendor) (tmp))
       (with-option object "Общие характеристики" "Производитель"
