@@ -68,9 +68,6 @@
     (setf dumb (remove-if #'(lambda (x)
                               (equal x (assoc :id dumb)))
                           dumb))
-    (setf dumb (remove-if #'(lambda (x)
-                              (equal x (assoc :keyoptions dumb)))
-                          dumb))
     ;; keyoptions - json array or null
     (re-assoc dumb :keyoptions
               (if (null (keyoptions object))
