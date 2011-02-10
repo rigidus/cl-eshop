@@ -97,6 +97,12 @@
 (restore-from-files)
 
 
+(defun store-to-files ()
+  (maphash #'(lambda (k v)
+               (serialize v))
+           *storage*))
+
+
 ;; Кое-какие заготовки для переноса данных - удалить после завершения
 ;; (let ((data (cl-store:restore "#h-product"))
 ;;       (old 0)
