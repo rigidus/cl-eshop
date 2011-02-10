@@ -98,12 +98,19 @@
 
 
 (defun store-to-files ()
-  (maphash #'(lambda (k v)
-               (serialize v))
-           *storage*))
+  (when nil
+    ;; Этот код не должен применяться необдуманно! :)
+    (maphash #'(lambda (k v)
+                   (when (equal 'group (type-of v))
+                     (serialize v)))
+             *storage*)
+    (print "done"))
+  "deprecated")
+
+;; (store-to-files)
 
 
-;; Кое-какие заготовки для переноса данных - удалить после завершения
+;; Кое-какие заготовки для переноса данных - удалить после переезда
 ;; (let ((data (cl-store:restore "#h-product"))
 ;;       (old 0)
 ;;       (new 0)
