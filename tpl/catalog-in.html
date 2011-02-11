@@ -80,11 +80,17 @@
 
 {template centergroup}
 {$producers |noAutoescape}
-<ul class="catalog">{\n}
+
   {foreach $group in $groups}
-  {call group data="$group" /}
+     {if index($group)%2 == 0}
+         <ul class="catalog">{\n}
+     {/if}
+           {call group data="$group" /}
+     {if isLast($group) or (index($group)%2 == 1)}
+         </ul>{\n}
+     {/if}
   {/foreach}
-</ul>{\n}
+
 {$accessories |noAutoescape}
 {/template}
 
