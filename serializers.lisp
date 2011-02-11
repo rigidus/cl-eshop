@@ -31,7 +31,7 @@
                              :key key
                              :parent parent
                              :name (cdr (assoc :name raw))
-                             :active (cdr(assoc :active raw))
+                             :active (cdr (assoc :active raw))
                              :empty (cdr (assoc :empty raw))
                              :order (cdr (assoc :order raw))
                              :fullfilter (unserialize (cdr (assoc :fullfilter raw)) (make-instance 'group-filter))
