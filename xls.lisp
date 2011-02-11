@@ -135,8 +135,16 @@
                  (product (gethash (format nil "~a" articul) *storage*)))
             (if (null product)
                 (format nil "warn: product ~a (articul ~a) not found, ignore (file: ~a)" realname articul file)
-                (setf (optgroups product) optgroups))
-            )))
+                (progn
+                  (setf (optgroups product) optgroups)
+
+                  (if (not
+                       (string=
+                        (string-trim " "
+                                     (format nil "~@[~a~]"
+                                             realname))
+                        ""))
+                      (setf (realname product) realname)))))))
     (format t "~%...} successfully processed ~a files" cnt)))
 
 
