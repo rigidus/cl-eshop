@@ -31,7 +31,7 @@
    ----------------------------------------------------------------------- */
 .footer {
     width:100%;
-    height:183px;
+    height:203px;
     border-top:10px solid #e6e6e6;
     position:absolute;
     left:0;bottom:0;
@@ -49,7 +49,7 @@
     padding-top:10px;
 }
 .footer .list {
-    height:164px;
+    height:184px;
     overflow:hidden;
     position:absolute;
     top:12px;
