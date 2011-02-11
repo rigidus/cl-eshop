@@ -7,6 +7,17 @@
 
 (in-package #:eshop)
 
+(defmacro re-assoc (alist key val)
+  `(progn
+     (when (assoc ,key ,alist)
+       (setf ,alist (remove-if #'(lambda (x)
+                                   (equal x (assoc ,key ,alist)))
+                               ,alist)))
+     (push (cons ,key  ,val) ,alist)))
+
+;; (macroexpand-1 '(re-assoc dumb :nameless (name object)))
+
+
 
 (defmacro with-sorted-paginator (get-products body)
   `(let* ((products ,get-products)

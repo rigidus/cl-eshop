@@ -55,34 +55,39 @@
                               (format nil "~{/~a~}" path-list)
                               (key object)))
          (pathname (format nil "~a~a" current-dir (key object)))
-         (dumb '((:name . "-")
-                 (:active . nil)
-                 (:empty . nil)
-                 (:keyoptions . nil)
-                 (:fullfilter . nil)
-                 (:order . 1)
-                 (:ymlshow . 1)
-                 (:pic . ""))))
+         (dumb))
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)
     ;; Подтягиваем данные из файла, если он есть
     (when (probe-file pathname)
-      (setf dumb (union dumb (decode-json-from-string (alexandria:read-file-into-string pathname)) :key #'car)))
-    ;; Сохраняем только те поля, которые нам известны, неизвестные сохраняем без изменений
-    (setf (cdr (assoc :name dumb)) (name object))
-    (setf (cdr (assoc :active dumb)) (active object))
-    (setf (cdr (assoc :empty dumb)) (empty object))
-    (setf (cdr (assoc :pic dumb)) (pic object))
+      (setf dumb (decode-json-from-string (alexandria:read-file-into-string pathname))))
+    ;; Удаляем :key и :id если он есть
+    (setf dumb (remove-if #'(lambda (x)
+                              (equal x (assoc :key dumb)))
+                          dumb))
+    (setf dumb (remove-if #'(lambda (x)
+                              (equal x (assoc :id dumb)))
+                          dumb))
+    (setf dumb (remove-if #'(lambda (x)
+                              (equal x (assoc :keyoptions dumb)))
+                          dumb))
     ;; keyoptions - json array or null
-    (setf (cdr (assoc :keyoptions dumb))
-          (if (null (keyoptions object))
-              "null"
-              (let ((json-string (format nil "~{~a~}"
-                                         (loop :for item :in (keyoptions object) :collect
-                                            (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\"},~%"
-                                                    (getf item :optgroup)
-                                                    (getf item :optname))))))
-                (format nil "[~a]" (subseq  json-string 0 (- (length json-string) 2))))))
+    (re-assoc dumb :keyoptions
+              (if (null (keyoptions object))
+                  "null"
+                  (let ((json-string (format nil "~{~a~}"
+                                             (loop :for item :in (keyoptions object) :collect
+                                                (format nil "    {\"optgroup\":\"~a\", \"optname\":\"~a\"},~%"
+                                                        (getf item :optgroup)
+                                                        (getf item :optname))))))
+                    (format nil "[~%~a~%  ]" (subseq  json-string 0 (- (length json-string) 2))))))
+    ;; Сохраняем только те поля, которые нам известны, неизвестные сохраняем без изменений
+    (re-assoc dumb :pic (pic object))
+    (re-assoc dumb :ymlshow (ymlshow object))
+    (re-assoc dumb :order (order object))
+    (re-assoc dumb :empty (empty object))
+    (re-assoc dumb :active (active object))
+    (re-assoc dumb :name (name object))
     ;; assembly json-string
     (let ((json-string
            (format nil "~{~a~}"
@@ -90,19 +95,19 @@
                               (loop :for item :in dumb :collect
                                  (let ((field (string-downcase (format nil "~a" (car item))))
                                        (value (cdr item)))
-                                   (cond ((equal t   value) (format nil "\"~a\":true,~%" field))
-                                         ((equal nil value) (format nil "\"~a\":null,~%" field))
+                                   (cond ((equal t   value) (format nil "  \"~a\": true,~%" field))
+                                         ((equal nil value) (format nil "  \"~a\": null,~%" field))
                                          ((or (subtypep (type-of value) 'number)
                                               (equal 'null (type-of value)))
-                                          (format nil "\"~a\":~a,~%" field value))
+                                          (format nil "  \"~a\": ~a,~%" field value))
                                          ((string= "keyoptions" field)
-                                          (format nil "\"~a\":~a,~%" field value))
+                                          (format nil "  \"~a\": ~a,~%" field value))
                                          ((subtypep (type-of value) 'string)
-                                          (format nil "\"~a\":\"~a\",~%"
+                                          (format nil "  \"~a\": \"~a\",~%"
                                                   field
                                                   (replace-all value "\"" "\\\"")))
-                                         ;; ;; for debug
-                                         ;; (t (format nil "\"~a\":[~a][~a],~%"
+                                         ;; for debug
+                                         ;; (t (format nil "  \"~a\": [~a][~a],~%"
                                          ;;            field
                                          ;;            (type-of value)
                                          ;;            value))
@@ -110,8 +115,8 @@
       ;; correction
       (setf json-string (subseq  json-string 0 (- (length json-string) 2)))
       (setf json-string (format nil "{~%~a~%}~%" json-string))
-      ;; ;; dbg
-      ;; (format t "~a---" json-string)
+      ;; dbg
+      ;; (format t "~a" json-string)
       ;; save file
       (with-open-file (file pathname
                             :direction :output
@@ -119,7 +124,8 @@
                             :external-format :utf-8)
         (format file json-string))
       ;; return pathname
-      pathname)))
+      pathname
+      )))
 
 
 ;; GROUP-FILTER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
