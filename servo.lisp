@@ -7,6 +7,17 @@
 
 (in-package #:eshop)
 
+(defmacro re-assoc (alist key val)
+  `(progn
+     (when (assoc ,key ,alist)
+       (setf ,alist (remove-if #'(lambda (x)
+                                   (equal x (assoc ,key ,alist)))
+                               ,alist)))
+     (push (cons ,key  ,val) ,alist)))
+
+;; (macroexpand-1 '(re-assoc dumb :nameless (name object)))
+
+
 
 (defmacro with-sorted-paginator (get-products body)
   `(let* ((products ,get-products)
@@ -511,7 +522,8 @@ is replaced with replacement."
 
 (defmethod relink ((object product))
   (let ((rs (list nil nil nil nil)))
-    (unless (active object)
+    (when (or (not (active object))
+              (not (equal 'group (type-of (parent object)))))
       (return-from relink rs))
     (let* ((base-vendor) (tmp))
       (with-option object "Общие характеристики" "Производитель"

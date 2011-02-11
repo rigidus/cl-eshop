@@ -77,7 +77,7 @@
 
 
 (defun restore-from-files ()
-  (let ((t-storage))
+  (let ((t-storage) (*package* (find-package :eshop)))
     (handler-bind ((WRONG-PRODUCT-FILE
                     #'(lambda (e)
                         (format t "~%warn: WRONG-PRODUCT-FILE: ~a"
@@ -97,7 +97,20 @@
 (restore-from-files)
 
 
-;; Кое-какие заготовки для переноса данных - удалить после завершения
+(defun store-to-files ()
+  (when nil
+    ;; Этот код не должен применяться необдуманно! :)
+    (maphash #'(lambda (k v)
+                   (when (equal 'group (type-of v))
+                     (serialize v)))
+             *storage*)
+    (print "done"))
+  "deprecated")
+
+;; (store-to-files)
+
+
+;; Кое-какие заготовки для переноса данных - удалить после переезда
 ;; (let ((data (cl-store:restore "#h-product"))
 ;;       (old 0)
 ;;       (new 0)
