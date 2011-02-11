@@ -137,13 +137,9 @@
                 (format nil "warn: product ~a (articul ~a) not found, ignore (file: ~a)" realname articul file)
                 (progn
                   (setf (optgroups product) optgroups)
-
-                  (if (not
-                       (string=
-                        (string-trim " "
-                                     (format nil "~@[~a~]"
-                                             realname))
-                        ""))
+                  ;; Если есть значимое realname - перезаписать в продукте
+                  (if (not (string= "" (string-trim '(#\Space #\Tab #\Newline)
+                                                    (format nil "~@[~a~]" realname))))
                       (setf (realname product) realname)))))))
     (format t "~%...} successfully processed ~a files" cnt)))
 
