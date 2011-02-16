@@ -174,7 +174,11 @@
 			  <div class="chars-left">
 			    <table class="chars-table">
                   {foreach $keyoption in $keyoptions}
-                  {call keyoptions data="$keyoption" /}
+                  {if $keyoption.optvalue}
+                     {if not $keyoption.optvalue == ''}
+                     {call keyoptions data="$keyoption" /}
+                     {/if}
+                  {/if}
                   {/foreach}
 				  <tr class="noborder">
 				    <th>&nbsp;</th>
@@ -238,7 +242,7 @@
 	  <ul class="tabs">
 	    <li class="h2"><a href="#overview">Обзор</a></li>
 	    <li class="h2 active"><a href="#tech">Технические&nbsp;характеристики</a></li>
-	    <li class="h2"><a href="#video">Видео-обзор</a></li>
+<!--	    <li class="h2"><a href="#video">Видео-обзор</a></li> -->
 	  </ul>
 
 	  <div class="tab tab-overview tab-hidden">
@@ -362,7 +366,7 @@
 	    <li>
 		  <var class="num">3</var>
 		  <big class="title">Купить в рассрочку</big>
-		  <p><a href="#">Оформите кредит</a> в любом из наших
+		  <p>Оформите кредит в любом из наших
 		  магазинов. Платим проценты за вас! Успейте оформить кредит
 		  и мы заплатим за вас банковский процент! </p>
 <!--

@@ -191,7 +191,9 @@
   (let ((cnt 0))
     (maphash #'(lambda (k v)
                  (declare (ignore k))
-                 (if (equal (type-of v) 'eshop::product)
+                 (if (and
+                      (equal (type-of v) 'eshop::product)
+                      (eshop::active v))
                      (progn
                        (incf cnt)
                        (eshop::serialize v))))
