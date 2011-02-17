@@ -205,8 +205,8 @@ function refreshWidth() {
 
 
 
-
-
+/* Тут ядерная бомба. Дата, когда время жизни куки истекает, проставлена руками
+   TODO: генерировать expires data*/
 function rSetCookie (name, value) {
 	document.cookie= name+"="+encodeURIComponent(value)+"; path=/; expires=Mon, 15-Oct-2011 00:00:00 GMT";
 }
@@ -438,14 +438,16 @@ function initRCartReDraw2 () {
 			$(tmp).find('.delete a').unbind('click').click(function(){
 				$(this).parents('.item').addClass('item-deleted');
 				$(this).parents('.item').find('.pic').animate({opacity: 0.5}, 0);
-				rDelCart(cur.id);
+				rDelCart(cur[0].id);
 				rCartReDraw2();
+                rCartReDraw();
 				return false;
 			});
 			$(tmp).find('.return a').unbind('click').click(function(){
 				$(tmp).find('.pic').animate({opacity: 1}, 0);
 				$(tmp).removeClass('item-deleted');
 				rCartReDraw2();
+                rCartReDraw();
 				return false;
 			});
 		})(cur);

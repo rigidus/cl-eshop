@@ -73,6 +73,7 @@
                                            *trade-hits-2*))))
 
 
+
 (defmacro with-option (product optgroup-name option-name body)
   `(mapcar #'(lambda (optgroup)
                (if (string= (name optgroup) ,optgroup-name)
@@ -83,6 +84,26 @@
                              options))))
            (optgroups ,product)))
 
+(defmacro with-range (key optgroup-name option-name)
+  `(lambda (product)
+     (let ((value-f (getf (request-get-plist) (intern (string-upcase (format nil "~a-f" (symbol-name ,key))) :keyword)))
+           (value-t (getf (request-get-plist) (intern (string-upcase (format nil "~a-t" (symbol-name ,key))) :keyword)))
+           (value-x 0))
+       (with-option product
+         ,optgroup-name ,option-name
+         (setf value-x (value option)))
+       (when (null value-x)
+         (setf value-x "0"))
+       (when (null value-f)
+         (setf value-f "0"))
+       (when (or (null value-t)
+                 (string= value-t ""))
+         (setf value-t "99999999"))
+       (setf value-f (arnesi:parse-float (format nil "~as" value-f)))
+       (setf value-t (arnesi:parse-float (format nil "~as" value-t)))
+       (setf value-x (arnesi:parse-float (format nil "~as" value-x)))
+       (and (<= value-f value-x)
+            (>= value-t value-x)))))
 
 (defun get-date-time ()
   (multiple-value-bind (second minute hour date month year) (get-decoded-time)

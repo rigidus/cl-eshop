@@ -4228,6 +4228,10 @@
     text-align:center;
     background:#ffd652;
 }
+.catalog-cart2 .item .id {
+    display:none;
+}
+
 .catalog-cart2 .item .rating {
     margin:0 0 0 34px;
     display:block;
