@@ -8,7 +8,7 @@
       </a>
       <var style="background: url('{$icon}') no-repeat;"></var>
     </p>
-  </li>
+ </li>
 {/template}
 
 {template sub}
@@ -37,5 +37,6 @@
     {foreach $elt in $elts}{\n}
     {$elt |noAutoescape}{\n}
     {/foreach}{\n}
+    <li><p class="block menu-all menu-level1"><a href="catalog">Весь каталог</a><var></var></p></li>
   </ul>
 {/template}

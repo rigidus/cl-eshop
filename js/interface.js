@@ -76,6 +76,11 @@ function bestSliderItemLoadCallback(carousel) {
 	current = $(carousel.container);
 	$(current).parents('.best-items').find('.slider-pager').find('li').removeClass('active').end().find('li').eq(carousel.first - 1).addClass('active');
 };
+
+function closeFancy() {
+  $.fancybox.close();
+};
+
 /* показ попапа */
 function showPopup(current,where) {
 	$(".popup").hide();
@@ -1091,4 +1096,21 @@ $(document).ready(function() {
 		'titleShow'		: true,
 		'titlePosition'	: 'over'
 	});
+    $(".iframe,.add a").fancybox(
+      {
+        'content' : '<div class="product-add-complete">Товар добавлен в корзину!</div>',
+        'transitionIn'	:	'fade',
+		'transitionOut'	:	'fade',
+		'overlayShow'	:	true,
+		'hideOnOverlayClick':	true,
+		'speedIn'		:	200,
+		'speedOut'		:	200,
+        'width'    : 240,
+        'height'   : 'auto',
+        'autoDimensions' : false,
+        'centerOnScroll' : true,
+        'padding'  : 20,
+        'scrolling' : 'no',
+        'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
+      });
 });

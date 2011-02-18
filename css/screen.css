@@ -5396,6 +5396,11 @@ p.sort-on a.active {
     border: 0px solid #fff;
 }
 
+#fancybox-content .product-add-complete {
+    background-color: #fff;
+    font-weight: bold;
+}
+
 #fancybox-hide-sel-frame {
     position: absolute;
     top: 0;
