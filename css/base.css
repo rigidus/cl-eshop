@@ -21,7 +21,7 @@ a img {border:none;}
 /* _typography
 ----------------------------------------------------------------------- */
 html {height:100%;font-size:100.01%;font-family:Arial, Helvetica, sans-serif;}
-body {height:100%;font-size:14px;line-height:20px;color:#000;background:#fff url('../img/body.png') repeat-x 0 0;}
+body {height:100%;font-size:14px;line-height:20px;color:#000}
 
 h1, h2, h3, h4, h5, h6 {margin:inherit;font-size:inherit;line-height:inherit;font-weight:inherit;}
 .h1 {
@@ -69,7 +69,7 @@ p {margin:0 0 20px 0;}
 a {color:#0776b5;text-decoration:underline;}
 a:focus, a:hover {text-decoration:none;}
 a.js {border-bottom:1px dotted #0776b5;text-decoration:none;}
-a.js:focus, a.js:hover {border-bottom:none;} 
+a.js:focus, a.js:hover {border-bottom:none;}
 
 strong {font-weight:bold;}
 em, dfn {font-style:italic;}

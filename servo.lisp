@@ -536,7 +536,7 @@ is replaced with replacement."
             :groupkey  (if (null group)
                            ""
                            (key  group))
-            :price (price object)
+            :price (siteprice object)
             :firstpic (car pics)
             ))))
 

@@ -267,6 +267,9 @@ function rCalc() {
 			$(current).find('.sum').html(sum);
 
             // ->> жеский костыль для случая, когда rUser не определен в куках или определен странных образом
+            if(sum > 10000) {
+              $(this).find('.delivery-price').html('Доставка — <big>бесплатно</big>');
+            }
             if(rUser){
                 if('delivery' in rUser){
                     // ->>
