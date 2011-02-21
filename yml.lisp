@@ -6,7 +6,7 @@
 ;; но будем выгружать полные деревья исключая только листья, если это нужно
 
 
-(defparameter *yml-group-ids* (make-hash-table))
+(defparameter *yml-group-ids* (make-hash-table :test #'equal))
 
 (defun yml-groups ()
   "Строим *yml-group-ids*"
@@ -64,13 +64,17 @@
                                                (not (null (price product)))
                                                (> (price product) 0))
                                     :collect (yml:offer (list :articul (articul product)
-                                                              :price (price product)
+                                                              :price (siteprice product)
                                                               :category (gethash
                                                                          (key (parent product))
                                                                          *yml-group-ids*)
-                                                              :picture  (let ((pics (get-pics product)))
-                                                                          (if (null pics) nil (car pics)))
+                                                              :picture  (let ((pics (get-pics
+                                                                                     (articul product))))
+                                                                          (if (null pics)
+                                                                              nil
+                                                                              (encode-uri (car pics))))
                                                               :name (name product)
                                                               :description (descr product)
                                                               )))))))
+
 

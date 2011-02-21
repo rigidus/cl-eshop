@@ -143,8 +143,9 @@
              (setf delivery (cdr (assoc :delivery user)))
              (setf pay      (cdr (assoc :pay user)))
              (setf order-id (get-order-id)) ;;генерация идентификатора заказа происходит только если заказ валиден
-             (if (string= (cdr (assoc :deliverytype delivery))
+             (if (and (string= (cdr (assoc :deliverytype delivery))
                           "courier")
+                      (< itogo 10000))
                  (setf deliverysum 200))
              (setf client-mail
                 (sendmail:clientmail
@@ -192,7 +193,9 @@
                                    date
                                    order-id
                                    )))
+          ;;
           (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+          (send-mail (list "internetorder@alpha-pc.com") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
