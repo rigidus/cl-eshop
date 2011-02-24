@@ -74,7 +74,10 @@
                                                                               nil
                                                                               (encode-uri (car pics))))
                                                               :name (name product)
-                                                              :description (descr product)
+                                                              :description (if (string= "NIL"
+                                                                                        (descr product))
+                                                                               nil
+                                                                               (descr product))
                                                               )))))))
 
 
