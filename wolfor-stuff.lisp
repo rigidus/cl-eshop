@@ -246,7 +246,8 @@
                  (declare (ignore k))
                  (if (and
                       (equal (type-of v) 'eshop::product)
-                      (eshop::active v))
+                      ;; (eshop::active v)
+                      (null nil))
                      (progn
                        (incf cnt)
                        (eshop::serialize v))))
