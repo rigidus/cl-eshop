@@ -12,7 +12,6 @@
 (defparameter *order* nil)
 
 ;; (length *history*)
-
 ;; (length (json:decode-json-from-string
 ;;          (sb-ext:octets-to-string (cadr *load-list*) :external-format :cp1251)))
 
@@ -29,6 +28,7 @@
                  (progn
                    ;; Делаем все продукты неактивными
                    (maphash #'(lambda (k v)
+                                (declare (ignore k))
                                 (when (equal (type-of v) 'product)
                                   (setf (active v) nil)))
                             *storage*)
