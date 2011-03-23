@@ -199,7 +199,7 @@
              {if $active}
 			  <div class="item-col1">
 			    <p class="price"><big>{$siteprice}</big> руб.</p>
-			    <p class="note gray">цена в интернете</p>
+			    <p class="note gray">цена для интернет-магазина</p>
 		        <p class="add"><a href="#add" onclick="return
 		        rAddCart('{$articul}', '{$group_id}', '{$name}',
 		        {$siteprice},
@@ -218,12 +218,11 @@
 			    <p class="price red"><big>{$diffprice}</big> руб. <big class="gray">({$procent}%)</big></p>
 			    <p class="note red">экономия</p>
 
-                <p class="deliver"><big>Доставим завтра</big></p>
+                <p class="deliver"><big>Доставим завтра, возможен <a href="kakdobratsja" target="blank">самовывоз.</a></big></p>
 
 			  </div>
-			  <p class="str">*В пределах
-			  Санкт-Петербурга. <a href="#">Условия доставки в другие
-			  регионы</a></p>
+			  <p class="str">В пределах
+			  Санкт-Петербурга.</a></p>
               {else}
              <p class="outs-and-shorts">Товара нет в наличии</p>
              {/if}
@@ -242,7 +241,7 @@
 	  <ul class="tabs">
 	    <li class="h2"><a href="#overview">Обзор</a></li>
 	    <li class="h2 active"><a href="#tech">Технические&nbsp;характеристики</a></li>
-<!--	    <li class="h2"><a href="#video">Видео-обзор</a></li> -->
+	    <li class="h2"><a href="#delivery">Информация о доставке</a></li> 
 	  </ul>
 
 	  <div class="tab tab-overview tab-hidden">
@@ -252,7 +251,28 @@
 
       {$optlist |noAutoescape}
 
-	  <div class="tab tab-video tab-hidden">
+	  <div class="tab tab-delivery tab-hidden">
+	  <noindex>
+	  <p class="h3">Стоимость доставки</p>
+	  <p>При заказе от 10 000 рублей доставляем <strong>бесплатно</strong> в пределах КАД Санкт-Петербурга.<br/>
+	     При заказе до 10 000 рублей стоимость курьерской доставки - 200 рублей в пределах КАД.<br>
+	     Самовывоз из <a href="kakdobratsja" target="blank">наших магазинов</a> - осуществляется <strong>бесплатно</strong></p>
+	  <p class="h3">Сроки доставки</p>
+	  <p>При оформлении заявки до 11:00 доставляем в течение дня при наличие товара на главном складе - Левашовский проспект, 12. При оформлении заявки после 11:00 доставляем на следующий день</p>
+	  <p class="h3">Адреса магазинов</p>
+	  <p><a href="kakdobratsja" target="blank">Левашовский проспект, 12</a> - время работы 24 часа<br/>
+	     <a href="kakdobratsja" target="blank">Петергоф, ул.Ботаническая 18, к.3</a> - время работы с 11-21, кроме воскресенья</p>
+	  <p class="h3">Время доставки</p>
+	  <p> Доставка товара осуществляется с 12:00 до 20:00 ежедневно.</p>
+	  <p class="h3">Стоимость доставки в пригороды Санкт-Петербурга и ЛО</p>
+	  <p>Сестрорецк, Металлострой, Понтонный, Сертолово, Горелово, Парголово, Белоостров, Кузьмолово, и близкие к ним - <strong>450 рублей</strong><br/>
+	     Солнечное, Репино, Пушкин, Павловск, Красное Село, Петродворец - <strong>700 рублей</strong><br/>
+	     Гатчина, Кировск, Сосновый Бор, Тосно, Шлиссельбург, Рощино, Верево, Коммунар - <strong>1000 рублей</strong><br/>
+	     Кириши - <strong>2000 рублей</strong><br/>
+	     Сиверский - <strong>1200 рублей</strong><br/>
+	     Ломоносов - <strong>800 рублей</strong>
+		 
+		 <p><a href="delivery">Более подробно о доставке &rarr;</a></p></noindex>
 	  </div>
     </div>
 
@@ -297,7 +317,7 @@
         {if $active}
 	    <div class="item-col1">
 		  <p class="price"><big>{$siteprice}</big> руб.</p>
-		  <p class="note gray">цена в интернете</p>
+		  <p class="note gray">цена для интернет-магазина</p>
 		  <p class="add"><a href="#add" onclick="return rAddCart('{$articul}', '{$group_id}', '{$name}', {$siteprice}, 1,'{$subst}','/pic/small/{$articul}/{$firstpic}');"><img src="/img/cart-add.png" alt="В корзину"/></a></p>
 	    </div>
 	    <div class="item-col2">
@@ -311,9 +331,9 @@
 	    <div class="item-col3">
 		  <p class="price red"><big>{$diffprice}</big> руб. <big class="gray">({$procent}%)</big></p>
 		  <p class="note red">экономия</p>
-		  <p class="deliver"><big>Доставим завтра</big></p>
+		  <p class="deliver"><big>Доставим завтра, возможен <a href="kakdobratsja" target="blank">самовывоз.</a></big></p>
 	    </div>
-	    <p class="str">*В пределах Санкт-Петербурга.</p>
+	    <p class="str"></p>
         {else}
         <p class="outs-and-shorts">Товара нет в наличии</p>
         {/if}
@@ -334,7 +354,7 @@
   <div id="credit" class="full grey-block credit-block">
     <div class="left">&nbsp;</div>
     <div class="right2">
-	  <p class="h2">Купить этот ноутбук другим способом?</p>
+	  <p class="h2">Купить этот товар другим способом?</p>
 	  <ul class="credit-list">
 	    <li>
 		  <var class="num">1</var>
@@ -377,10 +397,6 @@
 	    </li>
 	  </ul>
     </div>
-  </div>
-<div style="padding: 5px; background-color: #F3F3F3; 
-			  border: 1px solid #BBBBBB; text-align: justify">
-	Купить {$name} в ЦиFры 320-8080, а также узнайть технические характеристики и цену на {$name}, посмотреть фотографии и отзывы посетителей нашего сайта. Заказать {$name} с доставкой на дом - очень легко!
   </div>
   <br/>
 <!--
