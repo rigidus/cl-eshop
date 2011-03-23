@@ -596,7 +596,7 @@ function checkoutFinish(current) {
 		if (rUser.delivery.comment) {
 			temp += '<br/>' + rUser.delivery.comment;
 		}
-		temp += '<br/><a href="checkout2.html">Изменить способ доставки</a>'
+		temp += '<br/><a href="checkout2">Изменить способ доставки</a>'
 	}
 	else
 		if (rUser.delivery.deliverytype == 'auto') {
