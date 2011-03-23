@@ -18,6 +18,7 @@
    (keyoptions        :initarg :keyoptions      :initform nil       :accessor keyoptions)
    (ymlshow           :initarg :ymlshow         :initform nil       :accessor ymlshow)
    (pic               :initarg :pic             :initform nil       :accessor pic)
+   (icon              :initarg :icon            :initform nil       :accessor icon)
    (childs            :initarg :childs          :initform nil       :accessor childs)
    (filters           :initarg :filters         :initform nil       :accessor filters)
    (fullfilter        :initarg :fullfilter      :initform nil       :accessor fullfilter)

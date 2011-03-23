@@ -37,6 +37,7 @@
                              :fullfilter (unserialize (cdr (assoc :fullfilter raw)) (make-instance 'group-filter))
                              :keyoptions keyoptions
                              :pic (cdr (assoc :pic raw))
+                             :icon (cdr (assoc :icon raw))
                              :ymlshow (cdr (assoc :ymlshow raw))
                              :descr (cdr (assoc :descr raw)))))
     (when (equal 'group (type-of parent))
@@ -80,6 +81,7 @@
                     (format nil "[~%~a~%  ]" (subseq  json-string 0 (- (length json-string) 2))))))
     ;; Сохраняем только те поля, которые нам известны, неизвестные сохраняем без изменений
     (re-assoc dumb :pic (pic object))
+    (re-assoc dumb :icon (icon object))
     (re-assoc dumb :ymlshow (ymlshow object))
     (re-assoc dumb :order (order object))
     (re-assoc dumb :empty (empty object))

@@ -183,6 +183,7 @@
                                 :phone (cdr (assoc :phone auth))
                                 :email (cdr (assoc :email auth))
                                 :date (get-date-time)
+                                :comment (cdr (assoc :comment delivery))
                                 :products products))
           (setf filename (multiple-value-bind (second minute hour date month year) (get-decoded-time)
                            (declare (ignore second))

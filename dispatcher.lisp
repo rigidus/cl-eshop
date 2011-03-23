@@ -17,7 +17,6 @@
 (asdf:operate 'asdf:load-op '#:drakma)
 (asdf:operate 'asdf:load-op '#:restas)
 
-
 (defpackage #:wolfor-stuff
   (:use #:cl)
   (:export :range-filter
@@ -95,25 +94,21 @@
 ;;         '("fullfilter.html" "product-others.html"))
 
 
-(load "errors.lisp")
-(load "classes.lisp")
-(load "serializers.lisp")
-(load "servo.lisp")
-(load "spike.lisp")
-(load "generics.lisp")
-
-(load "trans.lisp")
-
-(load "cart.lisp")
-(load "gateway.lisp")
-(load "xls.lisp")
-(load "search.lisp")
-(load "yml.lisp")
-
-(load "wolfor-stuff.lisp")
-
-(load "routes.lisp")
-(load "render.lisp")
+;; (load "errors.lisp")
+;; (load "classes.lisp")
+;; (load "serializers.lisp")
+;; (load "servo.lisp")
+;; (load "spike.lisp")
+;; (load "generics.lisp")
+;; (load "trans.lisp")
+;; (load "cart.lisp")
+;; (load "gateway.lisp")
+;; (load "xls.lisp")
+;; (load "search.lisp")
+;; (load "yml.lisp")
+;; (load "wolfor-stuff.lisp")
+;; (load "routes.lisp")
+;; (load "render.lisp")
 
 
 (setf hunchentoot:*hunchentoot-default-external-format* (flexi-streams:make-external-format :utf-8 :eol-style :lf))

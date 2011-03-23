@@ -17,9 +17,6 @@
 ;; (restas:define-route storage-object-route  ("/:key")
 ;;   "Позвони мне")
 
-;; (restas:define-route main  ("/")
-;;   "Позвони мне")
-
 ;; (setf swank::*connections* nil)
 
 
@@ -126,17 +123,17 @@
 
 ;; GATEWAY
 
-(restas:define-route gateway-route ("/gateway")
-  (gateway-page))
+;; (restas:define-route gateway-route ("/gateway")
+;;   (gateway-page))
 
 (restas:define-route gateway/post-route ("/gateway" :method :post)
   (gateway-page))
 
-(restas:define-route gateway/-route ("/gateway/")
-  (gateway-page))
+;; (restas:define-route gateway/-route ("/gateway/")
+;;   (gateway-page))
 
-(restas:define-route gateway/post/-route ("/gateway/" :method :post)
-  (gateway-page))
+;; (restas:define-route gateway/post/-route ("/gateway/" :method :post)
+;;   (gateway-page))
 
 
 ;; SEARCH
@@ -155,11 +152,11 @@
 
 ;; 404
 
-(restas:define-route not-found-route (":any")
-  (restas:abort-route-handler
-   (babel:string-to-octets
-    (default-page
-        (static:main (list :menu (menu "") :subcontent (error-404:content))))
-    :encoding :utf-8)
-   :return-code hunchentoot:+http-not-found+
-   :content-type "text/html"))
+;; (restas:define-route not-found-route (":any")
+;;   (restas:abort-route-handler
+;;    (babel:string-to-octets
+;;     (default-page
+;;         (static:main (list :menu (menu "") :subcontent (error-404:content))))
+;;     :encoding :utf-8)
+;;    :return-code hunchentoot:+http-not-found+
+;;    :content-type "text/html"))

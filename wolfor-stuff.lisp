@@ -155,7 +155,8 @@
 (defun num-active-product-with-bad-price ()
   (length (remove-if #'(lambda(p) (or (not (eshop::active p))
                                       (and (not (null (eshop::price p)))
-                                           (> (eshop::siteprice p) 0)))) (get-products-list))))
+                                           (> (eshop::siteprice p) 0))))
+                     (get-products-list))))
 
 (defun get-group-ymlshow()
   (let ((result))
@@ -240,19 +241,7 @@
 ;;          (group:products (gethash "pamyat-dlya-noutbukov" trans:*group*))))
 
 
-(defun store-products ()
-  (let ((cnt 0))
-    (maphash #'(lambda (k v)
-                 (declare (ignore k))
-                 (if (and
-                      (equal (type-of v) 'eshop::product)
-                      ;; (eshop::active v)
-                      (null nil))
-                     (progn
-                       (incf cnt)
-                       (eshop::serialize v))))
-             eshop:*storage*)
-    (format t "~& Num of products was serializes: ~a" cnt)))
+
 
 ;; :keywords (format nil "" )
 ;; :description (format nil "")
@@ -260,8 +249,4 @@
 
 ;; (defvar *test-request*)
 
-(maphash #'(lambda(k v)
-             (declare (ignore k))
-             (if (and (equal (type-of v)
-                             'eshop::product)
-                      (<= 0 (eshop::siteprice ))
+
