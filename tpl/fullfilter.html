@@ -47,9 +47,9 @@
 <p>
   <label class="title">{$name}</label>
   <label>от</label>
-  <input name="{$key}-f" class="text text-wide" type="text" value="{$from}"/>
+  <input name="{$key}-f" class="text text-wide" type="text" {if not $from==''}value="{$from}"{/if}/>
   <label>до</label>
-  <input name="{$key}-t" class="text text-wide" type="text" value="{$to}"/>
+  <input name="{$key}-t" class="text text-wide" type="text" {if not $to==''}value="{$to}"{/if}/>
   <label>{$unit}</label>
 </p>
 {/template}
