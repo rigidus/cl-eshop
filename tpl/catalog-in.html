@@ -109,6 +109,8 @@
 <p class="maybe">Возможно, вы имели в виду «<strong>toshiba за 30 тысяч</strong>»? В этом случае будет гораздо больше - <strong><a href="#">241 модель</a></strong></p>
 
 -->
+
+{if $products}
 <div class="pager">{\n}
  <p>{$pager |noAutoescape}</p>
 </div>{\n}
@@ -138,6 +140,10 @@
   href="#">8</a><a href="#">9</a><a href="#">10</a><span>&hellip;</span><a href="#">20</a></p>
 -->
 </div>{\n}
+{else}
+<p>Извините, ни одного товара с похожими характеристиками не найдено. Попробуйте изменить параметры поиска.</p>
+{/if}
+
 {$accessories |noAutoescape}
 {/template}
 
