@@ -51,22 +51,18 @@
                                                                    :key (key filter))))))))
                              ;; else
                              (let ((products-list
-                                    (cond
-                                      ((getf (request-get-plist) :showall)
-                                       (cond
-                                         ((getf (request-get-plist) :fullfilter)
-                                          (filter-controller object (request-get-plist)))
-                                         ((getf (request-get-plist) :vendor)
-                                          (vendor-controller object (request-get-plist)))
-                                         (t (copy-list (products object)))))
-                                      (t (remove-if-not #'(lambda (product)
-                                                            (active product))
-                                                       (cond
-                                                         ((getf (request-get-plist) :fullfilter)
-                                                          (filter-controller object (request-get-plist)))
-                                                         ((getf (request-get-plist) :vendor)
-                                                          (vendor-controller object (request-get-plist)))
-                                                         (t (copy-list (products object)))))))))
+                                    (if (getf (request-get-plist) :showall)
+                                        (copy-list (products object))
+                                        (remove-if-not #'(lambda (product)
+                                                           (active product))
+                                                       (products object)))))
+                               (if (getf (request-get-plist) :vendor)
+                                   (setf products-list
+                                         (remove-if-not #'(lambda (p)
+                                                            (vendor-filter-controller p (request-get-plist)))
+                                                            products-list)))
+                               (if (getf (request-get-plist) :fullfilter)
+                                   (setf products-list (fullfilter-controller products-list  object (request-get-plist))))
                                (with-sorted-paginator
                                    products-list
                                    (catalog:centerproduct
@@ -90,6 +86,7 @@
 (defmethod restas:render-object ((designer eshop-render) (object group-filter))
   (fullfilter:container
    (list :name (name object)
+         :sort (getf (request-get-plist) :sort)
          :base (format nil "~{~a~}"
                        (mapcar #'(lambda (elt)
                                    (filter-element elt (request-get-plist)))
@@ -170,26 +167,35 @@
 
 
 (defmethod restas:render-object ((designer eshop-render) (object producers))
-  (multiple-value-bind (base hidden)
-      (cut 12 (mapcar #'(lambda (x)
-                          (list :vendor (car x)
-                                :cnt (cadr x)
-                                :link (format nil "?vendor=~a" (car x))))
-                      (cond
-                        ((getf (request-get-plist) :showall)
-                         (producersall object))
-                        (t (producers object)))))
-    (catalog:producers (list :vendorblocks (make-producters-lists base)
-                             :vendorhiddenblocks (make-producters-lists hidden)))))
+  (let ((url-parameters (request-get-plist)))
+    (remf url-parameters :page)
+    (multiple-value-bind (base hidden)
+        (cut 12 (mapcar #'(lambda (x)
+                            (setf (getf url-parameters :vendor) (car x))
+                            (list :vendor (car x)
+                                  :cnt (cadr x)
+                                  :link (format nil "?~a" (make-get-str url-parameters))))
+                        (cond
+                          ((getf (request-get-plist) :showall)
+                           (producersall object))
+                          (t (producers object)))))
+      (catalog:producers (list :vendorblocks (make-producters-lists base)
+                               :vendorhiddenblocks (make-producters-lists hidden))))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object filter))
-  (with-sorted-paginator
-      (remove-if-not (func object)
-                     (remove-if-not #'(lambda (product)
-                                        (active product))
-                                    (get-recursive-products
-                                     (parent object))))
+  (let ((products-list (remove-if-not (func object)
+                                     (remove-if-not #'(lambda (product)
+                                                        (active product))
+                                                    (get-recursive-products
+                                                     (parent object))))))
+    (if (getf (request-get-plist) :vendor)
+        (setf products-list
+              (remove-if-not #'(lambda (p)
+                                 (vendor-filter-controller p (request-get-plist)))
+                             products-list)))
+    (with-sorted-paginator
+        products-list
       (default-page
           (catalog:content
            (list :name (name object)
@@ -212,7 +218,7 @@
           :title (format nil "~a - купить ~a по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
                          (name object)
                          (name object)
-                         (name object)))))
+                         (name object))))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object optgroup))

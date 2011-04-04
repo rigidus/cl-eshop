@@ -3,6 +3,7 @@
 {template container}
 <div class="block choose-laptop">
   <form method="get">
+    {if $sort}<input type="hidden" name="sort" value="{$sort}">{/if}
 	<p class="h2">{$name}</p>
     {$base |noAutoescape}
 	<div id="param-advanced" class="switch-block switch-block-hidden">

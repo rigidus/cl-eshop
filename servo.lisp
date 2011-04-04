@@ -34,15 +34,22 @@
 
 
 (defmacro sorts ()
-  `(let ((variants '(:pt "увеличению цены" :pb "уменьшению цены")))
+  `(let ((variants '(:pt "увеличению цены" :pb "уменьшению цены"))
+         (url-parameters (request-get-plist)))
+     (remf url-parameters :page)
+     (remf url-parameters :sort)
      (loop :for sort-field :in variants :by #'cddr :collect
-        (if (string= (string-downcase (format nil "~a" sort-field))
-                     (getf (request-get-plist) :sort))
-            (list :key (string-downcase (format nil "~a" sort-field))
-                  :name (getf variants sort-field)
-                  :active t)
-            (list :key (string-downcase (format nil "~a" sort-field))
-                  :name (getf variants sort-field))))))
+        (let ((key (string-downcase (format nil "~a" sort-field))))
+          (setf (getf url-parameters :sort) key)
+          (if (string= (string-downcase (format nil "~a" sort-field))
+                       (getf (request-get-plist) :sort))
+              (list :key key
+                    :name (getf variants sort-field)
+                    :url (make-get-str url-parameters)
+                    :active t)
+              (list :key key
+                    :url (make-get-str url-parameters)
+                    :name (getf variants sort-field)))))))
 
 
 (defmacro rightblocks ()
@@ -152,6 +159,7 @@
 ;; (filter-test (gethash "noutbuki" *storage*) "http://dev.320-8080.ru/noutbuki?fullfilter=1")
 ;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&fullfilter=1#producer")
 ;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
+;; ( make-get-str "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
 
 ;;фильтрация по значениям опции
 (defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)
@@ -759,7 +767,7 @@ is replaced with replacement."
 ;;      :finally (return t)
 ;;      :do (format t "~&~a ~a" (car function) (cdr function))))
 
-
+;; TODO: удалить из кода
 (defmethod filter-controller ((object group) request-get-plist)
   (let ((functions (mapcar #'(lambda (elt)
                                (cons (eval (car (last elt)))
@@ -772,7 +780,6 @@ is replaced with replacement."
                                                            (get-filter-function-option advanced-filter)))))
                           advanced-filters)))
             (advanced (fullfilter object)))
-
     ;; processing
     (let ((result-products))
       (mapcar #'(lambda (product)
@@ -790,6 +797,33 @@ is replaced with replacement."
                              (get-recursive-products object)))
       result-products)))
 
+
+(defmethod fullfilter-controller (product-list (object group) request-get-plist)
+  (let ((functions (mapcar #'(lambda (elt)
+                               (cons (eval (car (last elt)))
+                                     (get-filter-function-option elt)))
+                           (base (fullfilter object)))))
+    (mapcar #'(lambda (filter-group)
+                (let ((advanced-filters (cadr filter-group)))
+                  (mapcar #'(lambda (advanced-filter)
+                              (nconc functions (list (cons (eval (car (last advanced-filter)))
+                                                           (get-filter-function-option advanced-filter)))))
+                          advanced-filters)))
+            (advanced (fullfilter object)))
+    ;; processing
+    (let ((result-products))
+      (mapcar #'(lambda (product)
+                  (when (loop
+                           :for function :in functions
+                           :finally (return t)
+                           :do (unless (funcall (car function)
+                                                product
+                                                request-get-plist
+                                                (cdr function))
+                                 (return nil)))
+                    (push product result-products)))
+              product-list)
+      result-products)))
 
 (defmethod filter-test ((object group) url)
   (let* ((request-full-str url)
@@ -898,3 +932,13 @@ is replaced with replacement."
             (get-recursive-products object)
            )
     result-products))
+
+(defmethod vendor-filter-controller (product request-get-plist)
+  (let ((vendor))
+       (with-option product "Общие характеристики" "Производитель"
+                    (setf vendor (value option)))
+       (string=
+            (string-trim '(#\Space #\Tab #\Newline) vendor)
+            (string-trim '(#\Space #\Tab #\Newline)
+                         (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ")))))
+
