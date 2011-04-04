@@ -497,7 +497,8 @@
 (defun make-get-str (request-get-plist)
   (format nil "~{~a~^&~}"
           (loop :for cursor :in request-get-plist by #'cddr collect
-             (string-downcase (format nil "~a=~a" cursor (getf request-get-plist cursor))))))
+              (format nil "~a=~a" (string-downcase cursor) (getf request-get-plist cursor))
+             )))
 
 
 
