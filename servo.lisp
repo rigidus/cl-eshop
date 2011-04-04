@@ -23,9 +23,9 @@
   `(let* ((products ,get-products)
           (sorting  (getf (request-get-plist) :sort))
           (sorted-products   (cond ((string= sorting "pt")
-                                    (product-sort products #'< #'price))
+                                    (product-sort products #'< #'siteprice))
                                    ((string= sorting "pb")
-                                    (product-sort products #'> #'price))
+                                    (product-sort products #'> #'siteprice))
                                    ((string= sorting "pt1") products)
                                    (t products))))
      (multiple-value-bind (paginated pager)
@@ -85,9 +85,9 @@
            (optgroups ,product)))
 
 (defmacro f-price ()
-  `(lambda (product)
-     (let ((value-f (getf (request-get-plist) :price-f))
-           (value-t (getf (request-get-plist) :price-t))
+  `(lambda (product request-plist filter-options)
+     (let ((value-f (getf request-plist :price-f))
+           (value-t (getf request-plist :price-t))
            (value-x (siteprice product)))
        (when (null value-f)
          (setf value-f "0"))
@@ -100,9 +100,9 @@
             (>= value-t value-x)))))
 
 (defmacro with-range (key optgroup-name option-name)
-  `(lambda (product)
-     (let ((value-f (getf (request-get-plist) (intern (string-upcase (format nil "~a-f" (symbol-name ,key))) :keyword)))
-           (value-t (getf (request-get-plist) (intern (string-upcase (format nil "~a-t" (symbol-name ,key))) :keyword)))
+  `(lambda (product request-plist filter-options)
+     (let ((value-f (getf request-plist (intern (string-upcase (format nil "~a-f" (symbol-name ,key))) :keyword)))
+           (value-t (getf request-plist (intern (string-upcase (format nil "~a-t" (symbol-name ,key))) :keyword)))
            (value-x 0))
        (with-option product
          ,optgroup-name ,option-name
@@ -120,17 +120,116 @@
        (and (<= value-f value-x)
             (>= value-t value-x)))))
 
-(defmacro with-check (key optgroup-name option-name)
-  `(lambda (product) t))
+
+;;Фильтруем по наличию опции
+(defun filter-with-check-options (key-name option-group-name product request-plist filter-options)
+  (let ((number 0)
+        (result-flag t))
+    (mapcar #'(lambda (option-name)
+                (let ((value-p (getf request-plist
+                                     (intern (string-upcase
+                                              (format nil "~a-~a"
+                                                      key-name
+                                                      number))
+                                             :keyword))))
+                  (incf number)
+                  (when (equal value-p "1")
+                    (let ((value-x))
+                      (mapcar #'(lambda (optgroup)
+                                  (if (string= (name optgroup) option-group-name)
+                                      (progn
+                                        (let ((options (options optgroup)))
+                                          (mapcar #'(lambda (option)
+                                                      (if (string= (name option) option-name)
+                                                          (setf value-x (value option))))
+                                                  options)))))
+                              (optgroups product))
+                      (if (not (string= value-x "Есть"))
+                          (setf result-flag nil))))))
+            filter-options)
+    result-flag))
+
+;; (filter-test (gethash "noutbuki" *storage*) "http://dev.320-8080.ru/noutbuki?fullfilter=1")
+(filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&fullfilter=1#producer")
+
+;;фильтрация по значениям опции
+(defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)
+  (let ((number 0)
+        (result-flag nil)
+        (request-flag t)
+        (value-x nil))
+    (with-option product
+      option-group-name option-name
+      (setf value-x (value option)))
+    ;; (format t "~&Значение опции: ~a ключ: ~a " value-x key-name)
+    (when (not (null value-x))
+      (mapcar #'(lambda (option-value)
+                  (let ((value-p (getf request-plist
+                                       (intern (string-upcase
+                                                (format nil "~a-~a"
+                                                        key-name
+                                                        number))
+                                               :keyword))))
+                    (incf number)
+                    ;; (format t "~&Опция в запросе: ~a ~a" option-value value-p)
+                    (when (equal value-p "1")
+                      (setf request-flag nil)
+                      ;; (format t "~&Опция в запросе: ~a" option-value)
+                      (if (string= value-x option-value)
+                          (setf result-flag t)))))
+              filter-options))
+      (or result-flag
+          request-flag)))
+
+(defmacro with-check (key optgroup-name dummy-var)
+  `(lambda (product request-plist filter-options)
+     (let ((option-group-name ,optgroup-name)
+           (key-name (symbol-name ,key)))
+       (if (string= ,dummy-var "")
+           (filter-with-check-options key-name option-group-name product request-plist filter-options)
+           (filter-with-check-values key-name option-group-name ,dummy-var product request-plist filter-options)))))
+
+
+     ;; (let ((value-p (getf request-plist (intern (string-upcase (format nil "~a" (symbol-name ,key))) :keyword)))
+     ;;       (value-x ""))
+     ;;   (with-option product
+     ;;     ,optgroup-name ,dummy-var
+     ;;     (setf value-x (value option)))
+     ;;   (print filter-options)
+     ;;   (cond
+     ;;     ((null value-p)
+     ;;      t)
+     ;;     ((null value-x)
+     ;;      nil)
+     ;;     (t
+     ;;      (progn
+     ;;        (setf value-p (parse-integer value-p))
+     ;;        (let ((opt-val (nth value-p filter-options)))
+     ;;          (if (string= opt-val "Любой")
+     ;;              t
+     ;;              (string= value-x opt-val)))))))))
+
 
 (defmacro with-radio (key optgroup-name option-name)
-  `(lambda (product) t))
+  `(lambda (product request-plist filter-options)
+     (let ((value-p (getf request-plist (intern (string-upcase (format nil "~a" (symbol-name ,key))) :keyword)))
+           (value-x ""))
+       (with-option product
+         ,optgroup-name ,option-name
+         (setf value-x (value option)))
+       (cond
+         ((null value-p)
+          t)
+         ((null value-x)
+          nil)
+         (t
+          (progn
+            (setf value-p (parse-integer value-p))
+            (let ((opt-val (nth value-p filter-options)))
+              (if (string= opt-val "Любой")
+                  t
+                  (string= value-x opt-val)))))))))
 
-(defmacro with-range (key optgroup-name option-name)
-  `(lambda (product) t))
-
-(defmacro f-price ()
-  `(lambda (product) t))
 
 (defun get-date-time ()
   (multiple-value-bind (second minute hour date month year) (get-decoded-time)
@@ -273,6 +372,7 @@
                                    (leftmenu:selected
                                     (list :key (key val)
                                           :name (name val)
+                                          :icon (icon val)
                                           :subs (loop
                                                    :for child
                                                    :in (sort
@@ -632,33 +732,56 @@ is replaced with replacement."
                                      t
                                      nil))))
 
+(defmethod get-filter-function-option (malformed-filter-list)
+(let ((option nil))
+  (maplist #'(lambda (val)
+              (when (or (equal (car val) :radio)
+                        (equal (car val) :checkbox))
+                (setf option (cadr val))))
+          malformed-filter-list)
+  option))
+
+;; (let ((functions (mapcar #'(lambda (elt)
+;;                              (cons (eval (car (last elt)))
+;;                                      (get-filter-function-option elt)))
+;;                              (base (fullfilter (gethash "noutbuki" *storage*))))))
+;;   (mapcar #'(lambda (filter-group)
+;;               (let ((advanced-filters (cadr filter-group)))
+;;                 (mapcar #'(lambda (advanced-filter)
+;;                             (nconc functions (list (cons (eval (car (last advanced-filter)))
+;;                                                    (get-filter-function-option advanced-filter)))))
+;;                         advanced-filters)))
+;;           (advanced (fullfilter (gethash "noutbuki" *storage*))))
+;;   ;; (format t "~&~{~a~%~}" functions)
+;;   (loop
+;;      :for function :in functions
+;;      :finally (return t)
+;;      :do (format t "~&~a ~a" (car function) (cdr function))))
+
 
 (defmethod filter-controller ((object group) request-get-plist)
   (let ((functions (mapcar #'(lambda (elt)
-                               (eval (car (last elt))))
+                               (cons (eval (car (last elt)))
+                                     (get-filter-function-option elt)))
                            (base (fullfilter object)))))
-
     (mapcar #'(lambda (filter-group)
                 (let ((advanced-filters (cadr filter-group)))
                   (mapcar #'(lambda (advanced-filter)
-                              (nconc functions (list (eval (car (last advanced-filter))))))
-                          advanced-filters)))
-            (advanced(fullfilter object)))
-
-    (mapcar #'(lambda (filter-group)
-                (let ((advanced-filters (cadr filter-group)))
-                  (mapcar #'(lambda (advanced-filter)
-                              (nconc functions (list (eval (car (last advanced-filter))))))
+                              (nconc functions (list (cons (eval (car (last advanced-filter)))
+                                                           (get-filter-function-option advanced-filter)))))
                           advanced-filters)))
             (advanced (fullfilter object)))
-    (print functions)
+
     ;; processing
     (let ((result-products))
       (mapcar #'(lambda (product)
                   (when (loop
                            :for function :in functions
                            :finally (return t)
-                           :do (unless (funcall function product request-get-plist)
+                           :do (unless (funcall (car function)
+                                                product
+                                                request-get-plist
+                                                (cdr function))
                                  (return nil)))
                     (push product result-products)))
               (remove-if-not #'(lambda (product)
@@ -680,6 +803,8 @@ is replaced with replacement."
                               result)))
     (filter-controller object request-get-plist)))
 
+
+;; (fullfilter (gethash "noutbuki" *storage*))
 
 (defun filter-element (elt request-get-plist)
   (let* ((key (string-downcase (format nil "~a" (nth 0 elt))))
@@ -748,14 +873,27 @@ is replaced with replacement."
                   ;;         ;;    (format t "~:c." ch))
                   ;;         )
                   ;; vendor (getf request-get-plist :vendor))
+
+                  ;; Временно отключил унификацию по регистру
+                  ;; (if (string=
+                  ;;      (string-downcase
+                  ;;       (string-trim '(#\Space #\Tab #\Newline) vendor))
+                  ;;      (string-downcase
+                  ;;       (string-trim '(#\Space #\Tab #\Newline)
+                  ;;                    (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " "))))
+                  ;;     (push product result-products))))
+
                   (if (string=
-                       (string-downcase
-                        (string-trim '(#\Space #\Tab #\Newline) vendor))
-                       (string-downcase
+                        (string-trim '(#\Space #\Tab #\Newline) vendor)
                         (string-trim '(#\Space #\Tab #\Newline)
-                                     (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " "))))
-                      (push product result-products))))
-            (remove-if-not #'(lambda (product)
-                               (active product))
-                           (get-recursive-products object)))
+                                     (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ")))
+                      (push product result-products))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  ))
+
+            ;; (remove-if-not #'(lambda (product)
+            ;;                    (active product))
+                           ;; (get-recursive-products object))
+            (get-recursive-products object)
+           )
     result-products))

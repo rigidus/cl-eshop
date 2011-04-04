@@ -11,14 +11,6 @@
            :plist-representation))
 
 
-(defpackage #:wolfor-stuff
-  (:use #:cl)
-  (:export :range-filter
-           :checkbox-filter
-           :price-filter
-           :radio-filter
-           ))
-
 (defpackage #:eshop-test
   (:use #:cl
         #:eshop

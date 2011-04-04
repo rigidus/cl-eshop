@@ -94,10 +94,6 @@
       (print "...} finish restore"))))
 
 
-(print "Restoring data from files")
-(restore-from-files)
-
-
 (defun store-to-files ()
   (when nil
     ;; Этот код не должен применяться необдуманно! :)
@@ -127,29 +123,31 @@
   (maphash #'(lambda(k v)
                (declare (ignore k))
                (if (and (equal (type-of v)
-                               'eshop::product)
-                        (eshop::active v)
-                        (= 0 (eshop::siteprice v)))
+                               'product)
+                        (active v)
+                        (= 0 (siteprice v)))
                    (progn
                      (format t "~&~a: ~a"
-                             (eshop::articul v)
-                             (eshop::name v))
-                     (setf (eshop::siteprice v) (eshop::price v))
-                     (eshop::serialize v))))
-           eshop::*storage*))
+                             (articul v)
+                             (name v))
+                     (setf (siteprice v) (price v))
+                     (serialize v))))
+           *storage*))
 
-(defun safely-restor()
+(defun safely-restore()
   (restore-from-files)
   (use-revert-history)
-  (dtd)
   (copy-price-to-siteprice))
 
 (defun safely-store()
   (restore-from-files)
   (use-revert-history)
-  (dtd)
   (copy-price-to-siteprice)
   (store-products))
+
+(print "Restoring data from files")
+(restore-from-files)
+
 
 ;; (store-to-files)
 

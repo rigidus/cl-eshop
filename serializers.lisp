@@ -128,12 +128,21 @@
 
 
 ;; GROUP-FILTER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; (defun eliminate-malform (malformed-filter)
+;;   (mapcar #'(lambda (malform) (append (butlast malform)
+;;                                       (list :func (car (last malform)))))
+;;           malformed-filter))
+
+;; (defun eliminate-malform-advanced (malformed-filter-list)
+;;   (append (butlast malformed-filter)
+;;           (list :func (last malformed-filter))))
 
 
 (defmethod unserialize (in-string (dummy group-filter))
   (if (null in-string)
       nil
-      (let ((tmp (read-from-string in-string)))
+      (let* ((tmp (read-from-string in-string)))
         (make-instance 'group-filter
                        :name (getf tmp :name)
                        :base (getf tmp :base)

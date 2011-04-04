@@ -38,6 +38,8 @@
                    ;; Обрабатываем все сохраненные пакеты
                    (loop :for packet :in (reverse *load-list*) :do
                       (process packet))
+                   ;; Заполняем siteprice если он равен 0
+                   (copy-price-to-siteprice)
                    ;; Сохраняем *load-list* и *order* для истории
                    (push (list (get-date-time) *order* *load-list*) *history*)
                    ;; Обнуляем *load-list* и *order* (если приходит 1 пакет, то он num=0)
@@ -99,11 +101,13 @@
     (when (equal (type-of product) 'product)
       (setf (articul product)         articul
             (name product)            name
-            (realname product)        (if (or (null realname)
-                                              (null (realname product))
-                                              (string= "" realname))
-                                          name
-                                          realname)
+            (realname product)        (if (or (null (realname product))
+                                              (string= ""  (realname product)))
+                                          (if (or (null realname)
+                                                  (string= "" realname))
+                                              name
+                                              realname)
+                                          (realname product))
             (price product)           price
             (siteprice product)       siteprice
             (ekkprice product)        ekkprice
@@ -114,6 +118,17 @@
             (count-transit  product)  count-transit)
       (setf (gethash (format nil "~a" articul) *storage*) product))))
 
+
+(defun use-revert-history ()
+  (when (not (null *history*))
+    ;; Делаем все продукты неактивными
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (when (equal (type-of v) 'product)
+                   (setf (active v) nil)))
+             *storage*)
+    (loop :for packet :in (reverse (caddr (car *history*))) :do
+       (process packet))))
 
 ;; (let ((a 0))
 ;;   (maphash #'(lambda (k v)
