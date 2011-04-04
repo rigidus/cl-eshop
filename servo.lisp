@@ -150,7 +150,8 @@
     result-flag))
 
 ;; (filter-test (gethash "noutbuki" *storage*) "http://dev.320-8080.ru/noutbuki?fullfilter=1")
-(filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&fullfilter=1#producer")
+;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&fullfilter=1#producer")
+;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
 
 ;;фильтрация по значениям опции
 (defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)
@@ -162,24 +163,23 @@
       option-group-name option-name
       (setf value-x (value option)))
     ;; (format t "~&Значение опции: ~a ключ: ~a " value-x key-name)
-    (when (not (null value-x))
-      (mapcar #'(lambda (option-value)
-                  (let ((value-p (getf request-plist
-                                       (intern (string-upcase
-                                                (format nil "~a-~a"
-                                                        key-name
-                                                        number))
-                                               :keyword))))
-                    (incf number)
-                    ;; (format t "~&Опция в запросе: ~a ~a" option-value value-p)
-                    (when (equal value-p "1")
-                      (setf request-flag nil)
-                      ;; (format t "~&Опция в запросе: ~a" option-value)
-                      (if (string= value-x option-value)
-                          (setf result-flag t)))))
-              filter-options))
-      (or result-flag
-          request-flag)))
+    (mapcar #'(lambda (option-value)
+                (let ((value-p (getf request-plist
+                                     (intern (string-upcase
+                                              (format nil "~a-~a"
+                                                      key-name
+                                                      number))
+                                             :keyword))))
+                  (incf number)
+                  ;; (format t "~&Опция в запросе: ~a ~a" option-value value-p)
+                  (when (equal value-p "1")
+                    (setf request-flag nil)
+                    ;; (format t "~&Опция в запросе: ~a" option-value)
+                    (if (string= value-x option-value)
+                        (setf result-flag t)))))
+            filter-options)
+    (or result-flag
+        request-flag)))
 
 (defmacro with-check (key optgroup-name dummy-var)
   `(lambda (product request-plist filter-options)
