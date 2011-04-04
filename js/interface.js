@@ -609,7 +609,7 @@ function checkoutFinish(current) {
 
 	temp = '';
 	if (rUser.pay.paytype == 'cash') {
-		where.append('<p class="h2">Оплата наличными</p><p>Курьеру при получении товара. Вы получите товарный чек</p>');
+		where.append('<p class="h2">Оплата наличными</p><p>Самостоятельно в магазине, или курьеру при получении товара. Вы получите товарный чек.</p>');
 	}
 	else
 		if (rUser.pay.paytype == 'card') {
