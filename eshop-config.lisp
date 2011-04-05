@@ -44,3 +44,4 @@
 
 (print "Compiling templates")
 (compile-templates)
+(print "Compiling templates finish")
