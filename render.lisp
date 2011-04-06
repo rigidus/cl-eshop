@@ -55,7 +55,7 @@
                                         (copy-list (products object))
                                         (remove-if-not #'(lambda (product)
                                                            (active product))
-                                                       (products object)))))
+                                                       (get-recursive-products object)))))
                                (if (getf (request-get-plist) :vendor)
                                    (setf products-list
                                          (remove-if-not #'(lambda (p)
