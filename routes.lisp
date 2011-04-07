@@ -92,7 +92,7 @@
                           "warranty"         "moneyback"         "article"         "news1"
                           "news2"            "news3"             "news4"           "news5"
                           "news6"            "dillers"           "corporate"       "vacancy"
-                          "bonus"))))
+                          "bonus"            "burunduk"))))
 
 (static)
 
@@ -160,3 +160,5 @@
     :encoding :utf-8)
    :return-code hunchentoot:+http-not-found+
    :content-type "text/html"))
+
+

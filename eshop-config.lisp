@@ -29,7 +29,7 @@
             "cart-widget.html"      "cart.html"               "checkout.html"
             "admin.html"            "article.html"            "search.html"
             "agent.html"            "update.html"             "outload.html"
-            "header.html"           "static.html"
+            "header.html"           "static.html"             "burunduk.html"
             "delivery.html"         "about.html"
             "faq.html"              "kakdobratsja.html"       "kaksvjazatsja.html"
             "levashovsky.html"      "partners.html"           "payment.html"
