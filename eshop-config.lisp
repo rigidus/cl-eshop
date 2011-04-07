@@ -33,13 +33,13 @@
             "delivery.html"         "about.html"
             "faq.html"              "kakdobratsja.html"       "kaksvjazatsja.html"
             "levashovsky.html"      "partners.html"           "payment.html"
-            "servicecenter.html"    "otzyvy.html"
+            "servicecenter.html"    "otzyvy.html"             "listservice.html"
             "pricesc.html"          "warrantyservice.html"    "warranty.html"
             "moneyback.html"        "yml.html"                "fullfilter.html"
             "news1.html"            "news2.html"              "vacancy.html"
             "news3.html"            "news4.html"              "bonus.html"
             "news5.html"            "news6.html"              "corporate.html"
-            "dillers.html"          "sendmail.html"           "404.html"
+            "dilers.html"          "sendmail.html"           "404.html"
             )))
 
 (print "Compiling templates")

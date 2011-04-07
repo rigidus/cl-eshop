@@ -91,8 +91,8 @@
                           "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
                           "warranty"         "moneyback"         "article"         "news1"
                           "news2"            "news3"             "news4"           "news5"
-                          "news6"            "dillers"           "corporate"       "vacancy"
-                          "bonus"            "burunduk"))))
+                          "news6"            "dilers"           "corporate"       "vacancy"
+                          "bonus"            "burunduk"          "listservice"))))
 
 (static)
 
