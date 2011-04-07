@@ -825,6 +825,19 @@ is replaced with replacement."
               product-list)
       result-products)))
 
+(defun url-to-request-get-plist (url)
+  (let* ((request-full-str url)
+         (request-parted-list (split-sequence:split-sequence #\? request-full-str))
+         (request-get-plist (let ((result))
+                              (loop :for param :in (split-sequence:split-sequence #\& (cadr request-parted-list)) :do
+                                 (let ((split (split-sequence:split-sequence #\= param)))
+                                   (setf (getf result (intern (string-upcase (car split)) :keyword))
+                                         (if (null (cadr split))
+                                             ""
+                                             (cadr split)))))
+                              result)))
+    request-get-plist))
+
 (defmethod filter-test ((object group) url)
   (let* ((request-full-str url)
          (request-parted-list (split-sequence:split-sequence #\? request-full-str))
@@ -840,10 +853,48 @@ is replaced with replacement."
 
 
 ;; (fullfilter (gethash "noutbuki" *storage*))
+(defun if-need-to-show-hidden-block (elt request-get-plist)
+  (let ((key (string-downcase (format nil "~a" (nth 0 elt))))
+        (showflag nil))
+    ;; проверку нужно ли раскрывать hidden блока
+      (cond
+        ((equal :radio (nth 2 elt))
+         (loop
+            :for nameelt
+            :in  (nth 3 elt)
+            :for i from 0
+            :do (if (string= (format nil "~a" i)
+                             (getf request-get-plist (intern
+                                                      (string-upcase key))))
+                    (setf showflag t))))
+        ((equal :checkbox (nth 2 elt))
+         (loop
+            :for nameelt
+            :in  (nth 3 elt)
+            :for i from 0
+            :do (if  (string= "1" (getf request-get-plist (intern
+                                                           (string-upcase
+                                                            (format nil "~a-~a" key i))
+                                                           :keyword)))
+                     (setf showflag t)))))
+      showflag))
+
+;; (is-need-to-show-advanced (fullfilter (gethash "noutbuki" *storage*)) (url-to-request-get-plist "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-0=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&frequency-f=&frequency-t=&ram-f=&ram-t=&harddrive-f=&harddrive-t=&videoram-f=&videoram-t=&fullfilter=1#producer"))
+
+(defun is-need-to-show-advanced (fullfilter request-get-plist)
+  (let ((flag nil))
+    (mapcar #'(lambda (elt)
+                (mapcar #'(lambda (inelt)
+                            (setf flag (or flag
+                                           (if-need-to-show-hidden-block inelt request-get-plist))))
+                        (cadr elt)))
+            (advanced fullfilter))
+    flag))
 
 (defun filter-element (elt request-get-plist)
   (let* ((key (string-downcase (format nil "~a" (nth 0 elt))))
          (name (nth 1 elt))
+         (showflag nil)
          (contents
           (cond ((equal :range (nth 2 elt))
                  (fullfilter:range
@@ -890,7 +941,8 @@ is replaced with replacement."
     (if (search '(:hidden) elt)
         (fullfilter:hiddencontainer (list :key key
                                           :name name
-                                          :contents contents))
+                                          :contents contents
+                                          :isshow (if-need-to-show-hidden-block elt request-get-plist)))
         contents)))
 
 
