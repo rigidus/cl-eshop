@@ -143,10 +143,10 @@
              (setf delivery (cdr (assoc :delivery user)))
              (setf pay      (cdr (assoc :pay user)))
              (setf order-id (get-order-id)) ;;генерация идентификатора заказа происходит только если заказ валиден
-             (if (and (string= (cdr (assoc :deliverytype delivery))
+             ;;Временно доставка 300 на все
+             (if (string= (cdr (assoc :deliverytype delivery))
                           "courier")
-                      (< itogo 10000))
-                 (setf deliverysum 200))
+                 (setf deliverysum 300))
              (setf client-mail
                 (sendmail:clientmail
                  (list :datetime (get-date-time)

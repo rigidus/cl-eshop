@@ -267,9 +267,9 @@ function rCalc() {
 			$(current).find('.sum').html(sum);
 
             // ->> жеский костыль для случая, когда rUser не определен в куках или определен странных образом
-            if(sum > 10000) {
-              $(this).find('.delivery-price').html('Доставка — <big>бесплатно</big>');
-            }
+            // if(sum > 10000) {
+              // $(this).find('.delivery-price').html('Доставка — <big>бесплатно</big>');
+            // }
             if(rUser){
                 if('delivery' in rUser){
                     // ->>
@@ -279,8 +279,8 @@ function rCalc() {
 	  //   	        } else {
       //                   $(this).find('.delivery-price big').text('Доставка — <big>бесплатно</big>');
       //               }
-			        if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
-				        $(this).find('.delivery-price').html('Стоимость курьерской доставки — <big>200</big> руб. в пределах КАД, от 10 000 руб. доставляем бесплатно! <br> Самовывоз — бесплатно!');
+			        if (rUser.delivery.deliverytype == 'courier' /* && sum < 10000*/) {
+				        $(this).find('.delivery-price').html('Стоимость курьерской доставки — <big>300</big> руб. в пределах КАД<br> Самовывоз — бесплатно!');
 			        } else {
                         $(this).find('.delivery-price').html('Доставка — <big>бесплатно</big>');
                     }
@@ -586,11 +586,11 @@ function checkoutFinish(current) {
 	where.append('<p>' + temp + '</p>');
 	temp = '';
 	if (rUser.delivery.deliverytype == 'courier') {
-		if (sum < 10000) {
-			where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping">Стоимость <strong>200 руб.,</strong> завтра в течение дня</p>');
-		} else {
-			where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping"><strong>бесплатно,</strong> завтра в течение дня</p>');
-		}
+		// if (sum < 10000) {
+			where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping">Стоимость <strong>300 руб.,</strong> завтра в течение дня</p>');
+		// } else {
+			// where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping"><strong>бесплатно,</strong> завтра в течение дня</p>');
+		// }
 		// temp += rUser.delivery.city + '<br/>';
 		temp += rUser.delivery.addr;
 		if (rUser.delivery.comment) {
@@ -624,8 +624,8 @@ function checkoutFinish(current) {
 					where.append('<p class="h2">Оплата по безналичному расчету</p>');
 					where.append('<p>Реквизиты:<br/>' + rUser.pay.bankaccount + '</p>');
 				}
-	if (sum < 10000 && rUser.delivery.deliverytype == 'courier') {
-		where.append('<br/><p class="price"><big>' + (sum + 200) + '</big> руб.</p>');
+	if (/*sum < 10000 &&*/ rUser.delivery.deliverytype == 'courier') {
+		where.append('<br/><p class="price"><big>' + (sum + 300) + '</big> руб.</p>');
 	} else {
 		where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
 	}
@@ -656,11 +656,11 @@ function checkoutThanks(current) {
 	where.append(temp);
 	temp = '';
 	if (rUser.delivery.deliverytype == 'courier') {
-		if (sum < 10000) {
-			where.append('<p class="h2">Стоимость доставки - 200 руб., <strong class="gray">завтра в течение дня</strong></p>');
-		} else {
-			where.append('<p class="h2">Бесплатная доставка курьером <strong class="gray">завтра в течение дня</strong></p>');
-		}
+		// if (sum < 10000) {
+			where.append('<p class="h2">Стоимость доставки - 300 руб., <strong class="gray">завтра в течение дня</strong></p>');
+		// } else {
+			// where.append('<p class="h2">Бесплатная доставка курьером <strong class="gray">завтра в течение дня</strong></p>');
+		// }
 
 		// temp += rUser.delivery.city + '<br/>';
 		temp += rUser.delivery.addr;
@@ -691,8 +691,8 @@ function checkoutThanks(current) {
 					where.append('<p class="h2">Оплата по безналичному расчету</p>');
 					where.append('<p>Реквизиты:<br/>' + rUser.pay.bankaccount + '</p>');
 				}
-	if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
-		where.append('<br/><p class="price"><big>' + (sum + 200) + '</big> руб.</p>');
+    if (rUser.delivery.deliverytype == 'courier' /*&& sum < 10000*/) {
+		where.append('<br/><p class="price"><big>' + (sum + 300) + '</big> руб.</p>');
 	} else {
 		where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
 	}
