@@ -282,7 +282,7 @@ function rCalc() {
 			        if (rUser.delivery.deliverytype == 'courier' /* && sum < 10000*/) {
 				        $(this).find('.delivery-price').html('Стоимость курьерской доставки — <big>300</big> руб. в пределах КАД<br> Самовывоз — бесплатно!');
 			        } else {
-                        $(this).find('.delivery-price').html('Доставка — <big>бесплатно</big>');
+                        $(this).find('.delivery-price').html('Самовывоз — <big>бесплатно</big>');
                     }
                 }
             }

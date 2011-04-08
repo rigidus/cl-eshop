@@ -1,27 +1,5 @@
 
-Интернет-магазин, написанный на Common Lisp.
+Основа для интернет магазина
+Продолжение проекта https://github.com/rigidus/cl-eshop. (спасибо Миша)
 
-Оттестировано на sbcl SBCL 1.0.33
-
-Необходимые библиотеки:
- * alexandria
- * hunchentoot
- * closure-template
- * split-sequence
- * babel
- * cl-json
- * postmodern
- * cl-store
- * cl-ppcre
- * ironclad
- * html-entities
- * uffi
- * mel-base
- * cl-base64
- * clon
- * arnesi
- * cl-fad
-
-Контакты:
-  email:  i.am.rigidus@gmail.com
-  jabber: rigidus@jabber.ru
+Тестируется на SBCL 1.0.45
