@@ -207,17 +207,21 @@
 		        alt="В корзину"/></a></p>
 			  </div>
 			  <div class="item-col2">
-			    <p class="price gray"><big class="strike">{$storeprice}</big> <span class="strike">руб.</span></p>
-			    <p class="note gray">цена в магазине</p>
+			{if not $equalprice}
+                <p class="price gray"><big class="strike">{$storeprice}</big> <span class="strike">руб.</span></p>
+                <p class="note gray">цена в магазине</p>
+            {/if}
+
 <!--
                 <p class="one"><a href="#one"><img src="/img/one-click.png"
                 alt="Купить в 1 клик"/></a></p>
 -->
 			  </div>
 			  <div class="item-col3">
-			    <p class="price red"><big>{$diffprice}</big> руб. <big class="gray">({$procent}%)</big></p>
-			    <p class="note red">экономия</p>
-
+	            {if not $equalprice}
+			       <p class="price red"><big>{$diffprice}</big> руб. <big class="gray">({$procent}%)</big></p>
+			       <p class="note red">экономия</p>
+                {/if}
                 <p class="deliver"><big>Доставим завтра, возможен <a href="kakdobratsja" target="blank">самовывоз.</a></big></p>
 
 			  </div>
@@ -241,7 +245,7 @@
 	  <ul class="tabs">
 	    <li class="h2"><a href="#overview">Обзор</a></li>
 	    <li class="h2 active"><a href="#tech">Технические&nbsp;характеристики</a></li>
-	    <li class="h2"><a href="#delivery">Информация о доставке</a></li> 
+	    <li class="h2"><a href="#delivery">Информация о доставке</a></li>
 	  </ul>
 
 	  <div class="tab tab-overview tab-hidden">
@@ -270,7 +274,7 @@
 	     Кириши - <strong>2000 рублей</strong><br/>
 	     Сиверский - <strong>1200 рублей</strong><br/>
 	     Ломоносов - <strong>800 рублей</strong>
-		 
+
 		 <p><a href="delivery">Более подробно о доставке &rarr;</a></p></noindex>
 	  </div>
     </div>
@@ -320,16 +324,20 @@
 		  <p class="add"><a href="#add" onclick="return rAddCart('{$articul}', '{$group_id}', '{$name}', {$siteprice}, 1,'{$subst}','/pic/small/{$articul}/{$firstpic}');"><img src="/img/cart-add.png" alt="В корзину"/></a></p>
 	    </div>
 	    <div class="item-col2">
+	    {if not $equalprice}
 		  <p class="price gray"><big class="strike">{$storeprice}</big> <span class="strike">руб.</span></p>
 		  <p class="note gray">цена в магазине</p>
+        {/if}
  <!--
          <p class="one"><a href="#one"><img src="/img/one-click.png"
 		 alt="Купить в 1 клик"/></a></p>
  -->
 	    </div>
 	    <div class="item-col3">
+        {if not $equalprice}
 		  <p class="price red"><big>{$diffprice}</big> руб. <big class="gray">({$procent}%)</big></p>
 		  <p class="note red">экономия</p>
+        {/if}
 		  <p class="deliver"><big>Доставим завтра, возможен <a href="kakdobratsja" target="blank">самовывоз.</a></big></p>
 	    </div>
 	    <p class="str"></p>

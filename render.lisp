@@ -114,6 +114,7 @@
                          :name (realname object)
                          :siteprice (siteprice object)
                          :storeprice (price object)
+                         :equalprice (= (siteprice object) (price object))
                          :diffprice diffprice
                          :procent procent
                          :subst (format nil "/~a" (articul object))
