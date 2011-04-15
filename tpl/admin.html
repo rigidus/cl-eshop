@@ -2,7 +2,7 @@
 
 {template shortheader}
 <div class="header header-short">
-  <div class="logo"><img src="img/logo.jpg" alt="ЦиFры"/></div>
+  <div class="logo"><img src="/img/logo.jpg" alt="ЦиFры"/></div>
 </div>
 {/template}
 
@@ -39,50 +39,28 @@
 </html>{\n}
 {/template}
 
-{template authform}
-  <form method="post">{\n}
-	<table width="300" cellspacing="1" cellpadding="1" border="0">{\n}
-	  <tr>{\n}
-		<td>
-		<div style="padding: 10px 10px 10px 0px; font-size: 14px; color:red">
-		  Логин: </td>{\n}
-		</div>
-	  </tr>
-	  <tr>
-		<td>
-		<div style="padding: 10px 10px 10px 30px; font-size: 14px; color:red">
-		  <input type="text" name="login" value="{$lastlogin}" /></td>{\n}
-		</div>
-	  </tr>{\n}
-	  <tr>{\n}
-		<td>
-		  <div style="padding: 10px 10px 10px 0px; font-size: 14px; color:red">
-			Пароль:
-		  </div>
-		</td>{\n}
-	  </tr>
-	  <tr>
-		<td>
-		<div style="padding: 10px 10px 10px 30px; font-size: 14px; color:red">
-		  <input type="password" name="password" value="" />
-		</div>
-		</td>{\n}
-	  </tr>{\n}
-	  <tr>
-		<td>
-		  <div style="padding: 10px 10px 10px 30px; font-size: 14px; color:red">
-			<input type="submit" value="войти" />
-		  </div>
-		  </td>{\n}
-	  </tr>{\n}
-	</table>{\n}
-  </form>{\n}
+{template content}
+<div class="content">{\n}
+  <div class="full">{\n}
+	<div class="left">{\n}
+	  {$menu |noAutoescape}
+	</div>{\n}
+	<div class="center">{\n}
+      {$subcontent |noAutoescape}
+	</div>{\n}
+  </div>{\n}
+</div>{\n}
 {/template}
 
-
+{template menu}
+  <ul class="catalog-menu">
+    {foreach $elt in $elts}{\n}
+    {$elt |noAutoescape}{\n}
+    {/foreach}{\n}
+  </ul>
+{/template}
 
 {template footer}
-
 <div class="footer">{\n}
   <div class="copyright">
 	<p>&copy; 1997&ndash;2011 &laquo;ЦиFры 320-8080&raquo;<br/>Санкт-Петербург <a href="kakdobratsja">Адреса магазинов</a><br/>Телефон: (812) 320-80-80<br/>Электронная почта: <a href="mailto:info@320-8080.ru">info@320-8080.ru</a></p>
@@ -140,50 +118,3 @@
 </div>
 {/template}
 
-
-{template logoutform}
-  <form method="post" style="display: inline">{\n}
-	<input type="submit" name="logout" value="выйти" />{\n}
-  </form>{\n}
-{/template}
-
-
-{template menu}
-<div style="display: none;">
-	 <form method="post" id="delagentform">
-	   <input type="text" name="delagent" id="delagent" value="" />
-	 </form>
-</div>
-
-<div style="padding: 20px 20px 20px 20px;">
-  <table width="100%" cellspacing="1" cellpadding="1" border="0">
-	<tr>
-	  <td valign="top" class="menu" width="1">
-		<a href="/admin/update">Обновление&nbsp;прайсов</a>
-		<br />
-		<br />
-		<a href="/admin/add-agent">Добавить&nbsp;партнера</a>
-		<br />
-		<br />
-		<a href="/admin/outload">Выгрузка&nbsp;в&nbsp;базу</a>
-		<br />
-		<br />
-		Загрузка прайсов:
-		<br />
-		{foreach $agent in $agents}
-		{call menuagent data="$agent" /}{\n}
-		{/foreach}
-	  </td>
-	</tr>
-  </table>
-</div>
-{/template}
-
-{template menuagent}
-  <br />
-<nobr>
-  <input type="button" value="×" onclick="javascript: document.getElementById('delagent').value = '{$key}';
-										  document.getElementById('delagentform').submit()" />
-  <a href="/admin/{$key}">{$val}</a>
-</nobr>
-{/template}

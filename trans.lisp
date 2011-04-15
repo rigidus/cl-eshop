@@ -137,12 +137,14 @@
 (defun safely-restore()
   (restore-from-files)
   (use-revert-history)
-  (copy-price-to-siteprice))
+  (copy-price-to-siteprice)
+  (dtd))
 
 (defun safely-store()
   (restore-from-files)
   (use-revert-history)
   (copy-price-to-siteprice)
+  (dtd)
   (store-products))
 
 (print "Restoring data from files")
