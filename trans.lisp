@@ -126,7 +126,7 @@
                                'product)
                         (active v)
                         (or (= 0 (siteprice v))
-                            (< (siteprice v) (price v))))
+                            (> (siteprice v) (price v))))
                    (progn
                      (format t "~&~a: ~a"
                              (articul v)
