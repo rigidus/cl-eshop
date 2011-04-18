@@ -222,10 +222,15 @@
                          (name object))))))
 
 
+
+
 (defmethod restas:render-object ((designer eshop-render) (object optgroup))
   (product:optgroup (list :name (name object)
                           :options (mapcar #'(lambda (option)
-                                               (restas:render-object designer option))
+                                               (if ( not (or (null (value option))
+                                                             (string= (value option)
+                                                                "")))
+                                               (restas:render-object designer option)))
                                            (options object)))))
 
 
