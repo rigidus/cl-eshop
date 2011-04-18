@@ -42,7 +42,22 @@
 ;; STORAGE OBJECT
 
 (defun test-route-storage-object ()
-  (not (null (gethash (cadr (request-list)) *storage*))))
+  (let ((obj (gethash (cadr (request-list)) *storage*)))
+    (if (not (null obj))
+        (if (equal (type-of obj)
+                   'group)
+            (let ((vendor (getf (request-get-plist) :vendor)))
+              (not (= (length (remove-if-not #'(lambda (p)
+                                    (vendor-filter-controller p (request-get-plist)))
+                                (get-recursive-products obj)))
+                 0)))
+            t)
+        nil)))
+
+;; (defun test-route-storage-object ()
+;;   (gethash (cadr (request-list)) *storage*))
+
+
 
 (defun route-storage-object (key)
   (gethash key *storage*))
@@ -55,8 +70,11 @@
 
 
 ;; MAIN
+(defun test-get-parameters ()
+  (null (request-get-plist)))
 
-(restas:define-route main-route ("/")
+(restas:define-route main-route ("/" :requirement #'test-get-parameters)
+;; (restas:define-route main-route ("/")
   (default-page (root:content (list :menu (menu (request-str))
                                             :dayly (root:dayly)
                                             :banner (root:banner)
