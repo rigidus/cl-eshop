@@ -55,7 +55,10 @@
                                         (copy-list (products object))
                                         (remove-if-not #'(lambda (product)
                                                            (active product))
-                                                       (get-recursive-products object)))))
+                                                       (get-recursive-products object))))
+                                   (request-get-plist (request-get-plist)))
+                               (if (null (getf request-get-plist :sort))
+                                   (setf (getf request-get-plist :sort) "pt"))
                                (if (getf (request-get-plist) :vendor)
                                    (setf products-list
                                          (remove-if-not #'(lambda (p)
@@ -65,15 +68,16 @@
                                    (setf products-list (fullfilter-controller products-list  object (request-get-plist))))
                                (with-sorted-paginator
                                    products-list
-                                   (catalog:centerproduct
-                                    (list
-                                     :sorts (sorts)
-                                     :producers (restas:render-object designer (make-producers object))
-                                     :accessories (catalog:accessories)
-                                     :pager pager
-                                     :products
-                                     (loop
-                                        :for product :in  paginated :collect (view product)))))
+                                 request-get-plist
+                                 (catalog:centerproduct
+                                  (list
+                                   :sorts (sorts request-get-plist)
+                                   :producers (restas:render-object designer (make-producers object))
+                                   :accessories (catalog:accessories)
+                                   :pager pager
+                                   :products
+                                   (loop
+                                      :for product :in  paginated :collect (view product)))))
                                ))))
       :keywords (format nil "~a" (name object))
       :description (format nil "~a" (name object))
@@ -189,7 +193,10 @@
                                      (remove-if-not #'(lambda (product)
                                                         (active product))
                                                     (get-recursive-products
-                                                     (parent object))))))
+                                                     (parent object)))))
+        (request-get-plist (request-get-plist)))
+    (if (null (getf request-get-plist :sort))
+        (setf (getf request-get-plist :sort) "pt"))
     (if (getf (request-get-plist) :vendor)
         (setf products-list
               (remove-if-not #'(lambda (p)
@@ -197,6 +204,7 @@
                              products-list)))
     (with-sorted-paginator
         products-list
+      request-get-plist
       (default-page
           (catalog:content
            (list :name (name object)
@@ -206,7 +214,7 @@
                  :tradehits (tradehits)
                  :subcontent (catalog:centerproduct
                               (list
-                               :sorts (sorts)
+                               :sorts (sorts request-get-plist)
                                :producers (restas:render-object designer (make-producers (parent object)))
                                :accessories (catalog:accessories)
                                :pager pager

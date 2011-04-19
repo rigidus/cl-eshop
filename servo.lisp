@@ -19,30 +19,29 @@
 
 
 
-(defmacro with-sorted-paginator (get-products body)
+(defmacro with-sorted-paginator (get-products request-get-plist body)
   `(let* ((products ,get-products)
-          (sorting  (getf (request-get-plist) :sort))
+          (sorting  (getf ,request-get-plist :sort))
           (sorted-products   (cond ((string= sorting "pt")
                                     (product-sort products #'< #'siteprice))
                                    ((string= sorting "pb")
                                     (product-sort products #'> #'siteprice))
-                                   ((string= sorting "pt1") products)
                                    (t products))))
      (multiple-value-bind (paginated pager)
-         (paginator (request-get-plist) sorted-products)
+         (paginator ,request-get-plist sorted-products)
        ,body)))
 
 
-(defmacro sorts ()
+(defmacro sorts (request-get-plist)
   `(let ((variants '(:pt "увеличению цены" :pb "уменьшению цены"))
-         (url-parameters (request-get-plist)))
+         (url-parameters request-get-plist))
      (remf url-parameters :page)
      (remf url-parameters :sort)
      (loop :for sort-field :in variants :by #'cddr :collect
         (let ((key (string-downcase (format nil "~a" sort-field))))
           (setf (getf url-parameters :sort) key)
           (if (string= (string-downcase (format nil "~a" sort-field))
-                       (getf (request-get-plist) :sort))
+                       (getf request-get-plist :sort))
               (list :key key
                     :name (getf variants sort-field)
                     :url (make-get-str url-parameters)
