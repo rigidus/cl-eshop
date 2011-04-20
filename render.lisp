@@ -12,12 +12,14 @@
 
 (setf *default-render-method* (make-instance 'eshop-render))
 
+(defun add-vendor(bdkr)
+  bdkr)
 
 (defmethod restas:render-object ((designer eshop-render) (object group))
   (default-page
       (catalog:content
        (list :name (name object)
-             :breadcrumbs (catalog:breadcrumbs (breadcrumbs object))
+             :breadcrumbs (catalog:breadcrumbs (breadcrumbs-add-vendor (breadcrumbs object)))
              :menu (menu object)
              :rightblocks (let ((ret (rightblocks)))
                             (if (not (null (fullfilter object)))
@@ -32,23 +34,26 @@
                               (list
                                :producers (restas:render-object designer (make-producers object))
                                :accessories (catalog:accessories)
-                               :groups (remove-if ;; удаляем пустые группы
+                               :groups (remove-if ;; удаляем пустые и неактивные группы
                                         #'(lambda (x)
-                                            (equal 0 (getf x :cnt)))
+                                            (or (equal 0 (getf x :cnt))
+                                                (null (getf x :is-active))))
                                         (loop :for child :in (sort (copy-list (childs object)) #'menu-sort) :collect
-                                           (list :name (name child)
-                                                 :key (key child)
-                                                 :cnt (let ((products (get-recursive-products child)))
-                                                        (if (null products)
-                                                            "-"
-                                                            (length (remove-if-not #'(lambda (product)
-                                                                                       (active product))
-                                                                                   products))))
-                                                 :pic (pic child)
-                                                 :filters (loop :for filter :in (filters child) :collect
-                                                             (list :name (name filter)
-                                                                   :groupkey (key child)
-                                                                   :key (key filter))))))))
+                                           (list
+                                            :is-active (active child)
+                                            :name (name child)
+                                            :key (key child)
+                                            :cnt (let ((products (get-recursive-products child)))
+                                                   (if (null products)
+                                                       "-"
+                                                       (length (remove-if-not #'(lambda (product)
+                                                                                  (active product))
+                                                                              products))))
+                                            :pic (pic child)
+                                            :filters (loop :for filter :in (filters child) :collect
+                                                        (list :name (name filter)
+                                                              :groupkey (key child)
+                                                              :key (key filter))))))))
                              ;; else
                              (let ((products-list
                                     (if (getf (request-get-plist) :showall)

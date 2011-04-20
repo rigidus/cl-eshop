@@ -993,3 +993,14 @@ is replaced with replacement."
             (string-trim '(#\Space #\Tab #\Newline)
                          (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ")))))
 
+;;; Функция, добавляющая в хлебные крошки вендора, если он присутствует
+;;; в get запросе.
+(defun breadcrumbs-add-vendor (breadcrumbs)
+  (let ((belts (getf breadcrumbs :breadcrumbelts))
+        (tail (getf breadcrumbs :breadcrumbtail))
+        (vendor (getf (request-get-plist) :vendor))
+        (result breadcrumbs))
+    (when (not (null vendor))
+      (setf result (list :breadcrumbelts (append belts (list tail))
+                         :breadcrumbtail (list :key vendor :val vendor))))
+    result))
