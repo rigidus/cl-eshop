@@ -1002,5 +1002,8 @@ is replaced with replacement."
         (result breadcrumbs))
     (when (not (null vendor))
       (setf result (list :breadcrumbelts (append belts (list tail))
-                         :breadcrumbtail (list :key vendor :val vendor))))
+                         :breadcrumbtail (list :key vendor
+                                               :val (format nil "~a ~a"
+                                                            (getf tail :val)
+                                                            vendor)))))
     result))
