@@ -3,6 +3,7 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
 
 var w;
 
+
 /* === Javascript Trim === */
 String.prototype.trim = function() {
 	return this.replace(/^\s+|\s+$/, '');
@@ -389,9 +390,16 @@ function rCartReDraw2() {
 	var sumold = 0;
 	var cnt = 0;
 	var tmpcnt = 0;
+	var rCart = eval(rGetCookie('cart'));
 	$('.catalog-cart2 .item').each(function(){
 		if (!$(this).hasClass('item-deleted')) {
 			tmpcnt = parseInt($(this).find('.prices p.count span.count').text());
+			for (i = 0; i < rCart.length; i++){
+				if (rCart[i].id == parseInt($(this).find('.id').text()))
+					rCart[i].count = tmpcnt;
+			}
+			rSave(rCart);
+			//rCartReDraw();
 			var tmpsum = parseInt($(this).find('.info big.price span').text()) * tmpcnt;
 			sum += tmpsum;
 			$(this).find('.prices big.price span').text(tmpsum)
@@ -399,7 +407,7 @@ function rCartReDraw2() {
 			if (tmpsumold) {
 				sumold += tmpsumold;
 			} else {
-				sumold += parseInt($(this).find('.info big.price span').text()) * tmpcnt;
+				sumold += tmpsum;
 			}
 			$(this).find('.accs .acc').each(function(){
 				if ($(this).find('.cb .checkbox:checked').length > 0) {
