@@ -678,37 +678,71 @@ is replaced with replacement."
             ))))
 
 
-(defmethod relink ((object product))
-  (let ((rs (list nil nil nil nil)))
-    (when (or (not (active object))
-              (not (equal 'group (type-of (parent object)))))
-      (return-from relink rs))
-    (let* ((base-vendor) (tmp))
-      (with-option object "Общие характеристики" "Производитель"
-                   (setf base-vendor (value option)))
-      (setf tmp (remove-if-not
-                 #'(lambda (x)
-                     (and (active x)
-                          (let ((vendor))
-                            (with-option x "Общие характеристики" "Производитель"
-                                         (setf vendor (value option)))
-                            (equal vendor base-vendor))))
-                 (products (parent object))))
-      (setf tmp (append tmp tmp))
-      (let ((pos (position object tmp)))
-        (setf (nth 0 rs) (nth pos tmp))
-        (setf (nth 1 rs) (nth (+ 1 pos) tmp))))
-    (let ((all) (len) (two))
-      (maphash #'(lambda (k v)
-                   (when (and (equal 'product (type-of v))
-                              (active v))
-                     (push k all)))
-               *storage*)
-      (setf len (length all))
-      (setf (nth 2 rs) (gethash (nth (random len) all) *storage*))
-      (setf (nth 3 rs) (gethash (nth (random len) all) *storage*)))
-    rs))
+;; выбор нескольких случайных элементов из списка
+;; если количество не указано то возвращается список из одного элемента
+;; если количество больше длинны входного списка, то возвращается перемешанный входной список
+(defun get-randoms-from-list (input-list &optional (count 1))
+  (let ((result)
+        (current-list input-list))
+    ;;уменьшаем count до длинны списка если надо
+    (if (< (length input-list)
+           count)
+        (setf count (length input-list)))
+    (setf result (loop
+                    :for n
+                    :from 1 to count
+                    :collect (let* ((pos (random (length current-list)))
+                                    (element (nth pos current-list)))
+                               (setf current-list (remove-if #'(lambda (v)
+                                                                 (equal v element))
+                                                             current-list))
+                               element)))
+    result))
 
+(defmethod relink ((object product))
+  (let ((rs (list nil nil nil nil))
+        (temp-rs1)
+        (temp-rs2))
+    (when (not (equal 'group (type-of (parent object))))
+      (print object)
+      (return-from relink2 rs))
+    ;;2 случайных товара из списка
+    (setf temp-rs1 (get-randoms-from-list
+                   ;; список активных товаров той же группы и того же производителя
+                   ;; кроме его самого
+                   (let* ((base-vendor))
+                     (with-option object "Общие характеристики" "Производитель"
+                                  (setf base-vendor (value option)))
+                     (remove-if-not
+                      #'(lambda (x)
+                          (and (not (equal x object))
+                               (active x)
+                               (let ((vendor))
+                                 (with-option x "Общие характеристики" "Производитель"
+                                              (setf vendor (value option)))
+                                 (equal vendor base-vendor))))
+                      (products (parent object))))
+                   2))
+    ;;4 случайных товара из списка
+    (setf temp-rs2 (get-randoms-from-list
+                    ;;список всех активных товаров кроме object
+                    (let ((all))
+                      (maphash #'(lambda (k v)
+                                   (when (and (equal 'product (type-of v))
+                                              (active v)
+                                              (not (equal v object)))
+                                     ;; (print v)
+                                     (push v all)))
+                               *storage*)
+                      all)
+                    4))
+    ;; (print temp-rs1)
+    ;; (print temp-rs2)
+    (loop
+       :for item in (append temp-rs1 temp-rs2)
+       :for n
+       :from 1 to 4
+       :collect item)))
 
 
 (defparameter *trade-hits-1*
