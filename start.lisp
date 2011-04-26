@@ -50,10 +50,10 @@
 (setf hunchentoot:*handle-http-errors-p* nil)
 
 (print "Restas start")
-(restas:start '#:eshop :port 4245)
-(restas:debug-mode-on)
+(restas:start '#:eshop :port 4246)
+;; (restas:debug-mode-on)
 (restas:debug-mode-off)
-(setf hunchentoot:*catch-errors-p* nil)
+;; (setf hunchentoot:*catch-errors-p* nil)
 (setf hunchentoot:*catch-errors-p* t)
 (setf hunchentoot:*log-lisp-errors-p* nil)
 
