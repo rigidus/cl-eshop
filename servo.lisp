@@ -159,6 +159,7 @@
 ;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&fullfilter=1#producer")
 ;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
 ;; ( make-get-str "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
+;; (filter-test (gethash "noutbuki" *storage*) "http://www.320-8080.ru/noutbuki?&warranty-1=1&fullfilter=1")
 
 ;;фильтрация по значениям опции
 (defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)
@@ -185,6 +186,11 @@
                     (if (string= value-x option-value)
                         (setf result-flag t)))))
             filter-options)
+    ;; DBG
+    ;; (if (string= (format nil "~a" key-name) "WARRANTY")
+    ;;     (progn
+    ;;       (print filter-options) ;;158712
+    ;;       (format t "~a-- ~a : ~a" (articul product)  result-flag request-flag)))
     (or result-flag
         request-flag)))
 
@@ -871,18 +877,6 @@ is replaced with replacement."
                               result)))
     request-get-plist))
 
-(defmethod filter-test ((object group) url)
-  (let* ((request-full-str url)
-         (request-parted-list (split-sequence:split-sequence #\? request-full-str))
-         (request-get-plist (let ((result))
-                              (loop :for param :in (split-sequence:split-sequence #\& (cadr request-parted-list)) :do
-                                 (let ((split (split-sequence:split-sequence #\= param)))
-                                   (setf (getf result (intern (string-upcase (car split)) :keyword))
-                                         (if (null (cadr split))
-                                             ""
-                                             (cadr split)))))
-                              result)))
-    (filter-controller object request-get-plist)))
 
 
 ;; (fullfilter (gethash "noutbuki" *storage*))
