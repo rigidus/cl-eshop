@@ -133,6 +133,7 @@
                                       ""
                                       (product:optlist
                                        (list :optgroups (mapcar #'(lambda (optgroup)
+                                                                    ;;не отображать группу опций с именем "Secret"
                                                                     (if (not (string= (name optgroup)
                                                                                       "Secret"))
                                                                         (restas:render-object designer optgroup)))
