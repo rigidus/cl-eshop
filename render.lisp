@@ -133,8 +133,10 @@
                                       ""
                                       (product:optlist
                                        (list :optgroups (mapcar #'(lambda (optgroup)
-                                                                    (restas:render-object designer optgroup))
-                                                                        (optgroups object)))))
+                                                                    (if (not (string= (name optgroup)
+                                                                                      "Secret"))
+                                                                        (restas:render-object designer optgroup)))
+                                                                (optgroups object)))))
                          :accessories (product:accessories)
                          :reviews (product:reviews)
                          :simular (product:simulars)
