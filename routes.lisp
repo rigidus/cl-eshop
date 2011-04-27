@@ -171,7 +171,7 @@
 
 ;; 404
 
-(restas:define-route not-found-route (":any")
+(restas:define-route not-found-route ("*any")
   (restas:abort-route-handler
    (babel:string-to-octets
     (default-page
