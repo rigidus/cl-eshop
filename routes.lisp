@@ -110,8 +110,8 @@
                           "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
                           "warranty"         "moneyback"         "article"         "news1"
                           "news2"            "news3"             "news4"           "news5"
-                          "news6"            "dilers"           "corporate"       "vacancy"
-                          "bonus"            "burunduk"          "listservice"))))
+                          "news6"            "dilers"            "corporate"       "vacancy"
+                          "bonus"            "burunduk"          "listservice"     "suslik"))))
 
 (static)
 
@@ -168,6 +168,24 @@
 
 (restas:define-route yml/-route ("/yml/")
   (yml-page))
+
+
+;; ARTICLES
+;;TODO возможно проверять входные тэги
+(defun test-article-get-parameters ()
+  t)
+
+;;проверяем есть ли такая статья
+(defun test-route-article-object ()
+  (not (null (gethash (caddr (request-list)) *storage-articles*))))
+
+;;список статей
+(restas:define-route article-route ("/articles" :requirement #'test-article-get-parameters)
+  (articles-page))
+
+;;конкретная статья
+(restas:define-route article/-key-route ("/articles/:key" :requirement #'test-route-article-object)
+  (gethash (caddr (request-list)) *storage-articles*))
 
 ;; 404
 

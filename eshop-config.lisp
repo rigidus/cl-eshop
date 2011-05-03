@@ -2,13 +2,16 @@
 (print "ESHOP config")
 
 ;; PATH
+(defparameter *path-to-dropbox* (format nil "~aDropbox" (user-homedir-pathname)))
+(export '*path-to-dropbox*)
+(defparameter *path-to-articles* (format nil "~aDropbox/httpls/release/articles" (user-homedir-pathname)))
+(export '*path-to-articles*)
 (defparameter *path-to-tpls* (format nil "~aDropbox/httpls/release" (user-homedir-pathname)))
 (export '*path-to-tpls*)
 (defparameter *path-to-bkps* (format nil "~aDropbox/htbkps" (user-homedir-pathname)))
 (export '*path-to-bkps*)
 (defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
 (export '*path-to-conf*)
-
 (defparameter *path-to-pics* (format nil "~ahtpics" (user-homedir-pathname)))
 (export '*path-to-pics*)
 
@@ -30,7 +33,7 @@
             "admin.html"            "article.html"            "search.html"
             "agent.html"            "update.html"             "outload.html"
             "header.html"           "static.html"             "burunduk.html"
-            "delivery.html"         "about.html"
+            "delivery.html"         "about.html"              "suslik.html"
             "faq.html"              "kakdobratsja.html"       "kaksvjazatsja.html"
             "levashovsky.html"      "partners.html"           "payment.html"
             "servicecenter.html"    "otzyvy.html"             "listservice.html"
@@ -39,7 +42,8 @@
             "news1.html"            "news2.html"              "vacancy.html"
             "news3.html"            "news4.html"              "bonus.html"
             "news5.html"            "news6.html"              "corporate.html"
-            "dilers.html"          "sendmail.html"           "404.html"
+            "dilers.html"           "sendmail.html"           "404.html"
+            "articles.html"
             )))
 
 (print "Compiling templates")
