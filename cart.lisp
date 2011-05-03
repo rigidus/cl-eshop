@@ -195,19 +195,25 @@
                                    order-id
                                    )))
           ;;
-          (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+          ;; (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "internetorder@alpha-pc.com") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "wolforus@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-client-mail (list (cdr (assoc :email auth))) client-mail order-id)
+          (save-order-text order-id client-mail)
           (checkout-thankes-page (checkout:thanks (list :order (checkout:order)
                                                 :orderid order-id))))
         (progn
           (checkout-thankes-page (checkout:thankserror))))))
 
 
+(defun save-order-text (file-name body)
+  (let ((filename (format nil "~a/htconf/orders/~a.html" *path-to-dropbox* file-name)))
+    (with-open-file
+        (stream filename :direction :output :if-exists :supersede)
+      (format stream "~a" body))))
 
 (defvar *sendmail*
   (find-if #'fad:file-exists-p
@@ -314,5 +320,4 @@ Content-Transfer-Encoding: base64
 				(push x $ret))
 			  (push x $ret)))
 	(coerce (reverse $ret) 'string)))
-
 
