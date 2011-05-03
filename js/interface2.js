@@ -79,7 +79,7 @@ function bestSliderItemLoadCallback(carousel) {
 };
 
 function closeFancy() {
-  $.fancybox.close();
+	$.fancybox.close();
 };
 
 /* показ попапа */
@@ -212,9 +212,16 @@ function refreshWidth() {
 
 
 /* Тут ядерная бомба. Дата, когда время жизни куки истекает, проставлена руками
-   TODO: генерировать expires data*/
-function rSetCookie (name, value) {
+	 TODO: генерировать expires data*/
+/*function rSetCookie (name, value) {
 	document.cookie= name+"="+encodeURIComponent(value)+"; path=/; expires=Mon, 15-Oct-2011 00:00:00 GMT";
+}*/
+
+function rSetCookie(c_name, value){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate() + 30);
+	var c_value=escape(value) + ("; expires="+exdate.toUTCString());
+	document.cookie=c_name + "=" + c_value;
 }
 
 function rGetCookie(name) {
@@ -246,7 +253,7 @@ function rCalc() {
 	var rUser = eval("("+rGetCookie('user')+")");
 	var sum = 0;
 	var cnt = 0;
- 	if (rCart) {
+	if (rCart) {
 		for (i = 0; i < rCart.length; i++) {
 			sum += rCart[i].price * rCart[i].count;
 			cnt += rCart[i].count;
@@ -267,28 +274,18 @@ function rCalc() {
 				}
 			$(current).find('.sum').html(sum);
 
-            // ->> жеский костыль для случая, когда rUser не определен в куках или определен странных образом
-            // if(sum > 10000) {
-              // $(this).find('.delivery-price').html('Доставка — <big>бесплатно</big>');
-            // }
-            if(rUser){
-                if('delivery' in rUser){
-                    // ->>
-	  //   	        if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
-	  //   		        $(this).find('.delivery-price big').text('Стоимость курьерской доставки —
-      // <big>200</big> руб. в пределах КАД, от 10 000 руб. доставляем бесплатно! <br> Самовывоз — бесплатно!');
-	  //   	        } else {
-      //                   $(this).find('.delivery-price big').text('Доставка — <big>бесплатно</big>');
-      //               }
-			        if (rUser.delivery.deliverytype == 'courier' /* && sum < 10000*/) {
-				        $(this).find('.delivery-price').html('Стоимость курьерской доставки — <big>300</big> руб. в пределах КАД<br> Самовывоз — бесплатно!');
-			        } else {
-                        $(this).find('.delivery-price').html('Самовывоз — <big>бесплатно</big>');
-                    }
-                }
-            }
+			// ->> жесткий костыль для случая, когда rUser не определен в куках или определен странных образом
+			if(rUser && 'delivery' in rUser){
+				if (rUser.delivery.deliverytype == 'courier') {
+					$(this).find('.delivery-price').html('Стоимость курьерской доставки — <big>300</big> руб. в пределах КАД<br> Самовывоз — бесплатно!');
+				}
+				else{
+					$(this).find('.delivery-price').html('Самовывоз — <big>бесплатно</big>');
+				}	
+			}
 			$(current).find('.count').html(cnt);
-		} else {
+		}
+		else{
 			$(current).html('Нет товаров');
 		}
 	});
@@ -297,9 +294,10 @@ function rCalc() {
 
 function rAddCart(id, group_id, name, price, count, item_link,img_link) {
 
-	if(!count) count = 1;
+	if(!count) 
+		count = 1;
 	var rCart = new Array();
-	if (rGetCookie('cart')) {
+	if (eval(rGetCookie('cart'))) {
 		rCart = eval(rGetCookie('cart'));
 	}
 	var present = false;
@@ -369,13 +367,13 @@ function rCartReDraw() {
 				}
 				var cur = rCart[i];
 				(function(cur) {
-					$(tmp).find('.delete a').unbind('click').click(function(){
+					$(tmp).find('.delete').unbind('click').click(function(){
 						$(this).parents('.item').addClass('item-deleted');
 						$(this).parents('.item').find('.pic').animate({opacity: 0.5}, 0);
 						rDelCart(cur.id);
 						return false;
 					});
-					$(tmp).find('.return a').unbind('click').click(function(){
+					$(tmp).find('.return').unbind('click').click(function(){
 						return rAddCart(cur.id, cur.group_id, cur.name, cur.price, cur.count,cur.item_link,cur.img_link);
 					});
 				})(cur);
@@ -394,11 +392,12 @@ function rCartReDraw2() {
 	$('.catalog-cart2 .item').each(function(){
 		if (!$(this).hasClass('item-deleted')) {
 			tmpcnt = parseInt($(this).find('.prices p.count span.count').text());
-			for (i = 0; i < rCart.length; i++){
-				if (rCart[i].id == parseInt($(this).find('.id').text()))
-					rCart[i].count = tmpcnt;
+			if (rCart){
+				for (i = 0; i < rCart.length; i++){
+					if (rCart[i].id == parseInt($(this).find('.id').text()))
+						rCart[i].count = tmpcnt;
+				}
 			}
-			rSave(rCart);
 			//rCartReDraw();
 			var tmpsum = parseInt($(this).find('.info big.price span').text()) * tmpcnt;
 			sum += tmpsum;
@@ -418,6 +417,8 @@ function rCartReDraw2() {
 			cnt = cnt + tmpcnt;
 		}
 	});
+	if (rCart)
+		rSave(rCart);
 	$('.go-checkout').each(function(){
 		var current = $(this).find('.total');
 		var cprice = $(this).find('.price big').not('.gray');
@@ -456,14 +457,14 @@ function initRCartReDraw2 () {
 				$(this).parents('.item').find('.pic').animate({opacity: 0.5}, 0);
 				rDelCart(cur[0].id);
 				rCartReDraw2();
-                rCartReDraw();
+				rCartReDraw();
 				return false;
 			});
 			$(tmp).find('.return a').unbind('click').click(function(){
 				$(tmp).find('.pic').animate({opacity: 1}, 0);
 				$(tmp).removeClass('item-deleted');
 				rCartReDraw2();
-                rCartReDraw();
+				rCartReDraw();
 				return false;
 			});
 		})(cur);
@@ -471,7 +472,7 @@ function initRCartReDraw2 () {
 			var theEvent = evt || window.event;
 			var key = theEvent.keyCode || theEvent.which;
 			keyChar = String.fromCharCode(key);
-			var regex = /[0-9]|\./;
+			var regex = /\d|[\x60-\x6A]/; 
 			if (!regex.test(keyChar)) {
 				if((key!=8) && (key!=37) && (key!=39)) {
 					return false;
@@ -503,7 +504,6 @@ function checkoutProceed(current) {
 	var formname = $(current).parents('.form').attr('id').replace('checkout-','');
 	var mask = $(current).parents('.form').attr('id')+'-';
 	var noerrors = true;
-	var nofill = false;
 	var errorFields = new Array();
 	var filter = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
 	$(current).parents('.form').find(":input.required").each(function(){
@@ -513,50 +513,52 @@ function checkoutProceed(current) {
 				$("<label class='errorlabel'>Не заполнено обязательное поле</label>").insertAfter(this);
 			}
 			noerrors = false;
-			nofill = true;
-		} else {
-			nofill = false;
+		} 
+		else {
 			if (($(this).hasClass('required-email')) && (!filter.test($(this).val()))) {
 				$(this).parent('p').addClass('error').find('.errorlabel').remove();
 				$("<label class='errorlabel'>Введите правильный e-mail</label>").insertAfter(this);
 				noerrors = false;
-			} else {
+			} 
+			else {
 				$(this).parent('p').removeClass('error').find('.errorlabel').remove();
 			}
 		}
 	});
-	if (nofill) {
+	if (!noerrors) {
 		$(current).parents('.form').find('p.error').eq(0).find(':input').focus();
-	} else {
+	} 
+	else {
 		obj = new Object;
 		$(current).parents('.form').find(':input').each(function(){
 			var name = $(this).attr('id').replace(mask,'');
 			var val = $(this).val();
 			if ($(this).is(":checkbox")) {
 				obj[name]=$(this).is(":checked");
-			} else if ($(this).is(":radio")) {
+			} 
+			else if ($(this).is(":radio")) {
 				if ($(this).is(":checked") && $(this).attr('id').indexOf("addr-")>0) {
 					obj['addr'] = val;
 				}
-			} else {
+			} 
+			else {
 				obj[name] = val;
 			}
 		});
-		var rCart = eval("("+rGetCookie('user')+")");
-		if (!rCart) {
-			rCart = new Object();
+		var rUser = eval("("+rGetCookie('user')+")");
+		if (!rUser) {
+			rUser = new Object();
 		}
 		if (formname == 'oldbuyer' || formname == 'newbuyer' || formname == 'anonym') {
-			rCart.auth = obj;
+			rUser.auth = obj;
 		}
 		else if (formname == 'auto' || formname == 'courier') {
-			rCart.delivery = obj;
+			rUser.delivery = obj;
 		}
 		else if (formname == 'cash' || formname == 'card' || formname == 'credit' || formname == 'bank') {
-			rCart.pay = obj;
+			rUser.pay = obj;
 		}
-		//console.log(rCart);
-		rSetCookie('user', JSON.stringify(rCart));
+		rSetCookie('user', JSON.stringify(rUser));
 		window.location = $(current).attr('href');
 	}
 }
@@ -699,13 +701,13 @@ function checkoutThanks(current) {
 					where.append('<p class="h2">Оплата по безналичному расчету</p>');
 					where.append('<p>Реквизиты:<br/>' + rUser.pay.bankaccount + '</p>');
 				}
-    if (rUser.delivery.deliverytype == 'courier' /*&& sum < 10000*/) {
+		if (rUser.delivery.deliverytype == 'courier' /*&& sum < 10000*/) {
 		where.append('<br/><p class="price"><big>' + (sum + 300) + '</big> руб.</p>');
 	} else {
 		where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
 	}
-    rCart = new Array();
-    rSetCookie('cart', JSON.stringify(rCart));
+		rCart = new Array();
+		rSetCookie('cart', JSON.stringify(rCart));
 }
 
 
@@ -729,7 +731,46 @@ function rCartReDraw3() {
 }
 
 
-$(document).ready(function() {
+$(document).ready(function() {	
+	var rUser = eval("(" + rGetCookie('user') + ")");
+	if (rUser){
+		if (rUser.auth){
+			if (rUser.auth.authtype == 'newbuyer'){
+				if ((document).getElementById('checkout-newbuyer-name')){
+					(document).getElementById('checkout-newbuyer-name').value = rUser.auth.name;
+				}
+				if ((document).getElementById('checkout-newbuyer-family')){
+					(document).getElementById('checkout-newbuyer-family').value = rUser.auth.family;
+				}
+				if ((document).getElementById('checkout-newbuyer-email')){
+					(document).getElementById('checkout-newbuyer-email').value = rUser.auth.email;
+				}
+				if ((document).getElementById('checkout-newbuyer-phone')){
+					(document).getElementById('checkout-newbuyer-phone').value = rUser.auth.phone;
+				}
+			}	
+			else {
+				if (rUser.auth.authtype == 'anonym'){
+					if ((document).getElementById('checkout-anonym-name')){
+						(document).getElementById('checkout-anonym-name').value = rUser.auth.name;
+					}
+					if ((document).getElementById('checkout-anonym-phone')){
+						(document).getElementById('checkout-anonym-phone').value = rUser.auth.phone;
+					}
+				}
+			}
+		}
+		if (rUser.delivery){
+			if (rUser.delivery.deliverytype == 'courier'){
+				if ((document).getElementById('checkout-courier-addr')){
+					(document).getElementById('checkout-courier-addr').value = rUser.delivery.addr;
+				}
+				if ((document).getElementById('checkout-courier-comment')){
+					(document).getElementById('checkout-courier-comment').value = rUser.delivery.comment;
+				}
+			}
+		}
+	}
 	/* Дефолтный блок, округленные углы */
 	$('.block').append('<i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>');
 
@@ -1094,7 +1135,7 @@ $(document).ready(function() {
 	$('.checkout-thanks').each(function(){
 		checkoutThanks(this);
 	});
-    $(".block-item-pics ul li a,.item-info-left .pic a").fancybox({
+		$(".block-item-pics ul li a,.item-info-left .pic a").fancybox({
 		'transitionIn'	:	'fade',
 		'transitionOut'	:	'fade',
 		'speedIn'		:	300,
@@ -1107,21 +1148,21 @@ $(document).ready(function() {
 		'titleShow'		: true,
 		'titlePosition'	: 'over'
 	});
-    $(".iframe,.add a").fancybox(
-      {
-        'content' : '<div class="product-add-complete">Товар добавлен в корзину!</div>',
-        'transitionIn'	:	'fade',
+		$(".iframe,.add a").fancybox(
+			{
+				'content' : '<div class="product-add-complete">Товар добавлен в корзину!</div>',
+				'transitionIn'	:	'fade',
 		'transitionOut'	:	'fade',
 		'overlayShow'	:	true,
 		'hideOnOverlayClick':	true,
 		'speedIn'		:	200,
 		'speedOut'		:	200,
-        'width'    : 240,
-        'height'   : 'auto',
-        'autoDimensions' : false,
-        'centerOnScroll' : true,
-        'padding'  : 20,
-        'scrolling' : 'no',
-        'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
-      });
+				'width'    : 240,
+				'height'   : 'auto',
+				'autoDimensions' : false,
+				'centerOnScroll' : true,
+				'padding'  : 20,
+				'scrolling' : 'no',
+				'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
+			});
 });
