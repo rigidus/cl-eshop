@@ -476,7 +476,7 @@
 
 
 (defun request-str ()
-  (let* ((request-full-str (hunchentoot:request-uri hunchentoot:*request*))
+  (let* ((request-full-str (hunchentoot:url-decode (hunchentoot:request-uri hunchentoot:*request*)))
          (request-parted-list (split-sequence:split-sequence #\? request-full-str))
          (request-str (string-right-trim "\/" (car request-parted-list)))
          (request-list (split-sequence:split-sequence #\/ request-str))
@@ -973,6 +973,7 @@ is replaced with replacement."
         contents)))
 
 
+;; (url-to-request-get-plist "http://www.320-8080.ru/komputery?vendor=%D0%A6%D0%B8F%D1%80%D1%8B")
 
 (defmethod vendor-controller ((object group) request-get-plist)
   (let* ((result-products))
