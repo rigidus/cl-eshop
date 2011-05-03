@@ -12,9 +12,6 @@
 
 (setf *default-render-method* (make-instance 'eshop-render))
 
-(defun add-vendor(bdkr)
-  bdkr)
-
 (defmethod restas:render-object ((designer eshop-render) (object group))
   (default-page
       (catalog:content
