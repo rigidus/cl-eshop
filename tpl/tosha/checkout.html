@@ -76,7 +76,7 @@
 		<p class="discount">%</p>
 		<p>Укажите свои контактные данные и вы получите нашу дисконтную карту, персональные скидки и возможность получать бонусы на личный счет.</p>
 		<div id="checkout-newbuyer" class="form form-new-user switch-hidden switch-one">
-		  <form action="/checkout1" method="get">
+		  <form action="/checkout1" method="get" id="checkout-newbuyer-info">
 			<p><label for="checkout-newbuyer-name" class="for">Имя</label><input id="checkout-newbuyer-name" class="text" type="text" value=""/></p>
 			<p><label for="checkout-newbuyer-family" class="for">Фамилия</label><input id="checkout-newbuyer-family" class="text" type="text" value=""/></p>
 			<p><label for="checkout-newbuyer-email" class="for">E-mail <span class="red">*</span></label><input id="checkout-newbuyer-email" class="text required required-email" type="text" value=""/></p>
@@ -98,7 +98,7 @@
 		href="#checkout-anonym">Я не хочу дисконтную карту ЦиFры</a></p>
 		<p>Простой вариант покупки - достаточно будет указать только ваш телефон, если вы не хотите заполнять никакие формы.</p>
 		<div id="checkout-anonym" class="form form-donotwant switch-hidden switch-one">
-		  <form action="/checkout1" method="get">
+		  <form action="/checkout1" method="get" id="checkout-anonym-info">
 			<p><label for="checkout-anonym-phone" class="for">Телефон <span class="red">*</span></label><input id="checkout-anonym-phone" class="text required" type="text" value=""/><small class="small">В любом формате - 89278905666 или +7 (927) 890-56-66</small></p>
 			<p><label for="checkout-anonym-name" class="for">Как вас зовут</label><input id="checkout-anonym-name" class="text" type="text" value=""/></p>
 			<div class="clearfix">
