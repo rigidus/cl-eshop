@@ -2,7 +2,7 @@
 
 
 (defun write-products-report (stream)
-  (format stream "~a;~a;~a;~a;~a;~a;~a;~a;~%"
+  (format stream "~a;~a;~a;~a;~a;~a;~a;~a;~a~%"
           "артикул"
           "имя"
           "seo текст"
@@ -10,7 +10,8 @@
           "характеристики"
           "активный"
           "группа"
-          "родительская группа")
+          "родительская группа"
+          "secret")
   (maphash #'(lambda (k v)
                (let ((id "нет")
                      (name "нет")
@@ -19,7 +20,8 @@
                      (option "нет")
                      (active "нет")
                      (group-name "нет")
-                     (parent-group-name "нет"))
+                     (parent-group-name "нет")
+                     (secret "нет"))
                  (when (equal (type-of v)
                               'product)
                    (setf id (articul v))
@@ -39,7 +41,10 @@
                    (setf parent-group-name (if (and (not (null (parent v)))
                                                     (not (null (parent (parent v)))))
                                                (stripper (name (parent (parent v))))))
-                   (format stream "~a;\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~%"
+                   (setf secret "Нет")
+                   (with-option v "Secret" "Checked"
+                                (setf secret (value option)))
+                   (format stream "~a;\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~a~%"
                            id
                            name
                            desc
@@ -47,7 +52,8 @@
                            options
                            active
                            group-name
-                           parent-group-name)
+                           parent-group-name
+                           secret)
                    )))
            *storage*))
 
@@ -121,13 +127,13 @@
            *storage*))
 
 (defun create-report (file-name report-func)
-  (let ((filename (format nil "~a/~a" *path-to-conf* file-name)))
+  (let ((filename (format nil "~a/~a" *path-to-dropbox* file-name)))
     (with-open-file
         (stream filename :direction :output :if-exists :supersede)
       (funcall report-func stream))))
 
 
-(create-report "report.csv" #'write-products-report)
+(create-report "xls/products.csv" #'write-products-report)
 ;; (create-report "report-groups.csv" #'write-groups)
 ;; (create-report "report-products.csv" #'write-products)
 ;; (create-report "report-vendors.csv" #'write-vendors)
