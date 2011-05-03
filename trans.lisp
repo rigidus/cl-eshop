@@ -77,7 +77,8 @@
 
 
 (defun restore-from-files ()
-  (let ((t-storage) (*package* (find-package :eshop)))
+  (let ((t-storage)
+        (*package* (find-package :eshop)))
     (handler-bind ((WRONG-PRODUCT-FILE
                     #'(lambda (e)
                         (format t "~%warn: WRONG-PRODUCT-FILE: ~a"
