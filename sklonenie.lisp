@@ -32,14 +32,10 @@
                (format t "~&~a: ~{~a~^,~}" key skls))
               ))))
 
-(defun group-skls-make ()
-  "Строим *yml-group-ids*"
-    *group-skls*)
-
 (defun sklonenie (name skl)
   (let* ((key (string-downcase name))
          (words (gethash key *group-skls*)))
     (if (null words)
-        (key)
+        key
         (nth (- skl 1) words))))
 
