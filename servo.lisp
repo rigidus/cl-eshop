@@ -70,7 +70,7 @@
                            ""
                            (catalog:seotext (list :text descr))))))))))
 
-
+;; (maphash #'(lambda (k v ) (print k)) (vendors (gethash "monobloki" *storage*)))
 
 (defmacro tradehits ()
   `(catalog:tradehits (list :reviews (list *trade-hits-1*

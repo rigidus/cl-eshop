@@ -39,6 +39,7 @@
   (let* ((string-filename (format nil "~a" file))
          (group (car (last (split-sequence #\/ string-filename) 2)))
          (vendor (regex-replace-all ".vendor" (pathname-name file) "")))
+    ;; (format t "~&~a: ~a ~a" file vendor group)
     (setf (gethash vendor (vendors (gethash group *storage*)))
         (read-file-into-string file))))
 
