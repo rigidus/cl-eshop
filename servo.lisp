@@ -126,6 +126,9 @@
        (and (<= value-f value-x)
             (>= value-t value-x)))))
 
+(defun sklonenie (name skl)
+  (setf name (string-downcase name)))
+
 
 ;;Фильтруем по наличию опции
 (defun filter-with-check-options (key-name option-group-name product request-plist filter-options)
