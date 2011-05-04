@@ -62,7 +62,16 @@
                                                (ymlshow (parent product))
                                                (active product)
                                                (not (null (price product)))
-                                               (> (price product) 0))
+                                               (> (price product) 0)
+                                               ;;для селективного исключения товаров по значению специальной опции
+                                               (let ((yml-show))
+                                                 (with-option product "Secret" "UML"
+                                                              (setf yml-show (value option)))
+                                                 (if (and (not (null yml-show))
+                                                          (string= "No"
+                                                                   (stripper yml-show)))
+                                                     nil
+                                                     t)))
                                     :collect (yml:offer (list :articul (articul product)
                                                               :price (siteprice product)
                                                               :category (gethash
@@ -73,11 +82,41 @@
                                                                           (if (null pics)
                                                                               nil
                                                                               (encode-uri (car pics))))
-                                                              :name (name product)
+                                                              :name   (let ((yml-name))
+                                                                        (with-option product "Secret" "Yandex"
+                                                                                     (setf yml-name (value option)))
+                                                                        (if (or (null yml-name)
+                                                                                (string= ""
+                                                                                         (stripper yml-name)))
+                                                                            (name product)
+                                                                            yml-name))
                                                               :description (if (string= "NIL"
                                                                                         (descr product))
                                                                                nil
                                                                                (descr product))
                                                               )))))))
 
+
+(defun yml-name-test (product)
+  (let ((yml-name))
+    (with-option product "Secret" "Yandex"
+                 (setf yml-name (value option)))
+    (if (or (null yml-name)
+            (string= ""
+                     (stripper yml-name)))
+        (name product)
+        yml-name)))
+
+(defun yml-show-test (product)
+  (let ((yml-show))
+    (with-option product "Secret" "UML"
+                 (setf yml-show (value option)))
+    (if (and (not (null yml-show))
+             (string= "No"
+                      (stripper yml-show)))
+        nil
+        t)))
+
+;; (length (get-recursive-products (gethash "noutbuki" *storage*)))
+;; (length (remove-if-not #'yml-show-test (get-recursive-products (gethash "noutbuki" *storage*))))
 
