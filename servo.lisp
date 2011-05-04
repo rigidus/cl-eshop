@@ -376,7 +376,10 @@
                         (equal 'group (type-of val))
                         (null (parent val))
                         (active val)
-                        (not (empty val)))
+                        (not (empty val))
+                        ;;проверка на реальное наличие активных товаров
+                        (not (= 0
+                                (length (remove-if-not #'active (get-recursive-products val))))))
                    (push val root-groups)))
              *storage*)
     (let ((src-lst (mapcar #'(lambda (val)
@@ -392,7 +395,13 @@
                                                         (remove-if #'(lambda (g)
                                                                        (or
                                                                         (empty g)
-                                                                        (not (active g)) ))
+                                                                        (not (active g))
+                                                                        ;;проверка на реальное наличие активных товаров
+                                                                        (= 0
+                                                                           (length
+                                                                            (remove-if-not #'active
+                                                                                           (get-recursive-products g))))
+                                                                        ))
                                                                    (childs val)) #'menu-sort)
                                                    :collect
                                                    (list :key  (key child) :name (name child)))
