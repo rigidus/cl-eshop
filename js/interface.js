@@ -220,7 +220,7 @@ function refreshWidth() {
 function rSetCookie(c_name, value){
 	var exdate=new Date();
 	exdate.setDate(exdate.getDate() + 30);
-	var c_value=escape(value) + ("; expires="+exdate.toUTCString());
+	var c_value=encodeURIComponent(value) + ("; expires="+exdate.toUTCString());
 	document.cookie=c_name + "=" + c_value;
 }
 
@@ -230,6 +230,8 @@ function rGetCookie(name) {
 	var setStr = null;
 	var offset = 0;
 	var end = 0;
+	var rCart = new Array();
+        var rUser = new Object();
 	if (cookie.length > 0) {
 		offset = cookie.indexOf(search);
 		if (offset != -1) {
@@ -238,7 +240,24 @@ function rGetCookie(name) {
 			if (end == -1) {
 				end = cookie.length;
 			}
-			setStr = decodeURIComponent(cookie.substring(offset, end));
+			try
+			{
+				setStr = decodeURIComponent(cookie.substring(offset, end));
+				if(setStr == "") {
+					setStr = null;
+				}
+  			}
+			catch(err)
+  			{
+				setStr = null;
+				if(name == 'cart') {
+					rSetCookie('cart', JSON.stringify(rCart));
+				}
+				if(name == 'user') {
+					rSetCookie('user', JSON.stringify(rUser));
+				}
+				return(setStr);
+  			}
 		}
 	}
 	return(setStr);
