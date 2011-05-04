@@ -751,6 +751,7 @@ function rCartReDraw3() {
 
 
 $(document).ready(function() {	
+	/*Инициализация ранее заполненных полей*/
 	var rUser = eval("(" + rGetCookie('user') + ")");
 	if (rUser){
 		if (rUser.auth){
@@ -1108,6 +1109,17 @@ $(document).ready(function() {
 			if ($(this).parent().hasClass('h2')) {
 				$(this).parent().removeClass('h2-active');
 			}
+			$('#'+attr).addClass('switch-hidden');
+		}
+		reloadPage();
+		return false;
+	});
+	
+	$('.checkout-tab a[rel="switch-map"]').click(function(){
+		var attr = $(this).attr("href").replace(/^.*#(.*)/, "$1");
+		if ($('#'+attr).hasClass('switch-hidden')) {
+			$('#'+attr).removeClass('switch-hidden');
+		} else {
 			$('#'+attr).addClass('switch-hidden');
 		}
 		reloadPage();

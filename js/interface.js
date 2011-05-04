@@ -1113,6 +1113,17 @@ $(document).ready(function() {
 		reloadPage();
 		return false;
 	});
+	
+	$('.checkout-tab a[rel="switch-map"]').click(function(){
+		var attr = $(this).attr("href").replace(/^.*#(.*)/, "$1");
+		if ($('#'+attr).hasClass('switch-hidden')) {
+			$('#'+attr).removeClass('switch-hidden');
+		} else {
+			$('#'+attr).addClass('switch-hidden');
+		}
+		reloadPage();
+		return false;
+	});
 
 	$("#slider-price").each(function(){
 		$(this).slider({
