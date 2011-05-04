@@ -3861,6 +3861,7 @@
     color:#777;
 }
 .catalog-cart .item .info .delete {
+    cursor: pointer; cursor: hand;
     padding:5px 0 2px 16px;
     margin:0;
     font-size:12px;
@@ -3874,6 +3875,7 @@
     color:#525252;
 }
 .catalog-cart .item .info .return {
+    cursor: pointer; cursor: hand;
     padding:5px 0 2px 16px;
     margin:0;
     font-size:12px;
@@ -5311,6 +5313,12 @@ p.sort-on a.active {
     margin:0 3% 0 0;
     float:left;
     overflow:hidden;
+}
+
+
+/* блок 'статьи' */
+.articles {
+	margin:0 0 60px 0;
 }
 
 /*

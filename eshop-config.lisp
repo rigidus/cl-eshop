@@ -2,7 +2,7 @@
 (print "ESHOP config")
 
 ;; PATH
-(defparameter *path-to-tpls* (format nil "~aDropbox/httpls" (user-homedir-pathname)))
+(defparameter *path-to-tpls* (format nil "~aDropbox/httpls/tosha" (user-homedir-pathname)))
 (export '*path-to-tpls*)
 (defparameter *path-to-bkps* (format nil "~aDropbox/htbkps" (user-homedir-pathname)))
 (export '*path-to-bkps*)

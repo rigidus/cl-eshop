@@ -1,0 +1,449 @@
+{namespace checkout}
+
+{template order}
+<div class="right">
+  <div class="your-order">
+	<p class="h2">Ваш заказ</p>
+	<p class="edit"><a href="cart">Изменить
+        заказ</a></p>
+	<p class="total"><i class="count"></i> товар на
+      <big class="sum"></big> руб.</p>
+	<div class="items">
+	  <ol>
+	  </ol>
+	</div>
+	<p class="delivery"><strong>Доставка</strong>
+      завтра в течение дня</p>
+	<p class="delivery-price">Стоимость доставки —
+      <big>300</big> руб. в пределах КАД.</p>
+  </div>
+</div>
+{/template}
+
+
+{template content0}
+<div class="content">
+  <div class="full">
+	<div class="full2">
+	  <p class="h1">Оформление заказа</p>
+	</div>
+
+	<div class="left2">
+	  <ul class="checkout-nav">
+		<li class="active">1. Авторизация</li>
+		<li>2. Доставка</li>
+		<li>3. Оплата</li>
+		<li>4. Подтверждение заказа</li>
+	  </ul>
+
+<!--
+
+	  <div class="checkout-tab">
+		<p class="h2"><a rel="switch" class="js" href="#checkout-oldbuyer">Я уже покупал в магазине и оставлял свой e-mail</a></p>
+		<p class="discount">-8%</p>
+		<p>Введите свой логин и пароль — вы сможете не вводить персональную информацию заново и получите скидку как постоянный клиент.</p>
+		<div id="checkout-oldbuyer" class="form switch-hidden switch-one">
+		  <form action="/checkout1" method="get">
+			<p><label for="checkout-oldbuyer-email" class="for">E-mail</label><input id="checkout-oldbuyer-email" class="text required required-email" type="text" value=""/></p>
+			<p><label for="checkout-oldbuyer-pass" class="for">Пароль</label><input id="checkout-oldbuyer-pass" class="text required" type="password" value=""/></p>
+			<p><label for="checkout-oldbuyer-remember" class="cb"><input id="checkout-oldbuyer-remember" class="checkbox" type="checkbox" value=""/>Запомнить меня</label></p>
+			<div class="clearfix">
+			  <input id="checkout-oldbuyer-authtype" type="hidden" value="oldbuyer"/>
+			  <p class="defsubmit"><a rel="submit-cookie" href="/checkout1" class="submit">Продолжить оформление заказа</a></p>
+			  <p class="forgot"><a href="#checkout-forgot" class="js" rel="switch" onclick="$('#checkout-oldbuyer').addClass('switch-hidden');">Забыли пароль?</a></p>
+			</div>
+		  </form>
+		</div>
+		<div id="checkout-forgot" class="form switch-hidden">
+		  <form action="/checkout0" method="post">
+			<p><label class="for">Забыли пароль?</label></p>
+			<p>Укажите свой электронный адрес, с которым вы покупали у нас в последний раз</p>
+			<p>
+			  <label for="checkout-forgot-mail" class="for for-full">E-mail</label>
+			  <input id="checkout-forgot-mail" class="text required  required-email" type="text" value=""/>
+			  <input class="submit submit-black" type="submit" value="Запросить пароль"/>
+			</p>
+			<p><a href="#checkout-oldbuyer" class="js" rel="switch" onclick="$('#checkout-forgot').addClass('switch-hidden');">Вспомнил! Хочу ввести пароль</a></p>
+		  </form>
+		</div>
+	  </div>
+
+-->
+
+	  <div class="checkout-tab">
+		<p class="h2"><a rel="switch" class="js"
+		 href="#checkout-newbuyer">Я хочу получить дисконтную карту ЦиFры</a></p>
+		<p class="discount">%</p>
+		<p>Укажите свои контактные данные и вы получите нашу дисконтную карту, персональные скидки и возможность получать бонусы на личный счет.</p>
+		<div id="checkout-newbuyer" class="form form-new-user switch-hidden switch-one">
+		  <form action="/checkout1" method="get" id="checkout-newbuyer-info">
+			<p><label for="checkout-newbuyer-name" class="for">Имя</label><input id="checkout-newbuyer-name" class="text" type="text" value=""/></p>
+			<p><label for="checkout-newbuyer-family" class="for">Фамилия</label><input id="checkout-newbuyer-family" class="text" type="text" value=""/></p>
+			<p><label for="checkout-newbuyer-email" class="for">E-mail <span class="red">*</span></label><input id="checkout-newbuyer-email" class="text required required-email" type="text" value=""/></p>
+<!--
+		<p><label for="checkout-newbuyer-pass"
+		class="for">Пароль <span class="red">*</span></label><input id="checkout-newbuyer-pass"
+		class="text required" type="password" value=""/></p>
+-->
+			<p><label for="checkout-newbuyer-phone" class="for">Телефон <span class="red">*</span></label><input id="checkout-newbuyer-phone" class="text required" type="text" value=""/><small class="small">В любом формате - 89278905666 или +7 (927) 890-56-66</small></p>
+			<div class="clearfix">
+			  <input id="checkout-newbuyer-authtype" type="hidden" value="newbuyer"/>
+			  <p class="defsubmit"><a rel="submit-cookie" href="/checkout1" class="submit">Продолжить оформление заказа</a></p>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	  <div class="checkout-tab">
+		<p class="h2"><a rel="switch" class="js"
+		href="#checkout-anonym">Я не хочу дисконтную карту ЦиFры</a></p>
+		<p>Простой вариант покупки - достаточно будет указать только ваш телефон, если вы не хотите заполнять никакие формы.</p>
+		<div id="checkout-anonym" class="form form-donotwant switch-hidden switch-one">
+		  <form action="/checkout1" method="get" id="checkout-anonym-info">
+			<p><label for="checkout-anonym-phone" class="for">Телефон <span class="red">*</span></label><input id="checkout-anonym-phone" class="text required" type="text" value=""/><small class="small">В любом формате - 89278905666 или +7 (927) 890-56-66</small></p>
+			<p><label for="checkout-anonym-name" class="for">Как вас зовут</label><input id="checkout-anonym-name" class="text" type="text" value=""/></p>
+			<div class="clearfix">
+			  <input id="checkout-anonym-authtype" type="hidden" value="anonym"/>
+			  <p class="defsubmit"><a rel="submit-cookie" href="/checkout1" class="submit">Продолжить оформление заказа</a></p>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	</div>
+
+	{$order |noAutoescape}
+
+  </div>
+</div>
+{/template}
+
+
+{template content1}
+<div class="content">
+  <div class="full">
+	<div class="full2">
+	  <p class="h1">Оформление заказа</p>
+	</div>
+
+	<div class="left2">
+	  <ul class="checkout-nav">
+		<li class="passed"><a href="/checkout0">1. Авторизация</a></li>
+		<li class="active">2. Доставка</li>
+		<li>3. Оплата</li>
+		<li>4. Подтверждение заказа</li>
+	  </ul>
+	  <div class="checkout-tab">
+		<p class="h2"><a rel="switch" class="js" href="#checkout-courier">Доставьте курьером</a></p>
+		<p class="discount discount-shipping"><strong>300 руб в	пределах КАД СПб</strong></p>
+		<p>Укажите адрес, по которому вам нужно доставить заказ:</p>
+		<div id="checkout-courier" class="form switch-hidden switch-one">
+		  <form action="/checkout2" method="post">
+
+<!--
+
+	<p><label for="checkout-courier-city" class="for">Город <span class="red">*</span></label><select id="checkout-courier-city" class="required"><option>Санкт-Петербург</option><option>Москва</option></select></p>
+
+-->
+
+	<p><label for="checkout-courier-addr"
+	class="for">Адрес <span class="red">*</span></label><textarea id="checkout-courier-addr"
+	cols="10" rows="10" class="required"></textarea></p>
+			<p><label for="checkout-courier-comment" class="for">Комментарии для курьера</label><textarea id="checkout-courier-comment" cols="10" rows="10"></textarea><small class="small">Удобное время доставки или другие примечания</small></p>
+			<div class="clearfix">
+			  <input id="checkout-courier-deliverytype" type="hidden" value="courier"/>
+			  <p class="forgot"><a href="/checkout0">Изменить заказ</a></p>
+			  <p class="defsubmit"><a rel="submit-cookie" href="/checkout2" class="submit">Перейти к оплате</a></p>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	  <div class="checkout-tab">
+		<p class="h2"><a rel="switch" class="js" href="#checkout-auto">Хочу забрать самостоятельно</a></p>
+		<p class="discount discount-shipping">Бесплатно</p>
+		<p>Вы можете сами забрать свой заказ в нашем центральном
+		магазине на Левашовском проспекте, дом 12. Если товар
+		присутствует на центральном складе, то минимальное время,
+		спустя которое можно получить заказ - 1.5 часа.</p>
+		<div id="checkout-auto" class="form switch-hidden switch-one">
+		  <form action="/checkout2" method="post">
+			<ul class="radios">
+			  <li>
+				<input id="checkout-auto-addr-1" class="radio" type="radio" value="Левашовский пр-т, 12" name="radio-address" checked="checked"/>
+				<label for="checkout-auto-addr-1" class="for">Левашовский пр-т, 12<small>24 часа</small></label>
+				<div id="checkout-auto-map-1" class="map switch-hidden">
+				  <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.ru/maps/ms?ie=UTF8&amp;hl=ru&amp;msa=0&amp;ll=59.965575,30.293859&amp;spn=0.004825,0.01929&amp;msid=208039224828410786056.00049992f16697c625d76&amp;output=embed"></iframe><br /><small>Просмотреть <a href="http://maps.google.ru/maps/ms?ie=UTF8&amp;hl=ru&amp;msa=0&amp;ll=59.965575,30.293859&amp;spn=0.004825,0.01929&amp;msid=208039224828410786056.00049992f16697c625d76&amp;source=embed" style="color:#0000FF;text-align:left">ЦиFры - центральный магазин</a> на карте большего размера</small>
+
+<!--
+
+                  <p class="yandex"><a href="yandex.ru" onclick="window.open(this.href);return false;">Показать на Яндекс-Картах</a></p>
+
+-->
+
+			</div>
+				<a class="js" href="#checkout-auto-map-1" rel="switch">Карта проезда</a>
+			
+			  </li>
+
+
+
+              <li>
+				<input id="checkout-auto-addr-2" class="radio"
+				type="radio" value="Петергоф, ул. Ботаническая, д.18, к.3" name="radio-address"/>
+				<label for="checkout-auto-addr-2"
+				class="for">Петергоф, ул. Ботаническая, д.18,
+				к.3<small>11:00 - 21:00, выходной - воскресенье</small></label>
+				<div id="checkout-auto-map-2" class="map switch-hidden">
+				      <iframe width="425" height="350" frameborder="0" scrolling="no"
+        marginheight="0" marginwidth="0"
+        src="http://maps.google.ru/maps/ms?ie=UTF8&amp;hl=ru&amp;msa=0&amp;ll=59.871321,29.852192&amp;spn=0.004825,0.01929&amp;msid=208039224828410786056.00049992cae7aa9de3fd8&amp;output=embed"></iframe><br /><small>Просмотреть <a href="http://maps.google.ru/maps/ms?ie=UTF8&amp;hl=ru&amp;msa=0&amp;ll=59.871321,29.852192&amp;spn=0.004825,0.01929&amp;msid=208039224828410786056.00049992cae7aa9de3fd8&amp;source=embed" style="color:#0000FF;text-align:left">ЦиFры
+    Петергоф</a> на карте большего размера</small> </p>
+<!--				  <p class="yandex"><a href="yandex.ru" onclick="window.open(this.href);return false;">Показать на Яндекс-Картах</a></p>-->
+				</div>
+				<a class="js" href="#checkout-auto-map-2" rel="switch">Карта проезда</a>
+			  </li>
+
+<!--
+			  <li>
+				<input id="checkout-auto-addr-3" class="radio" type="radio" value="пр-т Энгельса, 27" name="radio-address"/>
+				<label for="checkout-auto-addr-3" class="for">пр-т Энгельса, 27<small>24 часа</small></label>
+				<div id="checkout-auto-map-3" class="map switch-hidden">
+				  <img src="img/temp/yandex.jpg" alt="Карта"/>
+				  <p class="yandex"><a href="yandex.ru" onclick="window.open(this.href);return false;">Показать на Яндекс-Картах</a></p>
+				</div>
+				<a class="js" href="#checkout-auto-map-3" rel="switch">Карта проезда</a>
+			  </li>
+			  <li>
+				<input id="checkout-auto-addr-4" class="radio" type="radio" value="пр-т Энгельса, 154" name="radio-address"/>
+				<label for="checkout-auto-addr-4" class="for">пр-т Энгельса, 154 <span>(ТРК &laquo;Гранд-Каньон&raquo;)</span><small>24 часа</small></label>
+				<div id="checkout-auto-map-4" class="map switch-hidden">
+				  <img src="img/temp/yandex.jpg" alt="Карта"/>
+				  <p class="yandex"><a href="yandex.ru" onclick="window.open(this.href);return false;">Показать на Яндекс-Картах</a></p>
+				</div>
+				<a class="js" href="#checkout-auto-map-4" rel="switch">Карта проезда</a>
+			  </li>
+
+-->
+
+			</ul>
+			<div class="clearfix">
+			  <input id="checkout-auto-deliverytype" type="hidden" value="auto"/>
+			  <p class="forgot"><a href="/checkout0">Изменить заказ</a></p>
+              <p class="defsubmit"><a rel="submit-cookie" href="/checkout2" class="submit">Перейти к оплате</a></p>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	</div>
+
+	{$order |noAutoescape}
+
+  </div>
+</div>
+{/template}
+
+
+{template content2}
+<div class="content">
+  <div class="full">
+	<div class="full2">
+	  <p class="h1">Оформление заказа</p>
+	</div>
+
+	<div class="left2">
+	  <ul class="checkout-nav">
+		<li class="passed"><a href="/checkout0">1. Авторизация</a></li>
+		<li class="passed"><a href="/checkout1">2. Доставка</a></li>
+		<li class="active">3. Оплата</li>
+		<li>4. Подтверждение заказа</li>
+	  </ul>
+	  <div class="checkout-tab">
+		<p class="h2"><a rel="switch" class="js" href="#checkout-cash">Оплата наличными</a></p>
+		<p>Самый простой и удобный способ оплаты. Вам необходимо будет
+		передать деньги курьеру. Вы получите товарный
+		чек,подтверждающий покупку, гарантийный талон и нашу любовь :).</p>
+		<div id="checkout-cash" class="form switch-hidden switch-one">
+		  <form action="/checkout3" method="post">
+			<div class="clearfix">
+			  <input type="hidden" id="checkout-cash-paytype" value="cash"/>
+			  <p class="forgot"><a href="/checkout1">Изменить способ доставки</a></p>
+			  <p class="defsubmit"><a rel="submit-cookie" href="/checkout3" class="submit">К последнему этапу</a></p>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	  <div class="checkout-tab">
+		<p class="h2"><a rel="switch" class="js" href="#checkout-card">Кредитной картой</a></p>
+		<p>Вы можете оплатить покупку кредитной картой - курьеру или
+		непосредственно в самих магазинах.</p>
+		<div id="checkout-card" class="form switch-hidden switch-one">
+		  <form action="/checkout3" method="post">
+			<div class="clearfix">
+			  <input type="hidden" id="checkout-card-paytype" value="card"/>
+			  <p class="forgot"><a href="/checkout1">Изменить способ доставки</a></p>
+			  <p class="defsubmit"><a rel="submit-cookie" href="/checkout3" class="submit">К последнему этапу</a></p>
+			</div>
+		  </form>
+		</div>
+	  </div>
+
+<!--
+
+	  <div class="checkout-tab">
+		<p class="h2"><a rel="switch" class="js" href="#checkout-credit">В кредит</a></p>
+		<p>Укажите свои контактные данные и вы получите нашу дисконтную карту, персональные скидки и возможность получать бонусы на личный счет.</p>
+		<div id="checkout-credit" class="form switch-hidden switch-one">
+		  <form action="/checkout3" method="post">
+			<div class="clearfix">
+			  <input type="hidden" id="checkout-credit-paytype" value="credit"/>
+			  <p class="defsubmit"><a rel="submit-cookie" href="/checkout3" class="submit">К последнему этапу</a></p>
+			  <p class="forgot"><a href="/checkout1">Изменить способ доставки</a></p>
+			</div>
+		  </form>
+		</div>
+	  </div>
+
+-->
+
+	  <div class="checkout-tab">
+		<p class="h2"><a rel="switch" class="js" href="#checkout-bank">По безналичному расчету</a></p>
+		<p>Просто заполните реквизиты и мы выставим вам счет на оплату.</p><p><strong>Обращаем ваше внимание, что при оплате по безналичному расчету стоимость заказа увеличевается на 1% из-за банковской комиссии</strong></p>
+		<div id="checkout-bank" class="form switch-hidden switch-one">
+		  <form action="/checkout3" method="post">
+			<p><label for="checkout-bank-bankaccount" class="for">Реквизиты юридического лица <span class="red">*</span></label><textarea id="checkout-bank-bankaccount" class="required" cols="10" rows="10">Обращаем ваше внимание, что при оплате по безналичному расчету стоимость заказа увеличивается на 1% из-за банковской комиссии</textarea><small class="small">Вы можете указать реквизиты в свободном формате</small></p>
+			<div class="clearfix">
+			  <input type="hidden" id="checkout-bank-paytype" value="bank"/>
+			  <p class="forgot"><a href="/checkout1">Изменить способ доставки</a></p>
+			  <p class="defsubmit"><a rel="submit-cookie" href="/checkout3" class="submit">К последнему этапу</a></p>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	</div>
+
+
+	{$order |noAutoescape}
+
+  </div>
+</div>
+{/template}
+
+
+{template content3}
+<div class="content">
+  <div class="full">
+	<div class="full2">
+	  <p class="h1">Оформление заказа</p>
+	</div>
+
+	<div class="left2">
+	  <ul class="checkout-nav">
+		<li class="passed"><a href="/checkout0">1. Авторизация</a></li>
+		<li class="passed"><a href="/checkout1">2. Доставка</a></li>
+		<li class="passed"><a href="/checkout2">3. Оплата</a></li>
+		<li class="active">4. Подтверждение заказа</li>
+	  </ul>
+
+      <div class="checkout-tab checkout-finish">
+        <p class="h2">Проверьте, все ли верно перед отправкой заказа:</p>
+        <div class="temparea">
+        </div>
+        <div id="checkout-confirm" class="form">
+	      <form action="/thanks"
+                method="get">
+	        <div class="clearfix">
+		      <p class="defsubmit"><input class="submit"
+                                          type="submit" value="Все верно, отправить заказ"/></p>
+	        </div>
+	      </form>
+        </div>
+      </div>
+
+	</div>
+
+	{$order |noAutoescape}
+
+  </div>
+</div>
+{/template}
+
+
+{template thanks}
+<div class="content">
+  <div class="full">
+	<div class="full2">
+	  <p class="h1">Спасибо за покупку!</p>
+      <p>В течение получаса с вами свяжется наш менеджер и уточнит
+      детали заказа. На ваш электронный адрес отправлено письмо с информацией о заказе.</p>
+	</div>
+
+	<div class="left2">
+	  <div class="checkout-thanks">
+		<div class="temparea">
+          <p class="h2">Номер заказа — №{$orderid}</p>
+	      <p>Этот номер вам пригодится, если вы захотите сами позвонить в службу доставки. Вы сможете сделать это по телефону <big>(812) 320-80-80</big></p>
+		</div>
+      <p>Если вы хотите забрать товар самостоятельно, то сделать это вы можете в нашем центральном
+      магазине на Левашовском пр, 12</p>
+		<div class="map">
+		  <img src="img/temp/yandex.jpg" alt="Карта"/>
+		<!--  <p class="yandex"><a href="yandex.ru" onclick="window.open(this.href);return false;">Показать на Яндекс-Картах</a></p>-->
+		</div>
+<!--
+		<hr/>
+		<p class="h2">Вам может быть полезно</p>
+		<ul class="thanks-list">
+		  <li class="future">
+			<p class="h2"><a href="#checkout-future" rel="switch">Получите скидку на дальнейшие заказы</a></p>
+			<p>Укажите свой адрес электронной почты и вы сможете быстрее оформлять следующие заказы и получите скидку</p>
+			<div id="checkout-future" class="form switch-hidden">
+			  <form action="#" method="post">
+				<p>
+				  <label for="checkout-future-mail" class="for for-full">E-mail</label>
+				  <input id="checkout-future-mail" class="text" type="text" value=""/>
+				  <input class="submit submit-black" type="submit" value="Получить скидку"/>
+				</p>
+			  </form>
+			</div>
+		  </li>
+		  <li class="print">
+			<p class="h2"><a href="#print">Распечатайте информацию о заказе</a></p>
+			<p>Укажите свой адрес электронной почты и вы сможете быстрее оформлять следующие заказы и получите скидку</p>
+		  </li>
+		  <li class="warranty">
+			<p class="h2"><a href="#">Узнайте о гарантийной поддержке</a></p>
+			<p>Мы продаем только 100% "белые" и сертифицированные товары. Это значит, что на каждый из них распространяется официальная гарантия производителя.</p>
+		  </li>
+		  <li class="additional">
+			<p class="h2"><a href="#">Воспользуйтесь нашими дополнительными услугами</a></p>
+			<p>Укажите свой адрес электронной почты и вы сможете быстрее оформлять следующие заказы и получите скидку</p>
+		  </li>
+		</ul>
+
+-->
+		<hr/>
+		<p><a href="catalog">&larr; Вернуться к каталогу</a></p>
+	  </div>
+	</div>
+
+	{$order |noAutoescape}
+
+  </div>
+</div>
+{/template}
+
+{template thankserror}
+<div class="content">
+  <div class="full">
+	<div class="full2">
+	  <p class="h1">Для совершения покупки положите товары в корзину.</p>
+    </div>
+
+	<div class="left2">
+	  <div class="checkout-thanks">
+		<hr/>
+		<p><a href="catalog">&larr; Вернуться к каталогу</a></p>
+	  </div>
+	</div>
+
+  </div>
+</div>
+{/template}

@@ -87,9 +87,9 @@
       :keywords (format nil "~a" (name object))
       :description (format nil "~a" (name object))
       :title (format nil "~a - купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
-                     (name object)
-                     (name object)
-                     (name object))))
+                     (sklonenie (name object) 1)
+                     (sklonenie (name object) 2)
+                     (sklonenie (name object) 3))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object group-filter))
