@@ -210,7 +210,7 @@
 
 
 (defun save-order-text (file-name body)
-  (let ((filename (format nil "~a/htconf/orders/~a.html" *path-to-dropbox* file-name)))
+  (let ((filename (format nil "~a/orders/~a.html" *path-to-dropbox* file-name)))
     (with-open-file
         (stream filename :direction :output :if-exists :supersede)
       (format stream "~a" body))))
