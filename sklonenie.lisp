@@ -27,7 +27,7 @@
          :do (let* ((words (split-sequence:split-sequence #\, line))
                     (skls (mapcar #'(lambda (w) (string-trim "#\""  w))
                              words))
-                    (key (car skls)))
+                    (key (string-downcase (car skls))))
                (setf (gethash key *group-skls*) skls)
                (format t "~&~a: ~{~a~^,~}" key skls))
               ))))
