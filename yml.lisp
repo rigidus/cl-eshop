@@ -87,6 +87,8 @@
                                                                                      (setf yml-name (value option)))
                                                                         (if (or (null yml-name)
                                                                                 (string= ""
+                                                                                         (stripper yml-name))
+                                                                                (string= "No"
                                                                                          (stripper yml-name)))
                                                                             (name product)
                                                                             yml-name))
@@ -103,6 +105,8 @@
                  (setf yml-name (value option)))
     (if (or (null yml-name)
             (string= ""
+                     (stripper yml-name))
+            (string= "No"
                      (stripper yml-name)))
         (name product)
         yml-name)))
