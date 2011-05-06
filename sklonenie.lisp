@@ -29,7 +29,8 @@
                              words))
                     (key (string-downcase (car skls))))
                (setf (gethash key *group-skls*) skls)
-               (format t "~&~a: ~{~a~^,~}" key skls))
+               ;; (format t "~&~a: ~{~a~^,~}" key skls)
+               )
               ))))
 
 (defun sklonenie (name skl)
