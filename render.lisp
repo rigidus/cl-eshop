@@ -101,6 +101,7 @@
 (defmethod restas:render-object ((designer eshop-render) (object group-filter))
   (fullfilter:container
    (list :name (name object)
+         :vendor (getf (request-get-plist) :vendor)
          :sort (getf (request-get-plist) :sort)
          :base (format nil "~{~a~}"
                        (mapcar #'(lambda (elt)
