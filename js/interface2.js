@@ -1166,7 +1166,7 @@ $(document).ready(function() {
 	$('.checkout-thanks').each(function(){
 		checkoutThanks(this);
 	});
-		$(".block-item-pics ul li a,.item-info-left .pic a").fancybox({
+	$(".block-item-pics ul li a,.item-info-left .pic a").fancybox({
 		'transitionIn'	:	'fade',
 		'transitionOut'	:	'fade',
 		'speedIn'		:	300,
