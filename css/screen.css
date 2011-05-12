@@ -5321,6 +5321,18 @@ p.sort-on a.active {
 	margin:0 0 60px 0;
 }
 
+.articles a {
+	text-decoration:none;
+	color: black;
+}
+
+.articles .articles-menu a {
+	text-decoration:underline;
+	color: #0776B5;
+}
+
+.arti
+
 /*
  * FancyBox - jQuery Plugin
  * Simple and fancy lightbox alternative
@@ -5337,6 +5349,7 @@ p.sort-on a.active {
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
+ 
 
 #fancybox-loading {
     position: fixed;
@@ -5351,8 +5364,8 @@ p.sort-on a.active {
     z-index: 1104;
     display: none;
 }
-
-#fancybox-loading div {
+/*здесь что-то мутное*/
+#fancybox-loading-div {
     position: absolute;
     top: 0;
     left: 0;
