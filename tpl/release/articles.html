@@ -2,31 +2,52 @@
 
 {template article-big}
 	<p class="h1">{$name | noAutoescape}</p>
-	{$date}
+	<i>{$date}</i>
 	{$body | noAutoescape}
+<div class="articles">
+{$tags | noAutoescape}
+</div>
 {/template}
 
 {template article-short}
 <div class="articles">
 <a href="/articles/{$key}">
-<p class="h1">{$name | noAutoescape}</p>
-{$date}
+<p class="h1">{$name | noAutoescape}</p></a>
+<var class="date"><i>{$date}: </i></var>
+<a href="/articles/{$key}">
 {$descr | noAutoescape}
 </a>
+{$tags | noAutoescape}
 </div>
 {/template}
 
 {template articles-menu}
 <p class="articles-menu">
-<a href="/articles/news">Новости</a> |
-<a href="/articles/papers">Статьи</a> |
-<a href="/articles/reviews">Обзоры</a></p>
+{if $tag=='Новости'}<b>{else}<a href="/articles/news">{/if}
+Новости
+{if $tag=='Новости'}</b>{else}</a>{/if}
+ |&nbsp;
+{if $tag=='Статьи'}<b>{else}<a href="/articles/papers">{/if}
+Статьи
+{if $tag=='Статьи'}</b>{else}</a>{/if}
+ |&nbsp;
+{if $tag=='Обзоры'}<b>{else}<a href="/articles/reviews">{/if}
+Обзоры
+{if $tag=='Обзоры'}</b>{else}</a>{/if}
 {/template}
 
 {template articles-list}
+{if $articles}
+<div class="pager">{\n}
+ <p>{$pager |noAutoescape}</p>
+</div>
 	{foreach $article in $articles}
            {call article-short data="$article" /}
-     	{/foreach}
+     {/foreach}
+<div class="pager">{\n}
+ <p>{$pager |noAutoescape}</p>
+</div>
+{/if}
 {/template}
 
 {template articles-main}
@@ -34,6 +55,17 @@
 {$menu | noAutoescape}
 {$articles | noAutoescape}
 </div>
+{/template}
+
+
+{template articles-tags}
+<ul class="tags">
+	{foreach $tag in $tags}
+    <li>
+      <a href=/articles?tags={$tag}>{$tag}</a>
+    </li>
+    {/foreach}
+</ul>
 {/template}
 
 

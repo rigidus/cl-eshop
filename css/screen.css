@@ -5331,7 +5331,28 @@ p.sort-on a.active {
 	color: #0776B5;
 }
 
-.arti
+.articles .pager a {
+	text-decoration:underline;
+	color: #0776B5;
+}
+.articles .tags {
+    background: url("/img/i/bgtag.gif") no-repeat scroll 0 50% #FFFFFF;
+    clear: both;
+    list-style: none outside none;
+    padding: 0.2em 0 0.1em 18px;
+}
+.articles .tags li {
+    display: inline;
+}
+.articles .tags li a {
+    font-size: 0.83em;
+}
+.articles .tags li a {
+    color: #666666;
+}
+.articles .tags li a:hover {
+    color: #A3A3A3;
+}
 
 /*
  * FancyBox - jQuery Plugin
