@@ -2,7 +2,7 @@
 
 {template article-big}
 	<p class="h1">{$name | noAutoescape}</p>
-	<h3>{$date}</h3>
+	{$date}
 	{$body | noAutoescape}
 {/template}
 
@@ -10,10 +10,17 @@
 <div class="articles">
 <a href="/articles/{$key}">
 <p class="h1">{$name | noAutoescape}</p>
-<h3>{$date}</h3>
+{$date}
 {$descr | noAutoescape}
 </a>
 </div>
+{/template}
+
+{template articles-menu}
+<p class="articles-menu">
+<a href="/articles/news">Новости</a> |
+<a href="/articles/papers">Статьи</a> |
+<a href="/articles/reviews">Обзоры</a></p>
 {/template}
 
 {template articles-list}
@@ -22,6 +29,12 @@
      	{/foreach}
 {/template}
 
+{template articles-main}
+<div class="articles">
+{$menu | noAutoescape}
+{$articles | noAutoescape}
+</div>
+{/template}
 
 
 {template rightblock}
