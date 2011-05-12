@@ -38,6 +38,8 @@
                    ;; Обрабатываем все сохраненные пакеты
                    (loop :for packet :in (reverse *load-list*) :do
                       (process packet))
+                   ;;создаем новый yml файл
+                   (create-yml-file)
                    ;; Заполняем siteprice если он равен 0
                    (copy-price-to-siteprice)
                    ;; Сохраняем *load-list* и *order* для истории
