@@ -133,7 +133,7 @@
       (funcall report-func stream))))
 
 
-(create-report "xls/products.csv" #'write-products-report)
+;; (create-report "xls/products.csv" #'write-products-report)
 ;; (create-report "report-groups.csv" #'write-groups)
 ;; (create-report "report-products.csv" #'write-products)
 ;; (create-report "report-vendors.csv" #'write-vendors)

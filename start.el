@@ -21,4 +21,7 @@
          "~/cl-eshop/search.lisp"
          "~/cl-eshop/xls.lisp"
          "~/cl-eshop/yml.lisp"
+         "~/cl-eshop/articles.lisp"
+         "~/cl-eshop/report.lisp"
+         "~/cl-eshop/sklonenija.lisp"
          ))

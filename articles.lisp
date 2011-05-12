@@ -8,11 +8,20 @@
 (defclass article ()
   ((key               :initarg :key       :initform nil       :accessor key)
    (name              :initarg :name      :initform nil       :accessor name)
-   (descr             :initarg :descr      :initform nil       :accessor descr)
+   (descr             :initarg :descr     :initform nil       :accessor descr)
    (body              :initarg :body      :initform nil       :accessor body)
    (date              :initarg :date      :initform nil       :accessor date)
-   (tag               :initarg :tag       :initform (make-hash-table :test #'equal) :accessor tag)
+   (tags               :initarg :tags     :initform (make-hash-table :test #'equal) :accessor tags)
    ))
+
+;;тэги через запятую
+(defun make-tags-table(tags input-string)
+  (let ((words (split-sequence:split-sequence #\, input-string)))
+    (mapcar #'(lambda (w)
+                (setf (gethash (stripper w) tags) w))
+            words)
+    ;; (format t "~&~a: ~{~a~^,~}" key skls)
+    ))
 
 ;;
 (defmethod unserialize (filepath (dummy article))
@@ -23,13 +32,14 @@
            (name (cdr (assoc :name raw)))
            (date (cdr (assoc :date raw)))
            (descr (cdr (assoc :descr raw)))
+           (tags-line (cdr (assoc :tags raw)))
            (new (make-instance 'article
                                :key key
                                :name name
                                :descr descr
                                :body body
-                               :date date
-                               :tag nil)))
+                               :date date)))
+      ;; (make-tags-table (tags new) tags-line)
       (setf (gethash key *storage-articles*) new)
       ;; Возвращаем key статьи
       key))
@@ -50,12 +60,6 @@
 ;;
 (defun restore-articles-from-files ()
   (let ((t-storage))
-    (handler-bind ((WRONG-ARTILE-FILE
-                    #'(lambda (e)
-                        (format t "~%warn: WRONG-ARTICLE-FILE: ~a"
-                                (filepath e))
-                        (invoke-restart 'ignore)
-                        )))
       (print "start load articles....{")
       (sb-ext:gc :full t)
       (let ((*storage-articles* (make-hash-table :test #'equal)))
@@ -63,12 +67,16 @@
         (setf t-storage *storage-articles*))
       (setf *storage-articles* t-storage)
       (sb-ext:gc :full t)
-      (print "...} finish load articles"))))
-
+      (print "...} finish load articles")))
 
 ;; загрузить статьи
 (print ">> Articles <<")
 (restore-articles-from-files)
+
+(defun convert-data())
+
+
+;;;;;;;;;;;;;;;;;;;;; RENDER ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun get-articles (&optional tags)
   (let ((articles))
@@ -77,24 +85,41 @@
     articles))
 
 ;; отображение списка статей
-(defun articles-page ()
-  (default-page
-      (static:main
-       (list :menu (menu)
-             :breadcrumbs "<p class=\"breadcrumbs\"><a href=\"/\">Главная</a> / Статьи"
-             :subcontent  (articles:articles-list (list :articles
-                                                        (mapcar #'(lambda (v)
-                                                                    (list :name (name v)
-                                                                          :date (date v)
-                                                                          :descr (descr v)
-                                                                          :key (key v)))
-                                                                (get-articles))))
-             :rightblock  ""))))
+(defun articles-page (&optional request-get-plist)
+  (let ((tags (getf request-get-plist :tags))
+        (breadcrumbs)
+        (menu))
+    (if (not (null tags))
+        (setf breadcrumbs
+              (format nil "<p class=\"breadcrumbs\">
+                                  <a href=\"/\">Главная</a> /
+                                  <a href=\"/articles\">Материалы</a> /
+                                  ~a" tags))
+        (progn
+          (setf breadcrumbs "<p class=\"breadcrumbs\">
+                                  <a href=\"/\">Главная</a> /
+                                  Материалы")
+          (setf menu (articles:articles-menu))))
+    (default-page
+        (static:main
+         (list :menu (menu)
+               :breadcrumbs breadcrumbs
+               :subcontent  (articles:articles-main
+                             (list :menu menu
+                                   :articles (articles:articles-list
+                                              (list :articles
+                                                    (mapcar #'(lambda (v)
+                                                                (list :name (name v)
+                                                                      :date (date v)
+                                                                      :descr (descr v)
+                                                                      :key (key v)))
+                                                            (get-articles))))))
+               :rightblock  "")))))
 
 (defun get-article-breadcrumbs(article)
-  (format nil "<p class=\"breadcrumbs\">
+    (format nil "<p class=\"breadcrumbs\">
                   <a href=\"/\">Главная</a> /
-                  <a href=\"/articles\">Статьи</a> /
+                  <a href=\"/articles\">Материалы</a> /
                   ~a </p>" (name article)))
 
 ;; отображение страницы статьи

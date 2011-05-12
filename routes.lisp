@@ -179,9 +179,30 @@
 (defun test-route-article-object ()
   (not (null (gethash (caddr (request-list)) *storage-articles*))))
 
-;;список статей
+;;архив матерьялов
 (restas:define-route article-route ("/articles" :requirement #'test-article-get-parameters)
-  (articles-page))
+  (articles-page (request-get-plist)))
+
+;;список статей
+(restas:define-route article-papers-route ("/articles/papers" :requirement #'test-article-get-parameters)
+  (let ((request-get-plist (request-get-plist)))
+    (if (null (getf request-get-plist :tags))
+        (setf (getf request-get-plist :tags) "Статьи"))
+    (articles-page request-get-plist)))
+
+;;список новостей
+(restas:define-route article-news-route ("/articles/news" :requirement #'test-article-get-parameters)
+  (let ((request-get-plist (request-get-plist)))
+    (if (null (getf request-get-plist :tags))
+        (setf (getf request-get-plist :tags) "Новости"))
+    (articles-page request-get-plist)))
+
+;;список обзоры
+(restas:define-route article-review-route ("/articles/reviews" :requirement #'test-article-get-parameters)
+  (let ((request-get-plist (request-get-plist)))
+    (if (null (getf request-get-plist :tags))
+        (setf (getf request-get-plist :tags) "Обзоры"))
+    (articles-page request-get-plist)))
 
 ;;конкретная статья
 (restas:define-route article/-key-route ("/articles/:key" :requirement #'test-route-article-object)
