@@ -141,13 +141,11 @@
   (restore-from-files)
   (use-revert-history)
   (copy-price-to-siteprice)
-  (dtd))
+  (dtd)
+  (create-sitemap-file))
 
 (defun safely-store()
-  (restore-from-files)
-  (use-revert-history)
-  (copy-price-to-siteprice)
-  (dtd)
+  (safely-restore)
   (store-products))
 
 (print "Restoring data from files")

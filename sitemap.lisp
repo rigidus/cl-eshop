@@ -143,6 +143,7 @@
 
 
 (defun create-sitemap-file ()
+  (format t "~&create Sitemap.XML: ")
   (let ((filename (format nil "~a/sitemap.xml" *path-to-conf*)))
     (with-open-file
         (stream filename :direction :output :if-exists :supersede)
