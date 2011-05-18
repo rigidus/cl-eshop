@@ -100,18 +100,20 @@
 
 
 ;; STATIC
+(defparameter *static-pages* (list "delivery"         "about"             "faq"             "kakdobratsja"
+                                   "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
+                                   "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
+                                   "warranty"         "moneyback"         "article"         "news1"
+                                   "news2"            "news3"             "news4"           "news5"
+                                   "news6"            "dilers"            "corporate"       "vacancy"
+                                   "bonus"            "burunduk"          "listservice"     "suslik"))
+
 
 (defmacro static ()
   `(progn ,@(mapcar #'(lambda (x)
                         `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
                            (static-page)))
-                    (list "delivery"         "about"             "faq"             "kakdobratsja"
-                          "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
-                          "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
-                          "warranty"         "moneyback"         "article"         "news1"
-                          "news2"            "news3"             "news4"           "news5"
-                          "news6"            "dilers"            "corporate"       "vacancy"
-                          "bonus"            "burunduk"          "listservice"     "suslik"))))
+                    *static-pages*)))
 
 (static)
 

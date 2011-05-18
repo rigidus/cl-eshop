@@ -173,4 +173,4 @@
     (loop :for packet :in (reverse (caddr (car *history*))) :do
        (format stream "~a" (sb-ext:octets-to-string packet :external-format :cp1251)))))
 
-;; (create-report "last-gateway-string.txt" #'show-last-history)
+;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
