@@ -609,8 +609,12 @@ function checkoutFinish(current) {
 				temp += rUser.auth.family;
 			}
 			temp += '<br/>';
-			temp += rUser.auth.phone + '<br/>';
-			temp += rUser.auth.email;
+			if (rUser.auth.phone) {
+				temp += rUser.auth.phone + '<br/>';
+			}
+			if (rUser.auth.email) {
+				temp += rUser.auth.email;
+			}
 		}
 	where.append('<p>' + temp + '</p>');
 	temp = '';
@@ -621,7 +625,9 @@ function checkoutFinish(current) {
 			// where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping"><strong>бесплатно,</strong> завтра в течение дня</p>');
 		// }
 		// temp += rUser.delivery.city + '<br/>';
-		temp += rUser.delivery.addr;
+		if (rUser.delivery.addr) {
+			temp += rUser.delivery.addr;
+		}
 		if (rUser.delivery.comment) {
 			temp += '<br/>' + rUser.delivery.comment;
 		}
