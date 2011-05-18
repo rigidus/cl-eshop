@@ -220,7 +220,7 @@ function refreshWidth() {
 function rSetCookie(c_name, value){
 	var exdate=new Date();
 	exdate.setDate(exdate.getDate() + 30);
-	var c_value=encodeURIComponent(value) + ("; expires="+exdate.toUTCString());
+	var c_value=encodeURIComponent(value) + ("; path=/; expires="+exdate.toUTCString());
 	document.cookie=c_name + "=" + c_value;
 }
 
@@ -753,6 +753,17 @@ function rCartReDraw3() {
 $(document).ready(function() {	
 	/*Инициализация ранее заполненных полей*/
 	var rUser = eval("(" + rGetCookie('user') + ")");
+
+	if(document.location) {
+		var path = document.location.pathname;
+		if( path != "/") {
+ 			document.cookie = "cart=[]; path="+path+"/; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+			document.cookie = "user=[]; path="+path+"/; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+			document.cookie = "cart=[]; path="+path+"; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+			document.cookie = "user=[]; path="+path+"; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+		}
+	}
+
 	if (rUser){
 		if (rUser.auth){
 			if (rUser.auth.authtype == 'newbuyer'){
@@ -1179,21 +1190,21 @@ $(document).ready(function() {
 		'titleShow'		: true,
 		'titlePosition'	: 'over'
 	});
-		$(".iframe,.add a").fancybox(
-			{
-				'content' : '<div class="product-add-complete">Товар добавлен в корзину!</div>',
-				'transitionIn'	:	'fade',
-		'transitionOut'	:	'fade',
-		'overlayShow'	:	true,
-		'hideOnOverlayClick':	true,
-		'speedIn'		:	200,
-		'speedOut'		:	200,
-				'width'    : 240,
-				'height'   : 'auto',
-				'autoDimensions' : false,
-				'centerOnScroll' : true,
-				'padding'  : 20,
-				'scrolling' : 'no',
-				'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
-			});
+		$(".iframe,.add a").fancybox({
+			
+			'content' : '<div class="product-add-complete">Товар добавлен в корзину! Вы&nbsp;можете<br><a href="/cart">оформить&nbsp;заказ</a>&nbsp;или&nbsp;<a onclick="closeFancy();">продолжить&nbsp;покупки.</a></div>',
+			'transitionIn'	:	'fade',
+			'transitionOut'	:	'fade',
+			'overlayShow'	:	true,
+			'hideOnOverlayClick':	true,
+			'speedIn'		:	200,
+			'speedOut'		:	200,
+			'width'    : 370,
+			'height'   : 60,
+			'autoDimensions' : false,
+			'centerOnScroll' : true,
+			'padding'  : 20,
+			'scrolling' : 'no',
+			//'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
+		});
 });

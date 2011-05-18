@@ -220,7 +220,7 @@ function refreshWidth() {
 function rSetCookie(c_name, value){
 	var exdate=new Date();
 	exdate.setDate(exdate.getDate() + 30);
-	var c_value=encodeURIComponent(value) + ("; expires="+exdate.toUTCString());
+	var c_value=encodeURIComponent(value) + ("; path=/; expires="+exdate.toUTCString());
 	document.cookie=c_name + "=" + c_value;
 }
 
@@ -300,7 +300,7 @@ function rCalc() {
 				}
 				else{
 					$(this).find('.delivery-price').html('Самовывоз — <big>бесплатно</big>');
-				}	
+				}
 			}
 			$(current).find('.count').html(cnt);
 		}
@@ -313,7 +313,7 @@ function rCalc() {
 
 function rAddCart(id, group_id, name, price, count, item_link,img_link) {
 
-	if(!count) 
+	if(!count)
 		count = 1;
 	var rCart = new Array();
 	if (eval(rGetCookie('cart'))) {
@@ -491,7 +491,7 @@ function initRCartReDraw2 () {
 			var theEvent = evt || window.event;
 			var key = theEvent.keyCode || theEvent.which;
 			keyChar = String.fromCharCode(key);
-			var regex = /\d|[\x60-\x6A]/; 
+			var regex = /\d|[\x60-\x6A]/;
 			if (!regex.test(keyChar)) {
 				if((key!=8) && (key!=37) && (key!=39)) {
 					return false;
@@ -532,13 +532,13 @@ function checkoutProceed(current) {
 				$("<label class='errorlabel'>Не заполнено обязательное поле</label>").insertAfter(this);
 			}
 			noerrors = false;
-		} 
+		}
 		else {
 			if (($(this).hasClass('required-email')) && (!filter.test($(this).val()))) {
 				$(this).parent('p').addClass('error').find('.errorlabel').remove();
 				$("<label class='errorlabel'>Введите правильный e-mail</label>").insertAfter(this);
 				noerrors = false;
-			} 
+			}
 			else {
 				$(this).parent('p').removeClass('error').find('.errorlabel').remove();
 			}
@@ -546,7 +546,7 @@ function checkoutProceed(current) {
 	});
 	if (!noerrors) {
 		$(current).parents('.form').find('p.error').eq(0).find(':input').focus();
-	} 
+	}
 	else {
 		obj = new Object;
 		$(current).parents('.form').find(':input').each(function(){
@@ -554,12 +554,12 @@ function checkoutProceed(current) {
 			var val = $(this).val();
 			if ($(this).is(":checkbox")) {
 				obj[name]=$(this).is(":checked");
-			} 
+			}
 			else if ($(this).is(":radio")) {
 				if ($(this).is(":checked") && $(this).attr('id').indexOf("addr-")>0) {
 					obj['addr'] = val;
 				}
-			} 
+			}
 			else {
 				obj[name] = val;
 			}
@@ -625,13 +625,13 @@ function checkoutFinish(current) {
 		if (rUser.delivery.comment) {
 			temp += '<br/>' + rUser.delivery.comment;
 		}
-		temp += '<br/><a href="checkout2">Изменить способ доставки</a>'
+		temp += '<br/><a href="checkout1">Изменить способ доставки</a>'
 	}
 	else
 		if (rUser.delivery.deliverytype == 'auto') {
 			where.append('<p class="h2">Забрать самостоятельно</p>');
 			temp += rUser.delivery.addr;
-			temp += '<br/><a href="checkout2.html">Изменить способ доставки</a>'
+			temp += '<br/><a href="checkout1">Изменить способ доставки</a>'
 		}
 	where.append('<p>' + temp + '</p>');
 
@@ -658,7 +658,7 @@ function checkoutFinish(current) {
 	} else {
 		where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
 	}
-	where.append('<p><a href="checkout3.html">Изменить способ оплаты</a></p>');
+	where.append('<p><a href="checkout2">Изменить способ оплаты</a></p>');
 }
 
 
@@ -750,8 +750,19 @@ function rCartReDraw3() {
 }
 
 
-$(document).ready(function() {	
+$(document).ready(function() {
 	var rUser = eval("(" + rGetCookie('user') + ")");
+
+	if(document.location) {
+		var path = document.location.pathname;
+		if( path != "/") {
+ 			document.cookie = "cart=[]; path="+path+"/; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+			document.cookie = "user=[]; path="+path+"/; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+			document.cookie = "cart=[]; path="+path+"; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+			document.cookie = "user=[]; path="+path+"; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+		}
+	}
+
 	if (rUser){
 		if (rUser.auth){
 			if (rUser.auth.authtype == 'newbuyer'){
@@ -767,7 +778,7 @@ $(document).ready(function() {
 				if ((document).getElementById('checkout-newbuyer-phone')){
 					(document).getElementById('checkout-newbuyer-phone').value = rUser.auth.phone;
 				}
-			}	
+			}
 			else {
 				if (rUser.auth.authtype == 'anonym'){
 					if ((document).getElementById('checkout-anonym-name')){
@@ -1113,7 +1124,7 @@ $(document).ready(function() {
 		reloadPage();
 		return false;
 	});
-	
+
 	$('.checkout-tab a[rel="switch-map"]').click(function(){
 		var attr = $(this).attr("href").replace(/^.*#(.*)/, "$1");
 		if ($('#'+attr).hasClass('switch-hidden')) {
@@ -1178,7 +1189,24 @@ $(document).ready(function() {
 		'titleShow'		: true,
 		'titlePosition'	: 'over'
 	});
-		$(".iframe,.add a").fancybox(
+		$(".iframe,.add a").fancybox({
+
+			'content' : '<div class="product-add-complete">Товар добавлен в корзину! Вы&nbsp;можете<br><a href="/cart">оформить&nbsp;заказ</a>&nbsp;или&nbsp;<a onclick="closeFancy();">продолжить&nbsp;покупки.</a></div>',
+			'transitionIn'	:	'fade',
+			'transitionOut'	:	'fade',
+			'overlayShow'	:	true,
+			'hideOnOverlayClick':	true,
+			'speedIn'		:	200,
+			'speedOut'		:	200,
+			'width'    : 370,
+			'height'   : 60,
+			'autoDimensions' : false,
+			'centerOnScroll' : true,
+			'padding'  : 20,
+			'scrolling' : 'no',
+			//'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
+		});
+		/*$(".iframe,.add a").fancybox(
 			{
 				'content' : '<div class="product-add-complete">Товар добавлен в корзину!</div>',
 				'transitionIn'	:	'fade',
@@ -1194,5 +1222,5 @@ $(document).ready(function() {
 				'padding'  : 20,
 				'scrolling' : 'no',
 				'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
-			});
+			});*/
 });
