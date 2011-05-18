@@ -680,7 +680,11 @@ function checkoutThanks(current) {
 		}
 	}
 	if (rUser.auth.authtype == 'anonym') {
-		temp += '<div class="checkout-green"><p class="h2">Мы получили ваш заказ.</p><p>В течение часа с вами свяжется наш менеджер и уточнит детали заказа. На ваш адрес <b>'+rUser.auth.mail+'</b> отправлено письмо с информацией о заказе.</p></div>';
+		temp += '<div class="checkout-green"><p class="h2">Мы получили ваш заказ.</p><p>В течение часа с вами свяжется наш менеджер и уточнит детали заказа.';
+		if(rUser.auth.mail) {
+			temp += 'На ваш адрес <b>'+rUser.auth.mail+'</b> отправлено письмо с информацией о заказе.';
+		}
+		temp += '</p></div>';
 	}
 	else
 		if (rUser.auth.authtype == 'newbuyer') {
