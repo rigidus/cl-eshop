@@ -5353,6 +5353,14 @@ p.sort-on a.active {
     color: #A3A3A3;
 }
 
+.articles .date {
+    margin:0 0 1px 0;
+    display:block;
+    font-style:normal;
+    font-size:12px;
+    line-height:normal;
+}
+
 /*
  * FancyBox - jQuery Plugin
  * Simple and fancy lightbox alternative
