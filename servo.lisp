@@ -1048,3 +1048,11 @@ is replaced with replacement."
                                                             (getf tail :val)
                                                             vendor)))))
     result))
+
+
+;; Сделать строку начинающейся с заглавной буквы.
+(defun string-convertion-for-title (title)
+  (if (not (null title))
+      (format nil "~a~a"
+              (string-upcase (subseq title 0 1))
+              (subseq title 1))))
