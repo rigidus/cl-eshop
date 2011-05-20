@@ -32,7 +32,7 @@
      :do (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/~a" name)
                         :lastmod *sitemap-lastmod-time*
                         :changefreq "monthly"
-                        :priority "0,5"))))
+                        :priority "0.5"))))
 
 ;;группы
 (defun sitemap-one-group (g)
@@ -40,7 +40,7 @@
   (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/~a" (hunchentoot:url-encode (key g)))
                  :lastmod *sitemap-lastmod-time*
                  :changefreq "daily"
-                 :priority "0,5")))
+                 :priority "0.5")))
 
 ;;производители
 (defun sitemap-vendors (g)
@@ -62,7 +62,7 @@
                                                                        (name filter)))
                          :lastmod *sitemap-lastmod-time*
                          :changefreq "daily"
-                         :priority "0,5"))))
+                         :priority "0.5"))))
 
 ;;продукты
 (defun sitemap-products (plist)
@@ -70,7 +70,7 @@
               (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/~a" (articul product))
                              :lastmod *sitemap-lastmod-time*
                              :changefreq "monthly"
-                             :priority "0,5")))
+                             :priority "0.5")))
           plist))
 
 
@@ -80,7 +80,7 @@
                (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/~a" (hunchentoot:url-encode k))
                                             :lastmod *sitemap-lastmod-time*
                                             :changefreq "monthly"
-                                            :priority "0,5")))
+                                            :priority "0.5")))
            *storage-articles*))
 
 ;;особые маршруты
@@ -88,23 +88,23 @@
   (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/")
                                :lastmod *sitemap-lastmod-time*
                                :changefreq "hourly"
-                               :priority "0,5"))
+                               :priority "0.5"))
   (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/articles")
                                :lastmod *sitemap-lastmod-time*
                                :changefreq "daily"
-                               :priority "0,5"))
+                               :priority "0.5"))
   (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/articles/news")
                                :lastmod *sitemap-lastmod-time*
                                :changefreq "daily"
-                               :priority "0,5"))
+                               :priority "0.5"))
   (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/articles/papers")
                                :lastmod *sitemap-lastmod-time*
                                :changefreq "daily"
-                               :priority "0,5"))
+                               :priority "0.5"))
   (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/articles/reviews")
                                :lastmod *sitemap-lastmod-time*
                                :changefreq "daily"
-                               :priority "0,5")))
+                               :priority "0.5")))
 
 (defun sitemap-group-routes-proc (g)
   ;; (print g)
