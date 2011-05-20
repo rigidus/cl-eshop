@@ -134,9 +134,9 @@
 
 
 ;; (create-report "xls/products.csv" #'write-products-report)
-;; (create-report "report-groups.csv" #'write-groups)
-;; (create-report "report-products.csv" #'write-products)
-;; (create-report "report-vendors.csv" #'write-vendors)
+;; (create-report "seo/report-groups.csv" #'write-groups)
+;; (create-report "seo/report-products.csv" #'write-products)
+;; (create-report "seo/report-vendors.csv" #'write-vendors)
 
 
 (defun check-valid-siteprice ()
