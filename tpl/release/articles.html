@@ -2,7 +2,7 @@
 
 {template article-big}
 	<p class="h1">{$name | noAutoescape}</p>
-	<i>{$date}</i>
+	<var class="date"><i>{$date}</i></var>
 	{$body | noAutoescape}
 <div class="articles">
 {$tags | noAutoescape}
@@ -13,7 +13,7 @@
 <div class="articles">
 <a href="/articles/{$key}">
 <p class="h1">{$name | noAutoescape}</p></a>
-<var class="date"><i>{$date}: </i></var>
+<var class="date"><i>{$date}</i></var>
 <a href="/articles/{$key}">
 {$descr | noAutoescape}
 </a>
@@ -62,7 +62,7 @@
 <ul class="tags">
 	{foreach $tag in $tags}
     <li>
-      <a href=/articles?tags={$tag}>{$tag}</a>;
+      <a href="/articles?tags={$tag}">{$tag};</a>
     </li>
     {/foreach}
 </ul>
