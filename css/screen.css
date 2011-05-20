@@ -540,7 +540,7 @@
 .catalog-menu .active .menu-p10 var {background-position:-150px -144px;}
 
 .catalog-menu .active p.menu-level1 {padding-left:15px;font-weight:bold;background:#f3f3f3;}
-.catalog-menu .active p.menu-level1 a {text-decoration:none;cursor:default;}
+/* .catalog-menu .active p.menu-level1 a {text-decoration:none;cursor:default;} */
 .catalog-menu .active {
     margin:0;
 }
@@ -5377,7 +5377,7 @@ p.sort-on a.active {
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
- 
+
 
 #fancybox-loading {
     position: fixed;
