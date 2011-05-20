@@ -201,8 +201,8 @@
           (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "wolforus@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-client-mail (list (cdr (assoc :email auth))) client-mail order-id)
-          (save-order-text order-id client-mail)
+          (send-client-mail (list (cdr (assoc :email auth)))
+                            client-mail order-id)
           (checkout-thankes-page (checkout:thanks (list :order (checkout:order)
                                                 :orderid order-id))))
         (progn
