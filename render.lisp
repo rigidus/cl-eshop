@@ -29,7 +29,7 @@
                              ;; Отображаем группы
                              (catalog:centergroup
                               (list
-                               :producers (restas:render-object designer (make-producers object))
+                               :producers nil;;(restas:render-object designer (make-producers object))
                                :accessories (catalog:accessories)
                                :groups (remove-if ;; удаляем пустые и неактивные группы
                                         #'(lambda (x)
