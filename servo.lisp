@@ -723,7 +723,7 @@ is replaced with replacement."
         (temp-rs2))
     (when (not (equal 'group (type-of (parent object))))
       (print object)
-      (return-from relink2 rs))
+      (return-from relink rs))
     ;;2 случайных товара из списка
     (setf temp-rs1 (get-randoms-from-list
                    ;; список активных товаров той же группы и того же производителя
