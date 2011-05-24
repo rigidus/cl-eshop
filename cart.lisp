@@ -109,7 +109,7 @@
 
 
 (defun thanks-page ()
-  (let ((cart) (user) (products) (auth) (delivery) (pay) (client-mail) (mail-file)
+  (let ((cart) (user) (products) (auth) (delivery) (pay) (client-mail) (mail-file) (tks-mail)
         (deliverysum 0)
         (itogo 0)
         (order-id))
@@ -196,11 +196,13 @@
                                    )))
           ;;
           (save-order-text order-id client-mail)
-          (send-mail (list "internetorder@alpha-pc.com") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-mail (list "wolforus@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
+          (setf client-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) client-mail))
+          (setf tks-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) (sendmail:mailfile mail-file)))
+          (send-mail (list "internetorder@alpha-pc.com") client-mail filename tks-mail order-id)
+          (send-mail (list "stetoscop@gmail.com") client-mail filename  tks-mail order-id)
+          (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
+          (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
+          (send-mail (list "wolforus@gmail.com") client-mail filename  tks-mail order-id)
           (send-client-mail (list (cdr (assoc :email auth)))
                             client-mail order-id)
           (checkout-thankes-page (checkout:thanks (list :order (checkout:order)
