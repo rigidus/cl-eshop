@@ -1208,7 +1208,7 @@ $(document).ready(function() {
 	});
 		$(".iframe,.add a").fancybox({
 
-			'content' : '<div class="product-add-complete">Товар добавлен в корзину! Вы&nbsp;можете<br><a href="/cart">оформить&nbsp;заказ</a>&nbsp;или&nbsp;<a onclick="closeFancy();">продолжить&nbsp;покупки.</a></div>',
+			'content' : '<div class="product-add-complete">Товар добавлен в корзину! Вы&nbsp;можете<br><a onclick="closeFancy();">продолжить&nbsp;покупки.</a>&nbsp;или&nbsp;<a href="/cart?innerLayer">оформить&nbsp;заказ</a></div>',
 			'transitionIn'	:	'fade',
 			'transitionOut'	:	'fade',
 			'overlayShow'	:	true,
