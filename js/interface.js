@@ -313,8 +313,15 @@ function rCalc() {
 
 function rAddCart(id, group_id, name, price, count, item_link,img_link) {
 
-	if(!count)
-		count = 1;
+	try{
+		var pageTracker = _gat._getTracker("UA-8758024-4");
+		pageTracker._trackPageview("/click/button/add");
+		//console.log("track page");
+	   } catch(err) {}
+
+	if(!count) {
+		count = 1; 
+	}
 	var rCart = new Array();
 	if (eval(rGetCookie('cart'))) {
 		rCart = eval(rGetCookie('cart'));
