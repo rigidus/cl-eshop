@@ -4060,10 +4060,16 @@
     overflow: hidden;
 }
 .go-checkout .go {
-    width:25%;
-    margin:0;
+    width:228px;
+    margin:0 10px 0 0;
     display:block;
     float:left;
+}
+.go-checkout .go2 {
+    width:228px;
+    margin:0;
+    display:block;
+    float:right;
 }
 .go-checkout .go img {
     width:218px;
@@ -4073,7 +4079,7 @@
     left:8px;
 }
 .go-checkout .shipping {
-    width:25%;
+    width:18%;
     margin:0;
     display:block;
     float:left;
@@ -4085,7 +4091,7 @@
     font-size:14px;
 }
 .go-checkout .total {
-    width:25%;
+    width:18%;
     margin:0;
     display:block;
     float:left;
@@ -4103,10 +4109,10 @@
     color:#006097;
 }
 .go-checkout .price {
-    width:25%;
+    width:12%;
     margin:10px 0 0 0;
     float:right;
-    clear:right;
+    display:block;
 }
 .go-checkout .price big {
     font-size:36px;
