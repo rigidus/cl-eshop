@@ -259,16 +259,19 @@
 
 
 (defmethod restas:render-object ((designer eshop-render) (object optgroup))
-  (product:optgroup (list :name (name object)
-                          :options (mapcar #'(lambda (option)
-                                               (if ( not (or (null (value option))
-                                                             ;; Не отображать опции в пустыми значениями
-                                                             (string=  (string-trim
-                                                                        '(#\Space #\Tab #\Newline)
-                                                                        (value option))
-                                                                       "")))
-                                                   (restas:render-object designer option)))
-                                           (options object)))))
+  (let ((options (mapcar #'(lambda (option)
+                             (if ( not (or (null (value option))
+                                           ;; Не отображать опции в пустыми значениями
+                                           (string=  (string-trim
+                                                      '(#\Space #\Tab #\Newline)
+                                                      (value option))
+                                                     "")))
+                                 (restas:render-object designer option)))
+                         (options object))))
+    (if (not (null (remove-if  #'(lambda (v) (null v)) options)))
+        (product:optgroup (list :name (name object)
+                                :options options))
+        "")))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object option))
