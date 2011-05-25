@@ -193,7 +193,7 @@
     (remf url-parameters :page)
     (multiple-value-bind (base hidden)
         (cut 12 (mapcar #'(lambda (x)
-                            (setf (getf url-parameters :vendor) (car x))
+                            (setf (getf url-parameters :vendor) (hunchentoot:url-encode (car x)))
                             (list :vendor (car x)
                                   :cnt (cadr x)
                                   :link (format nil "?~a" (make-get-str url-parameters))))
