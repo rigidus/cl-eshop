@@ -171,11 +171,10 @@
     background:url('data:image/gif;base64,R0lGODlhDAARAIABAP///////yH5BAEAAAEALAAAAAAMABEAAAIhTIBga8rv0jt0NupgPSkvv10MSGqj+aFierYsG6lh0wUFADs=') no-repeat 0 0;
 }
 .header .nav {
-    padding:2px 0;
+    padding:5px 0;
     margin:0;
     display:block;
-    position:absolute;
-    top:3px;left:25.2%;
+    text-align: center;
 }
 .header .nav a {
     margin:0 15px 0 0;
