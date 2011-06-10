@@ -1,0 +1,80 @@
+{namespace main-page}
+
+/**
+ * кнопка добавления товара в корзину
+ */
+{template button-add-card}
+<span class="add">{\n}
+<a href="#add"
+   onclick="return rAddCart(
+            '{$articul}',      //артикул
+            '{$groupid}',       //id группы -- это поле устарело
+            '{$name}',         //имя товара
+            '{$price}',        //цена вида 8999.00
+            '{$number}',       //количество
+            '{$productlink}',  //cсылка на товар
+            '{$pic}');">       // url фотографии вида 'pic/small/{$article}/{$pic}'
+  <img src="/img/cart-add.png"
+       alt="В корзину"/></a>{\n}
+</span>{\n}
+{/template}
+
+/**
+ * характеристики товаров для блока daily
+ */
+{template daily-product-specs}
+ <dl class="specs">{\n}
+  {foreach $option in $options}
+    <dt>{$option[0]}</dt>{\n}
+    <dd>{$option[1]}</dd>{\n}
+  {/foreach}
+ </dl>{\n}
+{/template}
+
+/**
+ * карточка товара для блока daily
+ */
+{template daily-product}
+<li>{\n}
+{\t}<div class="pic">{\n}
+{\t}{\t}<a href="{$articul}" rel="nofollow">
+              <img class="img"
+                   src="{$pic}"    // url фщтографии вида "/pic/goods/145982/01.jpg"
+                   alt="{$name}"/> // имя продукта
+        </a>{\n}
+	{$daily-product-specs | noAutoescape}  // характеристики
+{\t}</div>
+{\t}<div class="info">
+	   <p class="h2"><a href="{$articul}">{$name}</a></p>
+	   <p class="bottom">
+			<big class="price">{$price}<small>руб.</small></big> // цена вида  8 490
+			{$button-add-card | noAutoescape}
+	   </p>
+{\t}</div>
+</li>
+{/template}
+
+{template daily}
+<div class="block block-daily-item">{\n}
+  <p class="h2">Товар дня <span>&ndash; специальная цена только сегодня!</span></p>{\n}
+  <div class="switch">{\n}
+	<ul class="slider-pager">{\n}
+	  <li class="active"><a href="145982">1</a></li>{\n}
+	  <li><a href="142098" rel="nofollow">2</a></li>{\n}
+	  <li><a href="139973" rel="nofollow">3</a></li>{\n}
+	  <li><a href="141858" rel="nofollow">4</a></li>{\n}
+	  <li><a href="159099" rel="nofollow">5</a></li>{\n}
+	  <li><a href="149324" rel="nofollow">6</a></li>{\n}
+	</ul>{\n}
+
+{\t}<ul class="slider">{\n}
+       {foreach $product in $products}
+             {if isFirst($product)}
+                 первый не первый
+             {/if}
+	         {$product | noAutoescape}
+       {/foreach}
+{\t}</ul>{\n}
+  </div>{\n}
+</div>{\n}
+{/template}

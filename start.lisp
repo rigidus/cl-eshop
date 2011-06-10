@@ -19,6 +19,7 @@
                 "closure-template"
                 "hunchentoot"
                 "restas"
+                "log5"
                ))
 
 ;; (setf ppcre:*use-bmh-matchers* nil)

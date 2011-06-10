@@ -69,7 +69,7 @@ http://code.google.com/closure/templates/
     <meta name='yandex-verification' content='46096f4a2b6678ca' />
 	<meta name='yandex-verification' content='4e6a8e2cfb1345f6' />
 	<meta name="google-site-verification" content="kn0fMUxycSHVB_XJQTJqim_T-m15GDxpE6-EcI2YKVY" />
-	<!--[if IE]><link rel="stylesheet" href="css/screen.ie.css"
+	<!--[if IE]><link rel="stylesheet" href="/css/screen.ie.css"
     type="text/css" media="screen"/><![endif]-->{\n}
 	<meta name="google-site-verification" content="Rsss07pZtj1W5Vi6IiZBWoiFULn7e2gSWGQSvSfMjGY" />
     <script type="text/javascript" src="/js/jquery-1.4.2.js"></script>{\n}
@@ -81,6 +81,10 @@ http://code.google.com/closure/templates/
     <script type="text/javascript" src="/js/interface.js"></script>{\n}
     <meta name="keywords" content={if $keywords}"{$keywords}"{else}""{/if}/>{\n}
     <meta name="description" content={if $description}"{$description}"{else}""{/if}/>{\n}
+    {call google-analytics /}
+    {if $headext}
+       {$headext | noAutoescape}
+    {/if}
   </head>{\n}
   <body>{\n}
     <div id="container" class="container">{\n}
@@ -92,11 +96,85 @@ http://code.google.com/closure/templates/
       {$footer |noAutoescape}
 
     </div>{\n}
-		{literal}
+	<!--	{literal}
 		<script language="JavaScript" id="clScript" type="text/javascript" src="http://live13.liveoperator.ru:443/chat/cl.php?site=5061"></script>
 	{/literal}
-
+-->
   </body>{\n}
 </html>{\n}
 {\n}
 {/template}
+
+
+
+
+/* Счетчики*/
+{template liveinternet}
+{literal}
+       <noindex>
+	   <!--LiveInternet counter-->
+       <script type="text/javascript">document.write("<a href='http://www.liveinternet.ru/click' "+"target=_blank><img src='//counter.yadro.ru/hit?t45.7;r"+escape(document.referrer)+((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+";"+Math.random()+"' alt='' title='LiveInternet' "+"border='0' width='31' height='31'><\/a>")</script>
+       <!--/LiveInternet-->
+	   </noindex>
+{/literal}
+{/template}
+
+{template mailru}
+{literal}
+	 <noindex>
+	 <a href="http://torg.mail.ru/?prtnr=1&pid=2279&click=1"rel="nofollow">
+       <img height="31"
+            border="0"
+            width="88"
+            alt="Товары@Mail.ru"
+            src="http://upload.torg.mail.ru/prtnr/?pid=2279"/></a>
+       </noindex>
+{/literal}
+{/template}
+
+/* Яндекс маркет */
+{template yandex-market}
+{literal}
+	   <noindex>
+       <a href="http://clck.yandex.ru/redir/dtype=stred/pid=47/cid=2508/*http://grade.market.yandex.ru/?id=19790&action=link" rel="nofollow"><img src="http://clck.yandex.ru/redir/dtype=stred/pid=47/cid=2505/*http://grade.market.yandex.ru/?id=19790&action=image&size=0" border="0" width="88" height="31" alt="Читайте отзывы покупателей и оценивайте качество магазина 320-8080.ru на Яндекс.Маркете" /></a>
+       </noindex>
+{/literal}
+{/template}
+
+{template google-analytics}
+/* Google аналитика */
+{literal}
+<script type="text/javascript">
+         var _gaq = _gaq || [];
+         _gaq.push(['_setAccount', 'UA-8758024-4']);
+         _gaq.push(['_trackPageview']);
+         (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+         })();
+ </script>
+ {/literal}
+{/template}
+
+
+{template yandex-metrika}
+{literal}
+<!-- Yandex.Metrika counter -->
+<div style="display:none;"><script type="text/javascript">
+(function(w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter3769609 = new Ya.Metrika({id:3769609,
+                    clickmap:true});
+        }
+        catch(e) { }
+    });
+})(window, 'yandex_metrika_callbacks');
+</script></div>
+<script src="//mc.yandex.ru/metrika/watch_visor.js" type="text/javascript" defer="defer"></script>
+<noscript><div><img src="//mc.yandex.ru/watch/3769609" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+{/literal}
+{/template}
+

@@ -95,7 +95,21 @@
       (sb-ext:gc :full t)
       (print "...} finish load articles")))
 
+;;обновление страницы
+(defun articles-update ()
+  (articles-compile-templates))
+
+;;шаблоны
+(defun articles-compile-templates ()
+  (mapcar #'(lambda (fname)
+              (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
+                (closure-template:compile-template :common-lisp-backend pathname)))
+          '("index.html"
+            "articles.soy"
+            "footer.html")))
+
 ;; загрузить статьи
+(articles-update)
 (print ">> Articles <<")
 (restore-articles-from-files)
 
@@ -154,7 +168,7 @@
 (defun articles-page (request-get-plist)
   (let* ((tags (getf request-get-plist :tags))
          (breadcrumbs)
-         (menu  (articles:articles-menu (list :tag tags))))
+         (menu  (soy.articles:articles-menu (list :tag tags))))
     (if (not (null tags))
         (setf breadcrumbs
               (format nil "<p class=\"breadcrumbs\">
@@ -174,9 +188,9 @@
           (static:main
            (list :menu (menu)
                  :breadcrumbs breadcrumbs
-                 :subcontent  (articles:articles-main
+                 :subcontent  (soy.articles:articles-main
                                (list :menu menu
-                                     :articles (articles:articles-list
+                                     :articles (soy.articles:articles-list
                                                 (list :pager pager
                                                       :articles
                                                       (mapcar #'(lambda (v)
@@ -186,7 +200,7 @@
                                                                         :key (key v)
                                                                         :tags
                                                                         (if (< 0 (hash-table-count (tags v)))
-                                                                            (articles:articles-tags
+                                                                            (soy.articles:articles-tags
                                                                              (list :tags
                                                                                    (loop
                                                                                       :for key being the hash-keys
@@ -204,21 +218,27 @@
 
 ;; отображение страницы статьи
 (defmethod restas:render-object ((designer eshop-render) (object article))
-  (default-page
-      (static:main
-       (list :menu (menu)
-             :breadcrumbs (get-article-breadcrumbs object)
-             :subcontent  (articles:article-big (list :name (name object)
-                                                      :date (article-encode-data object)
-                                                      :body (body object)
-                                                      :tags
-                                                      (if (< 0 (hash-table-count (tags object)))
-                                                          (articles:articles-tags
-                                                           (list :tags
-                                                                 (loop
-                                                                    :for key being the hash-keys
-                                                                    :of (tags object)
-                                                                    :collect key)))
-                                                      "")
-                                                      ))
-             :rightblock  ""))))
+  (root:main (list :keywords "" ;;keywords
+                   :description "" ;;description
+                   :title  (name object)
+                   :headext (soy.articles:head-share-buttons (list :test ""))
+                   :header (root:header (list :logged (root:notlogged)
+                                              :cart (root:cart)))
+                   :footer (root:footer)
+                   :content (static:main
+                             (list :menu (menu)
+                                   :breadcrumbs (get-article-breadcrumbs object)
+                                   :subcontent  (soy.articles:article-big (list :name (name object)
+                                                                                :date (article-encode-data object)
+                                                                                :body (body object)
+                                                                                :tags
+                                                                                (if (< 0 (hash-table-count (tags object)))
+                                                                                    (soy.articles:articles-tags
+                                                                                     (list :tags
+                                                                                           (loop
+                                                                                              :for key being the hash-keys
+                                                                                              :of (tags object)
+                                                                                              :collect key)))
+                                                                                    "")
+                                                                                ))
+                                   :rightblock  "")))))

@@ -46,6 +46,6 @@
             "articles.html"         "sitemap.html"
             )))
 
-(print "Compiling templates")
+(print "Compiling all templates")
 (compile-templates)
-(print "Compiling templates finish")
+(print "Compiling all templates finish")

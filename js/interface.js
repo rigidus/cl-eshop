@@ -686,64 +686,69 @@ function checkoutThanks(current) {
 			sum += rCart[i].price * rCart[i].count;
 		}
 	}
-	if (rUser.auth.authtype == 'anonym') {
-		temp += '<div class="checkout-green"><p class="h2">Мы получили ваш заказ.</p><p>В течение часа с вами свяжется наш менеджер и уточнит детали заказа.';
-		if(rUser.auth.mail) {
-			temp += 'На ваш адрес <b>'+rUser.auth.mail+'</b> отправлено письмо с информацией о заказе.';
+	if (rUser && rUser.auth) {
+		if (rUser.auth.authtype == 'anonym') {
+			temp += '<div class="checkout-green"><p class="h2">Мы получили ваш заказ.</p><p>В течение часа с вами свяжется наш менеджер и уточнит детали заказа.';
+			if(rUser.auth.mail) {
+				temp += 'На ваш адрес <b>'+rUser.auth.mail+'</b> отправлено письмо с информацией о заказе.';
+			}
+			temp += '</p></div>';
 		}
-		temp += '</p></div>';
-	}
-	else
+		else
 		if (rUser.auth.authtype == 'newbuyer') {
 			temp += '<div class="checkout-green"><p class="h2">' + rUser.auth.name + ' ' + rUser.auth.family + ', мы получили ваш заказ.</p><p>В течение часа с вами свяжется наш менеджер и уточнит детали заказа.</p></div>';
 		}
+	}
 	// temp += '<p class="h2">Номер заказа — №9595454</p>';
 	// temp += '<p>Этот номер вам пригодится, если вы захотите сами позвонить в службу доставки. Вы сможете сделать это по телефону <big>(812) 320-80-80</big></p>';
 	where.append(temp);
 	temp = '';
-	if (rUser.delivery.deliverytype == 'courier') {
-		// if (sum < 10000) {
-			where.append('<p class="h2">Стоимость доставки - 300 руб., <strong class="gray">завтра в течение дня</strong></p>');
-		// } else {
-			// where.append('<p class="h2">Бесплатная доставка курьером <strong class="gray">завтра в течение дня</strong></p>');
-		// }
-
-		// temp += rUser.delivery.city + '<br/>';
-		temp += rUser.delivery.addr;
-		if (rUser.delivery.comment) {
-			temp += '<br/>' + rUser.delivery.comment;
+	if (rUser && rUser.delivery) {
+		if (rUser.delivery.deliverytype == 'courier') {
+			// if (sum < 10000) {
+				where.append('<p class="h2">Стоимость доставки - 300 руб., <strong class="gray">завтра в течение дня</strong></p>');
+			// } else {
+				// where.append('<p class="h2">Бесплатная доставка курьером <strong class="gray">завтра в течение дня</strong></p>');
+			// }
+			// temp += rUser.delivery.city + '<br/>';
+			temp += rUser.delivery.addr;
+			if (rUser.delivery.comment) {
+				temp += '<br/>' + rUser.delivery.comment;
+			}	
 		}
-	}
-	else
+		else
 		if (rUser.delivery.deliverytype == 'auto') {
 			where.append('<p class="h2">Забрать самостоятельно</p>');
 			temp += rUser.delivery.addr;
 		}
+	}
 	where.append('<p>' + temp + '</p>');
 	temp = '';
-	if (rUser.pay.paytype == 'cash') {
-		where.append('<p class="h2">Оплата наличными</p><p>Вы получите кассовый товарный чек</p>');
-	}
-	else
-		if (rUser.pay.paytype == 'card') {
-			where.append('<p class="h2">Оплата кредитной картой</p>');
+	if (rUser && rUser.pay) {
+		if (rUser.pay.paytype == 'cash') {
+			where.append('<p class="h2">Оплата наличными</p><p>Вы получите кассовый товарный чек</p>');
 		}
 		else
-			if (rUser.pay.paytype == 'credit') {
-				where.append('<p class="h2">Покупка в кредит</p>');
+			if (rUser.pay.paytype == 'card') {
+				where.append('<p class="h2">Оплата кредитной картой</p>');
 			}
 			else
-				if (rUser.pay.paytype == 'bank') {
-					where.append('<p class="h2">Оплата по безналичному расчету</p>');
-					where.append('<p>Реквизиты:<br/>' + rUser.pay.bankaccount + '</p>');
+				if (rUser.pay.paytype == 'credit') {
+					where.append('<p class="h2">Покупка в кредит</p>');
 				}
-		if (rUser.delivery.deliverytype == 'courier' /*&& sum < 10000*/) {
-		where.append('<br/><p class="price"><big>' + (sum + 300) + '</big> руб.</p>');
-	} else {
-		where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
+				else
+					if (rUser.pay.paytype == 'bank') {
+						where.append('<p class="h2">Оплата по безналичному расчету</p>');
+						where.append('<p>Реквизиты:<br/>' + rUser.pay.bankaccount + '</p>');
+					}
+			if (rUser.delivery.deliverytype == 'courier' /*&& sum < 10000*/) {
+			where.append('<br/><p class="price"><big>' + (sum + 300) + '</big> руб.</p>');
+		} else {
+			where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
+		}
 	}
-		rCart = new Array();
-		rSetCookie('cart', JSON.stringify(rCart));
+	rCart = new Array();
+	rSetCookie('cart', JSON.stringify(rCart));
 }
 
 
@@ -1206,7 +1211,7 @@ $(document).ready(function() {
 		'titleShow'		: true,
 		'titlePosition'	: 'over'
 	});
-		$(".iframe,.add a").fancybox({
+		$('.iframe,.add a, area[href="#add"]').fancybox({
 
 			'content' : '<div class="product-add-complete">Товар добавлен в корзину! Вы&nbsp;можете<br><a onclick="closeFancy();">продолжить&nbsp;покупки.</a>&nbsp;или&nbsp;<a href="/cart?innerLayer">оформить&nbsp;заказ</a></div>',
 			'transitionIn'	:	'fade',

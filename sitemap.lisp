@@ -51,7 +51,7 @@
                                                         (hunchentoot:url-encode (car v)))
                                                :lastmod *sitemap-lastmod-time*
                                                :changefreq "daily"
-                                               :priority "0,5")))
+                                               :priority "0.5")))
           (get-list-of-producers g  #'(lambda (product) t))))
 
 ;;фильтры
