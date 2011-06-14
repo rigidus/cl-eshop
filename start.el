@@ -26,4 +26,5 @@
          "~/cl-eshop/sklonenija.lisp"
          "~/cl-eshop/newcart.lisp"
          "~/cl-eshop/main-page.lisp"
+         "~/cl-eshop/sitemap.lisp"
          ))
