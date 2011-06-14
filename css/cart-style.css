@@ -1,0 +1,895 @@
+
+html,body
+{
+	width:100%;
+	height:100%;
+}
+
+body
+{
+	color:#414042;
+	font-size:14px;
+	line-height:normal;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+#style-nes
+{
+	position:relative;
+	min-height:100%;
+	height:auto !important;
+}
+
+#style-nes .wraper
+{
+	position:relative;
+	min-width:985px;
+	max-width:1300px;
+	margin:0 auto;
+}
+
+/*=== Основные классы ===*/
+.clear_table
+{
+	border-collapse:collapse;
+}
+
+.clear_table td
+{
+	vertical-align:top;
+}
+
+.clear
+{
+	clear:both;
+	height:1px;
+	font-size:1px;
+}
+
+.border5
+{
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-khtml-border-radius:5px;
+}
+
+.hide
+{
+	display:none;
+}
+
+/*=== Стили для текста ===*/
+.content p
+{
+	padding:0 0 15px;
+	line-height:normal;
+}
+
+.content hr
+{
+	margin:0 0 15px;
+	height:1px;
+	color:#cccccc;
+	background:#cccccc;
+	border:none;
+}
+
+/*=== Стили списков ===*/
+ol
+{
+	margin:0;
+}
+
+ul
+{
+	margin:0;
+}
+
+ul li
+{
+	padding:0 0 10px;
+	list-style:circle;
+}
+
+/*=== Ссылки ===*/
+a
+{
+	color:#009dd7;
+	font-family:Arial, Helvetica, sans-serif;
+	text-decoration:underline;
+}
+
+a:hover
+{
+	text-decoration:none;
+}
+
+/*=== Загаловки ===*/
+h1,h2,h3,h4,h5,h6
+{
+	color:#000000;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+h1
+{
+	padding:0 0 15px;
+	font-size:30px;
+}
+
+h2
+{
+	padding:0 0 10px;
+	font-size:26px;
+}
+
+h3
+{
+	padding:0 0 5px;
+}
+
+h4
+{
+	padding:0 0 5px;
+}
+
+/*=== Стили форм ===*/
+input
+{
+	color:#666;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+select
+{
+	color:#666;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	background:#FFF;
+	border:1px solid #808080;
+}
+
+textarea
+{
+	color:#666;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	background:#FFF;
+	border:1px solid #808080;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ ----------------------------------- Top Cells ----------------------------------- */
+#top_cells
+{
+	height:86px;
+	background:url(/img/cart-images/top/bg.jpg) 0 0 repeat-x;
+}
+
+#top_cells .logo
+{
+	position:absolute;
+	left:3%;
+	top:13px;
+}
+
+#top_cells .phone
+{
+	position:absolute;
+	left:150px;
+	top:35px;
+	padding:0 0 0 5%;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ ----------------------------------- Left Cells ---------------------------------- */
+#left_cells
+{
+	padding:0 5% 0 0;
+}
+
+/* Имя страницы */
+#main_cells .page_title
+{
+	padding:0 0 25px;
+}
+
+#main_cells .page_title h1
+{
+	padding:0;
+}
+
+/* Основные свойста оформления заказа */
+#left_cells .checkout
+{
+	overflow:hidden;
+	padding:0 0 15px;
+}
+
+#left_cells .checkout .row
+{
+	padding:0 0 8px;
+}
+
+#left_cells .checkout .row .name
+{
+	padding:0 0 2px;
+}
+
+#left_cells .checkout .row .desc
+{
+	padding:2px 0 10px;
+	color:#808285;
+	font-size:11px;
+}
+
+#left_cells .checkout .empty
+{
+	overflow:hidden;
+	zoom:1px;
+}
+
+#left_cells .checkout .red
+{
+	color:#ed1c24;
+}
+
+#left_cells .checkout .step_field
+{
+	display:block;
+	width:93%;
+	padding:4px 7px;
+	background:#FFF;
+	border:1px solid #808080;
+}
+
+#left_cells .checkout .step_field_short
+{
+	display:block;
+	width:50%;
+	margin:3px 0 0;
+	padding:4px 7px;
+	background:#FFF;
+	border:1px solid #808080;
+}
+
+#left_cells .checkout .step_area
+{
+	width:95%;
+	height:110px;
+	margin:3px 0 0;
+	padding:5px;
+}
+
+#left_cells .checkout .row .select_field
+{
+	display:block;
+	width:97%;
+	padding:4px 7px;
+}
+
+/* Получить скидку */
+#left_cells .take_discount
+{
+	float:right;
+	width:44%;
+	margin:0 0 30px 5%;
+}
+
+#left_cells .take_discount .title
+{
+	overflow:hidden;
+	zoom:1px;
+	color:#414042;
+	font-size:18px;
+	background:#fece55 url(/img/cart-images/left/step_take_discount_title.jpg) 0 0 repeat-x;
+}
+
+#left_cells .take_discount .title .name
+{
+	display:block;
+	float:left;
+	padding:2px 0 2px 10px;
+}
+
+#left_cells .take_discount .title .count
+{
+	display:block;
+	float:right;
+	width:58px;
+	padding:2px 8px 2px 0;
+	color:#fff;
+	text-align:right;
+	background:url(/img/cart-images/left/step_take_discount_title_price.jpg) right 0 no-repeat;
+}
+
+#left_cells .take_discount .content
+{
+	position:relative;
+	padding:5px 10px 10px;
+	color:#414042;
+	font-size:11px;
+	line-height:11px;
+	background:#fbfbfc url(/img/cart-images/left/step_take_discount_bg_bot_rep.jpg) 0 bottom repeat-x;
+	border-left:1px solid #f4f4f4;
+	border-right:1px solid #f4f4f4;
+}
+
+#left_cells .take_discount .content .bg_left
+{
+	position:absolute;
+	left:0;
+	bottom:0;
+	width:7px;
+	height:7px;
+	background:url(/img/cart-images/left/step_take_discount_bg_bot.jpg) 0 0 no-repeat;
+}
+
+#left_cells .take_discount .content .bg_right
+{
+	position:absolute;
+	right:0;
+	bottom:0;
+	width:7px;
+	height:7px;
+	background:url(/img/cart-images/left/step_take_discount_bg_bot.jpg) 0 -7px no-repeat;
+}
+
+/* Доставка */
+#left_cells .delivery .title h2
+{
+	padding:0 0 2px;
+}
+
+#left_cells .delivery .title a
+{
+	color:#0776b5;
+	text-decoration:none;
+	border-bottom:1px dashed #0776b5;
+}
+
+#left_cells .delivery .title a:hover
+{
+	border:none;
+}
+
+#left_cells .delivery .title a.none
+{
+	color:#000000;
+	border:none;
+	cursor:default;
+}
+
+#left_cells .delivery .desc
+{
+	padding:0 0 10px;
+	font-size:14px;
+}
+
+#left_cells .delivery .desc .big
+{
+	display:block;
+	padding:10px 0 0;
+	font-size:18px;
+}
+
+/* Доставка курьером */
+#left_cells .delivery .express
+{
+	display:none;
+}
+/* Доставка / Забрать самому */
+#left_cells .delivery .pickup
+{
+	display:block;
+}
+
+#left_cells .delivery .pickup .empty .row
+{
+	padding:0 0 30px;
+	font-size:16px;
+}
+
+#left_cells .delivery .pickup .empty a.show_hidden
+{
+	margin:0 0 0 18px;
+	font-size:13px;
+	text-decoration:none;
+	color:#414042;
+	border-bottom:1px dashed #414042;
+}
+
+#left_cells .delivery .pickup .empty a.show_hidden:hover
+{
+	border:none;
+}
+
+#left_cells .delivery .pickup .empty .hide
+{
+	padding:10px 0 0 18px;
+}
+
+#left_cells .delivery .pickup .empty .hide p
+{
+	padding:10px 0 0;
+	font-size:12px;
+}
+
+/* Доставка / Больше информации */
+#left_cells .more_info
+{
+	float:right;
+	width:44%;
+	margin:0 0 0 5%;
+	position:relative;
+	background:#fbfbfc url(/img/cart-images/left/step_take_discount_bg_bot_rep.jpg) 0 bottom repeat-x;
+	border-left:1px solid #f4f4f4;
+	border-right:1px solid #f4f4f4;
+}
+
+#left_cells .more_info .bg_left
+{
+	position:absolute;
+	left:0;
+	bottom:0;
+	width:7px;
+	height:7px;
+	background:url(/img/cart-images/left/step_take_discount_bg_bot.jpg) 0 0 no-repeat;
+}
+
+#left_cells .more_info .bg_right
+{
+	position:absolute;
+	right:0;
+	bottom:0;
+	width:7px;
+	height:7px;
+	background:url(/img/cart-images/left/step_take_discount_bg_bot.jpg) 0 -7px no-repeat;
+}
+
+#left_cells .more_info .content
+{
+	padding:10px;
+}
+
+#left_cells .more_info .content .when
+{
+	padding:0 0 5px;
+	font-size:17px;
+}
+
+#left_cells .more_info .content .when .grey
+{
+	color:#808285;
+}
+
+#left_cells .more_info .content .how
+{
+	padding:0 0 10px;
+	font-size:13px;
+}
+
+#left_cells .more_info .content .how .big
+{
+	font-size:21px;
+	font-weight:bold;
+}
+
+#left_cells .more_info .content .more
+{
+	padding:0 0 10px;
+}
+
+#left_cells .more_info .content .more a
+{
+	color:#0776b5;
+	font-weight:bold;
+	text-decoration:none;
+	border-bottom:1px dashed #0776b5;
+}
+
+#left_cells .more_info .content .more a:hover
+{
+	border:none;
+}
+
+#left_cells .more_info .content .hide
+{
+	overflow:hidden;
+	zoom:1px;
+	padding:10px 0 0;
+	line-height:15px;
+}
+
+#left_cells .more_info .content .hide ul
+{
+	margin:0 0 0 20px;
+}
+
+#left_cells .more_info .content .hide li
+{
+	list-style:outside disc;
+}
+
+/* Оплата заказа */
+#left_cells .payments .payment_method
+{
+	overflow:hidden;
+	zoom:1px;
+	position:relative;
+	padding:8px 6px 0 20px;
+	background:url(/img/cart-images/left/payment_top_bg_r.jpg) 0 0 repeat-x;
+}
+
+#left_cells .payments .payment_method .bg_left
+{
+	position:absolute;
+	left:0;
+	top:0;
+	width:6px;
+	height:45px;
+	background:url(/img/cart-images/left/payment_top_left.jpg) 0 0 no-repeat;
+}
+
+#left_cells .payments .payment_method .bg_right
+{
+	position:absolute;
+	right:0;
+	top:0;
+	width:6px;
+	height:45px;
+	background:url(/img/cart-images/left/payment_top_right.jpg) 0 0 no-repeat;
+}
+
+#left_cells .payments .payment_method .item
+{
+	float:left;
+	padding:7px 6px 17px;
+	display:block;
+	margin:0 2%;
+	cursor:pointer;
+}
+
+#left_cells .payments .payment_method .active
+{
+	color:#ffa100;
+	font-size:14px;
+	background:#464646;
+	border:1px solid #464646;
+	border-bottom:none;
+}
+
+#left_cells .payments .method_desc
+{
+	position:relative;
+	margin:-4px 1px 0;
+	padding:10px;
+	background:#464646;
+	color:#FFF;
+}
+
+#left_cells .payments .method_desc .more
+{
+	display:block;
+	margin:10px -10px -10px;
+	padding:10px 0 0;
+	color:#414042;
+	font-size:14px;
+	background:#FFF;
+}
+
+#left_cells .payments .content
+{
+	position:relative;
+	padding:35px 10px 10px;
+	background:#fbfbfc url(/img/cart-images/left/step_take_discount_bg_bot_rep.jpg) 0 bottom repeat-x;
+	border-left:1px solid #f4f4f4;
+	border-right:1px solid #f4f4f4;
+}
+
+#left_cells .payments .content .bg_left
+{
+	position:absolute;
+	left:0;
+	bottom:0;
+	width:7px;
+	height:7px;
+	background:url(/img/cart-images/left/step_take_discount_bg_bot.jpg) 0 0 no-repeat;
+}
+
+#left_cells .payments .content .bg_right
+{
+	position:absolute;
+	right:0;
+	bottom:0;
+	width:7px;
+	height:7px;
+	background:url(/img/cart-images/left/step_take_discount_bg_bot.jpg) 0 -7px no-repeat;
+}
+
+#left_cells .payments .content .have_disc
+{
+	padding:0 0 5px;
+}
+
+#left_cells .payments .content .have_disc .btn
+{
+	font-size:26px;
+}
+
+#left_cells .payments .order_now
+{
+	padding:30px 0 0;
+	text-align:center;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ ---------------------------------- Center Cells --------------------------------- */
+#main_cells
+{
+	padding:20px 2%;
+}
+
+#main_cells .wraper
+{
+	max-width:1250px;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ ---------------------------------- Right Cells ---------------------------------- */
+#right_cells .shopcart .top
+{
+	position:relative;
+	padding:0 0 5px;
+	color:#ffffff;
+	background:#424242 url(/img/cart-images/right/shopcart_pic.jpg) 10px 3px no-repeat;
+	border-bottom:1px solid #8e7e4b;
+}
+
+#right_cells .shopcart .top .count_item
+{
+	position:absolute;
+	left:12px;
+	top:9px;
+	width:10px;
+	color:#414042;
+	font-size:11px;
+	font-weight:bold;
+	text-align:center;
+}
+
+#right_cells .shopcart .top .title
+{
+	padding:15px 0 5px 60px;
+	font-size:18px;
+}
+
+#right_cells .shopcart .top .info
+{
+	padding:0 0 0 15px;
+	font-size:14px;
+}
+
+#right_cells .shopcart .top .info .price
+{
+	font-size:24px;
+	font-weight:bold;
+}
+
+#right_cells .shopcart .content
+{
+	overflow:hidden;
+	zoom:1px;
+	padding:10px 0 0;
+	background:#ffd55b url(/img/cart-images/right/shopcart_bg.jpg) 0 bottom repeat-x;
+}
+
+#right_cells .shopcart .content .item
+{
+	overflow:hidden;
+	zoom:1px;
+	position:relative;
+	padding:7px 11px 6px 16px;
+	font-size:16px;
+	font-weight:bold;
+	border-bottom:1px dashed #414042;
+	list-style:decimal inside;
+}
+
+#right_cells .shopcart .content .last
+{
+	border:none;
+}
+
+#right_cells .shopcart .content .item .number
+{
+	float:left;
+	width:20px;
+	padding:0 10px 0 0;
+	text-align:right;
+}
+
+#right_cells .shopcart .content .item .count
+{
+	float:right;
+	padding:8px 0 0;
+	font-size:14px;
+	font-weight:normal;
+}
+
+#right_cells .shopcart .content .item .name
+{
+	overflow:hidden;
+	zoom:1px;
+	padding:0 5px 0 0;
+	font-weight:normal;
+}
+
+#right_cells .shopcart .content .item .price
+{
+	clear:both;
+	padding:0 0 0 30px;
+	font-size:14px;
+}
+
+#right_cells .shopcart .content .change
+{
+	float:right;
+	padding:2px 10px 7px 20px;
+	background:url(/img/cart-images/right/shopcart_change.jpg) 0 0 no-repeat;
+}
+
+#right_cells .shopcart .content .change a
+{
+	color:#FFF;
+	font-size:13px;
+	text-decoration:none;
+	border-bottom:1px dashed #FFF;
+}
+
+#right_cells .shopcart .content .change a:hover
+{
+	border:none;
+}
+
+#right_cells .shopcart .order_now
+{
+	padding:20px 0 0;
+	text-align:center;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ ---------------------------------- Footer Cells --------------------------------- */
+#footer_cells
+{
+	overflow:hidden;
+	zoom:1px;
+	min-height:75px;
+	color:#545454;
+	font-size:12px;
+	line-height:18px;
+	background:#f3f3f3;
+}
+
+#footer_cells a
+{
+	color:#0776b5;
+}
+
+#footer_cells .copy
+{
+	position:absolute;
+	left:3%;
+	top:17px;
+}
+
+#footer_cells .contacts
+{
+	position:absolute;
+	left:33%;
+	top:17px;
+}
+
+#footer_cells .metrika
+{
+	float:right;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+}
+
+#footer_cells .pay
+{
+	float:right;
+	padding:10px 30px 10px 0;
+}
+
+
+.checkout-thanks .h2 {
+    margin-bottom: 4px;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 22px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+}
+
+.checkout-thanks {
+    padding:0 2px;
+}
+.checkout-thanks .price {
+    margin:10px 0 13px 0;
+}
+.checkout-thanks p {
+    margin-bottom:15px;
+}
+.checkout-thanks .h2 {
+    margin-bottom:4px;
+}
+.checkout-thanks .h2 .gray {
+    font-weight:normal;
+    color:#6b6b6b;
+}
+.checkout-thanks hr {
+    margin-bottom:14px;
+}
+
+.checkout-thanks .addr {
+    margin-bottom:2px;
+}
+
+.checkout-green {
+    padding:9px 11px;
+    margin:-6px 0 18px 0;
+    background:#e1ee8a;
+}
+.checkout-green p {
+    margin:0;
+    line-height:18px;
+}
+.checkout-green .h2 {
+    padding:0 0 0 30px;
+    margin:-1px 0 6px -3px;
+    line-height:25px;
+    display:block;
+    position:relative;
+    background:url('/img/checkout-green.png') no-repeat 0 0;
+}
+
+.checkout-thanks .price big {
+    line-height: 36px;
+    font-size: 30px;
+    font-weight: bold;
+}   
+
+.checkout-thanks a.show_hidden {
+    border-bottom-color: #414042;
+    border-bottom-style: dashed;
+    border-bottom-width: 1px;
+    color: #414042;
+    font-size: 13px;
+    margin-bottom: 0;
+    margin-left: 18px;
+    margin-right: 0;
+    margin-top: 0;
+    text-decoration: none;
+}
+
+.checkout-thanks .delivery .hide {
+    padding-bottom: 0;
+    padding-left: 18px;
+    padding-right: 0;
+    padding-top: 10px;
+}
+
+.checkout-thanks .delivery {
+    margin-bottom: 15px;
+}
+
+#rekvizitu-urlic {
+    margin-left: 10px;
+}

@@ -1,0 +1,34 @@
+/*=== PNG Fix ===*/
+#top_cells .logo img {
+	behavior:url("/img/cart-images/iepngfix.htc");
+}
+
+/* ---------------------------------- Center Cells --------------------------------- */
+#main_cells {position:relative; padding:20px 15px;}
+#main_cells td {position:relative;}
+
+
+/* ----------------------------------- Left Cells ---------------------------------- */
+#left_cells {position:relative; zoom:1;}
+
+/* Получить скидку */
+#left_cells .take_discount {position:relative; zoom:1; margin:0px 0 30px 30px;}
+#left_cells .take_discount .content .bg_left {display:none;}
+#left_cells .take_discount .content .bg_right {display:none;}
+
+/* Доставка / Больше информации */
+#left_cells .more_info .bg_left {display:none;}
+#left_cells .more_info .bg_right {display:none;}
+
+/* Оплата заказа */
+#left_cells .payments .payment_method {padding:8px 2px 0px 10px;}
+#left_cells .payments .payment_method .bg_right {right:-1px;}
+#left_cells .payments .payment_method .item {padding:7px 5px 10px 5px;  margin:0 4px;}
+#left_cells .payments .method_desc {zoom:1;}
+#left_cells .payments .content {zoom:1;}
+#left_cells .payments .content .bg_left {display:none;}
+#left_cells .payments .content .bg_right {display:none;}
+
+
+/* ---------------------------------- Right Cells ---------------------------------- */
+#right_cells {position:relative; zoom:1;}
