@@ -40,7 +40,9 @@
 -->
 
 	<big class="price"><span>{$siteprice}</span> <var>руб.</var></big>
-	<big class="price-old"><span>{$price}</span> <var>руб.</var></big>
+    {if not $siteprice == $price}
+	 <big class="price-old"><span>{$price}</span> <var>руб.</var></big>
+    {/if}
   </div>
   <div class="actions">
 	<p class="deleted">Удалено из корзины</p>
@@ -119,12 +121,14 @@
 	</div>
 
 	<div class="go-checkout">
-	  <p class="go"><a href="/checkout0"><img src="/img/checkout.png" alt="Оформить заказ"/></a></p>
+	  <p class="go"><a href="/checkout0?button1"><img src="/img/checkout.png" alt="Оформить заказ"/></a></p>
 	  <p class="h2 shipping">Доставим завтра в течение дня</p>
 	  <p class="h2 total">Всего 3 товара на сумму</p>
-	  <p class="price"><big></big> <span>руб.</span></p>
+      <p class="go2"><a href="/checkout0?button2"><img src="/img/checkout.png" alt="Оформить заказ"/></a></p>
+      <p class="price"><big></big> <span>руб.</span></p>
+
 	  <!--<p class="price gray"><big class="strike"></big> <span class="strike">руб.</span></p> -->
-	  <p class="questions"><strong>Остались вопросы?</strong> Узнайте как происходят: <span class="more-link more-link-full"><a class="js" href="#cart-pay" rel="switch">Оплата</a>&nbsp;&darr;</span> &nbsp;&nbsp; <span class="more-link more-link-full"><a class="js" href="#cart-shipping" rel="switch">Доставка</a>&nbsp;&darr;</span> &nbsp;&nbsp; <span class="more-link more-link-full"><a class="js" href="#cart-warranty" rel="switch">Гарантии</a>&nbsp;&darr;</span> &nbsp;&nbsp; <span class="more-link more-link-full"><a class="js" href="#cart-return" rel="switch">Возврат товара</a>&nbsp;&darr;</span></p>
+	  <p class="questions"><strong>Остались вопросы?</strong> Узнайте как происходят: <span class="more-link more-link-full"><a class="js" href="#cart-pay" rel="switch">Оплата&nbsp;&darr;</a></span> &nbsp;&nbsp; <span class="more-link more-link-full"><a class="js" href="#cart-shipping" rel="switch">Доставка&nbsp;&darr;</a></span> &nbsp;&nbsp; <span class="more-link more-link-full"><a class="js" href="#cart-warranty" rel="switch">Гарантии&nbsp;&darr;</a></span> &nbsp;&nbsp; <span class="more-link more-link-full"><a class="js" href="#cart-return" rel="switch">Возврат товара&nbsp;&darr;</a></span></p>
 	</div>
 
 	<div>
@@ -141,11 +145,12 @@
 -->
 
 	<div class="go-checkout">
-	  <p class="go"><a href="/checkout0"><img src="/img/checkout.png" alt="Оформить заказ"/></a></p>
+	  <p class="go"><a href="/checkout0?button3"><img src="/img/checkout.png" alt="Оформить заказ"/></a></p>
 	  <p class="h2 shipping">Доставим завтра в течение дня</small></p>
 	  <p class="h2 total">Всего 3 товара на сумму</p>
-	  <p class="price"><big></big> <span>руб.</span></p>
-	  <p class="price gray"><big class="strike"></big> <span class="strike">руб.</span></p>
+      <p class="go2"><a href="/checkout0?button4"><img src="/img/checkout.png" alt="Оформить заказ"/></a></p>
+      <p class="price"><big></big> <span>руб.</span></p>
+
 
 <!--
 

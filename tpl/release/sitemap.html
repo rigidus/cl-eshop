@@ -12,5 +12,21 @@
    </url>
 </urlset>
 
-{template content}
+{template route}
+<url>{\n}
+      {\t}<loc>{$loc}</loc>{\n}
+      {\t}<lastmod>{$lastmod}</lastmod>{\n}
+      {\t}<changefreq>{$changefreq}</changefreq>{\n}
+      {\t}<priority>{$priority}</priority>{\n}
+</url>{\n}
+{/template}
+
+
+{template head}
+<?xml version="1.0" encoding="UTF-8"?>{\n}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{\n}
+{/template}
+
+{template tail}
+</urlset>{\n}
 {/template}

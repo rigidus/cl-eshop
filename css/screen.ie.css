@@ -67,7 +67,7 @@ html>body p code {*white-space:normal;}
 * html body {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
 * html legend {margin:0px -8px 16px 0;padding:0;}
 * html input.radio {top:-1px;left:-1px;}
-* html h1, * html h2, * html h3, * html h4, * html h5, * html h6 {font-weight:normal;}
+* html h1, * html h2, * html h3, * html h4, * html h5, * html h6 {font-weight:10;}
 * html .container {width: expression(((document.documentElement.clientWidth || document.body.clientWidth) < 950) ? '950px' : ((document.body.clientWidth > 1400) ? '1400px' : '100%'));height:100%;}
 * html .footer,* html .block .bl,* html .block .br {bottom:expression(this.parentNode.offsetHeight % 2 ? -1 : 0 );}
 * html .block .tr,* html .block .br, * html .popup .r,* html .checkout-nav li var {right:expression(this.parentNode.offsetWidth % 2 ? -1 : 0 );}

@@ -1,27 +1,87 @@
 {namespace articles}
 
+{template share-buttons}
+{literal}
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style">
+<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+<a class="addthis_button_tweet"></a>
+<a class="addthis_counter addthis_pill_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4def5bd654f6604f"></script>
+<!-- AddThis Button END -->
+{/literal}
+{/template}
+
 {template article-big}
 	<p class="h1">{$name | noAutoescape}</p>
-	<h3>{$date}</h3>
+	<var class="date"><i>{$date}</i></var>
+    {call share-buttons /}
 	{$body | noAutoescape}
+<div class="articles">
+{$tags | noAutoescape}
+</div>
 {/template}
 
 {template article-short}
 <div class="articles">
 <a href="/articles/{$key}">
-<p class="h1">{$name | noAutoescape}</p>
-<h3>{$date}</h3>
+<p class="h1">{$name | noAutoescape}</p></a>
+<var class="date"><i>{$date}</i></var>
+<a href="/articles/{$key}">
 {$descr | noAutoescape}
 </a>
+{$tags | noAutoescape}
 </div>
 {/template}
 
-{template articles-list}
-	{foreach $article in $articles}
-           {call article-short data="$article" /}
-     	{/foreach}
+{template articles-menu}
+<p class="articles-menu">
+{if $tag=='Новости'}<b>{else}<a href="/articles/news">{/if}
+Новости
+{if $tag=='Новости'}</b>{else}</a>{/if}
+ |&nbsp;
+{if $tag=='Статьи'}<b>{else}<a href="/articles/papers">{/if}
+Статьи
+{if $tag=='Статьи'}</b>{else}</a>{/if}
+ |&nbsp;
+{if $tag=='Обзоры'}<b>{else}<a href="/articles/reviews">{/if}
+Обзоры
+{if $tag=='Обзоры'}</b>{else}</a>{/if}
 {/template}
 
+{template articles-list}
+{if $articles}
+<div class="pager">{\n}
+ <p>{$pager |noAutoescape}</p>
+</div>
+	{foreach $article in $articles}
+           {call article-short data="$article" /}
+     {/foreach}
+<div class="pager">{\n}
+ <p>{$pager |noAutoescape}</p>
+</div>
+{/if}
+{/template}
+
+{template articles-main}
+<div class="articles">
+{$menu | noAutoescape}
+{$articles | noAutoescape}
+</div>
+{/template}
+
+
+{template articles-tags}
+<ul class="tags">
+	{foreach $tag in $tags}
+    <li>
+      <a href="/articles?tags={$tag}">{$tag};</a>
+    </li>
+    {/foreach}
+</ul>
+{/template}
 
 
 {template rightblock}

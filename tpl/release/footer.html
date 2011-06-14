@@ -14,7 +14,7 @@
 	  <li><a href="/about">О компании</a></li>
 	  <li><a href="/kaksvjazatsja">Связаться с нами</a></li>
 	  <li><a href="/news1">Новости</a></li>
-	  <li><a href="http://blog.320-8080.ru" target="_blank">Блог</a></li>
+	  <li><a href="http://320-80-80.livejournal.com/" target="_blank">Блог</a></li>
 	</ul>
 	<ul>
 	  <li class="twitter"><a href="https://twitter.com/3208080_ru" target="_blank">Twitter</a></li>
@@ -34,9 +34,9 @@
 	<ul>
 	  <li><a href="/faq">Помощь</a></li>
 	  <li><a href="http://forum.320-8080.ru">Форум</a></li>
-	  <li><a href="/article">Статьи</a></li>
-	  <li class="visa"><a href="payment"><img src="img/visa.png" alt="VISA"/></a></li>
-	  <li class="mastercard"><a href="/payment"><img src="img/mastercard.png" alt="Mastercard"/></a></li>
+	  <li><a href="/articles">Статьи</a></li>
+	  <li class="visa"><a href="payment"><img src="/img/visa.png" alt="VISA"/></a></li>
+	  <li class="mastercard"><a href="/payment"><img src="/img/mastercard.png" alt="Mastercard"/></a></li>
 	</ul>
   </div>
   <div class="list list-catalog">
@@ -55,6 +55,7 @@
 	</ul>
 	<ul>
 	  <li><a href="/rashodnye-materialy">Расходка и аксессуары</a></li>
+	  <li><a href="/bytovaya-technika">Бытовая техника</a></li>
 	</ul>
      <div>
        <br>
@@ -88,23 +89,11 @@
        </noindex>
 	   {/literal}
 
-       {literal}
-       <script type="text/javascript">
-         var _gaq = _gaq || [];
-         _gaq.push(['_setAccount', 'UA-8758024-4']);
-         _gaq.push(['_trackPageview']);
-         (function() {
-         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-         })();
-       </script>
-       {/literal}
-
 
      </div>
   </div>
 </div>
+
  {literal}
 <!-- Yandex.Metrika counter -->
 <div style="display:none;"><script type="text/javascript">
@@ -123,3 +112,28 @@
 <!-- /Yandex.Metrika counter -->
        {/literal}
 {/template}
+
+
+{template newcart-footer}
+	<div id="footer_cells">
+
+		<div class="wraper">
+			<div class="pay"><a href="/delivery"><img src="/img/cart-images/footer/pay.jpg" alt=" " width="48" height="62" /></a></div>
+			<div class="copy">© 1997—2010 «ЦиFры 320-8080»<br />Санкт-Петербург
+              /* <a href="/kakdobratsja">Адреса магазинов</a> */
+</div>
+			<div class="contacts">Телефон: (812) 320-80-80<br />Электронная почта: <a href="mailto:info@320-8080.ru">info@320-8080.ru</a></div>
+
+            <div class="metrika">
+              {call liveinternet /}
+              {call mailru /}
+              {call yandex-market /}
+              {call yandex-metrika /}
+            </div>
+		</div>
+	</div><!-- footer_cells:end -->
+{/template}
+
+
+
+
