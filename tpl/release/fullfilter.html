@@ -47,7 +47,7 @@
 
 {template range}
 <p>
-  <label class="title">{$name}</label>
+  {if not $ishidden}<label class="title">{$name}</label>{/if}
   <label>от</label>
   <input name="{$key}-f" class="text text-wide" type="text" {if not $from==''}value="{$from}"{/if}/>
   <label>до</label>
@@ -93,7 +93,7 @@
 
 {template box}
 <p>
-  <label class="title">{$name}</label>
+  {if not $ishidden}<label class="title">{$name}</label>{/if}
   {foreach $elt in $elts}
   {$elt | noAutoescape}
   {/foreach}

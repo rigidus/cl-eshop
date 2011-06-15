@@ -43,7 +43,7 @@
             "news3.html"            "news4.html"              "bonus.html"
             "news5.html"            "news6.html"              "corporate.html"
             "dilers.html"           "sendmail.html"           "404.html"
-            "articles.html"         "sitemap.html"
+            "articles.soy"         "sitemap.html"            "newcart.soy"
             )))
 
 (print "Compiling all templates")
