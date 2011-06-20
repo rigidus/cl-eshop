@@ -168,6 +168,8 @@
 (restas:define-route yml/-route ("/yml/")
   (yml-page))
 
+(restas:define-route parseryml-route ("/parseryml")
+  (yml-page-for-parser))
 
 ;; ARTICLES
 ;;TODO возможно проверять входные тэги
