@@ -133,12 +133,6 @@
       (funcall report-func stream))))
 
 
-;; (create-report "xls/products.csv" #'write-products-report)
-;; (create-report "seo/report-groups.csv" #'write-groups)
-;; (create-report "seo/report-products.csv" #'write-products)
-;; (create-report "seo/report-vendors.csv" #'write-vendors)
-
-
 (defun check-valid-siteprice ()
   (format t "~&~a;\"~a\";~a;~a;~a;"
           "Артикул"
@@ -174,3 +168,7 @@
        (format stream "~a" (sb-ext:octets-to-string packet :external-format :cp1251)))))
 
 ;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
+;; (create-report "xls/products.csv" #'write-products-report)
+;; (create-report "seo/report-groups.csv" #'write-groups)
+;; (create-report "seo/report-products.csv" #'write-products)
+;; (create-report "seo/report-vendors.csv" #'write-vendors)

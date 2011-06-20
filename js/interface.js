@@ -1225,7 +1225,7 @@ $(document).ready(function() {
 			'autoDimensions' : false,
 			'centerOnScroll' : true,
 			'padding'  : 20,
-			'scrolling' : 'no',
+			'scrolling' : 'no'
 			//'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
 		});
 		/*$(".iframe,.add a").fancybox(

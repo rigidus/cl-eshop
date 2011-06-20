@@ -229,7 +229,10 @@
 			  <p class="str">В пределах
 			  Санкт-Петербурга.</a></p>
               {else}
-             <p class="outs-and-shorts">Товара нет в наличии</p>
+              <!--noindex-->
+              <p class="outs-and-shorts">Извините, {$name} уже купили.</p>
+	      <!--/noindex-->
+             <p class="outs-and-shorts-small">Прямо сейчас можно заказать {$name}: по телефону (812) 320-8080, в системе он-лайн консультант, или просто написав письмо на <a href="mailto:shop@320-8080.ru">shop@320-8080.ru</a>.</p>             
              {/if}
 		    </div>
 		    <p class="item-bigtext">
@@ -343,7 +346,8 @@
 	    </div>
 	    <p class="str"></p>
         {else}
-        <p class="outs-and-shorts">Товара нет в наличии</p>
+        /*     <p class="outs-and-shorts">Извините, {$name} уже купили.</p>
+             <p class="outs-and-shorts-small">Прямо сейчас можно заказать {$name}: по телефону (812) 320-8080, в системе он-лайн консультант, или просто написав письмо на <a href="mailto:shop@320-8080.ru">shop@320-8080.ru</a></p> */
         {/if}
 	  </div>
     </div>

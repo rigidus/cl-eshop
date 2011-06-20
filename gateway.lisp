@@ -15,7 +15,6 @@
 ;; (length (json:decode-json-from-string
 ;;          (sb-ext:octets-to-string (cadr *load-list*) :external-format :cp1251)))
 
-
 (defun gateway-page ()
   (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
   (let ((raw (hunchentoot:raw-post-data)))
@@ -38,6 +37,7 @@
                    ;; Обрабатываем все сохраненные пакеты
                    (loop :for packet :in (reverse *load-list*) :do
                       (process packet))
+
                    ;;создаем новый yml файл
                    (create-yml-file)
                    ;; Заполняем siteprice если он равен 0

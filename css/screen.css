@@ -1560,7 +1560,7 @@
     overflow: hidden;
 }
 .news-list .item {
-    width:30.64%;
+    width:30.6%;
     padding:0 1.33% 17px 1.33%;
     float:left;
     position:relative;
@@ -5373,6 +5373,24 @@ p.sort-on a.active {
 .article-topline {
     display:block;
     margin-bottom:20px;
+}
+
+.container .content .stock {
+   cursor: pointer;
+}
+
+.container .content .stock embed {
+   cursor: pointer;
+}
+
+.vkontakte-community-widget {
+   position: relative;
+   float: left;
+   width: 25%;
+}
+
+#vkontakte-community-widget-vk_groups {
+   margin:0 auto;
 }
 
 /*
