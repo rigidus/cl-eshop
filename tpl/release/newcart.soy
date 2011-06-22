@@ -291,6 +291,14 @@
 	                                    <div class="name">Доставка</div>
 	                                    <div class="price">300 рублей</div>
                                     </div>
+                                    <div class="item" id="beznalichnii"
+                                              {if not $beznalichnii}style="display:none"{/if}>
+	                                    <div class="number">&nbsp;</div>
+	                                    <div class="count">&nbsp;</div>
+	                                    <div class="name">1% за перевод</div>
+	                                    <div class="price"></div>
+                                    </div>
+
 
 									<div class="change">
                                           {if $notfinished}<a href="/cart">Изменить заказ</a>{else}ваш заказ{/if}

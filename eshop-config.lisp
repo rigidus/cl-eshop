@@ -19,6 +19,7 @@
 (defun compile-templates ()
   (mapcar #'(lambda (fname)
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
+                (format t "~&closure-template:compile-template: ~a" fname)
                 (closure-template:compile-template :common-lisp-backend pathname)))
           '("index.html"            "product.html"            "product-accessories.html"
             "product-reviews.html"  "product-simulars.html"   "product-others.html"
@@ -45,7 +46,6 @@
             "dilers.html"           "sendmail.html"           "404.html"
             "articles.soy"         "sitemap.html"            "newcart.soy"
             )))
-
 (print "Compiling all templates")
 (compile-templates)
 (print "Compiling all templates finish")

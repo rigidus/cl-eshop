@@ -139,11 +139,12 @@
     (if (not (null products))
         (default-page
             (soy.newcart:cart-content (list :accessories (product:accessories)
-                                :products (format nil "~{~a~}"
+                                            :products (format nil "~{~a~}"
                                                   (mapcar #'(lambda (x)
                                                               (print (cart:product x))
                                                               (soy.newcart:cart-product x))
-                                                          products)))))
+                                                          products))))
+            :no-need-cart t)
         ;; страница для пустой корзины с автоматическим редиректом на главную
         (soy.newcart:fullpage (list :head (soy.newcart:head-redirect (list :timeout 5
                                                                            :url "/"))

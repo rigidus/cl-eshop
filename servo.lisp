@@ -448,12 +448,13 @@
 
 
 
-(defun default-page (&optional (content nil) &key keywords description title)
+(defun default-page (&optional (content nil) &key keywords description title no-need-cart)
   (root:main (list :keywords keywords
                    :description description
                    :title title
                    :header (root:header (list :logged (root:notlogged)
-                                              :cart (root:cart)))
+                                              :cart (if (not no-need-cart)
+                                                        (root:cart))));; (root:cart)))
                    :footer (root:footer)
                    :content (if content
                                 content
