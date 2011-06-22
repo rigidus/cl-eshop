@@ -101,7 +101,7 @@
 
 		  <div class="pic">
             {if $firstpic}
-               <a title="{$name}"
+               <a rel='fancy_pics' title="{$name}"
                   href="/pic/big/{$articul}/{$firstpic}">
                <img src="/pic/goods/{$articul}/{$firstpic}"
                    width="225" alt="Фото {$name}, картинка {$name}"/>
@@ -121,7 +121,7 @@
 		    <ul>
 		      {foreach $pic in $pics}
               <li>{\n}
-                <a title="{$name}" href="/pic/big/{$articul}/{$pic}">{\n}
+                <a rel='fancy_pics' title="{$name}" href="/pic/big/{$articul}/{$pic}">{\n}
                   <img src="/pic/minigoods/{$articul}/{$pic}" alt=""/>{\n}
                 </a>{\n}
               </li>{\n}

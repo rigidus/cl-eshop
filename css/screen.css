@@ -333,6 +333,7 @@
     top:43px;left:76%;
     font-size:13px;
     background:url('../img/cart.png') no-repeat 0 0;
+	cursor:pointer;
 }
 .cart .cart-blank {display:block;}
 .cart .cart-has {display:none;}
@@ -2285,6 +2286,7 @@
     width:210px;
     height:70px;
     z-index:1;
+	background:#FFF;
 }
 .block-item-pics .jcarousel-prev {
     width:10px;
@@ -5695,8 +5697,8 @@ p.sort-on a.active {
 .fancybox-title-inside {
     padding-bottom: 10px;
     text-align: center;
-    color: #333;
-    background: #fff;
+    color: #FFF;
+	background: #434343;
     position: relative;
 }
 

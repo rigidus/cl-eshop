@@ -783,6 +783,9 @@ $(document).ready(function() {
 			document.cookie = "cart=[]; path="+path+"; expires=Thu, 01-Jan-1970 00:00:01 GMT";
 			document.cookie = "user=[]; path="+path+"; expires=Thu, 01-Jan-1970 00:00:01 GMT";
 		}
+		if (path == "/cart"){
+			$('.container .cart').remove();
+		}
 	}
 
 	if (rUser){
@@ -1209,7 +1212,7 @@ $(document).ready(function() {
 		'overlayOpacity':	0.4,
 		'overlayColor'	:	'#000',
 		'titleShow'		: true,
-		'titlePosition'	: 'over'
+		'titlePosition'	: 'inside'
 	});
 		$('.iframe,.add a, area[href="#add"]').fancybox({
 
@@ -1225,7 +1228,7 @@ $(document).ready(function() {
 			'autoDimensions' : false,
 			'centerOnScroll' : true,
 			'padding'  : 20,
-			'scrolling' : 'no'
+			'scrolling' : 'no',
 			//'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
 		});
 		/*$(".iframe,.add a").fancybox(
