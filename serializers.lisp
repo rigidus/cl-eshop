@@ -19,6 +19,7 @@
 
 
 (defmethod unserialize (filepath (dummy group))
+  (format t "~&unserialize:~a" filepath)
   (let* ((file-content (alexandria:read-file-into-string filepath))
          (raw (decode-json-from-string file-content))
          (key (pathname-name filepath))
@@ -48,6 +49,7 @@
 
 
 (defmethod serialize ((object group))
+  (format t "~&unserialize:~a" filepath)
   (let* ((raw-breadcrumbs (breadcrumbs object))
          (path-list (mapcar #'(lambda (elt)
                                 (getf elt :key))

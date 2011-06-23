@@ -333,7 +333,6 @@
     top:43px;left:76%;
     font-size:13px;
     background:url('../img/cart.png') no-repeat 0 0;
-	cursor:pointer;
 }
 .cart .cart-blank {display:block;}
 .cart .cart-has {display:none;}

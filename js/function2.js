@@ -71,8 +71,7 @@ function setUserCookieField(fieldName, val){
  
 $(document).ready(function(){
 
-	var beznalPrice = 
-	$(".item#beznalichnii").html(parseInt($("span.price").text()) * 0.01);
+	$(".item#beznalichnii .price").html(Math.ceil(parseInt($("span.price").text()) * 0.01) + ' рублей');
 
 	// Показать больше информации
 	$('div.delivery a.show_hidden').toggle(
@@ -97,7 +96,14 @@ $(document).ready(function(){
 		$("#show_express").removeClass('none');
 		
 		$(".item#dostavka").hide();
+		
+		var user = eval('(' + $(document).cookie('user-nc') +')');
 		var newPrice = parseInt($("span.price").text()) - 300;
+		if (user && user['payment'] == 'payment_method-4'){
+			newPrice -= 3;
+		}
+		$(".item#beznalichnii .price").html((parseInt($(".item#beznalichnii .price").text()) - 3) + ' рублей');
+		
 		$("span.price").html(newPrice);
 		
 		setUserCookieField("delivery-type", "pickup");
@@ -115,7 +121,14 @@ $(document).ready(function(){
 		$("#show_pickup").removeClass('none');
 		
 		$(".item#dostavka").show();
+		
+		
+		var user = eval('(' + $(document).cookie('user-nc') +')');
 		var newPrice = parseInt($("span.price").text()) + 300;
+		if (user && user['payment'] == 'payment_method-4'){
+			newPrice += 3;
+		}
+		$(".item#beznalichnii .price").html((parseInt($(".item#beznalichnii .price").text()) + 3) + '  рублей');
 		$("span.price").html(newPrice);
 		
 		setUserCookieField("delivery-type", "express");
@@ -140,29 +153,30 @@ $(document).ready(function(){
 	
 	// Оплата заказа
 	$("div.payment_method .item").click(function() {
-		$(this).parent().find(".item").removeClass("active");
-		$(this).find("input").attr("checked", "checked");
-		$(this).addClass("active border5");
-		
+				
 		var id = $(this).find("input").attr("id");
 		$("div.method_desc div").hide();
 		$("div.method_desc .more").show();
 		$("div.method_desc div."+id).show();
 		
 		var user = eval('(' + $(document).cookie('user-nc') + ')');
-		if (id == "payment_method-4" && (!user || user["payment"] != id)){
+		if (id == "payment_method-4" && !($(this).hasClass('active'))){
 			
 			$(".item#beznalichnii").show();
-			var newPrice = parseInt($("span.price").text()) * 1.01;
+			var newPrice = parseInt($("span.price").text()) + parseInt($(".item#beznalichnii .price").text());
 			
 			$("span.price").html(newPrice);
 		}
 		if (id != "payment_method-4" && (!user || user["payment"] == "payment_method-4")){
 			$(".item#beznalichnii").hide();
-			var newPrice = parseInt($("span.price").text()) / 1.01;
+			var newPrice = parseInt($("span.price").text()) - parseInt($(".item#beznalichnii .price").text());
 			
 			$("span.price").html(newPrice);
 		}
+		
+		$(this).parent().find(".item").removeClass("active");
+		$(this).find("input").attr("checked", "checked");
+		$(this).addClass("active border5");
 		
 		setUserCookieField("payment", id);
 	});
@@ -226,6 +240,9 @@ $(document).ready(function(){
 		if (user['pickup'] && document.getElementById(user['pickup'])){
 			document.getElementById(user['pickup']).click();
 		}
+		if (user['payment'] && document.getElementById(user['payment'])){
+			document.getElementById(user['payment']).click();
+		}
 		if (user['delivery-type'] == 'express'){
 			if ($("a#show_express")[0]){
 				$("a#show_express").click();
@@ -240,9 +257,7 @@ $(document).ready(function(){
 				}
 			}
 		}
-		if (user['payment'] && document.getElementById(user['payment'])){
-			document.getElementById(user['payment']).click();
-		}
+		
 		var ids = ['phone', 'name', 'addr', 'email', 'pickup_comment', 'courier_comment', 'discount-card-number', 'bankaccount'];
 		for (var i = 0, len = ids.length; i < len; ++i){
 			if (user[ids[i]] && document.getElementById(ids[i])){

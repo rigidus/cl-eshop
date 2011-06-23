@@ -267,30 +267,60 @@ function rSave(rCart) {
 	rSetCookie('cart', JSON.stringify(rCart));
 }
 
+function getNameCountIndex(count) {
+	var cnt = (count % 100);
+	var result = 0;
+        if (cnt >= 20) {
+	   cnt = (cnt % 10);
+	};
+	if (cnt == 0) {
+	   result = 2;
+	} else { 
+	    if (cnt == 1) {
+	   	result = 0;
+	    } else {
+                if (cnt < 5) {
+	           result = 1;
+                }  else {
+	           result = 2;
+		};
+            };
+	};
+	return result;
+}
+
+function switchToCart(){
+	var cart = eval("(" + rGetCookie('cart') + ")");
+	if (cart.length){
+		window.location='/cart';
+	}
+}
+
 function rCalc() {
 	var rCart = eval(rGetCookie('cart'));
 	var rUser = eval("("+rGetCookie('user')+")");
 	var sum = 0;
 	var cnt = 0;
+	var tovar = ["товар","товара","товаров"];
 	if (rCart) {
 		for (i = 0; i < rCart.length; i++) {
 			sum += rCart[i].price * rCart[i].count;
 			cnt += rCart[i].count;
 		}
-	}
-	$('.cart,.your-order').each(function(){
-		var current = $(this).find('.cart-link a,.total');
+	}	
+	if (cnt > 0) {
+             var ctw = document.getElementById("cart-top-widget");
+	     if (ctw) {
+                  ctw.style.cursor = 'pointer';
+             };
+        };
+	$('.cart').each(function(){
+		var current = $(this).find('.cart-link a');
+                
 		if(cnt > 0) {
-			if (cnt == 1) {
-				$(current).html('<i class="count"></i>&nbsp;товар на <big class="sum"></big> руб.');
-			}
-			else
-				if (cnt > 4) {
-					$(current).html('<i class="count"></i>&nbsp;товаров на <big class="sum"></big> руб.');
-				}
-				else {
-					$(current).html('<i class="count"></i>&nbsp;товара на <big class="sum"></big> руб.');
-				}
+			//
+                        
+			$(current).html('<span><i class="count"></i>&nbsp; ' + tovar[getNameCountIndex(cnt)] + '  на <big class="sum"></big> руб.</span>');			
 			$(current).find('.sum').html(sum);
 
 			// ->> жесткий костыль для случая, когда rUser не определен в куках или определен странных образом
@@ -309,6 +339,8 @@ function rCalc() {
 		}
 	});
 }
+
+
 
 
 function rAddCart(id, group_id, name, price, count, item_link,img_link) {

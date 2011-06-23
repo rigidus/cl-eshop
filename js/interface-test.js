@@ -289,6 +289,13 @@ function getNameCountIndex(count) {
 	return result;
 }
 
+function switchToCart(){
+	var cart = eval("(" + rGetCookie('cart') + ")");
+	if (cart.length){
+		window.location='/cart';
+	}
+}
+
 function rCalc() {
 	var rCart = eval(rGetCookie('cart'));
 	var rUser = eval("("+rGetCookie('user')+")");
@@ -301,11 +308,18 @@ function rCalc() {
 			cnt += rCart[i].count;
 		}
 	}	
+	if (cnt > 0) {
+             var ctw = document.getElementById("cart-top-widget");
+	     if (ctw) {
+                  ctw.style.cursor = 'pointer';
+             };
+        };
 	$('.cart').each(function(){
 		var current = $(this).find('.cart-link a');
                 
 		if(cnt > 0) {
 			//
+                        
 			$(current).html('<span><i class="count"></i>&nbsp; ' + tovar[getNameCountIndex(cnt)] + '  на <big class="sum"></big> руб.</span>');			
 			$(current).find('.sum').html(sum);
 

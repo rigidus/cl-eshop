@@ -1,7 +1,7 @@
 {namespace root}
 
 {template cart}
-<div class="cart"  onClick="window.location='/cart'">{\n}
+<div class="cart" id="cart-top-widget" onclick="switchToCart();">{\n}
 <div class="cart-has">
   <p class="cart-title"><a href="/cart"<img src="/img/in-cart.png" alt="В корзине:"/></a></p>
   <p class="cart-link"><a href="#cartPopup" class="js" rel="tooltip"><span><i class="count"></i> товар на <i class="sum"></i> руб.</span></a></p>
