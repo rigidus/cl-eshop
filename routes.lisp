@@ -211,7 +211,7 @@
 
 ;; 404
 
-(restas:define-route not-found-route ("*any")
+(restas:define-route not-found-route-404 ("/404.html")
   (restas:abort-route-handler
    (babel:string-to-octets
     (default-page
@@ -220,4 +220,5 @@
    :return-code hunchentoot:+http-not-found+
    :content-type "text/html"))
 
-
+(restas:define-route not-found-route ("*any")
+  (restas:redirect "/404.html"))
