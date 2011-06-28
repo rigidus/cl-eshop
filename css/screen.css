@@ -2905,14 +2905,14 @@
     zoom:1;
 }
 .other-items .catalog .item {
-    width:25%;
+    width:24%;
     padding-top:6px;
     border-left:1px solid #d1d1d1;
     margin:0 0 0 -1px;
     overflow:visible !important;
 }
 .other-items .catalog .item-first {
-    border:none !Important;
+    /*border:none !Important;*/
     margin:0 0 0 -1px;
 }
 .other-items .catalog .item .place {
