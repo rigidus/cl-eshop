@@ -135,7 +135,7 @@
                          :diffprice diffprice
                          :procent procent
                          :subst (format nil "/~a" (articul object))
-                         :pics pics
+                         :pics (cdr pics)
                          :firstpic (if (null pics) nil (car pics))
                          :optlist (if (null (optgroups object))
                                       ""
