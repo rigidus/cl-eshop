@@ -191,3 +191,9 @@
 ;; (defvar *test-request*)
 
 
+(defun set-recursive-yml (group flag)
+  (mapcar #'(lambda (g)
+              (format t "~&~a" (eshop::name g))
+              (setf (eshop::ymlshow g) flag)
+              (set-recursive-yml g flag))
+          (eshop::childs group)))

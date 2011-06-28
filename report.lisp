@@ -2,9 +2,11 @@
 
 
 (defun write-products-report (stream)
-  (format stream "~a;~a;~a;~a;~a;~a;~a;~a;~a~%"
+  (format stream "~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~%"
           "артикул"
           "имя"
+          "имя real"
+          "имя yml"
           "seo текст"
           "фотографии"
           "характеристики"
@@ -15,6 +17,8 @@
   (maphash #'(lambda (k v)
                (let ((id "нет")
                      (name "нет")
+                     (name-real "нет")
+                     (name-yml "нет")
                      (desc "нет")
                      (img "нет")
                      (option "нет")
@@ -25,7 +29,10 @@
                  (when (equal (type-of v)
                               'product)
                    (setf id (articul v))
-                   (setf name (stripper (realname v)))
+                   (setf name (stripper (name v)))
+                   (setf name-real (stripper (realname v)))
+                   (with-option v "Secret" "Yandex"
+                                (setf name-yml (stripper (value option))))
                    (setf desc (if (not (null(descr v)))
                                   "есть"
                                   "нет"))
@@ -44,9 +51,11 @@
                    (setf secret "Нет")
                    (with-option v "Secret" "Checked"
                                 (setf secret (value option)))
-                   (format stream "~a;\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~a~%"
+                   (format stream "~a;\"~a\";\"~a\";\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~a;~%"
                            id
                            name
+                           name-real
+                           name-yml
                            desc
                            img
                            options
