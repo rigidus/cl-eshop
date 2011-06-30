@@ -220,5 +220,23 @@
    :return-code hunchentoot:+http-not-found+
    :content-type "text/html"))
 
+;;необходимо отдавать 404 ошибку для несуществеющих страниц
 (restas:define-route not-found-route ("*any")
-  (restas:redirect "/404.html"))
+  (restas:abort-route-handler
+   (babel:string-to-octets
+    (default-page
+        (static:main (list :menu (menu "") :subcontent (error-404:content))))
+    :encoding :utf-8)
+   :return-code hunchentoot:+http-not-found+
+   :content-type "text/html"))
+
+(restas:define-route request-route ("/request")
+ "<div class=\"xsnazzy\" style=\"width:200px;\"  >
+ <b class=\"ytop\"><b class=\"yb1\"></b><b class=\"yb2 color_a\">
+ </b><b class=\"yb3 color_a\"></b><b class=\"yb4 color_a\"></b></b>
+ <div class=\"yboxcontent\"><div  style=\"float: right;\">
+ <img alt=\"закрыть\" src=\"http://img.sotmarket.ru/des/close.gif\"></div><p>Ваш телефон:<input type=\"text\" id=\"nrtelefon\"><br>
+  <input type=\"button\" value=\"Сохранить\"><br>Пример: 7-915-123-45-67<br>Наш менеджер с Вами свяжется и примет заказ. Желательно указывать мобильный телефон.</div>
+↵<b class=\"ybottom\"><b class=\"yb4\"></b><b class=\"yb3\"></b>
+↵<b class=\"yb2\"></b><b class=\"yb1\"></b></b>
+↵</div><br><p></p><p></p><div  class=\"\"></div>")
