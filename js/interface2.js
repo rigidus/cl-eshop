@@ -779,7 +779,168 @@ function switchToCart(){
 }
 
 
+function addOneClick(articul){
+  oneClickDiv=document.getElementById('oneClickDiv');
+	var event = event || window.event;
+	x = event.pageX + 'px';
+	y = event.pageY + 'px';
+	
+  if (oneClickDiv==null){
+		var oneClickDiv = document.createElement('div');
+		oneClickDiv.id = 'oneClickDiv';  
+	}
+	
+	oneClickDiv.innerHTML = '';
+  oneClickDiv.style.visibility = 'visible';
+	with (oneClickDiv.style) {position='absolute'; left=x; top=y; display='block';}
+  document.body.appendChild(oneClickDiv);
+  
+	oneClickDiv.innerHTML = 'asdas ';
+   
+}
+
+var req = null;
+var dont_send = 0;
+
+function getShowDivAjax(){
+  var elDiv = document.getElementById('aboutDiv');
+  elDiv.innerHTML = '';
+  elDiv.innerHTML = req.responseText;
+
+  /*One click buy*/
+
+  $('.xsnazzy').find(':input').keypress(function(e) {
+      /* перехватываем нажатие на Enter */
+      if (e.which == 13) { return false; }
+    }).keyup(function(e) {
+      if (e.which == 13) {
+        $(".xsnazzy :input:button").click();
+      }
+  });
+}
+
+
+
+
+function processReqChange(f) {
+	if (req){
+		if (req.readyState == 4 && req.status == 200 ){  
+			if (f) f(req);
+		} 
+	}
+}
+
+
+function getXMLHTTPRequest(){
+  var xRequest=null;
+  if (window.XMLHttpRequest) {
+    xRequest=new XMLHttpRequest();
+  }
+  else if (window.ActiveXObject){
+    try { xRequest=new ActiveXObject("Msxml2.XMLHTTP"); } catch (err) {
+    try { xRequest=new ActiveXObject("Microsoft.XMLHTTP"); } catch(err) { xRequest=false; } }
+  }
+  return xRequest;
+}
+
+function sendRequest(url,HttpMethod,CallbackFunctionName){
+	if(dont_send==0){
+		if (!HttpMethod) {HttpMethod="GET";}
+		req=getXMLHTTPRequest();
+		if (req){
+  
+			req.onreadystatechange=function() { processReqChange(CallbackFunctionName); };
+			req.open(HttpMethod,url,true);
+			req.send('');
+		}
+  }
+}
+
+function showDiv1(url, event){
+  x = event.pageX;
+  y = event.pageY;
+
+  if (x + y == 0){
+    x = pageXOffset + event.currentTarget.getBoundingClientRect().left;
+    y = pageYOffset + event.currentTarget.getBoundingClientRect().top;
+  }
+  x += 'px';
+  y += 'px';
+  elDiv=document.getElementById('aboutDiv');
+
+  if (elDiv==null){
+    var elDiv = document.createElement('div');elDiv.id = 'aboutDiv';
+  }
+	elDiv.innerHTML = '';
+  elDiv.style.visibility = 'visible';
+  with (elDiv.style) {position='absolute'; left=x; top=y; zIndex = 1022;}
+  document.body.appendChild(elDiv);
+  showProgressBar = false;
+  if (url != false){
+    url1=document.location.href;
+    if (url1.indexOf('http://www')!=-1)
+      sendUrl='http://tosha.320-8080.ru/request?'+url;
+    else
+      sendUrl='http://tosha.320-8080.ru/request?'+url;
+    sendRequest(sendUrl,'GET',getShowDivAjax);
+  }
+  else{
+    elDiv.innerHTML = 'Не указали ни урл ни текст';
+  }
+}
+
+function hideDiv(){
+  req = null;
+  var elDiv = document.getElementById('aboutDiv');
+  if(elDiv != null){
+    elDiv.style.visibility = 'hidden';
+    document.body.removeChild(elDiv);
+  }
+}
+
+function orderOneClick(url, event){
+   var noerrors = true;
+   $(document).find("input.required").each(function(){
+     var errorString;
+     var len = $(this).val().toString().replace(/(\D+)/g, '').length;
+     if (len < 6) {
+       errorString = "В телефонном номере должно быть не менее 6 цифр. Пример: 7-915-123-45-67";
+       if (len == 0 && $(this).val().toString().length == 0){
+         errorString = "Не заполнено обязательное поле.";
+       }
+       if ($(this).parent().hasClass('error')) {
+         $(this).parent().removeClass('error').find('.errorlabel').remove();
+       }
+       $(this).parent().addClass('error');
+       $("<label class='errorlabel' style='color: red;'><br>" + errorString + "</label>").insertAfter(this);
+       noerrors = false;
+     }
+     else {
+       $(this).parent().removeClass('error').find('.errorlabel').remove();
+     }
+   });
+   if (!noerrors) {
+     $(document).find('.error').eq(0).find(':input').focus();
+   }
+   else {
+     showDiv1(url, event);
+   }
+ }
+
+
+
+
 $(document).ready(function() {
+
+  /*Переключение на вкладку обзора, если текст не пуст*/
+  if ($(".tab-overview").text().trim()){
+    $(".tab-tech").addClass("tab-hidden");
+    $("#h2-tech").removeClass("active");
+    $(".tab-overview").removeClass("tab-hidden");
+    $("#h2-overview").addClass("active");
+  }
+
+  /*Инициализация пользовательских куков и заполнение форм в корзине*/
 	var rUser = eval("(" + rGetCookie('user') + ")");
 
 	if(document.location) {
@@ -1215,6 +1376,8 @@ $(document).ready(function() {
 	$('.checkout-thanks').each(function(){
 		checkoutThanks(this);
 	});
+
+
 		$(".block-item-pics ul li a,.item-info-left .pic a").fancybox({
 		'transitionIn'	:	'fade',
 		'transitionOut'	:	'fade',
@@ -1245,21 +1408,4 @@ $(document).ready(function() {
 			'scrolling' : 'no',
 			//'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
 		});
-		/*$(".iframe,.add a").fancybox(
-			{
-				'content' : '<div class="product-add-complete">Товар добавлен в корзину!</div>',
-				'transitionIn'	:	'fade',
-		'transitionOut'	:	'fade',
-		'overlayShow'	:	true,
-		'hideOnOverlayClick':	true,
-		'speedIn'		:	200,
-		'speedOut'		:	200,
-				'width'    : 240,
-				'height'   : 'auto',
-				'autoDimensions' : false,
-				'centerOnScroll' : true,
-				'padding'  : 20,
-				'scrolling' : 'no',
-				'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
-			});*/
 });
