@@ -833,6 +833,17 @@ function getShowDivAjax(){
   var elDiv = document.getElementById('aboutDiv');
   elDiv.innerHTML = '';
   elDiv.innerHTML = req.responseText;
+
+  /*One click buy*/
+
+  $('.xsnazzy').find(':input').keypress(function(e) {
+      /* перехватываем нажатие на Enter */
+      if (e.which == 13) { return false; }
+    }).keyup(function(e) {
+      if (e.which == 13) {
+        $(".xsnazzy :input:button").click();
+      }
+  });
 }
 
 
@@ -865,17 +876,48 @@ function sendRequest(url,HttpMethod,CallbackFunctionName){
     req=getXMLHTTPRequest();
     if (req){
 
-      req.onreadystatechange=function() { processReqChange(CallbackFunctionName); };
+      req.onreadystatechange=function() { processReqChange(CallbackFunctionName); }
       req.open(HttpMethod,url,true);
       req.send('');
     }
   }
 }
 
+function getMouseXY(e) {
+  try {
+    if(navigator.userAgent.indexOf('Chrome')>0){
+      x = e.clientX + window.scrollX;
+      y = e.clientY +  window.scrollY;
+    }
+    else{
+      x = event.clientX + document.documentElement.scrollLeft;
+      y = event.clientY + document.documentElement.scrollTop;
+    }
+    if (x + y == 0){
+      x = pageXOffset + event.currentTarget.getBoundingClientRect().left;
+      y = pageYOffset + event.currentTarget.getBoundingClientRect().top;
+    }
+  }
+  catch(except) {
+    x = e.clientX + window.scrollX;
+    y = e.clientY +  window.scrollY;
+  }
+  var out = new Array(x,y);
+  return out;
+}
+
 function showDiv1(url, event){
-  var event1 = event || window.event;
-  x = event1.pageX + 'px';
-  y = event1.pageY + 'px';
+  XY = getMouseXY(event);
+   x=XY[0]+20;
+   y=XY[1]-30;
+
+  /*var x = event.pageX;
+  var y = event.pageY;
+
+  if (x + y == 0){
+    x = pageXOffset + event.currentTarget.getBoundingClientRect().left;
+    y = pageYOffset + event.currentTarget.getBoundingClientRect().top;
+  }*/
   elDiv=document.getElementById('aboutDiv');
 
   if (elDiv==null){
@@ -883,7 +925,8 @@ function showDiv1(url, event){
   }
   elDiv.innerHTML = '';
   elDiv.style.visibility = 'visible';
-  with (elDiv.style) {position='absolute'; left=x; top=y; zIndex = 1022;}
+  with (elDiv.style) {position='absolute';
+    left= x + 'px'; top= y + 'px'; zIndex = 1022;}
   document.body.appendChild(elDiv);
   showProgressBar = false;
   if (url != false){
@@ -910,11 +953,12 @@ function hideDiv(){
 
 function orderOneClick(url, event){
    var noerrors = true;
+
    $(document).find("input.required").each(function(){
      var errorString;
      var len = $(this).val().toString().replace(/(\D+)/g, '').length;
      if (len < 6) {
-       errorString = "В телефонном номере должно быть не менее 6 цифр. <br>Пример: 7-915-123-45-67";
+       errorString = "В телефонном номере должно быть не менее 6 цифр. Пример: 7-812-320-80-80";
        if (len == 0 && $(this).val().toString().length == 0){
          errorString = "Не заполнено обязательное поле.";
        }
@@ -933,6 +977,17 @@ function orderOneClick(url, event){
      $(document).find('.error').eq(0).find(':input').focus();
    }
    else {
+      try{
+         var pageTracker = _gat._getTracker("UA-8758024-4");
+         pageTracker._trackPageview("/click/button/orderOneClick");
+         //console.log("track page");
+      } catch(err) {};
+      try{
+         var pageTracker = _gat._getTracker("UA-8758024-4");
+         pageTracker._trackPageview("/thanks");
+         //console.log("track page");
+      } catch(err) {};
+               
      showDiv1(url, event);
    }
  }
@@ -1379,7 +1434,7 @@ $(document).ready(function() {
 		'titleShow'		: true,
 		'titlePosition'	: 'inside'
 	});
-		$('.iframe,.add a, area[href="#add"]').fancybox({
+		$('.iframe,.add a[href="#add"], area[href="#add"]').fancybox({
 
       'content' : '<div class="product-add-complete">Товар добавлен в корзину! Вы&nbsp;можете<br><a onclick="closeFancy();">продолжить&nbsp;покупки</a>&nbsp;или&nbsp;<a href="/cart?innerLayer">оформить&nbsp;заказ</a></div>',
 			'transitionIn'	:	'fade',

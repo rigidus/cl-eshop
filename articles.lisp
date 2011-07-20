@@ -171,12 +171,10 @@
          (menu  (soy.articles:articles-menu (list :tag tags))))
     (if (not (null tags))
         (setf breadcrumbs
-              (format nil "<p class=\"breadcrumbs\">
-                                  <a href=\"/\">Главная</a> /
+              (format nil "       <a href=\"/\">Главная</a> /
                                   <a href=\"/articles\">Материалы</a> /
                                   ~a" tags))
-        (setf breadcrumbs "<p class=\"breadcrumbs\">
-                                  <a href=\"/\">Главная</a> /
+        (setf breadcrumbs "       <a href=\"/\">Главная</a> /
                                   Материалы"))
     (multiple-value-bind (paginated pager)
         (paginator request-get-plist
@@ -211,24 +209,26 @@
                :rightblock  ""))))))
 
 (defun get-article-breadcrumbs(article)
-    (format nil "<p class=\"breadcrumbs\">
+    (format nil "
                   <a href=\"/\">Главная</a> /
                   <a href=\"/articles\">Материалы</a> /
-                  ~a </p>" (name article)))
+                  ~a " (name article)))
 
 ;; отображение страницы статьи
 (defmethod restas:render-object ((designer eshop-render) (object article))
   (root:main (list :keywords "" ;;keywords
                    :description "" ;;description
                    :title  (name object)
-                   :headext (soy.articles:head-share-buttons (list :test ""))
+                   :headext (soy.articles:head-share-buttons (list :key (key object)))
                    :header (root:header (list :logged (root:notlogged)
                                               :cart (root:cart)))
                    :footer (root:footer)
                    :content (static:main
                              (list :menu (menu)
                                    :breadcrumbs (get-article-breadcrumbs object)
-                                   :subcontent  (soy.articles:article-big (list :name (name object)
+                                   :subcontent  (soy.articles:article-big (list :sharebuttons (soy.articles:share-buttons
+                                                                                               (list :key (key object)))
+                                                                                :name (name object)
                                                                                 :date (article-encode-data object)
                                                                                 :body (body object)
                                                                                 :tags

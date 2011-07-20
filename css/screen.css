@@ -171,10 +171,12 @@
     background:url('data:image/gif;base64,R0lGODlhDAARAIABAP///////yH5BAEAAAEALAAAAAAMABEAAAIhTIBga8rv0jt0NupgPSkvv10MSGqj+aFierYsG6lh0wUFADs=') no-repeat 0 0;
 }
 .header .nav {
-    padding:5px 0;
-    margin:0;
-    display:block;
-    text-align: center;
+padding:5px 0;
+margin:0;
+display:block;
+text-align: center;
+position: relative;
+float: left;
 }
 .header .nav a {
     margin:0 15px 0 0;
@@ -1093,7 +1095,7 @@
     zoom:1;
 }
 .best-items .catalog .item {
-    width:25%;
+    width:24%;
     height:306px !important;
     overflow:visible !important;
 }
@@ -1452,7 +1454,7 @@
     margin:0 -1.35% 20px -1.35%;
 }
 .new-items .catalog .item {
-    width:33.33%;
+    width:33%;
     padding:0;
 }
 .new-items .catalog .item .place {
@@ -2440,9 +2442,14 @@
     visibility: hidden;
     overflow: hidden;
 }
-.item-buy .item-col1,
+.item-buy .item-col1 {
+    width:30.5%;
+    padding:0 3% 0 0;
+    float:left;
+}
+
 .item-buy .item-col2 {
-    width:28.5%;
+    width:26.5%;
     padding:0 3% 0 0;
     float:left;
 }
@@ -5785,13 +5792,13 @@ overflow:hidden;
 height:1px;
 }
 .yb2, .yb3, .yb4 {
-background:#fffbe3;
-border-left:1px solid #e7dea8;
-border-right:1px solid #e7dea8;
+background:#ffeea8;
+border-left:1px solid #4c4c4c;
+border-right:1px solid #4c4c4c;
 }
 .yb1 {
 margin:0 5px;
-background:#e7dea8;
+background:#4c4c4c;
 }
 .yb2 {
 margin:0 3px;
@@ -5806,9 +5813,10 @@ margin:0 1px;
 }
 
 .yboxcontent {
+padding: 0px 5px 3px 8px;
 display:block;
-border:0 solid #e7dea8;
-background:#fffbe3;
+border:0 solid #4c4c4c;
+background:#ffeea8;
 border-width:0 1px;
 height:auto;
 }
@@ -5818,5 +5826,60 @@ height:1px;
 
 .closeybox {
   position:relative;
-  right:5px;
+  //right:5px;
+}
+
+input#nrtelefon, input#nrname{
+  width:95%;
+}
+
+
+.add a{
+  float:left;
+  padding-right:3px;
+}
+
+
+#vk_like {
+  width:auto !important;
+  position:relative;
+  float:left;
+ }
+
+.addthis_toolbox .addthis_default_style {
+  position:relative;
+  float:right;
+}
+
+
+.addthis_button_facebook_like {
+  position:relative;
+  top:2px;
+}
+
+.addthis_button_tweet {
+  position:relative;
+  top:1px;
+}
+
+.addthis_button_google_plusone {
+  position:relative;
+  top:3px;
+}
+
+.share-buttons {
+  height:25px;
+}
+
+
+#social_buttons {
+  position: relative;
+  top: 3px;
+  float: left;
+  padding-left: 40px;
+  width: 160px;
+}
+
+#social_buttons a {
+  padding-left: 2px;
 }

@@ -37,8 +37,12 @@
 	<p>Экран 15,6" (1366x788), диск 250 ГБ, память 3 ГБ, процессор
 	2,16 ГГц, работа от батареи 3 часа, вес 2,6 кг</p>
 -->
-	<big class="price">{$price} <var>руб.</var></big>{\n}
-	<span class="add"><a href="#add" onclick="return rAddCart('{$articul}', '{$group_id}', '{$name}', {$price}, 1,'/{$articul}','/pic/small/{$articul}/{$firstpic}');"><img src="/img/cart-add.png" alt="В корзину"/></a></span>{\n}
+	<big class="price">{$formatprice} <var>руб.</var></big>{\n}
+	<span class="add">
+      {$oneclickbutton|noAutoescape}
+      {$addbutton|noAutoescape}
+               /* <a href="#add" onclick="return rAddCart('{$articul}', '{$group_id}', '{$name}', {$price}, 1,'/{$articul}','/pic/small/{$articul}/{$firstpic}');"><img src="/img/cart-add.png" alt="В корзину"/></a> */
+    </span>{\n}
   </div>{\n}
 </li>{\n}
 {/template}

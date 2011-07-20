@@ -188,7 +188,7 @@
                                                (> (price product) 0)
                                                ;;для селективного исключения товаров по значению специальной опции
                                                (let ((yml-show))
-                                                 (with-option product "Secret" "UML"
+                                                 (with-option product "Secret" "YML"
                                                               (setf yml-show (value option)))
                                                  (if (and (not (null yml-show))
                                                           (string= "No"
@@ -262,7 +262,7 @@
                                                (> (price product) 0)
                                                ;;для селективного исключения товаров по значению специальной опции
                                                (let ((yml-show))
-                                                 (with-option product "Secret" "UML"
+                                                 (with-option product "Secret" "YML"
                                                               (setf yml-show (value option)))
                                                  (if (and (not (null yml-show))
                                                           (string= "No"

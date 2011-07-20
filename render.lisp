@@ -43,7 +43,7 @@
                                             :cnt (let ((products (get-recursive-products child)))
                                                    (if (null products)
                                                        "-"
-                                                       (length (remove-if-not #'(lambda (product)
+                                                      (length (remove-if-not #'(lambda (product)
                                                                                   (active product))
                                                                               products))))
                                             :pic (pic child)
@@ -131,6 +131,8 @@
                          :name (realname object)
                          :siteprice (siteprice object)
                          :storeprice (price object)
+                         :formatsiteprice (get-format-price (siteprice object))
+                         :formatstoreprice (get-format-price (price object))
                          :equalprice (= (siteprice object) (price object))
                          :diffprice diffprice
                          :procent procent
@@ -164,7 +166,15 @@
                          :active (active object)
                          :descr (descr object)
                          :shortdescr (shortdescr object)
-                         ))
+                         :predzakaz (predzakaz object)
+                         :addproductcart (if (predzakaz object)
+                                             (soy.buttons:add-predzakaz (list :articul (articul object)))
+                                             (soy.buttons:add-product-cart (list :articul (articul object)
+                                                                             :name (realname object)
+                                                                             :pic (if (null pics) nil (car pics))
+                                                                             :price (siteprice object))))
+                         :addoneclick (if (not (predzakaz object))
+                                          (soy.buttons:add-one-click (list :articul (articul object))))))
           :keywords (format nil "~a"
                             (realname object))
           :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"

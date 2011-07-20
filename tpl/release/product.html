@@ -155,6 +155,20 @@
 
 		  <p class="tell-errors"><a href="#">В описании товара
 		  ошибки?</a></p> -->
+      <div>
+      <div id="vk_like" style="position:relative; float:left;width:100px !important;"></div>
+      <script type="text/javascript">
+      VK.Widgets.Like("vk_like", {type: "mini"});
+      </script>
+      <div class="addthis_toolbox addthis_default_style" style="position:relative;float:right">
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count" fb:like:width="80" fb:like:locale="en_US" style="position:relative;"></a>
+      <span class="addthis_separator" style="position:relative; top:2px;">|</span>
+      <a class="addthis_button_compact" style="position:relative;top:3px"></a>
+      </div>
+      <script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+      <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e1ec0674456563a"></script>
+      </div>
+
 	    </div>
 
 
@@ -199,17 +213,21 @@
 		    <div class="item-buy">
              {if $active}
 			  <div class="item-col1">
-			    <p class="price"><big>{$siteprice}</big> руб.</p>
+			    <p class="price"><big>{$formatsiteprice}</big> руб.</p>
 			    <p class="note gray">цена для интернет-магазина</p>
-		        <p class="add"><a href="#add" onclick="return
+		        <p class="add">
+                /* <a href="#add" onclick="return
 		        rAddCart('{$articul}', '{$group_id}', '{$name}',
 		        {$siteprice},
 		        1,'{$subst}','/pic/small/{$articul}/{$firstpic}');"><img src="/img/cart-add.png"
-		        alt="В корзину"/></a></p>
+		        alt="В корзину"/></a> */
+                {$addproductcart|noAutoescape}
+                {$addoneclick|noAutoescape}
+                </p>
 			  </div>
 			  <div class="item-col2">
 			{if not $equalprice}
-                <p class="price gray"><big class="strike">{$storeprice}</big> <span class="strike">руб.</span></p>
+                <p class="price gray"><big class="strike">{$formatstoreprice}</big> <span class="strike">руб.</span></p>
                 <p class="note gray">цена в магазине</p>
             {/if}
 
@@ -223,8 +241,11 @@
 			       <p class="price red"><big>{$diffprice}</big> руб. <big class="gray">({$procent}%)</big></p>
 			       <p class="note red">экономия</p>
                 {/if}
-                <p class="deliver"><big>Доставим завтра, возможен <a href="kakdobratsja" target="blank">самовывоз.</a></big></p>
-
+                {if not $predzakaz}
+                 <p class="deliver"><big>Доставим завтра, возможен <a href="kakdobratsja" target="blank">самовывоз.</a></big></p>
+                {else}
+                 <p class="deliver"><big>Сроки поступления {$name} уточняйте у наших операторов.</big></p>
+                {/if}
 			  </div>
 			  <p class="str">В пределах
 			  Санкт-Петербурга.</a></p>
@@ -232,7 +253,7 @@
               <!--noindex-->
               <p class="outs-and-shorts">Извините, {$name} уже купили.</p>
 	      <!--/noindex-->
-             <p class="outs-and-shorts-small">Прямо сейчас можно заказать {$name}: по телефону (812) 320-8080, в системе он-лайн консультант, или просто написав письмо на <a href="mailto:shop@320-8080.ru">shop@320-8080.ru</a>.</p>             
+             <p class="outs-and-shorts-small">Прямо сейчас можно заказать {$name}: по телефону (812) 320-8080, в системе он-лайн консультант, или просто написав письмо на <a href="mailto:shop@320-8080.ru">shop@320-8080.ru</a>.</p>
              {/if}
 		    </div>
 		    <p class="item-bigtext">
@@ -323,13 +344,16 @@
 	  <div class="item-buy">
         {if $active}
 	    <div class="item-col1">
-		  <p class="price"><big>{$siteprice}</big> руб.</p>
+		  <p class="price"><big>{$formatsiteprice}</big> руб.</p>
 		  <p class="note gray">цена для интернет-магазина</p>
-		  <p class="add"><a href="#add" onclick="return rAddCart('{$articul}', '{$group_id}', '{$name}', {$siteprice}, 1,'{$subst}','/pic/small/{$articul}/{$firstpic}');"><img src="/img/cart-add.png" alt="В корзину"/></a></p>
+		  <p class="add">
+               {$addproductcart|noAutoescape}
+                {$addoneclick|noAutoescape}
+          </p>
 	    </div>
 	    <div class="item-col2">
 	    {if not $equalprice}
-		  <p class="price gray"><big class="strike">{$storeprice}</big> <span class="strike">руб.</span></p>
+		  <p class="price gray"><big class="strike">{$formatstoreprice}</big> <span class="strike">руб.</span></p>
 		  <p class="note gray">цена в магазине</p>
         {/if}
  <!--
@@ -342,8 +366,12 @@
 		  <p class="price red"><big>{$diffprice}</big> руб. <big class="gray">({$procent}%)</big></p>
 		  <p class="note red">экономия</p>
         {/if}
-		  <p class="deliver"><big>Доставим завтра, возможен <a href="kakdobratsja" target="blank">самовывоз.</a></big></p>
-	    </div>
+        {if not $predzakaz}
+          <p class="deliver"><big>Доставим завтра, возможен <a href="kakdobratsja" target="blank">самовывоз.</a></big></p>
+        {else}
+          <p class="deliver"><big>Сроки поступления {$name} уточняйте у наших операторов.</big></p>
+          {/if}
+		 </div>
 	    <p class="str"></p>
         {else}
         /*     <p class="outs-and-shorts">Извините, {$name} уже купили.</p>

@@ -71,6 +71,10 @@ function setUserCookieField(fieldName, val){
  
 $(document).ready(function(){
 
+  if ((/cifry_terminal/).test(navigator.userAgent.toString())){
+    $(document).cookie('user-nc', '', { expires: -1 });
+  }
+
 	// Показать больше информации
 	$('div.delivery a.show_hidden').toggle(
 		function() {

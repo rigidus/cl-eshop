@@ -45,6 +45,7 @@
             "news5.html"            "news6.html"              "corporate.html"
             "dilers.html"           "sendmail.html"           "404.html"
             "articles.soy"         "sitemap.html"            "newcart.soy"
+            "god_kills_a_kitten.soy"
             )))
 (print "Compiling all templates")
 (compile-templates)

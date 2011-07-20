@@ -59,6 +59,7 @@
 	
 
 function setUserCookieField(fieldName, val){
+
 	var user = eval("(" + $(document).cookie('user-nc') + ")");
 	if (!user){
 		user = new Object;
@@ -70,6 +71,9 @@ function setUserCookieField(fieldName, val){
 	
  
 $(document).ready(function(){
+  if ((/cifry_terminal/).test(navigator.userAgent.toString())){
+    $(document).cookie('user-nc', '', { expires: -1 });
+  }
 
 	$(".item#beznalichnii .price").html(Math.ceil(parseInt($("span.price").text()) * 0.01) + ' рублей');
 

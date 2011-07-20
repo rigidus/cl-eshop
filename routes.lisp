@@ -75,14 +75,13 @@
   (route-storage-object key))
 
 
+
 ;; MAIN
 (defun test-get-parameters ()
-  (null (request-get-plist)))
+  t) ;;(null (request-get-plist)))
 
 (restas:define-route main-route ("/" :requirement #'test-get-parameters)
   (main-page-show (request-str)))
-
-
 
 
 ;; CATALOG
@@ -98,7 +97,8 @@
                                    "warranty"         "moneyback"         "article"         "news1"
                                    "news2"            "news3"             "news4"           "news5"
                                    "news6"            "dilers"            "corporate"       "vacancy"
-                                   "bonus"            "burunduk"          "listservice"     "suslik"))
+                                   "bonus"            "burunduk"          "listservice"     "suslik"
+                                   "god_kills_a_kitten"))
 
 
 (defmacro static ()
@@ -231,34 +231,4 @@
    :content-type "text/html"))
 
 (restas:define-route request-route ("/request")
-  (let* ((request-get-plist (request-get-plist))
-        (telef (getf request-get-plist :telef))
-        (articul (getf request-get-plist :articul)))
-   (if (not (null telef))
-       (format nil
-       "<div class=\"xsnazzy\" style=\"width:200px;\"  >
-          <b class=\"ytop\"><b class=\"yb1\"></b><b class=\"yb2 color_a\"></b><b class=\"yb3 color_a\"></b><b class=\"yb4 color_a\"></b></b>
-          <div class=\"yboxcontent\">
-            <div  style=\"float: right;\" class=\"closeybox\">
-              <img alt=\"закрыть\" onClick=\"hideDiv()\" src=\"/img/jule2011/close.gif\"></div>
-            <br>\"Ваш телефон ~a внесен в очередь скоро мы с Вами свяжемся: товар  ~a\"</div>
-          <b class=\"ybottom\"><b class=\"yb4\"></b><b class=\"yb3\"></b>
-          <b class=\"yb2\"></b><b class=\"yb1\"></b></b>
-       </div>" telef articul)
-
-      "<div class=\"xsnazzy\" style=\"width:200px;\"  >
-       <b class=\"ytop\"><b class=\"yb1\"></b><b class=\"yb2 color_a\"></b><b class=\"yb3 color_a\"></b><b class=\"yb4 color_a\"></b></b>
-       <div class=\"yboxcontent\">
-          <div  style=\"float: right;\"  class=\"closeybox\">
-            <img alt=\"закрыть\" onClick=\"hideDiv()\" src=\"/img/jule2011/close.gif\">
-          </div>
-          <p>Ваш телефон:<font style=\"color:#ED1C24\">*</font><input class=\"required\" type=\"text\" id=\"nrtelefon\"><br>
-          <p>Ваше имя:<input type=\"text\" id=\"name\"><br>
-          <input type=\"button\" onClick=\"
-            tel=encodeURIComponent(document.getElementById(\'nrtelefon\').value);
-            name=encodeURIComponent(document.getElementById(\'nrtelefon\').value);
-            articul=window.location.pathname.replace(\'/\', \'\');
-            orderOneClick(\'telef=\'+tel+\'&name=\'+name+\'&articul=\'+articul,event);\" value=\"Сохранить\">
-<br>Наш менеджер с Вами свяжется и примет заказ. Желательно указывать мобильный телефон.</div>
-       <b class=\"ybottom\"><b class=\"yb4\"></b><b class=\"yb3\"></b><b class=\"yb2\"></b><b class=\"yb1\"></b></b>
-       </div><br>")))
+  (oneclickcart-page (request-get-plist)))
