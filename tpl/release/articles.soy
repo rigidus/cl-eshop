@@ -1,46 +1,31 @@
 {namespace soy.articles}
-
-
 {template head-share-buttons}
-{literal}
+ {literal}
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4defa41b0722be31"></script>
 <script type="text/javascript">
-var addthis_config =
-{
+var addthis_config = {
         data_ga_property : 'UA-8758024-4',
         data_track_clickback : true,
-        ui_language: "ru"
-};
-
-var addthis_share =
-{
+        ui_language: "ru" };
+var addthis_share = {
 {/literal}
-    {if $shareurl}
-        url: "{$share-url}",
-    {/if}
-    {if $sharetitle}
-        title: "{$sharetitle}",
-    {/if}
-    {if $sharedescr}
-        description: "${sharedescr}",
-    {/if}
-    {if $shareswfurl}
-        swfurl: "{$shareswfurl}",
-    {/if}
-    {if $sharesrn}
-        screenshot: "{$sharesrn}",
-    {/if}
-    width: "560",
-    height: "340",
+
+{if $shareurl} url: "{$shareurl}", {/if}
+{if $sharetitle} title: "{$sharetitle}", {/if}
+{if $sharedescr} description: "{$sharedescr}", {/if}
+{if $shareswfurl} swfurl: "{$shareswfurl}", {/if}
+{if $sharesrn} screenshot: "{$sharesrn}", {/if}
+
+width: "560",
+height: "340",
+
 {literal}
     templates: {
+       twitter: '{{title}} {{lurl}} @3208080_ru'}};
 {/literal}
-       twitter: '{{title}} {{lurl}} @3208080_ru'
-{literal}
-    }
-};
+
 </script>
-{/literal}
+
 {/template}
 
 /*{template share-buttons}
@@ -63,8 +48,6 @@ var addthis_share =
 
 {template share-buttons}
 {literal}
-
-
 <!-- Put this div tag to the place, where the Like block will be -->
 <div id="vk_like" style="position:relative; float:left;width:100px !important;"></div>
 <script type="text/javascript">

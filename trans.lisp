@@ -74,7 +74,7 @@
     (recursive-explore file)))
 
 
-(defparameter *storage* (make-hash-table :test #'equal))
+(defvar *storage* (make-hash-table :test #'equal))
 
 
 (defun restore-from-files ()
@@ -148,8 +148,6 @@
   (safely-restore)
   (store-products))
 
-(print "Restoring data from files")
-(restore-from-files)
 
 
 ;; (store-to-files)

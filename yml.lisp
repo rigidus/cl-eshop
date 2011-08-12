@@ -90,7 +90,7 @@
                                                                                          (stripper yml-name))
                                                                                 (string= "No"
                                                                                          (stripper yml-name)))
-                                                                            (name product)
+                                                                            (realname product)
                                                                             yml-name))
                                                               :description (if (string= "NIL"
                                                                                         (descr product))
@@ -213,7 +213,7 @@
                                                                                          (stripper yml-name))
                                                                                 (string= "No"
                                                                                          (stripper yml-name)))
-                                                                            (name product)
+                                                                            (realname product)
                                                                             yml-name))
                                                               :description (if (string= "NIL"
                                                                                         (descr product))
@@ -222,10 +222,6 @@
                                                               )))))))
 
 
-/**
- *
- *
- **/
 (defun yml-page-for-parser ()
   (setf (hunchentoot:content-type*) "application/xml; charset=utf-8")
   (yml:xml (list :datetime (get-date-time)

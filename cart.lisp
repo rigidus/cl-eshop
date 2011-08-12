@@ -5,7 +5,7 @@
 ;;генерирует псевдоуникальный номер заказа
 (defun get-order-id ()
   (let ((current-order-id *order-id*)
-        (order-id-pathname (format nil "~a/~a" *path-to-conf* "order-id.txt")))
+        (order-id-pathname (format nil "~a/~a" *path-to-conf* *path-order-id-file*)))
     (if (not (null *order-id*))
         (progn
           (incf *order-id*)

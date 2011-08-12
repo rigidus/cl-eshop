@@ -109,9 +109,8 @@
             "footer.html")))
 
 ;; загрузить статьи
-(articles-update)
+;; (articles-update)
 (print ">> Articles <<")
-(restore-articles-from-files)
 
 
 ;; (defun get-date-time ()
@@ -230,7 +229,7 @@
                                                                                                (list :key (key object)))
                                                                                 :name (name object)
                                                                                 :date (article-encode-data object)
-                                                                                :body (body object)
+                                                                                :body (prerender-string-replace (body object))
                                                                                 :tags
                                                                                 (if (< 0 (hash-table-count (tags object)))
                                                                                     (soy.articles:articles-tags

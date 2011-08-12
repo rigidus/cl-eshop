@@ -1,8 +1,8 @@
 {namespace leftmenu}
 
 {template ordinal}
-  <li>
-    <p class="block menu-p1 menu-level1">
+  <li {if $divider}class="divider"{/if}>
+    <p class="block menu-p1 menu-level1" >
       <a href="/{$key}">
         {$name}
       </a>
@@ -16,7 +16,7 @@
 {/template}
 
 {template selected}
-  <li class="active">
+  <li class="active {if $divider}divider{/if}">
 	<p class="block menu-p3 menu-level1">
       <a href="/{$key}">{$name}</a>
       <var style="background: url('{$icon}') no-repeat;"></var>

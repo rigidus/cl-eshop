@@ -389,7 +389,11 @@
                                (if (string= (format nil "~a" current-key) (key val))
                                    ;; This is current
                                    (leftmenu:selected
-                                    (list :key (key val)
+                                    (list :divider (or
+                                                    (string= (key val) "setevoe-oborudovanie")
+                                                    (string= (key val) "foto-and-video")
+                                                    (string= (key val) "rashodnye-materialy"))
+                                          :key (key val)
                                           :name (name val)
                                           :icon (icon val)
                                           :subs (loop
@@ -410,7 +414,11 @@
                                                    (list :key  (key child) :name (name child)))
                                           ))
                                    ;; else - this is ordinal
-                                   (leftmenu:ordinal (list :key  (key val)
+                                   (leftmenu:ordinal (list :divider (or
+                                                                     (string= (key val) "setevoe-oborudovanie")
+                                                                     (string= (key val) "foto-and-video")
+                                                                     (string= (key val) "rashodnye-materialy"))
+                                                           :key  (key val)
                                                            :name (name val)
                                                            :icon (icon val)))
                                    ))
@@ -711,6 +719,7 @@ is replaced with replacement."
                            (soy.buttons:add-product-cart (list :articul (articul object)
                                                                :name (realname object)
                                                                :pic (if (null pics) nil (car pics))
+                                                               :siteprice (price object)
                                                                :price (siteprice object))))
             ))))
 
@@ -1079,3 +1088,6 @@ is replaced with replacement."
       (format nil "~a~a"
               (string-upcase (subseq title 0 1))
               (subseq title 1))))
+
+(defun wlog (s)
+  (format t "~&~a> ~a" (get-date-time) s))

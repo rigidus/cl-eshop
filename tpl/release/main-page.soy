@@ -1,0 +1,372 @@
+{namespace soy.main-page}
+
+/**
+ * блок Товар дня daily
+ */
+{template daily}
+<!-- товар дня  -->{\n}
+<div class="block block-daily-item">{\n}
+  <p class="h2">Товар дня <span>&ndash; специальная цена только сегодня!</span></p>{\n}
+  <div class="switch">{\n}
+	<ul class="slider-pager">{\n}
+       {foreach $item in $items}
+             {if isFirst($item)}
+                 <li class="active">
+                   <a href="/{$item.articul}" rel="nofollow">{index($item) + 1}</a>
+                 </li>{\n}
+             {else}
+                  <li> <a href="/{$item.articul}" rel="nofollow">{index($item) + 1}</a></li>{\n}
+             {/if}
+       {/foreach}
+	</ul>{\n}
+    <ul class="slider">{\n}
+      {foreach $item in $items}
+        <li>{\n}
+          <div class="pic">{\n}
+            <a href="/{$item.articul}" rel="nofollow">
+              <img class="img"
+                   src="/pic/middle/{$item.articul}/{$item.pic}"
+                   alt="{$item.name}"/>
+            </a>{\n}
+            // характеристики товаров для блока daily
+            <dl class="specs">{\n}
+              {foreach $option in $item.options}
+                {if index($option)%2 == 0}
+                  <dt>{$option}</dt>{\n}
+                {else}
+                  <dd>{$option}</dd>{\n}
+                {/if}
+              {/foreach}
+            </dl>{\n}
+            // --- характеристики товаров
+          </div>{\n}
+          <div class="info">{\n}
+	         <p class="h2"><a href="/{$item.articul}">{$item.name}</a></p>{\n}
+	         <p class="bottom">{\n}
+			   <big class="price">{$item.showsiteprice}<small>руб.</small></big>{\n} // цена вида  8 490
+               <span class="add">{\n}
+			     {$item.buttonaddcart | noAutoescape}
+               </span>{\n}
+	         </p>{\n}
+          </div>{\n}
+         </li>{\n}
+       {/foreach}
+    </ul>{\n}
+  </div>{\n}
+</div>{\n}
+{/template}
+
+
+/**
+ * блок Лучшие цены best
+ */
+{template best}
+<!-- лучшие цены  -->{\n}
+<div class="full best-items">{\n}
+  <div class="hspace">{\n}
+    <p class="h2">{\n}
+      Лучшие цены <span>{\n}
+        &mdash; на сайте дешевле, чем в магазинах</span>{\n}
+    </p>{\n}
+  </div>{\n}
+  <ul class="slider">{\n}
+    {foreach $item in $items}
+      {if index($item) %4 == 0}
+        <li class="page">{\n}
+          <ul class="catalog">{\n}
+      {/if}
+      <li class="item block">{\n}
+        <p class="place">{\n}
+          <a href="/{$item.grouplink}">{$item.groupname}</a>{\n}
+        </p>{\n}
+        <div class="area">{\n}
+          <p class="badge">{\n}
+            <img src="/img/bestprice.png" alt="Лучшая цена"/>{\n}
+          </p>{\n}
+          <p class="rating rating5"><i></i></p>{\n}
+        </div>{\n}
+        <div class="pic">{\n}
+          <a href="/{$item.articul}">{\n}
+            <img src="/pic/middle/{$item.articul}/{$item.pic}" alt="{$item.name}"/>{\n}
+          </a>{\n}
+        </div>{\n}
+        <div class="info">{\n}
+          <p class="h2">{\n}
+            <a href="/{$item.articul}">{\n}
+              {$item.name}</a>{\n}
+          </p>{\n}
+          <big class="price">{$item.showsiteprice}<var>руб.</var></big>{\n}
+          <span class="add">{\n}
+            {$item.buttonaddcart | noAutoescape}
+          </span>{\n}
+          <small class="price-old">{\n}
+            {$item.showprice}  руб.</small>{\n}
+        </div>{\n}
+      </li>{\n}
+      {if index($item) % 4 == 3 or isLast($item)}
+          </ul>{\n}
+        </li>{\n}
+      {/if}
+    {/foreach}
+  </ul>{\n}
+</div>{\n}
+{\n}
+{/template}
+
+
+/**
+ * блок Хиты продаж hit
+ */
+{template hit}
+<!-- хиты продаж -->{\n}
+<div class="left hit-items">{\n}
+  <div class="pre">{\n}
+	<p class="h2">Хиты продаж <a href="catalog-in.html"></a></p>{\n}
+	<p class="what">Что чаще всего выбирают покупатели?</p>{\n}
+  </div>{\n}
+
+  <ul class="catalog">{\n}
+    {foreach $item in $items}
+	<li class="item">{\n}
+          <div class="pic block">{\n}
+              <a href="/{$item.pic}">{\n}
+                  <img src="/pic/small/{$item.articul}/{$item.pic}" alt="{$item.name}"/>{\n}
+              </a>{\n}
+          </div>{\n}
+	  <div class="area">{\n}
+		<p class="rating rating5"><i></i></p>{\n}
+	  </div>{\n}
+	  <div class="info">{\n}
+		<p class="h2"><a href="/{$item.articul}">{$item.name}</a></p>{\n}
+		<big class="price">{$item.showsiteprice}<var>руб.</var></big>{\n}
+		<span class="add">{\n}
+          {$item.buttonaddcart | noAutoescape}
+        </span>{\n}
+	  </div>{\n}
+	  <div class="review block">{\n}
+		<p class="ico"><img src="{$item.options.0}" alt=""/></p>{\n}
+		<p><strong>{$item.options.1}</strong></p>{\n}
+		<p>{$item.options.2}</p>{\n}
+		<dfn></dfn>{\n}
+	  </div>{\n}
+	</li>{\n}
+    {/foreach}
+  </ul>{\n}
+</div>{\n}
+{/template}
+
+
+/**
+ * блок Новинки new
+ */
+{template new}
+<!-- новинки -->
+<div class="right2 new-items">{\n}
+  <p class="h2">Новинки</p>{\n}
+  <ul class="catalog">{\n}
+    {foreach $item in $items}
+	<li class="item block">{\n}
+	  <p class="place"><a href="/{$grouplink}">{$groupname}</a></p>{\n}
+	  <div class="area">{\n}
+		<p class="badge"><img src="/img/newitem.png" alt="Новинка"/></p>{\n}
+		<p class="rating rating5"><i></i></p>{\n}
+	  </div>{\n}
+	  <div class="pic">{\n}
+        <a href="/{$item.articul}"><img src="/pic/middle/{$item.articul}/{$item.pic}" alt="{$item.name}"/></a>{\n}
+      </div>{\n}
+	  <div class="info">{\n}
+		<p class="h2"><a href="/{$item.articul}">{$item.name}</a></p>{\n}
+		<big class="price">{$item.showsiteprice}<var>руб.</var></big>{\n}
+		<span class="add">{\n}
+          {$item.buttonaddcart | noAutoescape}
+        </span>{\n}
+	  </div>{\n}
+	</li>{\n}
+    {/foreach}
+	</ul>{\n}
+</div>{\n}
+{/template}
+
+
+/**
+ * блок баннер banner
+ */
+{template banner}
+<a href="{$url}">{\n}
+<div class="stock" align="center">{\n}
+  <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="474" height="162">{\n}
+    <param name="movie" value="{$src}" />{\n}
+	<param name="quality" value="high" />{\n}
+	<param name="bgcolor" value="#ffffff" />{\n}
+    <param name="wmode" value="opaque" />{\n}
+    <embed wmode=transparent src="{$src}" quality="high" bgcolor="#ffffff" width="474" height="162" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />{\n}
+  </object>{\n}
+  </div>{\n}
+ </a>{\n}
+{/template}
+
+/**
+ * блок наши преимущества
+ */
+{template olist}
+<p class="h2">С 2002 года мы доставили клиентам более 359 000 заказов</p>{\n}
+<div class="olist">{\n}
+  <ol>{\n}
+      <li>{\n}
+        <a href="/articles/new_plansheti"> Новинки</a>{\n}
+        Самые новые и эксклюзивные товары{\n}
+      </li>{\n}
+	<li class="pct">{\n}
+	  <a href="/warranty">Гарантия на все товары</a>{\n}
+          Только 100% белые и сертифицированные товары{\n}
+	</li>{\n}
+	<li>{\n}
+	  <a href="/moneyback">Манибэк</a>{\n}
+	  Вы можете вернуть товар в течение 3 дней с момента покупки, не
+	  объясняя причин
+	</li>{\n}
+  </ol>{\n}
+  <p class="more"><a href="/about">Подробнее о компании &rarr;</a></p>{\n}
+</div>{\n}
+{/template}
+
+
+/**
+ * блок Последний отзыв
+ */
+{template lastreview}
+<div class="block block-last-reviews">{\n}
+  <p class="ico"><img src="{$ico}" alt=""/></p>{\n}
+  <p><strong>{$name},</strong> {$city}</p>{\n}
+  <p>{$review | noAutoescape}</p>{\n}
+  <p class="more"><a href="/otzyvy">Еще 50 отзывов &rarr;</a></p>{\n}
+</div>{\n}
+{/template}
+
+
+
+/**
+ * блок последние статьи обзоры
+ */
+{template post}
+<!-- VK Widget -->
+<div class="vkontakte-community-widget">
+<div id="vkontakte-community-widget-vk_groups"></div>
+<script type="text/javascript">
+{literal}
+  if (typeof(VK) != "undefined") {
+    VK.Widgets.Group("vkontakte-community-widget-vk_groups", {mode: 0, width: "auto", height: "290"}, 27979099);
+   };
+{/literal}
+</script>
+</div>
+
+<div class="right2 news-index">
+  <p class="h2">Новости
+
+
+<a class="all" href="/articles/news">Все новости&nbsp;&rarr;</a>
+
+
+</p>
+  <ul class="news-list">
+  <li class="item">
+	  <var class="date">08 августа</var>
+	  <p class="h2"><a href="/articles/Noutbuk_vs_PC">Новый учебный год. Ноутбук vs. ПК</a></p>
+	</li>
+  <li class="item">
+	  <var class="date">04 августа</var>
+          <p class="h2"><a href="/articles/HTC_WildFire_S">HTC WildFire S &ndash; огоньки в глазах!</a></p>
+	</li>
+  <li class="item">
+	  <var class="date">04 августа</var>
+	  <p class="h2"><a href="/articles/Acer_Iconia_A501">Планшет Acer Iconia A501 - сплав стиля и функционала.</a></p>
+	</li>
+  <li class="item">
+	  <var class="date">04 августа</var>
+          <p class="h2"><a href="/articles/Acer_Aspire_5336-T352G">Acer Aspire 5336-T352G &ndash; ноутбук без вреда для сбережений.</a></p>
+	</li>
+  <li class="item">
+      <var class="date">03 августа</var>
+        <p class="h2"><a href="/articles/Acer_Aspire_One_HAPPY2">Acer Aspire One HAPPY2 &ndash; солнечные эмоции.</a></p>
+       </li>
+  <li class="item">
+      <var class="date">01 августа</var>
+          <p class="h2"><a href="/articles/asus_skidka">Cкидка 2000 рублей на ноутбуки ASUS!</a></p>
+         </li>
+  </ul>
+</div>
+
+<div class="right2 news-index news-cyfra-index">
+  <div class="news-h2">
+	<p class="h2">Цифровой обозреватель
+<a class="all" href="http://320-80-80.livejournal.com/">Архив обзоров&nbsp;&rarr;</a></p>
+	<p class="h2 h2-second">В центре внимания
+
+
+
+<a class="all" href="/articles/papers">Другие статьи&nbsp;&rarr;</a>
+
+
+
+</p>
+  </div>
+  <ul class="news-list">
+  	</li>
+	<li class="item">
+	  <var class="date">02 августа</var>
+	  <p class="h2"><a href="http://320-80-80.livejournal.com/203199.html">Куда бежать из ЖЖ</a></p>
+	  <p class="pic"><img src="/img/august2011/jj.jpg" alt="Куда бежать из ЖЖ"/></p>
+	</li>
+	<li class="item">
+	  <var class="date">21 июля</var>
+	  <p class="h2"><a href="http://320-80-80.livejournal.com/202893.html">Война патентов</a></p>
+	  <p class="pic"><img src="/img/jule2011/android.JPG" alt="Война патентов"/></p>
+	</li>
+  	<li class="item">
+	  <var class="date">29 июля</var>
+	  <p class="h2"><a href="http://www.320-8080.ru/articles/LG_Optimus_3D">LG Optimus 3D – новое измерение смартфонов!</a></p>
+	  <p class="pic"><img src="/img/august2011/i.jpg" alt="LG Optimus 3D – новое измерение смартфонов!"/></p>
+  </ul>
+</div>
+{/template}
+
+
+/**
+ * блок дополнительная инaформация горизонтальной полосой внизу
+ */
+{template plus}
+<div class="pluses">
+  <p class="h2"><strong>&laquo;ЦиFры&raquo;</strong> &ndash; это сеть магазинов в Санкт-Петербурге , служба доставки, склад, технический сервис</p>
+  <ul class="pluses-list">
+	<li class="item">
+	  <div class="space">
+		<p class="pic"><img src="/img/plus/service.png" alt=""/></p>
+		<p class="title"><a href="warranty">Гарантия и сервис</a></p>
+		<p>Бесплатный гарантийный ремонт компьютеров, ремонт комплектующих и периферии</p>
+	  </div>
+	</li>
+	<li class="item">
+	  <div class="space">
+		<p class="pic"><img src="/img/plus/shops.png" alt=""/></p>
+		<p class="title"><a href="kakdobratsja">2 магазина в Петербурге</a></p>
+		<p> В наших магазинах вы можете проконсультироваться и посмотреть технику вживую</p>
+	  </div>
+	</li>
+	<li class="item">
+	  <div class="space">
+		<p class="pic"><img src="/img/plus/stocks.png" alt=""/></p>
+		<p class="title"><a href="bonus">Бонусы в F-клубе!</a></p>
+		<p>Вступив в F-клуб Вы сможете получать бонусы, которыми можно расплачиваться за товары или услуги</p>
+	  </div>
+	</li>
+	<li class="item">
+	  <div class="space">
+		<p class="pic"><img src="/img/plus/corporate.png" alt=""/></p>
+		<p class="title"><a href="corporate">Корпоративным клиентам</a></p>
+		<p>Значительные скидки лояльным клиентам, абонентское обслуживание</p>
+	  </div>
+	</li>
+  </ul>
+</div>
+{/template}

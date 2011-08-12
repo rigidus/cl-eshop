@@ -1,5 +1,17 @@
 {namespace fullfilter}
 
+
+{template rightfilter}
+  <div class="block choose-laptop">{\n}
+    <p class="h2">Чаще всего ищут</p>{\n}
+    <div style="color:gray">
+    {foreach  $filter in $filters}
+      {$filter | noAutoescape}{\n}
+    {/foreach}
+    </div>
+  </div>
+{/template}
+
 {template container}
 <div class="block choose-laptop">
   <form method="get">
@@ -42,7 +54,7 @@
 {/foreach}
 {/template}
 
-{call groupelt data="$elt" /}
+/* {call groupelt data="$elt" /} */
 
 
 {template range}

@@ -1,17 +1,18 @@
 {namespace product}
 
-Здесь шаблоны для вывода опций, групп опций и всего блока опций.
+/* Здесь шаблоны для вывода опций, групп опций и всего блока опций.
 Они подставляются друг в друга и выглядят интуитивно простыми.
 |noAutoescape рядом с именем переменной означает не заменять теги,
-например "<" ">" их html-эквивалентами "&lt;" "&gt;"
+например "<" ">" их html-эквивалентами "&lt;" "&gt;" */
 
 
 {template option}
 <tr>{\n}
   <th>{$name}:</th>{\n}
-  <td>{$value |noAutoescape}</td>{\n}
+  <td>{$value | noAutoescape}</td>{\n}
 </tr>
 {/template}
+
 
 {template optgroup}
 <p class="h5">{$name}</p>{\n}
@@ -116,7 +117,7 @@
 		  </div>
 
           {if $firstpic}
-          {if length($pics) > 1}
+          {if length($pics) > 0}
           <div class="block block-item-pics">
 		    <ul>
 		      {foreach $pic in $pics}
@@ -157,9 +158,8 @@
 		  ошибки?</a></p> -->
       <div>
       <div id="vk_like" style="position:relative; float:left;width:100px !important;"></div>
-      <script type="text/javascript">
-      VK.Widgets.Like("vk_like", {type: "mini"});
-      </script>
+      {literal}
+      <script type="text/javascript"> VK.Widgets.Like("vk_like", {type: "mini"});</script>
       <div class="addthis_toolbox addthis_default_style" style="position:relative;float:right">
       <a class="addthis_button_facebook_like" fb:like:layout="button_count" fb:like:width="80" fb:like:locale="en_US" style="position:relative;"></a>
       <span class="addthis_separator" style="position:relative; top:2px;">|</span>
@@ -167,6 +167,7 @@
       </div>
       <script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
       <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e1ec0674456563a"></script>
+ {/literal}
       </div>
 
 	    </div>
@@ -195,10 +196,10 @@
                      {/if}
                   {/if}
                   {/foreach}
-				  <tr class="noborder">
-				    <th>&nbsp;</th>
-				    <td>&nbsp;</td>
-				  </tr>
+                                 <tr class="noborder">
+                                    <th></th>
+                                    <td></td>
+                                  </tr>
 			    </table>
 			  </div>
 		    </div>
@@ -498,7 +499,7 @@
 	</ul>
 </div>
 
-<div id="accReplace" class="popup popup-accReplace">
+/*<div id="accReplace" class="popup popup-accReplace">
 	<p class="close"><a href="#close" rel="popup-close"><img src="/img/close.png" alt="*"/>Закрыть</a></p>
 	<div class="yellow">
 		<p class="h2">Выбрать другую сумку в комплекте</p>
@@ -584,6 +585,7 @@
 	</div>
 	<p class="yellow-cancel"><a href="#cancel" rel="popup-close">Не менять сумку в комплекте</a></p>
 </div>
+*/
 
 {foreach $pic in $pics}
 <div id="bigImage{index($pic)}" class="popup popup-bigImage">

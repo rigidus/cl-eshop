@@ -933,10 +933,27 @@ function showDiv1(url, event){
     url1=document.location.href;
     if (url1.indexOf('http://www')!=-1)
       sendUrl='http://www.320-8080.ru/request?'+url;
+    else{
+      var serv = '';
+      if (url1.indexOf('http://wolfor') != -1){
+        serv = 'wolfor.';
+      }
+      else if (url1.indexOf('http://tosha') != -1){
+        serv = 'tosha.';
+      }
+      sendUrl='http://' + serv + '320-8080.ru/request?'+url;
+    }
+    sendRequest(sendUrl,'GET',getShowDivAjax);
+  }
+  /*
+  if (url != false){
+    url1=document.location.href;
+    if (url1.indexOf('http://www')!=-1)
+      sendUrl='http://www.320-8080.ru/request?'+url;
     else
       sendUrl='http://www.320-8080.ru/request?'+url;
     sendRequest(sendUrl,'GET',getShowDivAjax);
-  }
+  }*/
   else{
     elDiv.innerHTML = 'Не указали ни урл ни текст';
   }
@@ -1046,6 +1063,41 @@ $(document).ready(function() {
 			}
 		}
 	}
+
+  $(".search-fast input.text").keyup(function(){
+      var current = $(this);
+      var s = $(current).val().trim();
+      $('.catalog-list').each(function(){
+        $('.item').each(function(){
+          $(this).find('.h2,li').each(function(){
+            if ($(this).is(":Contains('" + s + "')")) {
+              $(this).addClass("yes").removeClass("no");
+            }
+            else {
+              $(this).addClass("no").removeClass("yes");
+            }
+          });
+          if ($(this).find('.h2,li').filter('.yes').length == 0) {
+            $(this).addClass("no").removeClass("yes");
+          } else {
+            $(this).addClass("yes").removeClass("no");
+          }
+        });
+        if ($(this).find('.item').filter('.yes').length == 0) {
+          $(this).addClass("no").removeClass("yes");
+          $(this).next('.link-up').addClass("link-no").removeClass("link-yes");
+        } else {
+          $(this).addClass("yes").removeClass("no");
+          $(this).next('.link-up').addClass("link-yes").removeClass("link-no");
+        }
+        if ($(this).siblings('.catalog-list').andSelf().filter('.yes').length == 0) {
+          $(this).siblings('.catalog-filter-none').show();
+        } else {
+          $(this).siblings('.catalog-filter-none').hide();
+        }
+      });
+    })
+
 	/* Дефолтный блок, округленные углы */
 	$('.block').append('<i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>');
 

@@ -917,7 +917,7 @@ float: left;
     overflow: hidden;
 }
 .catalog .item {
-    width:50%;
+    width:49%;
     padding:0 0 6px 0;
     border-left:1px solid #d1d1d1;
     margin:0 0 0 -1px;
