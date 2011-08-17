@@ -24,30 +24,6 @@
     ;; (format t "~&~a: ~{~a~^,~}" key skls)
     ))
 
-(defun article-decode-date(input-string)
-  (let ((r 0)
-        (counts)
-        (date)
-        (month)
-        (year))
-    (when (and (not (null input-string))
-               (not (string= ""
-                     (stripper input-string))))
-      (setf counts (split-sequence:split-sequence #\. input-string))
-      (setf date (parse-integer (first counts)))
-      (setf month (parse-integer (second counts)))
-      (setf year (parse-integer (third counts)))
-      (setf r (encode-universal-time 0 0 0 date month year)))
-    r))
-
-(defun article-encode-data(article)
-  (multiple-value-bind (second minute hour date month year) (decode-universal-time (date article))
-    (declare (ignore second))
-    (format nil
-            "~2,'0d.~2,'0d.~d"
-            date
-            month
-            year)))
 
 ;;
 (defmethod unserialize (filepath (dummy article))
@@ -56,7 +32,7 @@
            (key (pathname-name filepath))
            (body (cdr (assoc :body raw)))
            (name (cdr (assoc :name raw)))
-           (date (article-decode-date (cdr (assoc :date raw))))
+           (date (time.article-decode-date (cdr (assoc :date raw))))
            (descr (cdr (assoc :descr raw)))
            (tags-line (cdr (assoc :tags raw)))
            (new (make-instance 'article
@@ -166,7 +142,7 @@
 (defun articles-view-articles (articles)
   (mapcar #'(lambda (v)
               (list  :name (name v)
-                     :date (article-encode-data v)
+                     :date (time.article-encode-date v)
                      :key (key v)))
           articles))
 
@@ -199,7 +175,7 @@
                                                       :articles
                                                       (mapcar #'(lambda (v)
                                                                   (list :name (name v)
-                                                                        :date (article-encode-data v)
+                                                                        :date (time.article-encode-date v)
                                                                         :descr (descr v)
                                                                         :key (key v)
                                                                         :tags
@@ -235,7 +211,7 @@
                                    :subcontent  (soy.articles:article-big (list :sharebuttons (soy.articles:share-buttons
                                                                                                (list :key (key object)))
                                                                                 :name (name object)
-                                                                                :date (article-encode-data object)
+                                                                                :date (time.article-encode-date object)
                                                                                 :body (prerender-string-replace (body object))
                                                                                 :tags
                                                                                 (if (< 0 (hash-table-count (tags object)))
