@@ -42,7 +42,8 @@
 (restas:define-route request-route-static-sitemap ("/sitemap.xml")
     (pathname (concatenate 'string *path-to-conf* "/sitemap.xml")))
 
-
+(restas:define-route request-route-static-sitemap1 ("/sitemap1.xml")
+    (pathname (concatenate 'string *path-to-conf* "/sitemap1.xml")))
 
 ;; (restas:define-route storage-object-route  ("/:key")
 ;;   "Позвони мне")

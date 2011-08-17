@@ -460,9 +460,10 @@
   (root:main (list :keywords keywords
                    :description description
                    :title title
-                   :header (root:header (list :logged (root:notlogged)
-                                              :cart (if (not no-need-cart)
-                                                        (root:cart))));; (root:cart)))
+                   :header (root:header (append (list :logged (root:notlogged)
+                                                      :cart (if (not no-need-cart)
+                                                                (root:cart)))
+                                                (main-page-show-banner "line" (banner *main-page.storage*))))
                    :footer (root:footer)
                    :content (if content
                                 content
@@ -711,7 +712,9 @@ is replaced with replacement."
                            (key  group))
             :price (siteprice object)
             :formatprice (get-format-price (siteprice object))
+            :bestprice (> (price object) (siteprice object))
             :firstpic (car pics)
+            :keyopts (get-keyoptions object)
             :oneclickbutton  (if (not (predzakaz object))
                                  (soy.buttons:add-one-click (list :articul (articul object))))
             :addbutton (if (predzakaz object)

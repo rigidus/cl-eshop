@@ -24,7 +24,7 @@
 (defun compile-templates ()
   (mapcar #'(lambda (fname)
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
-                (format t "~&closure-template:compile-template: ~a" fname)
+                (wlog (format nil "~&compile-template: ~a" pathname))
                 (closure-template:compile-template :common-lisp-backend pathname)))
           '(
             ;; "post.html"

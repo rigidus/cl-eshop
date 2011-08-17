@@ -47,7 +47,7 @@
    "anaphora-0.9.4" ;; closure-template | macro collection from Hell http://www.cliki.net/Anaphora
    "esrap" ;; closure-template | packrat parser http://nikodemus.github.com/esrap/
    "log5" ;; логирование | logging framework http://common-lisp.net/project/log5/
-   "cl-store" ;; сохранение данных | Serialization Package http://common-lisp.net/project/cl-store/
+   ;; "cl-store" ;; сохранение данных | Serialization Package http://common-lisp.net/project/cl-store/
    ))
 
 (defparameter cl-eshop-modules
@@ -127,7 +127,7 @@
 (mapcar #'(lambda (filename) (load (cl-eshop-path filename)))
         cl-eshop-lisp-files)
 
-;; (print "Restoring data from files")
+(print "Restoring data from files")
 (eshop::restore-skls-from-files)
 (eshop::restore-articles-from-files)
 (eshop::main-page-restore)

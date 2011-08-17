@@ -8,7 +8,7 @@
 
 ;; старт сервера swank
 (setq swank:*use-dedicated-output-stream* nil)
-(swank:create-server :coding-system "utf-8-unix" :dont-close t :port 4007)
+(swank:create-server :coding-system "utf-8-unix" :dont-close t :port 7777)
 
 ;; нумерация заказов
 (setf eshop::*order-id* 1)
