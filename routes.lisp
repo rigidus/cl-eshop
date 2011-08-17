@@ -14,6 +14,37 @@
 
 (clear)
 
+(restas:define-route request-static-route-img ("/img/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string *path-to-dropbox* "/htimgs/" (subseq full-uri (search "/img/" full-uri))))))
+
+(restas:define-route request-static-route-pic ("/pic/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string  *path-to-pics* "/" (subseq full-uri (+ 5 (search "/pic/" full-uri)))))))
+
+(restas:define-route request-static-route-css ("/css/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string *path-to-dropbox* "/htimgs/" (subseq full-uri (search "/css/" full-uri))))))
+
+(restas:define-route request-static-route-js ("/js/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string *path-to-dropbox* "/htimgs/" (subseq full-uri (search "/js/" full-uri))))))
+
+(restas:define-route request-route-static-favicon ("/favicon.ico")
+    (pathname (concatenate 'string  *path-to-dropbox* "/htimgs/img/favicon.ico")))
+
+(restas:define-route request-route-static-robots ("/robots.txt")
+    (pathname (concatenate 'string *path-to-conf* "/robots.txt")))
+
+(restas:define-route request-route-static-yml ("/yml.xml")
+    (pathname (concatenate 'string *path-to-conf* "/yml.xml")))
+
+(restas:define-route request-route-static-sitemap ("/sitemap.xml")
+    (pathname (concatenate 'string *path-to-conf* "/sitemap.xml")))
+
+(restas:define-route request-route-static-sitemap1 ("/sitemap1.xml")
+    (pathname (concatenate 'string *path-to-conf* "/sitemap1.xml")))
+
 ;; (restas:define-route storage-object-route  ("/:key")
 ;;   "Позвони мне")
 
@@ -25,9 +56,14 @@
 (defun test-route-filter ()
   (let* ((request-list (request-list))
          (key (cadr request-list))
-         (filter (caddr request-list)))
-    (and (not (null (gethash key *storage*)))
-         (not (null (gethash filter *storage*))))))
+         (filter (caddr request-list))
+         (grp (gethash key *storage*))
+         (fltr (gethash filter *storage*)))
+    (and (not (null grp))
+         (not (null fltr))
+         (equal (type-of grp) 'group)
+         (equal (type-of fltr) 'filter)
+         (equal (key (parent fltr)) key))))
 
 (defun route-filter (filter)
   (gethash filter *storage*))
@@ -70,48 +106,45 @@
   (route-storage-object key))
 
 
+
 ;; MAIN
 (defun test-get-parameters ()
-  (null (request-get-plist)))
+  t) ;;(null (request-get-plist)))
 
 (restas:define-route main-route ("/" :requirement #'test-get-parameters)
-;; (restas:define-route main-route ("/")
-  (default-page (root:content (list :menu (menu (request-str))
-                                            :dayly (root:dayly)
-                                            :banner (root:banner)
-                                            :olist (root:olist)
-                                            :lastreview (root:lastreview)
-                                            :best (root:best)
-                                            :hit (root:hit)
-                                            :new (root:new)
-                                            :post (root:post)
-                                            :plus (root:plus)))
-      :KEYWORDS "компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
-      :DESCRIPTION "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
-      :TITLE "Интернет-магазин: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
-
-
+  (main-page-show (request-str)))
 
 
 ;; CATALOG
 
-(restas:define-route catalog-route ("/catalog")
-  (default-page (catalog:main (list :menu (menu "")))))
+(restas:define-route catalog-page-route ("/catalog")
+  (default-page (catalog-entity)
+      :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
+      :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
+      :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
 
+(restas:define-route sitemap-page-route ("/sitemap")
+  (default-page (sitemap-page)
+      :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
+      :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
+      :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
 
 ;; STATIC
+(defparameter *static-pages* (list "delivery"         "about"             "faq"             "kakdobratsja"
+                                   "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
+                                   "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
+                                   "warranty"         "moneyback"         "article"         "news1"
+                                   "news2"            "news3"             "news4"           "news5"
+                                   "news6"            "dilers"            "corporate"       "vacancy"
+                                   "bonus"            "burunduk"          "listservice"     "suslik"
+                                   "god_kills_a_kitten"))
+
 
 (defmacro static ()
   `(progn ,@(mapcar #'(lambda (x)
                         `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
                            (static-page)))
-                    (list "delivery"         "about"             "faq"             "kakdobratsja"
-                          "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
-                          "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
-                          "warranty"         "moneyback"         "article"         "news1"
-                          "news2"            "news3"             "news4"           "news5"
-                          "news6"            "dilers"           "corporate"       "vacancy"
-                          "bonus"            "burunduk"          "listservice"))))
+                    *static-pages*)))
 
 (static)
 
@@ -121,20 +154,24 @@
 (restas:define-route cart-route ("/cart")
   (cart-page))
 
-(restas:define-route cart/-route ("/cart")
-  (cart-page))
+(restas:define-route checkout-route ("/checkout")
+  (newcart-show))
 
 (restas:define-route checkout0-route ("/checkout0")
-  (checkout-page-0))
+  (newcart-show))
+ ;; (checkout-page-0))
 
 (restas:define-route checkout1-route ("/checkout1")
-  (checkout-page-1))
+  (newcart-show))
+  ;; (checkout-page-1))
 
 (restas:define-route checkout2-route ("/checkout2")
-  (checkout-page-2))
+  (newcart-show))
+  ;; (checkout-page-2))
 
 (restas:define-route checkout3-route ("/checkout3")
-  (checkout-page-3))
+  (newcart-show))
+  ;; (checkout-page-3))
 
 (restas:define-route thanks-route ("/thanks")
   (thanks-page))
@@ -147,6 +184,7 @@
 
 (restas:define-route gateway/post-route ("/gateway" :method :post)
   (gateway-page))
+
 
 ;; (restas:define-route gateway/-route ("/gateway/")
 ;;   (gateway-page))
@@ -169,9 +207,51 @@
 (restas:define-route yml/-route ("/yml/")
   (yml-page))
 
+(restas:define-route parseryml-route ("/parseryml")
+  (yml-page-for-parser))
+
+;; ARTICLES
+;;TODO возможно проверять входные тэги
+(defun test-article-get-parameters ()
+  t)
+
+;;проверяем есть ли такая статья
+(defun test-route-article-object ()
+  (not (null (gethash (caddr (request-list)) *storage-articles*))))
+
+;;архив матерьялов
+(restas:define-route article-route ("/articles" :requirement #'test-article-get-parameters)
+  (articles-page (request-get-plist)))
+
+;;список статей
+(restas:define-route article-papers-route ("/articles/papers" :requirement #'test-article-get-parameters)
+  (let ((request-get-plist (request-get-plist)))
+    (if (null (getf request-get-plist :tags))
+        (setf (getf request-get-plist :tags) "Статьи"))
+    (articles-page request-get-plist)))
+
+;;список новостей
+(restas:define-route article-news-route ("/articles/news" :requirement #'test-article-get-parameters)
+  (let ((request-get-plist (request-get-plist)))
+    (if (null (getf request-get-plist :tags))
+        (setf (getf request-get-plist :tags) "Новости"))
+    (articles-page request-get-plist)))
+
+;;список обзоры
+(restas:define-route article-review-route ("/articles/reviews" :requirement #'test-article-get-parameters)
+  (let ((request-get-plist (request-get-plist)))
+    (if (null (getf request-get-plist :tags))
+        (setf (getf request-get-plist :tags) "Обзоры"))
+    (articles-page request-get-plist)))
+
+;;конкретная статья
+(restas:define-route article/-key-route ("/articles/:key" :requirement #'test-route-article-object)
+  (gethash (caddr (request-list)) *storage-articles*))
+
+
 ;; 404
 
-(restas:define-route not-found-route (":any")
+(restas:define-route not-found-route-404 ("/404.html")
   (restas:abort-route-handler
    (babel:string-to-octets
     (default-page
@@ -179,5 +259,22 @@
     :encoding :utf-8)
    :return-code hunchentoot:+http-not-found+
    :content-type "text/html"))
+
+;;необходимо отдавать 404 ошибку для несуществеющих страниц
+(restas:define-route not-found-route ("*any")
+  (restas:abort-route-handler
+   (babel:string-to-octets
+     (default-page (sitemap-page t)
+      :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
+      :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
+      :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге")
+    :encoding :utf-8)
+   :return-code hunchentoot:+http-not-found+
+   :content-type "text/html"))
+
+(restas:define-route request-route ("/request")
+  (oneclickcart-page (request-get-plist)))
+
+
 
 

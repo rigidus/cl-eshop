@@ -70,7 +70,7 @@
                            ""
                            (catalog:seotext (list :text descr))))))))))
 
-
+;; (maphash #'(lambda (k v ) (print k)) (vendors (gethash "monobloki" *storage*)))
 
 (defmacro tradehits ()
   `(catalog:tradehits (list :reviews (list *trade-hits-1*
@@ -162,6 +162,7 @@
 ;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&fullfilter=1#producer")
 ;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
 ;; ( make-get-str "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
+;; (filter-test (gethash "noutbuki" *storage*) "http://www.320-8080.ru/noutbuki?&warranty-1=1&fullfilter=1")
 
 ;;фильтрация по значениям опции
 (defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)
@@ -188,6 +189,11 @@
                     (if (string= value-x option-value)
                         (setf result-flag t)))))
             filter-options)
+    ;; DBG
+    ;; (if (string= (format nil "~a" key-name) "WARRANTY")
+    ;;     (progn
+    ;;       (print filter-options) ;;158712
+    ;;       (format t "~a-- ~a : ~a" (articul product)  result-flag request-flag)))
     (or result-flag
         request-flag)))
 
@@ -373,14 +379,21 @@
                         (equal 'group (type-of val))
                         (null (parent val))
                         (active val)
-                        (not (empty val)))
+                        (not (empty val))
+                        ;;проверка на реальное наличие активных товаров
+                        (not (= 0
+                                (length (remove-if-not #'active (get-recursive-products val))))))
                    (push val root-groups)))
              *storage*)
     (let ((src-lst (mapcar #'(lambda (val)
                                (if (string= (format nil "~a" current-key) (key val))
                                    ;; This is current
                                    (leftmenu:selected
-                                    (list :key (key val)
+                                    (list :divider (or
+                                                    (string= (key val) "setevoe-oborudovanie")
+                                                    (string= (key val) "foto-and-video")
+                                                    (string= (key val) "rashodnye-materialy"))
+                                          :key (key val)
                                           :name (name val)
                                           :icon (icon val)
                                           :subs (loop
@@ -389,13 +402,23 @@
                                                         (remove-if #'(lambda (g)
                                                                        (or
                                                                         (empty g)
-                                                                        (not (active g)) ))
+                                                                        (not (active g))
+                                                                        ;;проверка на реальное наличие активных товаров
+                                                                        (= 0
+                                                                           (length
+                                                                            (remove-if-not #'active
+                                                                                           (get-recursive-products g))))
+                                                                        ))
                                                                    (childs val)) #'menu-sort)
                                                    :collect
                                                    (list :key  (key child) :name (name child)))
                                           ))
                                    ;; else - this is ordinal
-                                   (leftmenu:ordinal (list :key  (key val)
+                                   (leftmenu:ordinal (list :divider (or
+                                                                     (string= (key val) "setevoe-oborudovanie")
+                                                                     (string= (key val) "foto-and-video")
+                                                                     (string= (key val) "rashodnye-materialy"))
+                                                           :key  (key val)
                                                            :name (name val)
                                                            :icon (icon val)))
                                    ))
@@ -433,12 +456,14 @@
 
 
 
-(defun default-page (&optional (content nil) &key keywords description title)
+(defun default-page (&optional (content nil) &key keywords description title no-need-cart)
   (root:main (list :keywords keywords
                    :description description
                    :title title
-                   :header (root:header (list :logged (root:notlogged)
-                                              :cart (root:cart)))
+                   :header (root:header (append (list :logged (root:notlogged)
+                                                      :cart (if (not no-need-cart)
+                                                                (root:cart)))
+                                                (main-page-show-banner "line" (banner *main-page.storage*))))
                    :footer (root:footer)
                    :content (if content
                                 content
@@ -473,7 +498,7 @@
 
 
 (defun request-str ()
-  (let* ((request-full-str (hunchentoot:request-uri hunchentoot:*request*))
+  (let* ((request-full-str (hunchentoot:url-decode (hunchentoot:request-uri hunchentoot:*request*)))
          (request-parted-list (split-sequence:split-sequence #\? request-full-str))
          (request-str (string-right-trim "\/" (car request-parted-list)))
          (request-list (split-sequence:split-sequence #\/ request-str))
@@ -663,6 +688,15 @@ is replaced with replacement."
                   ))
             (keyoptions parent))))
 
+(defun get-format-price (p)
+  (let ((rs (format nil "~a" p))
+        (str (reverse (format nil "~a" p))))
+    (when (< 3 (length str))
+      (let ((st1 (reverse (subseq str 0 3)))
+            (st2 (reverse (subseq str 3))))
+        (setf rs (format nil "~a ~a" st2 st1))))
+    rs))
+
 
 (defmethod view ((object product))
   (let ((pics (get-pics (articul object))))
@@ -677,41 +711,87 @@ is replaced with replacement."
                            ""
                            (key  group))
             :price (siteprice object)
+            :formatprice (get-format-price (siteprice object))
+            :bestprice (> (price object) (siteprice object))
             :firstpic (car pics)
+            :keyopts (get-keyoptions object)
+            :oneclickbutton  (if (not (predzakaz object))
+                                 (soy.buttons:add-one-click (list :articul (articul object))))
+            :addbutton (if (predzakaz object)
+                           (soy.buttons:add-predzakaz (list :articul (articul object)))
+                           (soy.buttons:add-product-cart (list :articul (articul object)
+                                                               :name (realname object)
+                                                               :pic (if (null pics) nil (car pics))
+                                                               :siteprice (price object)
+                                                               :price (siteprice object))))
             ))))
 
 
-(defmethod relink ((object product))
-  (let ((rs (list nil nil nil nil)))
-    (when (or (not (active object))
-              (not (equal 'group (type-of (parent object)))))
-      (return-from relink rs))
-    (let* ((base-vendor) (tmp))
-      (with-option object "Общие характеристики" "Производитель"
-                   (setf base-vendor (value option)))
-      (setf tmp (remove-if-not
-                 #'(lambda (x)
-                     (and (active x)
-                          (let ((vendor))
-                            (with-option x "Общие характеристики" "Производитель"
-                                         (setf vendor (value option)))
-                            (equal vendor base-vendor))))
-                 (products (parent object))))
-      (setf tmp (append tmp tmp))
-      (let ((pos (position object tmp)))
-        (setf (nth 0 rs) (nth pos tmp))
-        (setf (nth 1 rs) (nth (+ 1 pos) tmp))))
-    (let ((all) (len) (two))
-      (maphash #'(lambda (k v)
-                   (when (and (equal 'product (type-of v))
-                              (active v))
-                     (push k all)))
-               *storage*)
-      (setf len (length all))
-      (setf (nth 2 rs) (gethash (nth (random len) all) *storage*))
-      (setf (nth 3 rs) (gethash (nth (random len) all) *storage*)))
-    rs))
+;; выбор нескольких случайных элементов из списка
+;; если количество не указано то возвращается список из одного элемента
+;; если количество больше длинны входного списка, то возвращается перемешанный входной список
+(defun get-randoms-from-list (input-list &optional (count 1))
+  (let ((result)
+        (current-list input-list))
+    ;;уменьшаем count до длинны списка если надо
+    (if (< (length input-list)
+           count)
+        (setf count (length input-list)))
+    (setf result (loop
+                    :for n
+                    :from 1 to count
+                    :collect (let* ((pos (random (length current-list)))
+                                    (element (nth pos current-list)))
+                               (setf current-list (remove-if #'(lambda (v)
+                                                                 (equal v element))
+                                                             current-list))
+                               element)))
+    result))
 
+(defmethod relink ((object product))
+  (let ((rs (list nil nil nil nil))
+        (temp-rs1)
+        (temp-rs2))
+    (when (not (equal 'group (type-of (parent object))))
+      (print object)
+      (return-from relink rs))
+    ;;2 случайных товара из списка
+    (setf temp-rs1 (get-randoms-from-list
+                   ;; список активных товаров той же группы и того же производителя
+                   ;; кроме его самого
+                   (let* ((base-vendor))
+                     (with-option object "Общие характеристики" "Производитель"
+                                  (setf base-vendor (value option)))
+                     (remove-if-not
+                      #'(lambda (x)
+                          (and (not (equal x object))
+                               (active x)
+                               (let ((vendor))
+                                 (with-option x "Общие характеристики" "Производитель"
+                                              (setf vendor (value option)))
+                                 (equal vendor base-vendor))))
+                      (products (parent object))))
+                   2))
+    ;;4 случайных товара из списка
+    (setf temp-rs2 (get-randoms-from-list
+                    ;;список всех активных товаров кроме object
+                    (let ((all))
+                      (maphash #'(lambda (k v)
+                                   (when (and (equal 'product (type-of v))
+                                              (active v)
+                                              (not (equal v object)))
+                                     ;; (print v)
+                                     (push v all)))
+                               *storage*)
+                      all)
+                    4))
+    ;; (print temp-rs1)
+    ;; (print temp-rs2)
+    (loop
+       :for item in (append temp-rs1 temp-rs2)
+       :for n
+       :from 1 to 4
+       :collect item)))
 
 
 (defparameter *trade-hits-1*
@@ -840,18 +920,6 @@ is replaced with replacement."
                               result)))
     request-get-plist))
 
-(defmethod filter-test ((object group) url)
-  (let* ((request-full-str url)
-         (request-parted-list (split-sequence:split-sequence #\? request-full-str))
-         (request-get-plist (let ((result))
-                              (loop :for param :in (split-sequence:split-sequence #\& (cadr request-parted-list)) :do
-                                 (let ((split (split-sequence:split-sequence #\= param)))
-                                   (setf (getf result (intern (string-upcase (car split)) :keyword))
-                                         (if (null (cadr split))
-                                             ""
-                                             (cadr split)))))
-                              result)))
-    (filter-controller object request-get-plist)))
 
 
 ;; (fullfilter (gethash "noutbuki" *storage*))
@@ -897,12 +965,14 @@ is replaced with replacement."
   (let* ((key (string-downcase (format nil "~a" (nth 0 elt))))
          (name (nth 1 elt))
          (showflag nil)
+         (ishidden (search '(:hidden) elt))
          (contents
           (cond ((equal :range (nth 2 elt))
                  (fullfilter:range
                   (list :unit (nth 3 elt)
                         :key key
                         :name name
+                        :ishidden ishidden
                         :from (getf request-get-plist
                                     (intern (string-upcase (format nil "~a-f" key)) :keyword))
                         :to (getf request-get-plist
@@ -911,6 +981,7 @@ is replaced with replacement."
                  (fullfilter:box
                   (list :key key
                         :name name
+                        :ishidden ishidden
                         :elts (let ((elts (nth 3 elt)))
                                 (loop :for nameelt :in elts
                                    :for i from 0 :collect
@@ -927,6 +998,7 @@ is replaced with replacement."
                  (fullfilter:box
                   (list :key key
                         :name name
+                        :ishidden ishidden
                         :elts (let ((values (nth 3 elt)))
                                 (loop :for value :in values
                                    :for i from 0 :collect
@@ -940,7 +1012,7 @@ is replaced with replacement."
                                                                                          :keyword)))
                                           )))))))
                 (t ""))))
-    (if (search '(:hidden) elt)
+    (if ishidden
         (fullfilter:hiddencontainer (list :key key
                                           :name name
                                           :contents contents
@@ -948,6 +1020,7 @@ is replaced with replacement."
         contents)))
 
 
+;; (url-to-request-get-plist "http://www.320-8080.ru/komputery?vendor=%D0%A6%D0%B8F%D1%80%D1%8B")
 
 (defmethod vendor-controller ((object group) request-get-plist)
   (let* ((result-products))
@@ -1010,3 +1083,14 @@ is replaced with replacement."
                                                             (getf tail :val)
                                                             vendor)))))
     result))
+
+
+;; Сделать строку начинающейся с заглавной буквы.
+(defun string-convertion-for-title (title)
+  (if (not (null title))
+      (format nil "~a~a"
+              (string-upcase (subseq title 0 1))
+              (subseq title 1))))
+
+(defun wlog (s)
+  (format t "~&~a> ~a" (get-date-time) s))

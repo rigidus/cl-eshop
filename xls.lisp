@@ -109,8 +109,8 @@
                                                                            :optgroups optgroups
                                                                            :fields fields)
                                                                      px)))
-                                                         (print "")
-                                                         (print val)
+                                                         (wlog "")
+                                                         (wlog val)
                                                          (push val rs))
                                                      (SB-INT:SIMPLE-PARSE-ERROR () nil))))))))
                                (END-OF-FILE () (return i)))))))))
@@ -118,7 +118,7 @@
 
 
 (defmethod ƒ ((jct nko) (obn nko))
-  (format t "~%Processing DTD: {...")
+  (wlog "Processing DTD: {...")
   (let ((cnt 0))
     (loop :for file :in (directory (format nil "~a/*.xls" (folder obn))) :do
        (format t "~%~a. Processing file: ~a" (incf cnt) file)
@@ -141,7 +141,9 @@
                   (if (not (string= "" (string-trim '(#\Space #\Tab #\Newline)
                                                     (format nil "~@[~a~]" realname))))
                       (setf (realname product) realname)))))))
-    (format t "~%...} successfully processed ~a files" cnt)))
+    (wlog (format nil "~%...} successfully processed ~a files" cnt))
+    ;;создаем новый yml файл
+    (create-yml-file)))
 
 
 (defun dtd ()

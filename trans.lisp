@@ -39,6 +39,7 @@
   (let* ((string-filename (format nil "~a" file))
          (group (car (last (split-sequence #\/ string-filename) 2)))
          (vendor (regex-replace-all ".vendor" (pathname-name file) "")))
+    ;; (format t "~&~a: ~a ~a" file vendor group)
     (setf (gethash vendor (vendors (gethash group *storage*)))
         (read-file-into-string file))))
 
@@ -73,11 +74,12 @@
     (recursive-explore file)))
 
 
-(defparameter *storage* (make-hash-table :test #'equal))
+(defvar *storage* (make-hash-table :test #'equal))
 
 
 (defun restore-from-files ()
-  (let ((t-storage) (*package* (find-package :eshop)))
+  (let ((t-storage)
+        (*package* (find-package :eshop)))
     (handler-bind ((WRONG-PRODUCT-FILE
                     #'(lambda (e)
                         (format t "~%warn: WRONG-PRODUCT-FILE: ~a"
@@ -139,17 +141,13 @@
   (restore-from-files)
   (use-revert-history)
   (copy-price-to-siteprice)
-  (dtd))
+  (dtd)
+  (create-sitemap-file))
 
 (defun safely-store()
-  (restore-from-files)
-  (use-revert-history)
-  (copy-price-to-siteprice)
-  (dtd)
+  (safely-restore)
   (store-products))
 
-(print "Restoring data from files")
-(restore-from-files)
 
 
 ;; (store-to-files)

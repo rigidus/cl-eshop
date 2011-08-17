@@ -1,4 +1,4 @@
-(in-package #:eshop-test)
+(in-package #:eshop)
 
 
 (defun test-filter(group)
@@ -57,3 +57,17 @@
    result))
 
 ;; (get-producter (gethash "138938" eshop::*storage*))
+
+(defmethod filter-test ((object group) url)
+  (let* ((request-full-str url)
+         (request-parted-list (split-sequence:split-sequence #\? request-full-str))
+         (request-get-plist (let ((result))
+                              (loop :for param :in (split-sequence:split-sequence #\& (cadr request-parted-list)) :do
+                                 (let ((split (split-sequence:split-sequence #\= param)))
+                                   (setf (getf result (intern (string-upcase (car split)) :keyword))
+                                         (if (null (cadr split))
+                                             ""
+                                             (cadr split)))))
+                              result)))
+    (filter-controller object request-get-plist)))
+

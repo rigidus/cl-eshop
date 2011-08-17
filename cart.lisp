@@ -1,10 +1,3 @@
-;;;; cart.lisp
-;;;;
-;;;; This file is part of the eshop project, released under GNU Affero General Public License, Version 3.0
-;;;; See file COPYING for details.
-;;;;
-;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
-
 (in-package #:eshop)
 
 (defvar *order-id* nil)
@@ -12,7 +5,7 @@
 ;;генерирует псевдоуникальный номер заказа
 (defun get-order-id ()
   (let ((current-order-id *order-id*)
-        (order-id-pathname (format nil "~a/~a" *path-to-conf* "order-id.txt")))
+        (order-id-pathname (format nil "~a/~a" *path-to-conf* *path-order-id-file*)))
     (if (not (null *order-id*))
         (progn
           (incf *order-id*)
@@ -55,7 +48,7 @@
                 :itemlink item-link
                 :firstpic (if (null pics) "" (car pics))
                 :articul (articul object)
-                :name (name object)
+                :name (realname object)
                 :siteprice (siteprice object)
                 :price (price object)
                 )))))
@@ -109,7 +102,7 @@
 
 
 (defun thanks-page ()
-  (let ((cart) (user) (products) (auth) (delivery) (pay) (client-mail) (mail-file)
+  (let ((cart) (user) (products) (auth) (delivery) (pay) (client-mail) (mail-file) (tks-mail)
         (deliverysum 0)
         (itogo 0)
         (order-id))
@@ -195,19 +188,27 @@
                                    order-id
                                    )))
           ;;
-          (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-mail (list "internetorder@alpha-pc.com") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-mail (list "wolforus@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
-          (send-client-mail (list (cdr (assoc :email auth))) client-mail order-id)
+          (save-order-text order-id client-mail)
+          (setf client-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) client-mail))
+          (setf tks-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) (sendmail:mailfile mail-file)))
+          (send-mail (list "internetorder@alpha-pc.com") client-mail filename tks-mail order-id)
+          (send-mail (list "stetoscop@gmail.com") client-mail filename  tks-mail order-id)
+          (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
+          (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
+          (send-mail (list "wolforus@gmail.com") client-mail filename  tks-mail order-id)
+          (send-client-mail (list (cdr (assoc :email auth)))
+                            client-mail order-id)
           (checkout-thankes-page (checkout:thanks (list :order (checkout:order)
                                                 :orderid order-id))))
         (progn
           (checkout-thankes-page (checkout:thankserror))))))
 
 
+(defun save-order-text (file-name body)
+  (let ((filename (format nil "~a/orders/~a.html" *path-to-dropbox* file-name)))
+    (with-open-file
+        (stream filename :direction :output :if-exists :supersede)
+      (format stream "~a" body))))
 
 (defvar *sendmail*
   (find-if #'fad:file-exists-p
@@ -314,5 +315,4 @@ Content-Transfer-Encoding: base64
 				(push x $ret))
 			  (push x $ret)))
 	(coerce (reverse $ret) 'string)))
-
 
