@@ -4,7 +4,7 @@
 ;; PATH
 (defparameter *path-to-dropbox* (format nil "~aDropbox" (user-homedir-pathname)))
 (export '*path-to-dropbox*)
-(defparameter *path-to-articles* (format nil "~aDropbox/httpls/release/articles" (user-homedir-pathname)))
+(defparameter *path-to-articles* (format nil "~aDropbox/content/articles" (user-homedir-pathname)))
 (export '*path-to-articles*)
 (defparameter *path-to-tpls* (format nil "~aDropbox/httpls/release" (user-homedir-pathname)))
 (export '*path-to-tpls*)
