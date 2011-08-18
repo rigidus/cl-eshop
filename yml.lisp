@@ -2,7 +2,7 @@
 
 ;; Группы представляют собой лес для YML нам нужны не только сами
 ;; группы маркированные для выгрузки но и их родители
-;; На самом деле нам нужно минимальные оставные деревья,
+;; На самом деле нам нужно минимальные остовные деревья,
 ;; но будем выгружать полные деревья исключая только листья, если это нужно
 
 
@@ -31,7 +31,7 @@
 
 (defun yml-page ()
   (setf (hunchentoot:content-type*) "application/xml; charset=utf-8")
-  (yml:xml (list :datetime (get-date-time)
+  (yml:xml (list :datetime (time.get-date-time)
                  :marketname "ЦиFры 320-8080"
                  :marketcompany "ЦиFры 320-8080"
                  :marketurl "http://www.320-8080.ru/"
@@ -154,7 +154,7 @@
 
 (defun yml-page ()
   (setf (hunchentoot:content-type*) "application/xml; charset=utf-8")
-  (yml:xml (list :datetime (get-date-time)
+  (yml:xml (list :datetime (time.get-date-time)
                  :marketname "ЦиFры 320-8080"
                  :marketcompany "ЦиFры 320-8080"
                  :marketurl "http://www.320-8080.ru/"
@@ -224,7 +224,7 @@
 
 (defun yml-page-for-parser ()
   (setf (hunchentoot:content-type*) "application/xml; charset=utf-8")
-  (yml:xml (list :datetime (get-date-time)
+  (yml:xml (list :datetime (time.get-date-time)
                  :marketname "ЦиFры 320-8080"
                  :marketcompany "ЦиFры 320-8080"
                  :marketurl "http://www.320-8080.ru/"
@@ -390,7 +390,7 @@
 
 (defun make-yml-data()
   (yml:xml
-        (list :datetime (get-date-time)
+        (list :datetime (time.get-date-time)
               :marketname "ЦиFры 320-8080"
               :marketcompany "ЦиFры 320-8080"
               :marketurl "http://www.320-8080.ru/"

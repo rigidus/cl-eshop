@@ -96,6 +96,7 @@
    "errors.lisp"
    "spike.lisp"
    "classes.lisp"
+   "time.lisp"
    "serializers.lisp"
    "servo.lisp"
    "trans.lisp"

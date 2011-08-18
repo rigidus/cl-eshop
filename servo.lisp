@@ -72,11 +72,6 @@
 
 ;; (maphash #'(lambda (k v ) (print k)) (vendors (gethash "monobloki" *storage*)))
 
-(defmacro tradehits ()
-  `(catalog:tradehits (list :reviews (list *trade-hits-1*
-                                           *trade-hits-2*
-                                           *trade-hits-1*
-                                           *trade-hits-2*))))
 
 
 
@@ -245,18 +240,6 @@
               (if (string= opt-val "Любой")
                   t
                   (string= value-x opt-val)))))))))
-
-
-(defun get-date-time ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-    (declare (ignore second))
-    (format nil
-            "~d-~2,'0d-~2,'0d ~2,'0d:~2,'0d"
-            year
-            month
-            date
-            hour
-            minute)))
 
 
 (defun paginator-page-line (request-get-plist start stop current)
@@ -794,26 +777,6 @@ is replaced with replacement."
        :collect item)))
 
 
-(defparameter *trade-hits-1*
-  (list :pic "/img/temp/s1.jpg"
-        :name "Lenovo E43-4S-B"
-        :price 19990
-        :ico "/img/temp/u2.jpg"
-        :user "Борис"
-        :text "Отличный ноутбук для работы, здорово помогает! Главное - мощная батарея, хватает на 4 часа"
-        :more "Еще 12 отзывов о ноутбуке"))
-
-(defparameter *trade-hits-2*
-  (list :pic "/img/temp/s3.jpg"
-        :name "ASUS UL30Vt"
-        :price 32790
-        :ico "/img/temp/u3.jpg"
-        :user "Тамара"
-        :text "Не плохой ноутбук, рабочая лошадка. Хорошие углы обзора, шустрый проц, без подзарядки работает часа 3, легкий и удобный в переноске. В общем, советую."
-        :more "Еще 12 отзывов о ноутбуке"))
-
-
-
 
 (defun product-sort (products operation getter)
   (sort (copy-list products) #'(lambda (a b)
@@ -1093,4 +1056,4 @@ is replaced with replacement."
               (subseq title 1))))
 
 (defun wlog (s)
-  (format t "~&~a> ~a" (get-date-time) s))
+  (format t "~&~a> ~a" (time.get-date-time) s))

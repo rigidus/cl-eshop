@@ -5,14 +5,6 @@
 ;; <changefreq>monthly</changefreq>
 ;; <priority>0.8</priority>
 
-(defun sitemap-get-lastmod-time ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-    (declare (ignore second))
-    (format nil
-            "~d-~2,'0d-~2,'0d"
-            year
-            month
-            date)))
 
 
 (defparameter *sitemap-lastmod-time* nil)
@@ -52,7 +44,7 @@
                                                :lastmod *sitemap-lastmod-time*
                                                :changefreq "daily"
                                                :priority "0.5")))
-          (get-list-of-producers g  #'(lambda (product) t))))
+          (get-list-of-producers g  #'(lambda (product) (declare (ignore product)) t))))
 
 ;;фильтры
 (defun sitemap-filters (flist)
@@ -124,7 +116,7 @@
 
 ;;список всех страниц сайта
 (defun sitemap-all-routes ()
-  (let ((*sitemap-lastmod-time* (sitemap-get-lastmod-time)))
+  (let ((*sitemap-lastmod-time* (time.get-lastmod-time)))
     (sitemap-special-routs)
     (sitemap-static-routes)
     (sitemap-group-routes)

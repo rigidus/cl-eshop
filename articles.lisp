@@ -89,18 +89,6 @@
 (print ">> Articles <<")
 
 
-;; (defun get-date-time ()
-;;   (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-;;     (declare (ignore second))
-;;     (format nil
-;;             "~d-~2,'0d-~2,'0d ~2,'0d:~2,'0d"
-;;             year
-;;             month
-;;             date
-;;             hour
-;;             minute)))
-
-
 (defun articles-sort (unsort-articles)
   (sort unsort-articles #'> :key #'date))
 
@@ -111,7 +99,9 @@
   (let ((articles)
         (showall (getf request-get-plist :showall))
         (date (getf request-get-plist :showall)))
+    (declare (ignore date))
     (maphash #'(lambda (k v)
+                 (declare (ignore k))
                  (if (or (not (null showall))
                           (not (= (date v) 0)))
                      (push v articles)))

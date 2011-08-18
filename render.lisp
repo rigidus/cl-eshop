@@ -268,7 +268,6 @@
                                                                                          filter
                                                                                          (equal object filter)))))))
                                    (rightblocks))
-                 :tradehits (tradehits)
                  :subcontent (catalog:centerproduct
                               (list
                                :sorts (sorts request-get-plist)

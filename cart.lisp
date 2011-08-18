@@ -142,7 +142,7 @@
                  (setf deliverysum 300))
              (setf client-mail
                 (sendmail:clientmail
-                 (list :datetime (get-date-time)
+                 (list :datetime (time.get-date-time)
                        :order_id order-id
                        :name (cdr (assoc :name auth))
                        :family (cdr (assoc :family auth))
@@ -175,7 +175,7 @@
                                 :addr (cdr (assoc :addr delivery))
                                 :phone (cdr (assoc :phone auth))
                                 :email (cdr (assoc :email auth))
-                                :date (get-date-time)
+                                :date (time.get-date-time)
                                 :comment (cdr (assoc :comment delivery))
                                 :products products))
           (setf filename (format nil "~a_~a.txt" (time.get-short-date) order-id))
