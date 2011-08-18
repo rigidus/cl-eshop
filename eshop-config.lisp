@@ -20,6 +20,8 @@
 (defparameter *path-order-id-file* "order-id.txt")
 (export '*path-order-id-file*)
 
+(defun wlog (s)
+  (format t "~&~a> ~a" (time.get-date-time) s))
 
 (defun compile-templates ()
   (mapcar #'(lambda (fname)
