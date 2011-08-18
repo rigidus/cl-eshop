@@ -6,6 +6,8 @@
 (export '*path-to-dropbox*)
 (defparameter *path-to-articles* (format nil "~aDropbox/content/articles" (user-homedir-pathname)))
 (export '*path-to-articles*)
+(defparameter *path-to-static-pages* (format nil "~aDropbox/content/static-pages" (user-homedir-pathname)))
+(export '*path-to-static-pages*)
 (defparameter *path-to-tpls* (format nil "~aDropbox/httpls/release" (user-homedir-pathname)))
 (export '*path-to-tpls*)
 (defparameter *path-to-bkps* (format nil "~aDropbox/htbkps" (user-homedir-pathname)))
