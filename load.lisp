@@ -1,5 +1,6 @@
 (require 'asdf)
 (print "LOAD LIBS:")
+
 (defun cl-eshop-path (&rest filenames)
   (pathname (format nil "~{~a~^/~}" (append (list (user-homedir-pathname) "cl-restas-eshop") filenames))))
 
@@ -92,11 +93,11 @@
 (defparameter cl-eshop-lisp-files
   (list
    ;; "start.lisp"
+   "time.lisp"
    "eshop-config.lisp"
    "errors.lisp"
    "spike.lisp"
    "classes.lisp"
-   "time.lisp"
    "serializers.lisp"
    "servo.lisp"
    "trans.lisp"
@@ -109,12 +110,12 @@
    "xls.lisp" ;;необходима xls2csv |  sudo apt-get install catdoc
    "yml.lisp"
    "articles.lisp"
+   "wolfor-stuff.lisp"
    "report.lisp"
    "sklonenie.lisp"
    "newcart.lisp"
    "main-page.lisp"
    "sitemap.lisp"
-   "wolfor-stuff.lisp"
    "report.lisp"
    "rename.lisp"
    "catalog.lisp"
@@ -125,7 +126,9 @@
 
 
 ;;закрузка файлов
-(mapcar #'(lambda (filename) (load (cl-eshop-path filename)))
+(mapcar #'(lambda (filename)
+            (print (format nil "load ~a" filename))
+            (load (cl-eshop-path filename)))
         cl-eshop-lisp-files)
 
 (print "Restoring data from files")

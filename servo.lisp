@@ -1054,6 +1054,3 @@ is replaced with replacement."
       (format nil "~a~a"
               (string-upcase (subseq title 0 1))
               (subseq title 1))))
-
-(defun wlog (s)
-  (format t "~&~a> ~a" (time.get-date-time) s))
