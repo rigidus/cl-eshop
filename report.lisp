@@ -216,10 +216,11 @@
 (mapcar #'(lambda (v)
             (let ((p (gethash v *storage*)))
               (when (not (null p))
-                  (setf (predzakaz p) nil)
+                  (setf (active p) nil)
                   (serialize p))))
-        (list "167310"
-              "167475"))
+        (list "157000"
+              "157001"
+              "159842"))
 
 
 (defun error-price-report ()

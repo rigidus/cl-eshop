@@ -19,22 +19,6 @@
             )))
 
 
-;; (defun main-page-button-add-card (articul)
-;;   (let ((product (gethash articul *storage*)))
-;;     (if (not (null articul))
-;;         (soy.main-page:button-add-card
-;;          (list :articul ""
-;;                :groupid "0" ;;id группы -- это поле устарело
-;;                :name ""
-;;                :price ""  ;;цена вида 8999.00
-;;                :number ""  ;;количество
-;;                :productlink ""  ;;cсылка на товар сейчас это и есть артикул
-;;                :pic ""))
-;;         ;; (log5:log-for (or log5::test-warr
-;;         ;;                   :main-page-log
-;;         ;;                   log5:error+) "trying to show button for articul:~a" articul)
-;;         )))
-
 
 ;; Имя берется из объявления
 ;; цена из хранилища товаров
@@ -262,8 +246,8 @@
                      (make-instance 'main-page-product
                                     :key key
                                     :name (nth 1 skls)
-                                    :date-start (article-decode-date (nth 2 skls))
-                                    :date-finish  (article-decode-date (nth 3 skls))
+                                    :date-start (time.article-decode-date (nth 2 skls))
+                                    :date-finish  (time.article-decode-date (nth 3 skls))
                                     :weight (parse-integer (aif (nth 4 skls) it "0"))
                                     :opts (nthcdr 5 skls)
                                     :banner-type (nth 5 skls)))

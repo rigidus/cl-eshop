@@ -86,6 +86,7 @@
 
  ;;отображение страницы
 (defun newcart-show (&optional (request-str ""))
+  (declare (ignore request-str))
   (let ((cart-cookie (hunchentoot:cookie-in "cart"))
         (cart)
         (products)
@@ -220,7 +221,9 @@
               (mail-file) ;; информация для ТКС
               (tks-mail) ;; файл с информацией о заказе для ТКС
               (filename)) ;;
-          (multiple-value-bind (phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount ekk) (newcart-user user)
+          (multiple-value-bind (phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount ekk)
+              (newcart-user user)
+            (declare (ignore city))
             ;; Временно доставка 300 на все
             ;; существует два вида доставки: курьером и самовывоз (express | pickup)
             (if  (string= delivery-type "express")
@@ -228,7 +231,7 @@
             (format t "EKK: ~a" ekk)
             (setf client-mail
                   (sendmail:clientmail
-                 (list :datetime (get-date-time)
+                 (list :datetime (time.get-date-time)
                        :order_id order-id
                        :name name
                        :family "" ;; Фамилия не передается отдельно
@@ -259,7 +262,7 @@
                                 :addr addr
                                 :phone phone
                                 :email email
-                                :date (get-date-time)
+                                :date (time.get-date-time)
                                 :comment (cond  ((string= delivery-type "express") courier_comment)
                                                 ((string= delivery-type "pickup") pickup_comment)
                                                 (t ""))
@@ -267,15 +270,7 @@
                                                   (if (string= delivery-type "express")
                                                       (list (list :articul "107209"
                                                                   :cnt "1"))))))
-            (setf filename (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-                             (declare (ignore second))
-                             (format nil
-                                     "~d~2,'0d~2,'0d_~a.txt"
-                                     year
-                                   month
-                                   date
-                                   order-id
-                                   )))
+            (setf filename (format nil "~a_~a.txt" (time.get-short-date) order-id))
             ;;сорханение заказа
             (save-order-text order-id client-mail)
             ;; удаление страных символов

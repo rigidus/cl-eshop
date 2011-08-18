@@ -102,7 +102,7 @@
 
 
 (defun thanks-page ()
-  (let ((cart) (user) (products) (auth) (delivery) (pay) (client-mail) (mail-file) (tks-mail)
+  (let ((cart) (user) (products) (auth) (delivery) (pay) (client-mail) (mail-file) (tks-mail) (filename)
         (deliverysum 0)
         (itogo 0)
         (order-id))
@@ -142,7 +142,7 @@
                  (setf deliverysum 300))
              (setf client-mail
                 (sendmail:clientmail
-                 (list :datetime (get-date-time)
+                 (list :datetime (time.get-date-time)
                        :order_id order-id
                        :name (cdr (assoc :name auth))
                        :family (cdr (assoc :family auth))
@@ -175,18 +175,10 @@
                                 :addr (cdr (assoc :addr delivery))
                                 :phone (cdr (assoc :phone auth))
                                 :email (cdr (assoc :email auth))
-                                :date (get-date-time)
+                                :date (time.get-date-time)
                                 :comment (cdr (assoc :comment delivery))
                                 :products products))
-          (setf filename (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-                           (declare (ignore second))
-                           (format nil
-                                   "~d~2,'0d~2,'0d_~a.txt"
-                                   year
-                                   month
-                                   date
-                                   order-id
-                                   )))
+          (setf filename (format nil "~a_~a.txt" (time.get-short-date) order-id))
           ;;
           (save-order-text order-id client-mail)
           (setf client-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) client-mail))
