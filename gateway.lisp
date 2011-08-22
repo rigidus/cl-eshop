@@ -1,6 +1,7 @@
 (in-package #:eshop)
 
 (defparameter *history* nil)
+(defparameter *single-history* nil)
 (defparameter *load-list* nil)
 (defparameter *order* nil)
 (defparameter *serialize-check-flag* t)
@@ -53,7 +54,16 @@
                    (push raw *load-list*)
                    (push (hunchentoot:get-parameter "num") *order*)
                    "first"))
-
+                ((string= "1" (hunchentoot:get-parameter "single"))
+                 ;; Обработка одиночного изменения, для экстренного внесения изменений на небольшое количество товаров
+                 (progn
+                   (wlog "GATEWAY::Single")
+                   ;; сохраняем запрос
+                   (push (list (time.get-date-time) raw) *single-history*)
+                   ;; обрабатываем данные пришедшие в одиночном запросе
+                   (process raw)
+                   ;; возможно тут необходимо пересчитать списки активных товаров или еще что-то
+                   "single"))
                 (t
                  ;; Обработка промежуточных пакетов
                  (progn
@@ -83,8 +93,9 @@
                (isspec    (cdr (assoc :isspec elt)))
                (name      (cdr (assoc :name elt)))
                (realname  (cdr (assoc :realname elt)))
-               (count-total    (ceiling (arnesi:parse-float (cdr (assoc :count--total elt)))))
+               (count-total    (cdr (assoc :count--total elt)))
                (count-transit  (ceiling (arnesi:parse-float (cdr (assoc :count--transit elt))))))
+           (wlog data)
            ;; Нам не нужны продукты с нулевой ценой (вероятно это группы продуктов)
            (when (equal 0 price)
              (return-from iteration))
@@ -171,6 +182,8 @@ Content-Transfer-Encoding: base64
   (let ((product (aif (gethash (format nil "~a" articul) *storage*)
                       it
                       (make-instance 'product :articul articul))))
+    (wlog product)
+    (wlog count-total)
     (when (and (equal (type-of product) 'product)
                (gateway-check-price product price siteprice))
       (setf (articul product)         articul
@@ -186,10 +199,14 @@ Content-Transfer-Encoding: base64
             (siteprice product)       siteprice
             (bonuscount product)      bonuscount
             (ekkprice product)        ekkprice
-            (active product)          (if (= count-total 0) nil t)
+            (count-total product)     (if count-total
+                                          (ceiling (arnesi:parse-float count-total))
+                                          (if (count-total product)
+                                              (count-total product)
+                                              0))
+            (active product)          (if (= (count-total product) 0) nil t)
             (newbie product)	        (if (string= "0" isnew) nil t)
             (sale product)            (if (string= "0" isspec) nil t)
-            (count-total product)     count-total
             (count-transit  product)  count-transit)
       (setf (gethash (format nil "~a" articul) *storage*) product))))
 
