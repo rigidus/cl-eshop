@@ -77,7 +77,6 @@
          (let ((articul   (ceiling (arnesi:parse-float (cdr (assoc :id elt)))))
                (price     (ceiling (arnesi:parse-float (cdr (assoc :price elt)))))
                (siteprice (ceiling (arnesi:parse-float (cdr (assoc :price--site elt)))))
-               (ekkprice  (ceiling (arnesi:parse-float (cdr (assoc :price--ekk elt)))))
                (bonuscount  (ceiling (arnesi:parse-float (cdr (assoc :bonuscount elt)))))
                (isnew     (cdr (assoc :isnew  elt)))
                (isspec    (cdr (assoc :isspec elt)))
@@ -88,7 +87,7 @@
            ;; Нам не нужны продукты с нулевой ценой (вероятно это группы продуктов)
            (when (equal 0 price)
              (return-from iteration))
-           (process-product articul price siteprice ekkprice isnew isspec name realname count-total count-transit bonuscount))))))
+           (process-product articul price siteprice isnew isspec name realname count-total count-transit bonuscount))))))
 
 
 (defun gateway-send-error-mail (to mailbody error-name)
@@ -128,8 +127,7 @@ Content-Transfer-Encoding: base64
 (defun gateway-check-price (product price siteprice)
   (let ((price-old (price product))
         (siteprice-old (siteprice product))
-        (mailbody)
-        (rs))
+        (mailbody))
     (if (or (and (< 3000 siteprice-old)
                  (<= 0.2 (float (/ (abs (- siteprice-old siteprice 1)) siteprice-old))))
             (and (< 3000 price-old)
@@ -164,10 +162,10 @@ Content-Transfer-Encoding: base64
               nil)))
         t)))
 
-(defun gateway-check-1c-name (product name-new)
-    (print "TEST"))
+;(defun gateway-check-1c-name (product name-new)
+;    (print "TEST"))
 
-(defun process-product (articul price siteprice ekkprice isnew isspec name realname count-total count-transit bonuscount)
+(defun process-product (articul price siteprice isnew isspec name realname count-total count-transit bonuscount)
   (let ((product (aif (gethash (format nil "~a" articul) *storage*)
                       it
                       (make-instance 'product :articul articul))))
@@ -185,7 +183,7 @@ Content-Transfer-Encoding: base64
             (price product)           price
             (siteprice product)       siteprice
             (bonuscount product)      bonuscount
-            (ekkprice product)        ekkprice
+            (date-modified product)   (get-universal-time)
             (active product)          (if (= count-total 0) nil t)
             (newbie product)	        (if (string= "0" isnew) nil t)
             (sale product)            (if (string= "0" isspec) nil t)
