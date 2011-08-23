@@ -190,8 +190,8 @@ Content-Transfer-Encoding: base64
                               (name product)
                               (name product)
                               name-new)))
-        (gateway-send-error-mail (list "CallCenter@alpha-pc.com"
-                                       "Supplers@alpha-pc.com"
+        (gateway-send-error-mail (list ;;"CallCenter@alpha-pc.com"
+                                       ;;"Supplers@alpha-pc.com"
                                        "web_design@alpha-pc.com"
                                        "wolforus@gmail.com"
                                        "slamly@gmail.com" ) mailbody (format nil "1C name ~a" (articul product))))))
