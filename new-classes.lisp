@@ -78,3 +78,45 @@
 
 
 
+(new-classes.make-class-and-methods
+ 'group
+ '((:name key               :initarg :key             :initform nil       :accessor key        :disabled t)
+   (:name parent            :initarg :parent          :initform nil       :accessor parent     :disabled t)
+   (:name name              :initarg :name            :initform nil       :accessor name       :disabled nil)
+   (:name active            :initarg :active          :initform nil       :accessor active     :disabled nil)
+   (:name empty             :initarg :empty           :initform nil       :accessor empty      :disabled t)
+   (:name order             :initarg :order           :initform nil       :accessor order      :disabled nil)
+   (:name keyoptions        :initarg :keyoptions      :initform nil       :accessor keyoptions :disabled t)
+   (:name ymlshow           :initarg :ymlshow         :initform nil       :accessor ymlshow    :disabled t)
+   (:name pic               :initarg :pic             :initform nil       :accessor pic        :disabled nil)
+   (:name icon              :initarg :icon            :initform nil       :accessor icon       :disabled nil)
+   (:name childs            :initarg :childs          :initform nil       :accessor childs     :disabled t)
+   (:name filters           :initarg :filters         :initform nil       :accessor filters    :disabled t)
+   (:name fullfilter        :initarg :fullfilter      :initform nil       :accessor fullfilter :disabled t)
+   (:name products          :initarg :products        :initform nil       :accessor products   :disabled t)
+   (:name vendors           :initarg :vendors         :initform (make-hash-table :test #'equal) :accessor vendors :disabled t)
+   (:name descr             :initarg :descr           :initform nil       :accessor descr      :disabled nil)
+   ))
+
+
+(new-classes.make-class-and-methods
+ 'product
+ '((:name articul           :initarg :articul         :initform nil                          :accessor articul :disabled t)
+   (:name parent            :initarg :parent          :initform nil                          :accessor parent :disabled t)
+   (:name key               :initarg :key             :initform ""                           :accessor key :disabled t)
+   (:name name              :initarg :name            :initform ""                           :accessor name :disabled nil)
+   (:name realname          :initarg :realname        :initform ""                           :accessor realname :disabled nil)
+   (:name price             :initarg :price           :initform 0                            :accessor price :disabled nil)
+   (:name siteprice         :initarg :siteprice       :initform 0                            :accessor siteprice :disabled nil)
+   (:name bonuscount        :initarg :bonuscount      :initform 0                            :accessor bonuscount :disabled nil)
+   (:name date-modified     :initarg :date-modified   :initform (get-universal-time)         :accessor date-modified :disabled nil)
+   (:name date-created       :initarg :date-created     :initform (get-universal-time)         :accessor date-created :disabled nil)
+   (:name active            :initarg :active          :initform t                            :accessor active :disabled nil)
+   (:name predzakaz         :initarg :predzakaz       :initform nil                          :accessor predzakaz :disabled nil)
+   (:name newbie            :initarg :newbie          :initform t                            :accessor newbie :disabled nil)
+   (:name sale              :initarg :sale            :initform t                            :accessor sale :disabled nil)
+   (:name descr             :initarg :descr           :initform ""                           :accessor descr :disabled nil)
+   (:name shortdescr        :initarg :shortdescr      :initform ""                           :accessor shortdescr :disabled nil)
+   (:name count-transit     :initarg :count-transit   :initform 0                            :accessor count-transit :disabled t)
+   (:name count-total       :initarg :count-total     :initform 0                            :accessor count-total :disabled t)
+   (:name optgroups         :initarg :optgroups       :initform nil                          :accessor optgroups :disabled t)))
