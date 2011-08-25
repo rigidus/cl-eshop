@@ -206,7 +206,7 @@ Content-Transfer-Encoding: base64
     ;; (wlog count-total)
     (when (and (equal (type-of product) 'product)
                (gateway-check-price product price siteprice))
-      (gateway-check-1c-name product name)
+      ;; (gateway-check-1c-name product name)
       (setf (articul product)         articul
             (name product)            (if (and (not (null name))
                                                (not (equal "" name)))

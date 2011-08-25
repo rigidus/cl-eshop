@@ -6,12 +6,16 @@
 
 ;; описание полей статьи
 (defclass article ()
-  ((key               :initarg :key       :initform nil       :accessor key)
-   (name              :initarg :name      :initform nil       :accessor name)
-   (descr             :initarg :descr     :initform nil       :accessor descr)
-   (body              :initarg :body      :initform nil       :accessor body)
-   (date              :initarg :date      :initform nil       :accessor date)
-   (tags               :initarg :tags     :initform (make-hash-table :test #'equal) :accessor tags)
+  ((key         :initarg :key       :initform nil       :accessor key)
+   (name        :initarg :name      :initform nil       :accessor name)
+   (descr       :initarg :descr     :initform nil       :accessor descr)
+   (bredcrumbs  :initarg :bredcrumbs :initform nil      :accessor bredcrumbs)
+   (rightblock  :initarg :rightblock :initform nil      :accessor rightblock)
+   (title       :initarg :title      :initform nil      :accessor title)
+   (body        :initarg :body      :initform nil       :accessor body)
+   (date        :initarg :date      :initform nil       :accessor date)
+   (ctype        :initarg :ctype    :initform "article"  :accessor ctype) ;; article / static
+   (tags        :initarg :tags    :initform (make-hash-table :test #'equal) :accessor tags)
    ))
 
 ;;тэги через запятую
@@ -31,15 +35,21 @@
            (raw (decode-json-from-string file-content))
            (key (pathname-name filepath))
            (body (cdr (assoc :body raw)))
+           (bredcrumbs (cdr (assoc :bredcrumbs raw)))
+           (rightblock (cdr (assoc :rightblock raw)))
            (name (cdr (assoc :name raw)))
            (date (time.article-decode-date (cdr (assoc :date raw))))
            (descr (cdr (assoc :descr raw)))
            (tags-line (cdr (assoc :tags raw)))
+           (title (cdr (assoc :title raw)))
            (new (make-instance 'article
                                :key key
                                :name name
                                :descr descr
+                               :bredcrumbs bredcrumbs
                                :body body
+                               :rightblock rightblock
+                               :title title
                                :date date)))
       (make-tags-table (tags new) tags-line)
       (setf (gethash key *storage-articles*) new)
@@ -48,35 +58,31 @@
 
 
 ;; загрузка статей из папки
-(defun process-articles-dir (path)
+(defun process-articles-dir (path &optional (ctype "article"))
   (let ((files))
     (mapcar #'(lambda (x)
                 (if (not (cl-fad:directory-pathname-p x))
                     (push x files)))
             (directory (format nil "~a/*" path)))
     (mapcar #'(lambda (file)
-                (unserialize (format nil "~a" file) (make-instance 'article)))
+                (unserialize (format nil "~a" file) (make-instance 'article :ctype ctype)))
             files)))
 
 
 ;;
 (defun restore-articles-from-files ()
   (let ((t-storage))
-      (print "start load articles....{")
+      (wlog "start load articles....{")
       (sb-ext:gc :full t)
       (let ((*storage-articles* (make-hash-table :test #'equal)))
-        (process-articles-dir *path-to-articles*)
+        (process-articles-dir *path-to-articles* "article")
         (setf t-storage *storage-articles*))
       (setf *storage-articles* t-storage)
       (sb-ext:gc :full t)
-      (print "...} finish load articles")))
-
-;;обновление страницы
-(defun articles-update ()
-  (articles-compile-templates))
+      (wlog "...} finish load articles")))
 
 ;;шаблоны
-(defun articles-compile-templates ()
+(defun articles.update ()
   (mapcar #'(lambda (fname)
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
                 (closure-template:compile-template :common-lisp-backend pathname)))
@@ -84,16 +90,14 @@
             "articles.soy"
             "footer.html")))
 
-;; загрузить статьи
-;; (articles-update)
-(print ">> Articles <<")
 
-
-(defun articles-sort (unsort-articles)
+(defun articles.sort (unsort-articles)
   (sort unsort-articles #'> :key #'date))
 
 
 ;;;;;;;;;;;;;;;;;;;;; RENDER ;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun
 
 (defun get-articles-list (&optional request-get-plist)
   (let ((articles)
@@ -150,7 +154,7 @@
                                   Материалы"))
     (multiple-value-bind (paginated pager)
         (paginator request-get-plist
-                   (articles-sort
+                   (articles.sort
                     (get-articles-by-tags
                      (get-articles-list request-get-plist) tags))
                    10)
