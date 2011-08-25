@@ -14,6 +14,9 @@
 (restas:define-route admin-actions-key-route ("/admin/actions" :method :post)
   (show-admin-page "actions"))
 
+(restas:define-route admin-edit-key-route ("/admin/edit" :method :post)
+  (show-admin-page "edit"))
+
 ;;обновление главной страницы
 (defun admin-update ()
   (admin-compile-templates))
@@ -24,6 +27,7 @@
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
                 (closure-template:compile-template :common-lisp-backend pathname)))
           '("admin.soy"
+            "class_forms.soy"
             )))
 
 (defun show-gateway-history ()
@@ -44,7 +48,8 @@
 
 
 (defun show-admin-page (&optional (key nil))
-  (let ((post-data (hunchentoot:raw-post-data))
+  (let* ((post-data (hunchentoot:raw-post-data))
+         (new-post-data (alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*)))
         (post-data-plist))
     (when (not (null post-data))
       (setf post-data (sb-ext:octets-to-string post-data :external-format :utf8))
@@ -76,6 +81,20 @@
                                              (format nil "~{~a<br>~}" (show-gateway-history)))
                                             ((string= key "actions")
                                              (soy.admin:action-buttons (list :post post-data)))
+                                            ((string= key "edit")
+                                             (let* ((articul (getf (request-get-plist) :articul))
+                                                    (product (gethash articul *storage*))
+                                                    (product-fields (new-classes.make-fields product)))
+                                               (when post-data
+                                                 (new-classes.edit-fields product new-post-data)
+                                                 (setf product-fields (new-classes.make-fields product)))
+                                               (if product
+                                                   (soy.class_forms:formwindow
+                                                    (list :output (format nil "~a ~% ~a" new-post-data post-data-plist)
+                                                          :articul articul
+                                                          :fields product-fields)))))
                                             (t (format nil "~a" key)))))))))
+
+
 
 (sb-thread:make-thread (lambda () (format t "Hello, world")))

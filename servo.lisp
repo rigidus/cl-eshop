@@ -1054,3 +1054,9 @@ is replaced with replacement."
       (format nil "~a~a"
               (string-upcase (subseq title 0 1))
               (subseq title 1))))
+
+(defun alist-to-plist (alist)
+  (loop
+     :for (key . value)
+     :in alist
+     :nconc (list (intern (format nil "~a" key) :keyword) value)))

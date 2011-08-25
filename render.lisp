@@ -33,7 +33,6 @@
                               (if (not (null (fullfilter object)))
                                   (push (restas:render-object designer (fullfilter object)) ret))
                               ret))
-             :tradehits (tradehits)
              :subcontent (if (and (null (products object))
                                   (null (getf (request-get-plist) :fullfilter))
                                   (null (getf (request-get-plist) :vendor)))
