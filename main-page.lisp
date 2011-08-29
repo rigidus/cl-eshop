@@ -101,7 +101,7 @@
              :best (soy.main-page:best (list :items (main-page-products-show (best *main-page.storage*) 12)))
              :hit (soy.main-page:hit (list :items (main-page-products-show (hit *main-page.storage*) 2)))
              :new (soy.main-page:new (list :items (main-page-products-show (new *main-page.storage*) 6)))
-             :post (soy.main-page:post (list :items (articles-view-articles (subseq (articles-sort (get-articles-list)) 0 6))))
+             :post (soy.main-page:post (list :items (articles-view-articles (subseq (articles.sort (get-articles-list)) 0 6))))
              :plus (soy.main-page:plus)))
       :KEYWORDS "компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :DESCRIPTION "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"

@@ -82,16 +82,16 @@
                                             ((string= key "actions")
                                              (soy.admin:action-buttons (list :post post-data)))
                                             ((string= key "edit")
-                                             (let* ((articul (getf (request-get-plist) :articul))
-                                                    (product (gethash articul *storage*))
+                                             (let* ((key (getf (request-get-plist) :key))
+                                                    (product (gethash key *storage*))
                                                     (product-fields (new-classes.make-fields product)))
                                                (when post-data
                                                  (new-classes.edit-fields product new-post-data)
                                                  (setf product-fields (new-classes.make-fields product)))
                                                (if product
                                                    (soy.class_forms:formwindow
-                                                    (list :output (format nil "~a ~% ~a" new-post-data post-data-plist)
-                                                          :articul articul
+                                                    (list :output (format nil "~a" new-post-data)
+                                                          :key key
                                                           :fields product-fields)))))
                                             (t (format nil "~a" key)))))))))
 
