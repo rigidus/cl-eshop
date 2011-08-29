@@ -1,31 +1,26 @@
 ;;;; classes.lisp
-;;;;
-;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
-;;;; See file COPYING for details.
-;;;;
-;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
 
 (in-package #:eshop)
 
 
 (new-classes.make-class-and-methods
  'group
- '((:name key               :initarg :key             :initform nil       :accessor key        :disabled t)
-   (:name parent            :initarg :parent          :initform nil       :accessor parent     :disabled t)
-   (:name name              :initarg :name            :initform nil       :accessor name       :disabled nil)
-   (:name active            :initarg :active          :initform nil       :accessor active     :disabled nil)
-   (:name empty             :initarg :empty           :initform nil       :accessor empty      :disabled t)
-   (:name order             :initarg :order           :initform 1000       :accessor order      :disabled nil)
-   (:name keyoptions        :initarg :keyoptions      :initform nil       :accessor keyoptions :disabled t)
-   (:name ymlshow           :initarg :ymlshow         :initform nil       :accessor ymlshow    :disabled t)
-   (:name pic               :initarg :pic             :initform nil       :accessor pic        :disabled nil)
-   (:name icon              :initarg :icon            :initform nil       :accessor icon       :disabled nil)
-   (:name childs            :initarg :childs          :initform nil       :accessor childs     :disabled t)
-   (:name filters           :initarg :filters         :initform nil       :accessor filters    :disabled t)
-   (:name fullfilter        :initarg :fullfilter      :initform nil       :accessor fullfilter :disabled t)
-   (:name products          :initarg :products        :initform nil       :accessor products   :disabled t)
-   (:name vendors           :initarg :vendors         :initform (make-hash-table :test #'equal) :accessor vendors :disabled t)
-   (:name descr             :initarg :descr           :initform nil       :accessor descr      :disabled nil)
+ '((:name key               :initarg :key             :initform nil       :accessor key        :disabled t :type string)
+   (:name parent            :initarg :parent          :initform nil       :accessor parent     :disabled nil :type group)
+   (:name name              :initarg :name            :initform nil       :accessor name       :disabled nil :type string)
+   (:name active            :initarg :active          :initform nil       :accessor active     :disabled nil :type bool)
+   (:name empty             :initarg :empty           :initform nil       :accessor empty      :disabled t :type bool)
+   (:name order             :initarg :order           :initform 1000       :accessor order      :disabled nil :type int)
+   (:name keyoptions        :initarg :keyoptions      :initform nil       :accessor keyoptions :disabled t :type string)
+   (:name ymlshow           :initarg :ymlshow         :initform nil       :accessor ymlshow    :disabled t :type string)
+   (:name pic               :initarg :pic             :initform nil       :accessor pic        :disabled nil :type string)
+   (:name icon              :initarg :icon            :initform nil       :accessor icon       :disabled nil :type string)
+   (:name childs            :initarg :childs          :initform nil       :accessor childs     :disabled t :type string)
+   (:name filters           :initarg :filters         :initform nil       :accessor filters    :disabled t :type string)
+   (:name fullfilter        :initarg :fullfilter      :initform nil       :accessor fullfilter :disabled t :type string)
+   (:name products          :initarg :products        :initform nil       :accessor products   :disabled t :type string)
+   (:name vendors           :initarg :vendors         :initform (make-hash-table :test #'equal) :accessor vendors :disabled t :type string)
+   (:name descr             :initarg :descr           :initform nil       :accessor descr      :disabled nil :type string)
    ))
 
 
@@ -39,8 +34,8 @@
    (:name price             :initarg :price           :initform 0                            :accessor price :disabled nil :type int)
    (:name siteprice         :initarg :siteprice       :initform 0                            :accessor siteprice :disabled nil :type int)
    (:name bonuscount        :initarg :bonuscount      :initform 0                            :accessor bonuscount :disabled nil :type int)
-   (:name date-modified     :initarg :date-modified   :initform (get-universal-time)         :accessor date-modified :disabled t :type string)
-   (:name date-created       :initarg :date-created     :initform (get-universal-time)         :accessor date-created :disabled t :type string)
+   (:name date-modified     :initarg :date-modified   :initform (get-universal-time)         :accessor date-modified :disabled t :type time)
+   (:name date-created       :initarg :date-created     :initform (get-universal-time)         :accessor date-created :disabled t :type time)
    (:name active            :initarg :active          :initform t                            :accessor active :disabled nil :type bool)
    (:name predzakaz         :initarg :predzakaz       :initform nil                          :accessor predzakaz :disabled nil :type bool)
    (:name newbie            :initarg :newbie          :initform t                            :accessor newbie :disabled nil :type bool)
@@ -51,34 +46,41 @@
    (:name count-total       :initarg :count-total     :initform 0                            :accessor count-total :disabled t :type int)
    (:name optgroups         :initarg :optgroups       :initform nil                          :accessor optgroups :disabled t :type string)))
 
-(defclass optgroup ()
-  ((name              :initarg :name            :initform ""        :accessor name)
-   (options           :initarg :options         :initform nil       :accessor options)))
+(new-classes.make-class-and-methods
+ 'optgroup
+ '((:name name              :initarg :name            :initform ""        :accessor name :disabled nil :type string)
+   (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string)
+   (:name options           :initarg :options         :initform nil       :accessor options :disabled t :type string)))
+
+(new-classes.make-class-and-methods
+ 'option
+ '((:name name              :initarg :name            :initform ""        :accessor name :disabled nil :type string)
+   (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string)
+   (:name value             :initarg :value           :initform ""        :accessor value :disabled nil :type string)
+   (:name optype            :initarg :optype          :initform nil       :accessor optype :disabled t :type string)
+   (:name boolflag          :initarg :boolflag        :initform nil       :accessor boolflag :disabled nil :type bool)))
+
+(new-classes.make-class-and-methods
+ 'group-filter
+ '((:name name              :initarg :name            :initform nil       :accessor name :disabled nil :type string)
+   (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string)
+   (:name base              :initarg :base            :initform nil       :accessor base :disabled t :type string)
+   (:name advanced          :initarg :advanced        :initform nil       :accessor advanced :disabled t :type string)))
 
 
-(defclass option ()
-  ((name              :initarg :name            :initform ""        :accessor name)
-   (value             :initarg :value           :initform ""        :accessor value)
-   (optype            :initarg :optype          :initform nil       :accessor optype)
-   (boolflag          :initarg :boolflag        :initform nil       :accessor boolflag)))
+(new-classes.make-class-and-methods
+ 'filter
+ '((:name key               :initarg :key             :initform nil       :accessor key :disabled t :type string)
+   (:name parent            :initarg :parent          :initform nil       :accessor parent :disabled t :type string)
+   (:name name              :initarg :name            :initform nil       :accessor name :disabled nil :type string)
+   (:name func              :initarg :func            :initform nil       :accessor func :disabled t :type string)))
 
 
-(defclass group-filter ()
-  ((name              :initarg :name            :initform nil       :accessor name)
-   (base              :initarg :base            :initform nil       :accessor base)
-   (advanced          :initarg :advanced        :initform nil       :accessor advanced)))
-
-
-(defclass filter ()
-  ((key               :initarg :key             :initform nil       :accessor key)
-   (parent            :initarg :parent          :initform nil       :accessor parent)
-   (name              :initarg :name            :initform nil       :accessor name)
-   (func              :initarg :func            :initform nil       :accessor func)))
-
-
-(defclass producers ()
-  ((producers         :initarg :producers         :initform nil       :accessor producers)
-   (producersall      :initarg :producersall      :initform nil       :accessor producersall)))
+(new-classes.make-class-and-methods
+ 'producers
+ '((:name producers         :initarg :producers         :initform nil       :accessor producers :disabled t :type string)
+   (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string)
+   (:name producersall      :initarg :producersall      :initform nil       :accessor producersall :disabled t :type string)))
 
 
 (defmacro make-integer-writer (field)

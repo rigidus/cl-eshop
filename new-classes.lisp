@@ -2,14 +2,8 @@
 
 
 (defun new-classes.view-string-field (value name disabled)
-  (format nil "<p style=\"margin-top: 0px; margin-bottom: 0px;\">
-                   ~a
-                </p><input type=\"text\" name=\"~a\" ~a
-                value=\"~a\" /><br/><br/>"
-          name name (if disabled
-                        "disabled=\"disabled\""
-                        "")
-          value))
+  (soy.class_forms:string-field
+   (list :name name :disabled disabled :value value)))
 
 (defun new-classes.string-field-get-data (string)
   string)
@@ -20,6 +14,12 @@
 (defun new-classes.int-field-get-data (string)
   (parse-integer string))
 
+(defun new-classes.view-time-field (value name disabled)
+  (new-classes.view-string-field (time.decode-date-time value) name disabled))
+
+(defun new-classes.time-field-get-data (string)
+  string)
+
 (defun new-classes.view-bool-field (value name disabled)
   (soy.class_forms:bool-field
    (list :name name :checked value :disabled disabled)))
@@ -29,8 +29,7 @@
   (string= string "T"))
 
 (defun new-classes.view-group-field (value name disabled)
-  (let ((leveled-groups (storage.get-groups-leveled-tree))
-        (indent "--------------------------------------"))
+  (let ((leveled-groups (storage.get-groups-leveled-tree)))
     (soy.class_forms:group-form
      (list :name name :disabled disabled
            :grouplist (mapcar #'(lambda (group-and-level)
@@ -39,7 +38,10 @@
                                     (list :hashkey (key group)
                                           :selected (eq value group)
                                           :name (name group)
-                                          :indent (subseq indent 0 (* 3 level)))))
+                                          :indent (let ((indent ""))
+                                                    (loop for x from 1 to level
+                                                       do (setf indent (concatenate 'string indent "---")))
+                                                    indent))))
                               leveled-groups)))))
 
 (defun new-classes.group-field-get-data (string)
