@@ -14,6 +14,16 @@
 (defun new-classes.int-field-get-data (string)
   (parse-integer string))
 
+(defun new-classes.view-textedit-field (value name disabled)
+  (if disabled
+      (new-classes.view-string-field value name disabled)
+      (soy.class_forms:texteditor
+       (list :name name :value value))))
+
+(defun new-classes.textedit-field-get-data (string)
+  string)
+
+
 (defun new-classes.view-time-field (value name disabled)
   (new-classes.view-string-field (time.decode-date-time value) name disabled))
 
