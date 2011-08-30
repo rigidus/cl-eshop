@@ -92,11 +92,10 @@
 
 (defparameter cl-eshop-lisp-files
   (list
-   ;; "start.lisp"
    "time.lisp"
    "eshop-config.lisp"
    "errors.lisp"
-   "spike.lisp"
+   "new-classes.lisp"
    "classes.lisp"
    "serializers.lisp"
    "servo.lisp"
@@ -132,8 +131,8 @@
         cl-eshop-lisp-files)
 
 (print "Restoring data from files")
-(eshop::restore-skls-from-files)
+;(eshop::restore-skls-from-files)
 (eshop::restore-articles-from-files)
 (eshop::main-page-restore)
-(eshop::restore-from-files)
+;(eshop::restore-from-files)
 

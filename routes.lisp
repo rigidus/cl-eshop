@@ -1,9 +1,4 @@
 ;;;; routes.lisp
-;;;;
-;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
-;;;; See file COPYING for details.
-;;;;
-;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
 
 
 (in-package #:eshop)
@@ -45,10 +40,7 @@
 (restas:define-route request-route-static-sitemap1 ("/sitemap1.xml")
     (pathname (concatenate 'string *path-to-conf* "/sitemap1.xml")))
 
-;; (restas:define-route storage-object-route  ("/:key")
-;;   "Позвони мне")
 
-;; (setf swank::*connections* nil)
 
 
 ;; FILTER

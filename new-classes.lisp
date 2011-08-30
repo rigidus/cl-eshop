@@ -1,27 +1,55 @@
 (in-package #:eshop)
 
 
-(defclass product ()
-  ((articul           :initarg :articul         :initform nil                          :accessor articul)
-   (parent            :initarg :parent          :initform nil                          :accessor parent)
-   (key               :initarg :key             :initform ""                           :accessor key)
-   (name              :initarg :name            :initform ""                           :accessor name)
-   (realname          :initarg :realname        :initform ""                           :accessor realname)
-   (price             :initarg :price           :initform 0                            :accessor price)
-   (siteprice         :initarg :siteprice       :initform 0                            :accessor siteprice)
-   (bonuscount        :initarg :bonuscount      :initform 0                            :accessor bonuscount)
-   (date-modified     :initarg :date-modified   :initform (get-universal-time)         :accessor date-modified)
-   (date-created       :initarg :date-created     :initform (get-universal-time)         :accessor date-created)
-   (active            :initarg :active          :initform t                            :accessor active)
-   (predzakaz         :initarg :predzakaz       :initform nil                          :accessor predzakaz)
-   (newbie            :initarg :newbie          :initform t                            :accessor newbie)
-   (sale              :initarg :sale            :initform t                            :accessor sale)
-   (descr             :initarg :descr           :initform ""                           :accessor descr)
-   (shortdescr        :initarg :shortdescr      :initform ""                           :accessor shortdescr)
-   (count-transit     :initarg :count-transit   :initform 0                            :accessor count-transit)
-   (count-total       :initarg :count-total     :initform 0                            :accessor count-total)
-   (optgroups         :initarg :optgroups       :initform nil                          :accessor optgroups)))
-:active
+(defun new-classes.view-string-field (value name disabled)
+  (soy.class_forms:string-field
+   (list :name name :disabled disabled :value value)))
+
+(defun new-classes.string-field-get-data (string)
+  string)
+
+(defun new-classes.view-int-field (value name disabled)
+  (new-classes.view-string-field (format nil "~a" value) name disabled))
+
+(defun new-classes.int-field-get-data (string)
+  (parse-integer string))
+
+(defun new-classes.view-time-field (value name disabled)
+  (new-classes.view-string-field (time.decode-date-time value) name disabled))
+
+(defun new-classes.time-field-get-data (string)
+  string)
+
+(defun new-classes.view-bool-field (value name disabled)
+  (soy.class_forms:bool-field
+   (list :name name :checked value :disabled disabled)))
+
+
+(defun new-classes.bool-field-get-data (string)
+  (string= string "T"))
+
+(defun new-classes.view-group-field (value name disabled)
+  (let ((leveled-groups (storage.get-groups-leveled-tree)))
+    (soy.class_forms:group-form
+     (list :name name :disabled disabled
+           :grouplist (mapcar #'(lambda (group-and-level)
+                                  (let ((group (car group-and-level))
+                                        (level (cdr group-and-level)))
+                                    (list :hashkey (key group)
+                                          :selected (eq value group)
+                                          :name (name group)
+                                          :indent (let ((indent ""))
+                                                    (loop for x from 1 to level
+                                                       do (setf indent (concatenate 'string indent "---")))
+                                                    indent))))
+                              leveled-groups)))))
+
+(defun new-classes.group-field-get-data (string)
+  (gethash string (storage *global-storage*)))
+
+
+
+
 
 
 (defmacro new-classes.make-class (name class-fields)
@@ -35,19 +63,27 @@
 
 (defmacro new-classes.make-view-method (name class-fields)
   `(defmethod new-classes.make-fields ((object ,name))
-     ,(cons `list (mapcar #'(lambda (field)
-                              `(list :value (format nil "~a" (,(getf field :name)  object))
-                                     :name (format nil "~a" (quote ,(getf field :name)))
-                                     :disabled ,(getf field :disabled)))
-                          class-fields))))
+     ,(cons
+       `list
+       (mapcar #'(lambda (field)
+                   `(,(intern (string-upcase
+                               (format nil "new-classes.view-~a-field" (getf field :type))))
+                                      (,(getf field :name)  object)
+                                      ,(format nil "~a" (getf field :name))
+                                      ,(getf field :disabled)))
+               class-fields))))
 
 (defmacro new-classes.make-edit-method (name class-fields)
   `(defmethod new-classes.edit-fields ((object ,name) post-data-plist)
-     ,(cons `progn (mapcar #'(lambda (field)
-                  (when (not (getf field :disabled))
-                    `(setf (,(getf field :name) object)
-                          (getf post-data-plist ,(intern (string-upcase (format nil "~a" (getf field :name))) :keyword)))))
-              class-fields))))
+     ,(cons
+       `progn
+       (mapcar #'(lambda (field)
+                   (when (not (getf field :disabled))
+                     `(setf (,(getf field :name) object)
+                            (,(intern (string-upcase
+                                       (format nil "new-classes.~a-field-get-data" (getf field :type))))
+                              (decode-uri (getf post-data-plist ,(intern (string-upcase (format nil "~a" (getf field :name))) :keyword)))))))
+               class-fields))))
 
 
 (defun new-classes.make-class-and-methods (name list-fields)
@@ -55,68 +91,3 @@
   (eval `(new-classes.make-view-method ,name ,list-fields))
   (eval `(new-classes.make-edit-method ,name ,list-fields)))
 
-(macroexpand-1 '(new-classes.make-edit-method test
-                 ((:name articul  :initarg :articul         :initform nil                          :accessor articul :disabled t)
-                   (:name parent            :initarg :parent          :initform nil                          :accessor parent :disabled t)
-                   (:name key               :initarg :key             :initform ""                           :accessor key :disabled t)
-                   (:name name              :initarg :name            :initform ""                           :accessor name :disabled nil)
-                   (:name realname          :initarg :realname        :initform ""                           :accessor realname :disalbed nil)
-                   (:name price             :initarg :price           :initform 0                            :accessor price :disabled nil)
-                   (:name siteprice         :initarg :siteprice       :initform 0                            :accessor siteprice :disabled nil)
-                   (:name bonuscount        :initarg :bonuscount      :initform 0                            :accessor bonuscount :disabled nil)
-                   (:name date-modified     :initarg :date-modified   :initform (get-universal-time)         :accessor date-modified :disabled nil)
-                   (:name date-created       :initarg :date-created     :initform (get-universal-time)         :accessor date-created :disabled nil)
-                   (:name active            :initarg :active          :initform t                            :accessor active :disabled nil)
-                   (:name predzakaz         :initarg :predzakaz       :initform nil                          :accessor predzakaz :disabled nil)
-                   (:name newbie            :initarg :newbie          :initform t                            :accessor newbie :disabled nil)
-                   (:name sale              :initarg :sale            :initform t                            :accessor sale :disabled nil)
-                   (:name descr             :initarg :descr           :initform ""                           :accessor descr :disabled nil)
-                   (:name shortdescr        :initarg :shortdescr      :initform ""                           :accessor shortdescr :disabled nil)
-                   (:name count-transit     :initarg :count-transit   :initform 0                            :accessor count-transit :disabled nil)
-                   (:name count-total       :initarg :count-total     :initform 0                            :accessor count-total :disabled nil)
-                   (:name optgroups         :initarg :optgroups       :initform nil                          :accessor optgroups :disabled t))))
-
-
-
-(new-classes.make-class-and-methods
- 'group
- '((:name key               :initarg :key             :initform nil       :accessor key        :disabled t)
-   (:name parent            :initarg :parent          :initform nil       :accessor parent     :disabled t)
-   (:name name              :initarg :name            :initform nil       :accessor name       :disabled nil)
-   (:name active            :initarg :active          :initform nil       :accessor active     :disabled nil)
-   (:name empty             :initarg :empty           :initform nil       :accessor empty      :disabled t)
-   (:name order             :initarg :order           :initform nil       :accessor order      :disabled nil)
-   (:name keyoptions        :initarg :keyoptions      :initform nil       :accessor keyoptions :disabled t)
-   (:name ymlshow           :initarg :ymlshow         :initform nil       :accessor ymlshow    :disabled t)
-   (:name pic               :initarg :pic             :initform nil       :accessor pic        :disabled nil)
-   (:name icon              :initarg :icon            :initform nil       :accessor icon       :disabled nil)
-   (:name childs            :initarg :childs          :initform nil       :accessor childs     :disabled t)
-   (:name filters           :initarg :filters         :initform nil       :accessor filters    :disabled t)
-   (:name fullfilter        :initarg :fullfilter      :initform nil       :accessor fullfilter :disabled t)
-   (:name products          :initarg :products        :initform nil       :accessor products   :disabled t)
-   (:name vendors           :initarg :vendors         :initform (make-hash-table :test #'equal) :accessor vendors :disabled t)
-   (:name descr             :initarg :descr           :initform nil       :accessor descr      :disabled nil)
-   ))
-
-
-(new-classes.make-class-and-methods
- 'product
- '((:name articul           :initarg :articul         :initform nil                          :accessor articul :disabled t)
-   (:name parent            :initarg :parent          :initform nil                          :accessor parent :disabled t)
-   (:name key               :initarg :key             :initform ""                           :accessor key :disabled t)
-   (:name name              :initarg :name            :initform ""                           :accessor name :disabled nil)
-   (:name realname          :initarg :realname        :initform ""                           :accessor realname :disabled nil)
-   (:name price             :initarg :price           :initform 0                            :accessor price :disabled nil)
-   (:name siteprice         :initarg :siteprice       :initform 0                            :accessor siteprice :disabled nil)
-   (:name bonuscount        :initarg :bonuscount      :initform 0                            :accessor bonuscount :disabled nil)
-   (:name date-modified     :initarg :date-modified   :initform (get-universal-time)         :accessor date-modified :disabled nil)
-   (:name date-created       :initarg :date-created     :initform (get-universal-time)         :accessor date-created :disabled nil)
-   (:name active            :initarg :active          :initform t                            :accessor active :disabled nil)
-   (:name predzakaz         :initarg :predzakaz       :initform nil                          :accessor predzakaz :disabled nil)
-   (:name newbie            :initarg :newbie          :initform t                            :accessor newbie :disabled nil)
-   (:name sale              :initarg :sale            :initform t                            :accessor sale :disabled nil)
-   (:name descr             :initarg :descr           :initform ""                           :accessor descr :disabled nil)
-   (:name shortdescr        :initarg :shortdescr      :initform ""                           :accessor shortdescr :disabled nil)
-   (:name count-transit     :initarg :count-transit   :initform 0                            :accessor count-transit :disabled t)
-   (:name count-total       :initarg :count-total     :initform 0                            :accessor count-total :disabled t)
-   (:name optgroups         :initarg :optgroups       :initform nil                          :accessor optgroups :disabled t)))

@@ -57,3 +57,11 @@
       (setf year (parse-integer (third counts)))
       (setf r (encode-universal-time 0 0 0 date month year)))
     r))
+
+(defun time.decode-date-time (uni-time)
+   (multiple-value-bind (second minute hour date month year)
+       (decode-universal-time uni-time)
+
+     (format nil
+             "~a:~a:~a ~a.~a.~a"
+             hour minute second date month year)))

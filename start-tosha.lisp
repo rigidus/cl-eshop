@@ -8,14 +8,14 @@
 
 ;; старт сервера swank
 (setq swank:*use-dedicated-output-stream* nil)
-(swank:create-server :coding-system "utf-8-unix" :dont-close t :port 4005)
+(swank:create-server :coding-system "utf-8-unix" :dont-close t :port 8888)
 
 ;; нумерация заказов
 (setf eshop::*order-id* 1)
 (setf eshop:*path-order-id-file* "tosha-order-id.txt")
 
 ;; запуск Restas
-(restas:start '#:eshop :port 8080)
+(restas:start '#:eshop :port 4247)
 (restas:debug-mode-on)
 (setf hunchentoot:*catch-errors-p* nil)
 
