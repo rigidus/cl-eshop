@@ -93,6 +93,7 @@
 (defparameter cl-eshop-lisp-files
   (list
    "time.lisp"
+   "log.lisp"
    "eshop-config.lisp"
    "errors.lisp"
    "new-classes.lisp"

@@ -65,3 +65,10 @@
      (format nil
              "~a:~a:~a ~a.~a.~a"
              hour minute second date month year)))
+
+
+(defun time.get-full-human-time ()
+  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+    (format nil
+            "~a.~2,'0d.~2,'0d ~a:~a:~a"
+            year month date hour minute second)))
