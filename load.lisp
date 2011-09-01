@@ -12,8 +12,8 @@
 
 (defparameter cl-eshop-libs
   (list
-   "slime-2011-09-01" ;; актуальный swank
-   ;; "slime-archimag" ;; SWANK
+   ;; "slime-2011-09-01" ;; актуальный swank
+   "slime-archimag" ;; SWANK
    "alexandria"     ;; hunch
    "bordeaux-threads" ;; hunch
    "usocket-0.5.2" ;; hunch
@@ -99,6 +99,7 @@
    "log.lisp"
    "new-classes.lisp"
    "classes.lisp"
+   "spike.lisp"
    "serializers.lisp"
    "servo.lisp"
    "trans.lisp"
@@ -126,15 +127,15 @@
    "images.lisp"))
 
 
-;;закрузка файлов
-;; (mapcar #'(lambda (filename)
-;;             (print (format nil "load ~a" filename))
-;;             (load (cl-eshop-path filename)))
-;;         cl-eshop-lisp-files)
+;; закрузка файлов
+(mapcar #'(lambda (filename)
+            (print (format nil "load ~a" filename))
+            (load (cl-eshop-path filename)))
+        cl-eshop-lisp-files)
 
 (print "Restoring data from files")
-;(eshop::restore-skls-from-files)
-;; (eshop::restore-articles-from-files)
-;; (eshop::main-page-restore)
-;(eshop::restore-from-files)
+(eshop::restore-skls-from-files)
+(eshop::restore-articles-from-files)
+(eshop::main-page-restore)
+(eshop::restore-from-files)
 
