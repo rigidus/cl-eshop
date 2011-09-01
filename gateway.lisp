@@ -40,6 +40,7 @@
                    ;; Сохраняем *load-list* и *order* для истории
                    (push (list (time.get-date-time) *order* *load-list*) *history*)
                    ;; Обнуляем *load-list* и *order* (если приходит 1 пакет, то он num=0)
+                   (post-proccess-gateway)
                    (setf *load-list* nil)
                    (setf *order* nil)
                    "last"))
@@ -219,7 +220,7 @@ Content-Transfer-Encoding: base64
             (price product)           price
             (siteprice product)       siteprice
             (bonuscount product)      bonuscount
-            (ekkprice product)        ekkprice
+            ;; (ekkprice product)        ekkprice
             (count-total product)     (if count-total
                                           (ceiling (arnesi:parse-float count-total))
                                           (if (count-total product)
@@ -244,7 +245,8 @@ Content-Transfer-Encoding: base64
                    (setf (active v) nil)))
              *storage*)
     (loop :for packet :in (reverse (caddr (car *history*))) :do
-       (process packet))))
+       (process packet))
+    (post-proccess-gateway)))
 
 ;; (let ((a 0))
 ;;   (maphash #'(lambda (k v)

@@ -14,7 +14,8 @@
   (mapcar #'(lambda (fname)
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
                 (closure-template:compile-template :common-lisp-backend pathname)))
-          '("index.html"
+          '(
+            ;;"index.html"
             "main-page.soy"
             )))
 
@@ -35,6 +36,7 @@
                        :options (opts dp)
                        :grouplink (key (parent p))
                        :groupname (name (parent p))
+                       :deliveryprice (delivery-price p)
                        :pic (car (get-pics (articul p)))))
          (button-add (list :buttonaddcart (soy.buttons:add-product-cart p-list))))
     (append p-list button-add)))

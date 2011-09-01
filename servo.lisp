@@ -700,6 +700,7 @@ is replaced with replacement."
                            (soy.buttons:add-product-cart (list :articul (articul object)
                                                                :name (realname object)
                                                                :pic (if (null pics) nil (car pics))
+                                                               :deliveryprice (delivery-price object)
                                                                :siteprice (price object)
                                                                :price (siteprice object))))
             ))))

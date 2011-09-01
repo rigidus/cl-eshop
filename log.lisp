@@ -1,5 +1,4 @@
 (in-package #:eshop)
-
 (log5:defcategory test)
 (log5:defcategory debug-console)
 (log5:defcategory debug-file)

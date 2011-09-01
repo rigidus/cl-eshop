@@ -83,6 +83,7 @@
              "buttons.soy"
             "main-page.soy"
             "new-catalog.soy"
+            "class_forms.soy"
             )))
 
 (print "Compiling all templates")
