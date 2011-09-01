@@ -54,6 +54,7 @@
   (let* ((post-data (hunchentoot:raw-post-data))
          (new-post-data (alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*)))
          (post-data-plist))
+
     (when (not (null post-data))
       (setf post-data (sb-ext:octets-to-string post-data :external-format :utf8))
       (setf post-data-plist  (let ((result))
@@ -85,7 +86,6 @@
                                             ((string= key "actions")
                                              (soy.admin:action-buttons (list :post post-data)))
                                             ((string= key "edit")
-                                             (log5:log-for planner "OMFG somebody enter admin-room!")
                                              (let* ((key (getf (request-get-plist) :key))
                                                     (item (gethash key (storage *global-storage*)))
                                                     (item-fields (new-classes.make-fields item)))
