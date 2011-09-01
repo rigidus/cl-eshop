@@ -37,6 +37,7 @@
                              :order (cdr (assoc :order raw))
                              :fullfilter (unserialize (cdr (assoc :fullfilter raw)) (make-instance 'group-filter))
                              :keyoptions keyoptions
+                             :delivery-price (cdr (assoc :delivery-price raw))
                              :pic (cdr (assoc :pic raw))
                              :icon (cdr (assoc :icon raw))
                              :ymlshow (cdr (assoc :ymlshow raw))
@@ -88,6 +89,7 @@
     (re-assoc dumb :empty (empty object))
     (re-assoc dumb :active (active object))
     (re-assoc dumb :name (name object))
+    (re-assoc dumb :delivery-price (delivery-price object))
     ;; assembly json-string
     (let ((json-string
            (format nil "~{~a~}"
@@ -199,6 +201,7 @@
                                :sale (cdr (assoc :sale raw))
                                :descr (cdr (assoc :descr raw))
                                :shortdescr (cdr (assoc :shortdescr raw))
+                               :delivery-price (cdr (assoc :delivery-price raw))
                                :count-transit (cdr (assoc :count-transit raw))
                                :count-total count-total
                                :optgroups (let* ((optgroups (cdr (assoc :optgroups raw))))
@@ -227,7 +230,7 @@
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)
     ;; Сохраняем файл продукта
-    (let* ((json-string (format nil "{~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"date-modified\": ~a,~%  \"date-created\": ~a,~%  \"bonuscount\": ~a,~% \"predzakaz\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"optgroups\": ~a~%}"
+    (let* ((json-string (format nil "{~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"date-modified\": ~a,~%  \"date-created\": ~a,~%  \"bonuscount\": ~a,~% \"predzakaz\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"optgroups\": ~a, \"delivery-price\": ~a~%}"
                                 (encode-json-to-string (articul object))
                                 (format nil "\"~a\"" (stripper (name object)))
                                 (format nil "\"~a\"" (stripper (realname object)))
@@ -251,6 +254,7 @@
                                                         (serialize optgroup))
                                                     (optgroups object)))
                                     )
+                                (encode-json-to-string (delivery-price object))
                                 )))
       ;; (print (descr object))
       (with-open-file (file pathname
