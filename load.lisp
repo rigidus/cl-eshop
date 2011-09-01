@@ -12,7 +12,8 @@
 
 (defparameter cl-eshop-libs
   (list
-   "slime-archimag" ;; SWANK
+   "slime-2011-09-01" ;; актуальный swank
+   ;; "slime-archimag" ;; SWANK
    "alexandria"     ;; hunch
    "bordeaux-threads" ;; hunch
    "usocket-0.5.2" ;; hunch
@@ -92,11 +93,11 @@
 
 (defparameter cl-eshop-lisp-files
   (list
-   ;; "start.lisp"
    "time.lisp"
    "eshop-config.lisp"
    "errors.lisp"
-   "spike.lisp"
+   "log.lisp"
+   "new-classes.lisp"
    "classes.lisp"
    "serializers.lisp"
    "servo.lisp"
@@ -107,7 +108,7 @@
    "generics.lisp"
    "gateway.lisp"
    "search.lisp"
-   "xls.lisp" ;;необходима xls2csv |  sudo apt-get install catdoc
+   "xls.lisp" ;;необходима xls2csv | sudo apt-get install catdoc
    "yml.lisp"
    "articles.lisp"
    "wolfor-stuff.lisp"
@@ -126,14 +127,14 @@
 
 
 ;;закрузка файлов
-(mapcar #'(lambda (filename)
-            (print (format nil "load ~a" filename))
-            (load (cl-eshop-path filename)))
-        cl-eshop-lisp-files)
+;; (mapcar #'(lambda (filename)
+;;             (print (format nil "load ~a" filename))
+;;             (load (cl-eshop-path filename)))
+;;         cl-eshop-lisp-files)
 
 (print "Restoring data from files")
-(eshop::restore-skls-from-files)
-(eshop::restore-articles-from-files)
-(eshop::main-page-restore)
-(eshop::restore-from-files)
+;(eshop::restore-skls-from-files)
+;; (eshop::restore-articles-from-files)
+;; (eshop::main-page-restore)
+;(eshop::restore-from-files)
 

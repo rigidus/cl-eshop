@@ -17,6 +17,9 @@
 (restas:define-route admin-edit-key-route ("/admin/edit" :method :post)
   (show-admin-page "edit"))
 
+(restas:define-route admin-testeditor-key-route ("/admin/testeditor" :method :post)
+  (show-admin-page "testeditor"))
+
 ;;обновление главной страницы
 (defun admin-update ()
   (admin-compile-templates))
@@ -50,7 +53,7 @@
 (defun show-admin-page (&optional (key nil))
   (let* ((post-data (hunchentoot:raw-post-data))
          (new-post-data (alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*)))
-        (post-data-plist))
+         (post-data-plist))
     (when (not (null post-data))
       (setf post-data (sb-ext:octets-to-string post-data :external-format :utf8))
       (setf post-data-plist  (let ((result))
@@ -58,8 +61,8 @@
                                   (let ((split (split-sequence:split-sequence #\= param)))
                                     (setf (getf result (intern (string-upcase (car split)) :keyword))
                                           (if (null (cadr split))
-                                             ""
-                                             (cadr split)))))
+                                              ""
+                                              (cadr split)))))
                                result))
       (let ((action (getf post-data-plist :action)))
         (if (not (null action))
@@ -82,17 +85,24 @@
                                             ((string= key "actions")
                                              (soy.admin:action-buttons (list :post post-data)))
                                             ((string= key "edit")
-                                             (let* ((articul (getf (request-get-plist) :articul))
-                                                    (product (gethash articul *storage*))
-                                                    (product-fields (new-classes.make-fields product)))
-                                               (when post-data
-                                                 (new-classes.edit-fields product new-post-data)
-                                                 (setf product-fields (new-classes.make-fields product)))
-                                               (if product
+                                             (log5:log-for planner "OMFG somebody enter admin-room!")
+                                             (let* ((key (getf (request-get-plist) :key))
+                                                    (item (gethash key (storage *global-storage*)))
+                                                    (item-fields (new-classes.make-fields item)))
+                                               (when new-post-data
+                                                 (new-classes.edit-fields item new-post-data)
+                                                 (setf item-fields (new-classes.make-fields item)))
+                                               (if item
                                                    (soy.class_forms:formwindow
-                                                    (list :output (format nil "~a ~% ~a" new-post-data post-data-plist)
-                                                          :articul articul
-                                                          :fields product-fields)))))
+                                                    (list :output (format nil "~a" new-post-data)
+                                                          :key key
+                                                          :fields item-fields))
+                                                   "not found")))
+                                            ((string= key "testeditor")
+                                             (soy.class_forms:texteditor (list :output (format nil "~a" new-post-data)
+                                                                               :name "testeditor"
+                                                                               :value "<p>This is some <strong>sample text</strong>.
+                                                                                       You are using <a href=\"http://ckeditor.com/\">CKEditor</a>.</p>")))
                                             (t (format nil "~a" key)))))))))
 
 

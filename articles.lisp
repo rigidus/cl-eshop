@@ -97,7 +97,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;; RENDER ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun
+
 
 (defun get-articles-list (&optional request-get-plist)
   (let ((articles)
