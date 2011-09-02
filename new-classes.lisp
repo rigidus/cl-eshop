@@ -1,6 +1,8 @@
 (in-package #:eshop)
 
+;;набор функций для показа и изменения различных типов полей в админке
 
+;;string - универсальный тип, так же используется как undefined
 (defun new-classes.view-string-field (value name disabled)
   (soy.class_forms:string-field
    (list :name name :disabled disabled :value value)))
@@ -8,12 +10,15 @@
 (defun new-classes.string-field-get-data (string)
   string)
 
+;;int
 (defun new-classes.view-int-field (value name disabled)
   (new-classes.view-string-field (format nil "~a" value) name disabled))
 
 (defun new-classes.int-field-get-data (string)
   (parse-integer string))
 
+
+;;textedit, онлайновый WYSIWYG редактор текста
 (defun new-classes.view-textedit-field (value name disabled)
   (if disabled
       (new-classes.view-string-field value name disabled)
@@ -24,20 +29,24 @@
   string)
 
 
+;;time, человекопонятное время
 (defun new-classes.view-time-field (value name disabled)
   (new-classes.view-string-field (time.decode-date-time value) name disabled))
 
 (defun new-classes.time-field-get-data (string)
   string)
 
+
+;;bool
 (defun new-classes.view-bool-field (value name disabled)
   (soy.class_forms:bool-field
    (list :name name :checked value :disabled disabled)))
 
-
 (defun new-classes.bool-field-get-data (string)
   (string= string "T"))
 
+
+;;group, список групп, генерируется из списка с проставленными уровнями глубины
 (defun new-classes.view-group-field (value name disabled)
   (let ((leveled-groups (storage.get-groups-leveled-tree)))
     (soy.class_forms:group-form
@@ -61,7 +70,7 @@
 
 
 
-
+;;макрос для создания класса по списку параметров
 (defmacro new-classes.make-class (name class-fields)
   `(defclass ,name ()
      ,(mapcar #'(lambda (field)
@@ -71,6 +80,8 @@
                      :accessor ,(getf field :accessor)))
               class-fields)))
 
+
+;;макрос для создания методов просмотра по списку параметров
 (defmacro new-classes.make-view-method (name class-fields)
   `(defmethod new-classes.make-fields ((object ,name))
      ,(cons
@@ -83,6 +94,8 @@
                                       ,(getf field :disabled)))
                class-fields))))
 
+
+;;макрос для создания методов редактирования
 (defmacro new-classes.make-edit-method (name class-fields)
   `(defmethod new-classes.edit-fields ((object ,name) post-data-plist)
      ,(cons

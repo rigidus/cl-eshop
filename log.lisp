@@ -37,4 +37,4 @@
 
 
 ;;example of call
-;;(log5:log-for info "First log msg")
+;;(log5:log-for debug-console "First log msg")
