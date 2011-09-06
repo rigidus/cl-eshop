@@ -15,6 +15,10 @@
 (setf (active-products *global-storage*) (storage.get-active-products-list))
 
 
+;;получение всех дочерних групп
+(defun storage.get-group-children (group)
+  (childs group))
+
 ;;обход storage и составление списка в соответствии с функцией checker. Сортировка с переданным компаратором
 (defun storage.round-collect-storage (checker &optional (compare t compare-supplied-p))
   (let ((result))
@@ -43,33 +47,6 @@
                                  compare))
 
 
-;;составление списка пар (группа . уровень) для построения дерева в админке
-(defun storage.get-groups-leveled-tree (&optional (compare #'(lambda (a b)
-                                                               (if (or (null (order a)) (null (order b)))
-                                                                   nil
-                                                                   (< (order a) (order b))))))
-  (let ((roots (stable-sort (copy-list (root-groups *global-storage*)) compare))
-          (result))
-    (mapcar #'(lambda (root)
-                (setf result
-                      (append result
-                              (storage.get-leveled-branch root 0))))
-            roots)
-    result))
-
-
-;;получение ветки с корнем в данной вершине с проставленными уровнями(абсолютными, не относительно данной вершины)
-(defun storage.get-leveled-branch (node level &optional (compare #'(lambda (a b)
-                                                                     (if (or (null (order a)) (null (order b)))
-                                                                         nil
-                                                                         (< (order a) (order b))))))
-  (let ((children (stable-sort (copy-list (childs node)) compare)) (result (list (cons node level))))
-    (mapcar #'(lambda (child)
-                (setf result
-                      (append result
-                              (storage.get-leveled-branch child (+ 1 level)))))
-            children)
-    result))
 
 
 ;;генерация следующего уникального ключа в storage
