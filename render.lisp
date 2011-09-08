@@ -191,7 +191,8 @@
                                                                                  :pic (if (null pics) nil (car pics))
                                                                                  :siteprice (siteprice object)
                                                                                  :price (price object)
-                                                                                 :deliveryprice (delivery-price object))))
+                                                                                 ;; :deliveryprice (delivery-price object)
+                                                                                 )))
                          :addoneclick (if (not (predzakaz object))
                                           (soy.buttons:add-one-click (list :articul (articul object))))))
           :keywords (format nil "~a"

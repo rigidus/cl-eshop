@@ -122,12 +122,29 @@
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
 
 ;; STATIC
-(defparameter *static-pages* (list "delivery"         "about"             "faq"             "kakdobratsja"
-                                   "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
-                                   "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
-                                   "warranty"         "moneyback"         "article"         "dilers"            "corporate"       "vacancy"
-                                   "bonus"            "burunduk"          "listservice"     "suslik"
-                                   "god_kills_a_kitten"))
+(defparameter *static-pages* (list ;;"delivery"
+                                   ;;"about"
+                                   ;;"faq"
+                                   ;; "kakdobratsja"
+                                   ;; "kaksvjazatsja"
+                                   ;; "levashovsky"
+                                   ;; "partners"
+                                   ;; "payment"
+                                   ;; "servicecenter"
+                                   ;; "otzyvy"
+                                   ;; "pricesc"
+                                   ;; "warrantyservice"
+                                   ;; "warranty"
+                                   ;; "moneyback"
+                                   ;; "dilers"
+                                   ;; "corporate"
+                                   ;; "vacancy"
+                                   ;; "bonus"
+                                   ;; "burunduk"
+                                   ;; "listservice"
+                                   ;; "suslik"
+                                   ;; "god_kills_a_kitten"
+                                   ))
 
 
 (defmacro static ()
@@ -136,7 +153,7 @@
                            (static-page)))
                     *static-pages*)))
 
-(static)
+;; (static)
 
 
 ;; CART & CHECKOUTS & THANKS

@@ -7,10 +7,7 @@
      (active-products :initarg :active-products :initform (make-hash-table :test #'equal) :accessor active-products)
      (root-groups :initarg :root-groups :initform (make-hash-table :test #'equal) :accessor root-groups)))
 
-
 (defvar *global-storage* (make-instance 'global-storage))
-(setf (storage *global-storage*) *storage*)
-(setf (root-groups *global-storage*) (storage.get-root-groups-list))
 
 (defun storage.get-root-groups-list (&optional (compare #'(lambda (a b)
                                                             (if (or (null (order a)) (null (order b)))
@@ -24,6 +21,11 @@
                      (push node result)))
              (storage *global-storage*))
     (stable-sort result compare)))
+
+(setf (storage *global-storage*) *storage*)
+(setf (root-groups *global-storage*) (storage.get-root-groups-list))
+
+
 
 (defun storage.get-groups-leveled-tree (&optional (compare #'(lambda (a b)
                                                                (if (or (null (order a)) (null (order b)))

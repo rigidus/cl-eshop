@@ -35,7 +35,7 @@
            (raw (decode-json-from-string file-content))
            (key (pathname-name filepath))
            (body (cdr (assoc :body raw)))
-           (bredcrumbs (cdr (assoc :bredcrumbs raw)))
+           (breadcrumbs (cdr (assoc :breadcrumbs raw)))
            (rightblock (cdr (assoc :rightblock raw)))
            (name (cdr (assoc :name raw)))
            (date (time.article-decode-date (cdr (assoc :date raw))))
@@ -46,10 +46,11 @@
                                :key key
                                :name name
                                :descr descr
-                               :bredcrumbs bredcrumbs
+                               :bredcrumbs breadcrumbs
                                :body body
                                :rightblock rightblock
                                :title title
+                               :ctype (ctype dummy)
                                :date date)))
       (make-tags-table (tags new) tags-line)
       (setf (gethash key *storage-articles*) new)
@@ -65,6 +66,7 @@
                     (push x files)))
             (directory (format nil "~a/*" path)))
     (mapcar #'(lambda (file)
+                (wlog ctype)
                 (unserialize (format nil "~a" file) (make-instance 'article :ctype ctype)))
             files)))
 
@@ -192,29 +194,43 @@
 
 ;; отображение страницы статьи
 (defmethod restas:render-object ((designer eshop-render) (object article))
-  (root:main (list :keywords "" ;;keywords
-                   :description "" ;;description
-                   :title  (name object)
-                   :headext (soy.articles:head-share-buttons (list :key (key object)))
-                   :header (root:header (list :logged (root:notlogged)
-                                              :cart (root:cart)))
-                   :footer (root:footer)
-                   :content (static:main
-                             (list :menu (menu)
-                                   :breadcrumbs (get-article-breadcrumbs object)
-                                   :subcontent  (soy.articles:article-big (list :sharebuttons (soy.articles:share-buttons
-                                                                                               (list :key (key object)))
-                                                                                :name (name object)
-                                                                                :date (time.article-encode-date object)
-                                                                                :body (prerender-string-replace (body object))
-                                                                                :tags
-                                                                                (if (< 0 (hash-table-count (tags object)))
-                                                                                    (soy.articles:articles-tags
-                                                                                     (list :tags
+  (if (equal (ctype object) "static")
+      (root:main (list :keywords "" ;;keywords
+                       :description "" ;;description
+                       :title "test" ;(title object)
+                       :header (root:header (append (list :logged (root:notlogged)
+                                                          :cart (root:cart))
+                                                    (main-page-show-banner "line" (banner *main-page.storage*))))
+                       :footer (root:footer)
+                       :content  (static:main
+                                 (list :menu (menu)
+                                       :breadcrumbs (bredcrumbs object)
+                                       :subcontent  (body object)
+                                       :rightblock  (rightblock object)))
+                 ))
+      (root:main (list :keywords "" ;;keywords
+                       :description "" ;;description
+                       :title  (name object)
+                       :headext (soy.articles:head-share-buttons (list :key (key object)))
+                       :header (root:header (list :logged (root:notlogged)
+                                                  :cart (root:cart)))
+                       :footer (root:footer)
+                       :content (static:main
+                                 (list :menu (menu)
+                                       :breadcrumbs (get-article-breadcrumbs object)
+                                       :subcontent  (soy.articles:article-big (list :sharebuttons (soy.articles:share-buttons
+                                                                                                   (list :key (key object)))
+                                                                                    :name (name object)
+                                                                                    :date (time.article-encode-date object)
+                                                                                    :body (prerender-string-replace (body object))
+                                                                                    :tags
+                                                                                    (if (< 0 (hash-table-count (tags object)))
+                                                                                        (soy.articles:articles-tags
+                                                                                         (list :tags
                                                                                            (loop
                                                                                               :for key being the hash-keys
                                                                                               :of (tags object)
                                                                                               :collect key)))
-                                                                                    "")
-                                                                                ))
-                                   :rightblock  "")))))
+                                                                                        "")
+                                                                                    ))
+                                       :rightblock  ""))))))

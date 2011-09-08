@@ -137,5 +137,5 @@
 (eshop::restore-skls-from-files)
 (eshop::restore-articles-from-files)
 (eshop::main-page-restore)
-(eshop::restore-from-files)
+;; (eshop::restore-from-files)
 
