@@ -666,14 +666,18 @@ is replaced with replacement."
                   ))
             (keyoptions parent))))
 
+;; (defun get-format-price (p)
+;;   (let ((rs (format nil "~a" p))
+;;         (str (reverse (format nil "~a" p))))
+;;     (when (< 3 (length str))
+;;       (let ((st1 (reverse (subseq str 0 3)))
+;;             (st2 (reverse (subseq str 3))))
+;;         (setf rs (format nil "~a ~a" st2 st1))))
+;;     rs))
+;; Теперь немного короче
 (defun get-format-price (p)
-  (let ((rs (format nil "~a" p))
-        (str (reverse (format nil "~a" p))))
-    (when (< 3 (length str))
-      (let ((st1 (reverse (subseq str 0 3)))
-            (st2 (reverse (subseq str 3))))
-        (setf rs (format nil "~a ~a" st2 st1))))
-    rs))
+  (format nil "~,,' ,3:d" p))
+
 
 
 (defmethod view ((object product))
