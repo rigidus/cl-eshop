@@ -22,6 +22,23 @@
             hour
             minute)))
 
+(defun time.get-date ()
+  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+    (declare (ignore second hour minute))
+    (format nil
+            "~2,'0d.~2,'0d.~2,'0d"
+            date
+            month
+            (mod year 100))))
+
+(defun time.get-time ()
+  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+    (declare (ignore year month date))
+    (format nil
+            "~2,'0d:~2,'0d:~2,'0d"
+            hour minute second)))
+
+
 ;;sitemap-get-lastmod-time
 (defun time.get-lastmod-time ()
   (multiple-value-bind (second minute hour date month year) (get-decoded-time)
