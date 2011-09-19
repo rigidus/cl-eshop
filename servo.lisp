@@ -1052,7 +1052,30 @@ is replaced with replacement."
               (subseq title 1))))
 
 (defun alist-to-plist (alist)
-  (loop
-     :for (key . value)
-     :in alist
-     :nconc (list (intern (format nil "~a" key) :keyword) value)))
+  (if (not (equal (type-of alist) 'cons))
+      alist
+      ;;else
+      (loop
+         :for (key . value)
+         :in alist
+         :nconc (list (intern (format nil "~a" key) :keyword) value))))
+
+
+(defun servo.plist-to-unique (plist)
+  (let ((result ))
+    (loop
+       :while plist
+       :do (let ((key (car plist))
+                 (value (cadr plist)))
+             (setf (getf result key)
+                   (if (getf result key)
+                       (append
+                        (if (eq (type-of (getf result key)) 'cons)
+                            (getf result key)
+                            (list (getf result key)))
+                        (list value))
+                       ;;else
+                       value)))
+       (setf plist (cddr plist)))
+    result))
+

@@ -75,6 +75,31 @@
   ((producers         :initarg :producers         :initform nil       :accessor producers)
    (producersall      :initarg :producersall      :initform nil       :accessor producersall)))
 
+(new-classes.make-class-and-methods
+ 'product
+ '((:name key               :initarg :key             :initform ""                     :accessor key          :disabled t   :type string    :serialize t)
+   (:name articul           :initarg :articul         :initform nil                    :accessor articul      :disabled t   :type string    :serialize t)
+   (:name name-provider     :initarg :name-provider   :initform ""                     :accessor name-provider :disabled nil :type string   :serialize t)
+   (:name name-seo          :initarg :name-seo        :initform ""                     :accessor name-seo     :disabled nil :type string    :serialize t)
+   (:name siteprice         :initarg :siteprice       :initform 0                      :accessor siteprice    :disabled nil :type int       :serialize t)
+   (:name delta-price       :initarg :delta-price     :initform 0                      :accessor delta-price  :disabled nil :type int       :serialize t)
+   (:name bonuscount        :initarg :bonuscount      :initform 0                      :accessor bonuscount   :disabled nil :type int       :serialize t)
+   (:name delivery-price    :initarg :delivery-price  :initform 0                      :accessor delivery-price :disabled nil :type int     :serialize t)
+   (:name active            :initarg :active          :initform t                      :accessor active       :disabled nil :type bool      :serialize nil)
+   (:name preorder          :initarg :preorder        :initform nil                    :accessor preorder     :disabled nil :type bool      :serialize t)
+   (:name newbie            :initarg :newbie          :initform t                      :accessor newbie       :disabled nil :type bool      :serialize t)
+   (:name sale              :initarg :sale            :initform t                      :accessor sale         :disabled nil :type bool      :serialize t)
+   (:name parents           :initarg :parents         :initform nil                    :accessor parents      :disabled nil :type group-list :serialize t)
+   (:name date-modified     :initarg :date-modified   :initform (get-universal-time)   :accessor date-modified :disabled t  :type time      :serialize t)
+   (:name date-created      :initarg :date-created    :initform (get-universal-time)   :accessor date-created :disabled t   :type time      :serialize t)
+   (:name seo-text          :initarg :seo-text        :initform ""                     :accessor seo-text     :disabled nil :type textedit  :serialize t)
+   (:name count-transit     :initarg :count-transit   :initform 0                      :accessor count-transit :disabled t  :type int       :serialize t)
+   (:name count-total       :initarg :count-total     :initform 0                      :accessor count-total  :disabled t   :type int       :serialize t)
+   (:name optgroups         :initarg :optgroups       :initform nil                    :accessor optgroups    :disabled t   :type string    :serialize t)))
+
+
+
+
 ;; (new-classes.make-class-and-methods
 ;;  'group
 ;;  '((:name key               :initarg :key             :initform nil       :accessor key        :disabled t :type string)
@@ -95,28 +120,6 @@
 ;;    (:name descr             :initarg :descr           :initform nil       :accessor descr      :disabled nil :type string)
 ;;    ))
 
-
-(new-classes.make-class-and-methods
- 'product
- '((:name articul           :initarg :articul         :initform nil                          :accessor articul :disabled t :type string :serialize t)
-   (:name parent            :initarg :parent          :initform nil                          :accessor parent :disabled nil :type group :serialize t)
-   (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string :serialize nil)
-   (:name name              :initarg :name            :initform ""                           :accessor name :disabled nil :type string :serialize t)
-   (:name realname          :initarg :realname        :initform ""                           :accessor realname :disabled nil :type string :serialize t)
-   (:name price             :initarg :price           :initform 0                            :accessor price :disabled nil :type int :serialize t)
-   (:name siteprice         :initarg :siteprice       :initform 0                            :accessor siteprice :disabled nil :type int :serialize t)
-   (:name bonuscount        :initarg :bonuscount      :initform 0                            :accessor bonuscount :disabled nil :type int :serialize t)
-   (:name date-modified     :initarg :date-modified   :initform (get-universal-time)         :accessor date-modified :disabled t :type time :serialize t)
-   (:name date-created       :initarg :date-created     :initform (get-universal-time)         :accessor date-created :disabled t :type time :serialize t)
-   (:name active            :initarg :active          :initform t                            :accessor active :disabled nil :type bool :serialize nil)
-   (:name predzakaz         :initarg :predzakaz       :initform nil                          :accessor predzakaz :disabled nil :type bool :serialize t)
-   (:name newbie            :initarg :newbie          :initform t                            :accessor newbie :disabled nil :type bool :serialize t)
-   (:name sale              :initarg :sale            :initform t                            :accessor sale :disabled nil :type bool :serialize t)
-   (:name descr             :initarg :descr           :initform ""                           :accessor descr :disabled nil :type textedit :serialize t)
-   (:name shortdescr        :initarg :shortdescr      :initform ""                           :accessor shortdescr :disabled nil :type textedit :serialize t)
-   (:name count-transit     :initarg :count-transit   :initform 0                            :accessor count-transit :disabled t :type int :serialize t)
-   (:name count-total       :initarg :count-total     :initform 0                            :accessor count-total :disabled t :type int :serialize t)
-   (:name optgroups         :initarg :optgroups       :initform nil                          :accessor optgroups :disabled t :type string :serialize t)))
 
 ;; (new-classes.make-class-and-methods
 ;;  'optgroup

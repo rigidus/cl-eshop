@@ -1,4 +1,4 @@
-(in-package #:eshop)
+0(in-package #:eshop)
 
 
 ;; ADMIN ROUTE
@@ -90,6 +90,9 @@
                                                     (item (gethash key (storage *global-storage*)))
                                                     (item-fields (new-classes.make-fields item)))
                                                (when new-post-data
+                                                 (log5:log-for debug-console "~a~%" (hunchentoot:post-parameters hunchentoot:*request*))
+                                                 (setf new-post-data (servo.plist-to-unique new-post-data))
+                                                 (log5:log-for debug-console "----> ~a~%" (getf new-post-data :parents))
                                                  (new-classes.edit-fields item new-post-data)
                                                  (setf item-fields (new-classes.make-fields item)))
                                                (if item

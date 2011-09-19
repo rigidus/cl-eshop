@@ -19,6 +19,11 @@
 (defun storage.get-group-children (group)
   (childs group))
 
+
+;;получение главного родителя продукта
+(defun storage.get-main-product-parent (product)
+  (car (parents product)))
+
 ;;обход storage и составление списка в соответствии с функцией checker. Сортировка с переданным компаратором
 (defun storage.round-collect-storage (checker &optional (compare t compare-supplied-p))
   (let ((result))

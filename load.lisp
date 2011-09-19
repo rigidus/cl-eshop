@@ -97,7 +97,7 @@
    "eshop-config.lisp"
    "errors.lisp"
    "log.lisp"
-   "new-classes.lisp"
+;;   "new-classes.lisp"
    "classes.lisp"
    "spike.lisp"
    "serializers.lisp"
