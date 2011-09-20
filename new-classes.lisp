@@ -131,19 +131,26 @@
 
 ;;макрос для создания метода сериализации
 (defmacro new-classes.make-serialize-method (name class-fields)
-  `(defmethod serialize-entity ((object ,name))
-     (format nil "{~%~{~a, ~%~}~%}"
+  `(list (defmethod serialize-entity ((object ,name))
+     (format nil "{~%~{~a~^, ~%~}~%}"
              ,(cons
                `list
                (mapcar #'(lambda (field)
-                           `(format nil "\"~a\" : ~a"
-                                    (quote ,(getf field :name))
+                           `(format nil "~a : ~a"
+                                    (encode-json-to-string (quote ,(getf field :name)))
                                     (,(intern (string-upcase
                                                (format nil "object-fields.~a-field-serialize" (getf field :type))))
                                       (,(getf field :name)  object))))
                        (remove-if-not #'(lambda (field)
                                           (getf field :serialize))
-                                      class-fields))))))
+                                      class-fields)))))
+  (defmethod serialize-to-file ((object ,name) pathname)
+     (with-open-file (file pathname
+                           :direction :output
+                           :if-exists :supersede
+                           :external-format :utf-8)
+       (format file "~a" (serialize-entity object))))))
+
 
 
 
