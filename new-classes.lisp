@@ -18,10 +18,10 @@
        `list
        (mapcar #'(lambda (field)
                    `(,(intern (string-upcase
-                               (format nil "new-classes.~a-field-view" (getf field :type))))
-                                      (,(getf field :name)  object)
-                                      ,(format nil "~a" (getf field :name))
-                                      ,(getf field :disabled)))
+                               (format nil "boject-fields.~a-field-view" (getf field :type))))
+                      (,(getf field :name)  object)
+                      ,(format nil "~a" (getf field :name))
+                      ,(getf field :disabled)))
                class-fields))))
 
 
@@ -34,7 +34,7 @@
                    (when (not (getf field :disabled))
                      `(setf (,(getf field :name) object)
                             (,(intern (string-upcase
-                                       (format nil "new-classes.~a-field-get-data" (getf field :type))))
+                                       (format nil "object-fields.~a-field-get-data" (getf field :type))))
                               (getf post-data-plist ,(intern (string-upcase (format nil "~a" (getf field :name))) :keyword))))))
                class-fields))))
 
@@ -130,14 +130,25 @@
 
 
 ;;макрос для создания метода сериализации
-(defmacro new-classes.make-serialize-methods (name class-fields)
+(defmacro new-classes.make-serialize-method (name class-fields)
   `(defmethod serialize-entity ((object ,name))
-
+     (format nil "{~%~{~a, ~%~}~%}"
+             ,(cons
+               `list
+               (mapcar #'(lambda (field)
+                           `(format nil "\"~a\" : ~a"
+                                    (quote ,(getf field :name))
+                                    (,(intern (string-upcase
+                                               (format nil "object-fields.~a-field-serialize" (getf field :type))))
+                                      (,(getf field :name)  object))))
+                       (remove-if-not #'(lambda (field)
+                                          (getf field :serialize))
+                                      class-fields))))))
 
 
 
 ;; (defmacro new-classes.make-serialize-method (name class-fields)
-`;;   `(defmethod serialize ((object ,name))
+;;   `(defmethod serialize ((object ,name))
 ;;      (let* ((raw-breadcrumbs (new-classes.breadcrumbs object))
 ;;             (path-list (mapcar #'(lambda (elt)
 ;;                                    (getf elt :key))
@@ -216,5 +227,6 @@
   (eval `(new-classes.make-class ,name ,list-fields))
   (eval `(new-classes.make-view-method ,name ,list-fields))
   (eval `(new-classes.make-edit-method ,name ,list-fields))
-  (eval `(new-classes.make-unserialize-method ,name ,list-fields)))
+  (eval `(new-classes.make-unserialize-method ,name ,list-fields))
+  (eval `(new-classes.make-serialize-method ,name ,list-fields)))
 

@@ -9,11 +9,6 @@
      (prev-valid-key :initarg :prev-valid-key :initform 0 :accessor prev-valid-key)))
 
 
-(defvar *global-storage* (make-instance 'global-storage))
-(setf (storage *global-storage*) *storage*)
-(setf (root-groups *global-storage*) (storage.get-root-groups-list))
-(setf (active-products *global-storage*) (storage.get-active-products-list))
-
 
 ;;получение всех дочерних групп
 (defun storage.get-group-children (group)
@@ -72,3 +67,7 @@
     key))
 
 
+(defvar *global-storage* (make-instance 'global-storage))
+(setf (storage *global-storage*) *storage*)
+(setf (root-groups *global-storage*) (storage.get-root-groups-list))
+(setf (active-products *global-storage*) (storage.get-active-products-list))

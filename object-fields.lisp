@@ -51,7 +51,7 @@
 (defun object-fields.textedit-field-get-data (string)
   string)
 
-(defun object-fields.textedit-field-get-data (text)
+(defun object-fields.textedit-field-serialize (text)
   (object-fields.string-field-serialize text))
 
 
@@ -76,6 +76,18 @@
 
 (defun object-fields.bool-field-serialize (bool)
   (encode-json-to-string bool))
+
+
+;;генерация дерева групп
+;;open - список групп до которых нужно раскрыть дерево
+;;field-name - название поля, нужно для проставления в name в radio
+(defun object-fields.group-tree (open-groups field-name)
+  (let ((roots (root-groups *global-storage*)))
+    (soy.class_forms:group-tree
+     (list :roots
+           (mapcar #'(lambda (child)
+                       (object-fields.group-branch child open-groups field-name))
+                   roots)))))
 
 
 ;;group, список групп, генерируется из списка с проставленными уровнями глубины
@@ -115,17 +127,6 @@
                                                            :fieldname field-name))
                   (or open child-open)))))
 
-;;генерация дерева групп
-;;open - список групп до которых нужно раскрыть дерево
-;;field-name - название поля, нужно для проставления в name в radio
-(defun object-fields.group-tree (open-groups field-name)
-  (let ((roots (root-groups *global-storage*)))
-    (soy.class_forms:group-tree
-     (list :roots
-           (mapcar #'(lambda (child)
-                       (object-fields.group-branch child open-groups field-name))
-                   roots)))))
-
 
 (defun object-fields.group-list-field-get-data (string)
   ;;(log5:log-for test "~a" string))
@@ -135,4 +136,27 @@
           string))
 
 (defun object-fields.group-list-field-serialize (groups)
-  )
+  (format nil "[ ~{\"~a\"~^, ~}]"
+          (mapcar #'(lambda (group)
+                      (key group))
+                  groups)))
+
+;;optgroups
+(defun object-fields.optgroups-field-view (value name disabled)
+  (object-fields.string-field-view value name disabled))
+
+(defun object-fields.optgroups-field-get-data (string)
+  (object-fields.string-field-get-data string))
+
+(defun object-fields.optgroups-field-serialize (optgroups)
+  (format nil "[~{~a~^, ~%~%~}]"
+          (mapcar #'(lambda (optgroup)
+                           (format nil "{\"name\" : \"~a\", ~%  \"options\" : ~%[~{~a~^, ~%~}]}"
+                                   (getf optgroup :name)
+                                   (mapcar #'(lambda (option)
+                                               (format nil "{\"name\" : \"~a\" ,~%\"value\" : \"~a\"}"
+                                                       (getf option :name)
+                                                       (getf option :value)))
+                                           (getf optgroup :options))))
+                  optgroups)))
+

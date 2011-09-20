@@ -78,7 +78,7 @@
 (new-classes.make-class-and-methods
  'product
  '((:name key               :initarg :key             :initform ""                     :accessor key          :disabled t   :type string    :serialize t)
-   (:name articul           :initarg :articul         :initform nil                    :accessor articul      :disabled t   :type string    :serialize t)
+   (:name articul           :initarg :articul         :initform nil                    :accessor articul      :disabled t   :type int       :serialize t)
    (:name name-provider     :initarg :name-provider   :initform ""                     :accessor name-provider :disabled nil :type string   :serialize t)
    (:name name-seo          :initarg :name-seo        :initform ""                     :accessor name-seo     :disabled nil :type string    :serialize t)
    (:name siteprice         :initarg :siteprice       :initform 0                      :accessor siteprice    :disabled nil :type int       :serialize t)
@@ -95,7 +95,7 @@
    (:name seo-text          :initarg :seo-text        :initform ""                     :accessor seo-text     :disabled nil :type textedit  :serialize t)
    (:name count-transit     :initarg :count-transit   :initform 0                      :accessor count-transit :disabled t  :type int       :serialize t)
    (:name count-total       :initarg :count-total     :initform 0                      :accessor count-total  :disabled t   :type int       :serialize t)
-   (:name optgroups         :initarg :optgroups       :initform nil                    :accessor optgroups    :disabled t   :type string    :serialize t)))
+   (:name optgroups         :initarg :optgroups       :initform nil                    :accessor optgroups    :disabled t   :type optgroups :serialize t)))
 
 
 

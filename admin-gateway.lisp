@@ -1,4 +1,4 @@
-0(in-package #:eshop)
+(in-package #:eshop)
 
 
 ;; ADMIN ROUTE
@@ -20,10 +20,6 @@
 (restas:define-route admin-testeditor-key-route ("/admin/testeditor" :method :post)
   (show-admin-page "testeditor"))
 
-;;обновление главной страницы
-(defun admin-update ()
-  (admin-compile-templates))
-
 ;;шаблоны
 (defun admin-compile-templates ()
   (mapcar #'(lambda (fname)
@@ -32,6 +28,11 @@
           '("admin.soy"
             "class_forms.soy"
             )))
+
+;;обновление главной страницы
+(defun admin-update ()
+  (admin-compile-templates))
+
 
 (defun show-gateway-history ()
   (let ((history-list
