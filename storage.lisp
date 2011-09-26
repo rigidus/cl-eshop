@@ -12,12 +12,17 @@
 
 ;;получение всех дочерних групп
 (defun storage.get-group-children (group)
-  (childs group))
+  (groups group))
 
 
 ;;получение главного родителя продукта
 (defun storage.get-main-product-parent (product)
   (car (parents product)))
+
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+(defmethod storage.main-parent ((object group))
+  (car (parents object)))
+;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ;;обход storage и составление списка в соответствии с функцией checker. Сортировка с переданным компаратором
 (defun storage.round-collect-storage (checker &optional (compare t compare-supplied-p))
@@ -43,7 +48,7 @@
                                                                 (< (order a) (order b))))))
   (storage.round-collect-storage #'(lambda (obj)
                                      (and (equal (type-of obj) 'group)
-                                          (null (parent obj))))
+                                          (null (parents obj))))
                                  compare))
 
 

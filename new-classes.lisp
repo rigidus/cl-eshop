@@ -5,9 +5,9 @@
   `(defclass ,name ()
      ,(mapcar #'(lambda (field)
                   `(,(getf field :name)
-                     :initarg ,(getf field :initarg)
+                     :initarg ,(intern (format nil "~a" (getf field :name)) :keyword)
                      :initform ,(getf field :initform)
-                     :accessor ,(getf field :accessor)))
+                     :accessor ,(getf field :name)))
               class-fields)))
 
 
@@ -18,7 +18,7 @@
        `list
        (mapcar #'(lambda (field)
                    `(,(intern (string-upcase
-                               (format nil "boject-fields.~a-field-view" (getf field :type))))
+                               (format nil "object-fields.~a-field-view" (getf field :type))))
                       (,(getf field :name)  object)
                       ,(format nil "~a" (getf field :name))
                       ,(getf field :disabled)))
@@ -52,19 +52,6 @@
 ;;макрос для создания метода десериализации класса из файла, по данным имени класса и списку полей
 (defmacro new-classes.make-unserialize-method (name class-fields)
   `(defmethod unserialize (filepath (dummy ,name))
-     ;;хендл ошибок при десереализации
-     (handler-bind ((WRONG-PRODUCT-SLOT-VALUE
-                     #'(lambda (in-condition)
-                         (restart-case
-                             (error 'WRONG-PRODUCT-FILE
-                                    :filepath filepath
-                                    :in-condition in-condition)
-                           (ignore ()
-                             :report "Ignore error, save current value"
-                             (invoke-restart 'ignore))
-                           (set-null ()
-                             :report "Set value as NIL"
-                             (invoke-restart 'set-null))))))
        ;;читаем из файла и декодируем json
        (let* ((file-content (alexandria:read-file-into-string filepath))
               (raw (decode-json-from-string file-content))
@@ -80,7 +67,7 @@
          ;;пост-обработка
          (new-classes.post-unserialize item)
          ;; Возвращаем десериализованный объект
-         item))))
+         item)))
 
 
 ;;вызывается после десереализации продукта
@@ -116,16 +103,23 @@
 
 ;;вызывается после десереализации группы
 (defmethod new-classes.post-unserialize ((item group))
+  ;; после десериализации в parent лежит список key родительских групп
+  (setf (parents item)
+        (mapcar #'(lambda (parent-key)
+                    (when (not (null parent-key))
+                      (let ((parent (gethash parent-key (storage *global-storage*))))
+                        ;;Если родитель — группа, связать группу с данной
+                        (when (equal 'group (type-of parent))
+                          (push item (groups parent))
+                          parent))))
+                (parents item)))
+  (mapcar #'(lambda (child)
+              (setf (empty item) (or (empty item) (active child)))) (products item))
   (setf (keyoptions item) (mapcar #'(lambda (pair)
                                       (list :optgroup (cdr (assoc :optgroup pair))
                                             :optname (cdr (assoc :optname pair))))
                                   (keyoptions item)))
-  (when (not (null (parent item)))
-    (setf (parent item) (gethash (parent item) (storage *global-storage*))))
-  (setf (fullfilter item) (new-classes.decode (fullfilter item) (make-instance 'group-filter)))
-  (when (equal 'group (type-of (parent item)))
-    (push item (childs (parent item)))
-    (setf (childs (parent item)) (remove-duplicates (childs (parent item))))))
+  (setf (fullfilter item) (new-classes.decode (fullfilter item) (make-instance 'group-filter))))
 
 
 

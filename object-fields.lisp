@@ -1,6 +1,6 @@
 (in-package #:eshop)
 
-(defun new-classes.string-escaping (string)
+(defun object-fields.string-escaping (string)
   "Processing string and escapes quotes and backslashes"
   (let ((chars-for-escape (list #\\ #\")))
     (format nil "~{~a~}"
@@ -28,7 +28,7 @@
 
 
 (defun object-fields.string-field-serialize (string)
-  (format nil "\"~a\"" (new-classes.string-escaping string)))
+  (format nil "\"~a\"" (object-fields.string-escaping string)))
 
 ;;int
 (defun object-fields.int-field-view (value name disabled)
@@ -128,12 +128,14 @@
                   (or open child-open)))))
 
 
-(defun object-fields.group-list-field-get-data (string)
-  ;;(log5:log-for test "~a" string))
-  (mapcar #'(lambda (parent)
-              (log5:log-for debug-console "~a~%" parent)
-              (gethash parent (storage *global-storage*)))
-          string))
+(defun object-fields.group-list-field-get-data (string-list)
+  (if (equal (type-of string-list) 'cons)
+      (mapcar #'(lambda (parent)
+                  (log5:log-for debug-console "~a~%" parent)
+                  (gethash parent (storage *global-storage*)))
+              string-list)
+      (list (gethash string-list (storage *global-storage*)))))
+
 
 (defun object-fields.group-list-field-serialize (groups)
   (format nil "[ ~{\"~a\"~^, ~}]"
@@ -160,3 +162,39 @@
                                            (getf optgroup :options))))
                   optgroups)))
 
+
+
+;;products, список продуктов(-детей)
+(defun object-fields.product-list-field-view (value name disabled)
+  (object-fields.string-field-view name value disabled))
+
+
+(defun object-fields.product-list-field-get-data (string-list)
+  (if (equal (type-of string-list) 'cons)
+      (mapcar #'(lambda (parent)
+                  (log5:log-for debug-console "~a~%" parent)
+                  (gethash parent (storage *global-storage*)))
+              string-list)
+      (list (gethash string-list (storage *global-storage*)))))
+
+(defun object-fields.product-list-field-serialize (products)
+  (format nil "[ ~{\"~a\"~^, ~}]"
+          (mapcar #'(lambda (product)
+                      (key product))
+                  products)))
+
+
+;;keyoptions
+(defun object-fields.keyoptions-field-view (value name disabled)
+  (object-fields.string-field-view name value disabled))
+
+(defun object-fields.keyoptions-field-get-data (string)
+  (object-fields.string-field-get-data string))
+
+(defun object-fields.keyoptions-field-serialize (keyoptions)
+  (format nil "[~{~a~^, ~%~%~}]"
+          (mapcar #'(lambda (keyoption)
+                           (format nil "{\"optgroup\" : \"~a\", ~%  \"optname\" : \"~a\"}"
+                                   (getf keyoption :optgroup)
+                                   (getf keyoption :optname)))
+                  keyoptions)))

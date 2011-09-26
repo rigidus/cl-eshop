@@ -1,0 +1,38 @@
+(defsystem eshop
+    :depends-on (#:restas #:cl-json #:arnesi #:closure-template #:log5)
+    :components
+    ((:module "src"
+              :components
+              ((:file "packages")
+               (:file "time" :depends-on ("packages"))
+               (:file "eshop-config" :depends-on ("time"))
+               (:file "errors" :depends-on ("eshop-config"))
+               (:file "log" :depends-on ("errors"))
+               (:file "new-classes" :depends-on ("log"))
+               (:file "classes" :depends-on ("new-classes"))
+               (:file "serializers" :depends-on ("classes"))
+               (:file "servo" :depends-on ("serializers"))
+               (:file "trans" :depends-on ("servo"))
+               (:file "routes" :depends-on ("trans"))
+               (:file "render" :depends-on ("routes"))
+               (:file "cart" :depends-on ("render"))
+               (:file "generics" :depends-on ("cart"))
+               (:file "gateway" :depends-on ("generics"))
+               (:file "search" :depends-on ("gateway"))
+               (:file "xls" :depends-on ("search"))  ;;необходима xls2csv | sudo apt-get install catdoc
+               (:file "yml" :depends-on ("xls"))
+               (:file "articles" :depends-on ("yml"))
+               (:file "wolfor-stuff" :depends-on ("articles"))
+               (:file "report" :depends-on ("wolfor-stuff"))
+               (:file "sklonenie" :depends-on ("report"))
+               (:file "newcart" :depends-on ("sklonenie"))
+               (:file "main-page" :depends-on ("newcart"))
+               (:file "sitemap" :depends-on ("main-page"))
+               (:file "rename" :depends-on ("sitemap"))
+               (:file "catalog" :depends-on ("rename"))
+               (:file "prerender" :depends-on ("catalog"))
+               (:file "filters" :depends-on ("prerender"))
+               (:file "oneclickcart" :depends-on ("filters"))
+               (:file "images" :depends-on ("oneclickcart")) ;; imagemagic
+               (:file "spike" :depends-on ("images"))
+               ))))
