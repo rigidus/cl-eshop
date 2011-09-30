@@ -231,6 +231,11 @@
 ;; (setf (active (gethash "153599" *storage*)) nil)
 ;; (serialize (gethash "153599" *storage*))
 
+;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
+;; (create-report "xls/products.csv" #'write-products-report)
+;; (create-report "seo/report-groups.csv" #'write-groups)
+;; (create-report "seo/report-products.csv" #'write-products)
+;; (create-report "seo/report-vendors.csv" #'write-vendors)
 
 
 (defparameter *special-products* (make-hash-table :test #'equal))
@@ -278,14 +283,14 @@
               "167534"
               "167535"))
 
-  ;; (maphash #'(lambda (k v)
-  ;;              (declare (ignore k))
-  ;;              (when (equal (type-of v)
-  ;;                             'group)
-  ;;                (when (not (delivery-price v))
-  ;;                    (wlog (name v))
-  ;;                    (setf (delivery-price v) 300))))
-  ;;          *storage*)
+  (maphash #'(lambda (k v)
+               (declare (ignore k))
+               (when (equal (type-of v)
+                              'group)
+                 (when (not (delivery-price v))
+                     (wlog (name v))
+                     (setf (delivery-price v) 300))))
+           *storage*)
   )
 
 
@@ -302,27 +307,3 @@
                  (delivery-price g)
                  300))))
   )
-
-
-;; (with-open-file (stream "/home/webadmin/Dropbox/htconf/test.csv")
-;;     (do ((line (read-line stream nil)
-;;                (read-line stream nil)))
-;;         ((null line))
-;;       ;; (print line)
-;;       (let* ((words (split-sequence:split-sequence #\, line))
-;;              (article (car words))
-;;              (price (parse-integer (cadr words)))
-;;              (siteprice (parse-integer (caddr words)))
-;;              (prod (gethash article *storage*)))
-;;         (format t "~&~a: ~a ~a" article price siteprice)
-;;         (if prod
-;;             (setf (price prod) price)
-;;             (setf (siteprice prod) siteprice))
-;;       )))
-
-
-;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
-;; (create-report "xls/products.csv" #'write-products-report)
-;; (create-report "seo/report-groups.csv" #'write-groups)
-;; (create-report "seo/report-products.csv" #'write-products)
-;; (create-report "seo/report-vendors.csv" #'write-vendors)

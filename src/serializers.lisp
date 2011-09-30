@@ -299,7 +299,7 @@
 
 
 (defmethod serialize ((object optgroup))
-  (format nil "~%      {~%         \"name\": \"~a\",~%         \"options\": [~{~a~^,~}~%         ]~%      }"
+  (format nil "{\"name\":\"~a\",\"options\":[~{~a~^,~}]}"
           (stripper (name object))
           (mapcar #'(lambda (option)
                       (serialize option))
@@ -319,7 +319,7 @@
 
 
 (defmethod serialize ((object option))
-  (format nil "~%            {~%               \"name\": \"~a\",~%               \"value\": \"~a\",~%               \"optype\": ~a,~%               \"boolflag\": ~a~%            }"
+  (format nil "{\"name\":\"~a\",\"value\": \"~a\",\"optype\":~a,\"boolflag\":~a}"
           (stripper (name object))
           (stripper (value object))
           (encode-json-to-string (optype object))

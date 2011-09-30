@@ -136,8 +136,8 @@
       (get-procent (price object) (siteprice object))
     (let ((pics (get-pics (articul object))))
       (default-page
-          (soy.product:content (list :menu (menu object)
-                         :breadcrumbs (soy.product:breadcrumbs (breadcrumbs object))
+          (product:content (list :menu (menu object)
+                         :breadcrumbs (product:breadcrumbs (breadcrumbs object))
                          :articul (articul object)
                          :name (realname object)
                          :siteprice (siteprice object)
@@ -151,19 +151,22 @@
                          :subst (format nil "/~a" (articul object))
                          :pics (cdr pics)
                          :firstpic (if (null pics) nil (car pics))
-                         :optlist (let ((optlist  (remove-if #'null (mapcar #'(lambda (optgroup)
-                                                                     ;;не отображать группу опций с именем "Secret"
-                                                                     (if (not (string= (name optgroup)
-                                                                                      "Secret"))
-                                                                        (restas:render-object designer optgroup)))
-                                                                           (optgroups object)))))
+                         :optlist (let ((optlist
+                                         (remove-if
+                                          #'null
+                                          (mapcar #'(lambda (optgroup)
+                                                      ;;не отображать группу опций с именем "Secret"
+                                                      (if (not (string= (name optgroup)
+                                                                        "Secret"))
+                                                          (restas:render-object designer optgroup)))
+                                                  (optgroups object)))))
                                     (if (null optlist)
                                         nil
-                                        (soy.product:optlist (list :optgroups optlist))))
-                         :accessories (soy.product:accessories)
-                         :reviews (soy.product:reviews)
-                         :simular (soy.product:simulars)
-                         :others (soy.product:others
+                                        (product:optlist (list :optgroups optlist))))
+                         :accessories (product:accessories)
+                         :reviews (product:reviews)
+                         :simular (product:simulars)
+                         :others (product:others
                                   (list :others (mapcar #'(lambda (x)
                                                             (if (equal 'product (type-of x))
                                                                 (view x)
@@ -191,8 +194,7 @@
                                                                                  :pic (if (null pics) nil (car pics))
                                                                                  :siteprice (siteprice object)
                                                                                  :price (price object)
-                                                                                 ;; :deliveryprice (delivery-price object)
-                                                                                 )))
+                                                                                 :deliveryprice (delivery-price object))))
                          :addoneclick (if (not (predzakaz object))
                                           (soy.buttons:add-one-click (list :articul (articul object))))))
           :keywords (format nil "~a"
@@ -322,13 +324,13 @@
                                  (restas:render-object designer option)))
                          (options object))))
     (if (not (null (remove-if  #'(lambda (v) (null v)) options)))
-        (soy.product:optgroup (list :name (name object)
+        (product:optgroup (list :name (name object)
                                 :options options))
         "")))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object option))
-  (soy.product:option (list :name (name object)
+  (product:option (list :name (name object)
                         :value (if (and (equal (optype object) :bool)
                                         (boolflag object))
                                    (format nil "~a ~a" "<img src=\"img/ok.png\" alt=\"*\"/>" (value object))

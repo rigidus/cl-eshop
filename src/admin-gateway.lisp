@@ -20,10 +20,6 @@
 (restas:define-route admin-testeditor-key-route ("/admin/testeditor" :method :post)
   (show-admin-page "testeditor"))
 
-;;обновление главной страницы
-(defun admin-update ()
-  (admin-compile-templates))
-
 ;;шаблоны
 (defun admin-compile-templates ()
   (mapcar #'(lambda (fname)
@@ -32,6 +28,11 @@
           '("admin.soy"
             "class_forms.soy"
             )))
+
+;;обновление главной страницы
+(defun admin-update ()
+  (admin-compile-templates))
+
 
 (defun show-gateway-history ()
   (let ((history-list
@@ -54,6 +55,7 @@
   (let* ((post-data (hunchentoot:raw-post-data))
          (new-post-data (alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*)))
          (post-data-plist))
+
     (when (not (null post-data))
       (setf post-data (sb-ext:octets-to-string post-data :external-format :utf8))
       (setf post-data-plist  (let ((result))
@@ -85,11 +87,13 @@
                                             ((string= key "actions")
                                              (soy.admin:action-buttons (list :post post-data)))
                                             ((string= key "edit")
-                                             ;; (log5:log-for planner "OMFG somebody enter admin-room!")
                                              (let* ((key (getf (request-get-plist) :key))
                                                     (item (gethash key (storage *global-storage*)))
                                                     (item-fields (new-classes.make-fields item)))
                                                (when new-post-data
+                                                 (log5:log-for debug-console "~a~%" (hunchentoot:post-parameters hunchentoot:*request*))
+                                                 (setf new-post-data (servo.plist-to-unique new-post-data))
+                                                 (log5:log-for debug-console "----> ~a~%" (getf new-post-data :parents))
                                                  (new-classes.edit-fields item new-post-data)
                                                  (setf item-fields (new-classes.make-fields item)))
                                                (if item

@@ -19,12 +19,12 @@
 
 ;;статические страницы
 (defun sitemap-static-routes ()
-  (maphash #'(lambda (k v)
-               (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/~a" k)
-                                            :lastmod *sitemap-lastmod-time*
-                                            :changefreq "monthly"
-                                            :priority "0.5")))
-           static-pages.*storage*))
+  (loop
+     :for name in *static-pages*
+     :do (sitemap-push-format-r (list :loc (format nil "http://www.320-8080.ru/~a" name)
+                        :lastmod *sitemap-lastmod-time*
+                        :changefreq "monthly"
+                        :priority "0.5"))))
 
 ;;группы
 (defun sitemap-one-group (g)

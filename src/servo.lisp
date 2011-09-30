@@ -559,6 +559,7 @@
 										 (equal x #\")
 										 (equal x #\\)
                                          (equal x #\~)
+                                         (equal x #\Newline)
 										 ))
 									   (push x $ret)))
                              (let ((ret (coerce (reverse $ret) 'string)))
@@ -666,18 +667,14 @@ is replaced with replacement."
                   ))
             (keyoptions parent))))
 
-;; (defun get-format-price (p)
-;;   (let ((rs (format nil "~a" p))
-;;         (str (reverse (format nil "~a" p))))
-;;     (when (< 3 (length str))
-;;       (let ((st1 (reverse (subseq str 0 3)))
-;;             (st2 (reverse (subseq str 3))))
-;;         (setf rs (format nil "~a ~a" st2 st1))))
-;;     rs))
-;; Теперь немного короче
 (defun get-format-price (p)
-  (format nil "~,,' ,3:d" p))
-
+  (let ((rs (format nil "~a" p))
+        (str (reverse (format nil "~a" p))))
+    (when (< 3 (length str))
+      (let ((st1 (reverse (subseq str 0 3)))
+            (st2 (reverse (subseq str 3))))
+        (setf rs (format nil "~a ~a" st2 st1))))
+    rs))
 
 
 (defmethod view ((object product))
@@ -1056,7 +1053,30 @@ is replaced with replacement."
               (subseq title 1))))
 
 (defun alist-to-plist (alist)
-  (loop
-     :for (key . value)
-     :in alist
-     :nconc (list (intern (format nil "~a" key) :keyword) value)))
+  (if (not (equal (type-of alist) 'cons))
+      alist
+      ;;else
+      (loop
+         :for (key . value)
+         :in alist
+         :nconc (list (intern (format nil "~a" key) :keyword) value))))
+
+
+(defun servo.plist-to-unique (plist)
+  (let ((result ))
+    (loop
+       :while plist
+       :do (let ((key (car plist))
+                 (value (cadr plist)))
+             (setf (getf result key)
+                   (if (getf result key)
+                       (append
+                        (if (eq (type-of (getf result key)) 'cons)
+                            (getf result key)
+                            (list (getf result key)))
+                        (list value))
+                       ;;else
+                       value)))
+       (setf plist (cddr plist)))
+    result))
+

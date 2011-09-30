@@ -75,50 +75,52 @@
   ((producers         :initarg :producers         :initform nil       :accessor producers)
    (producersall      :initarg :producersall      :initform nil       :accessor producersall)))
 
-;; (new-classes.make-class-and-methods
-;;  'group
-;;  '((:name key               :initarg :key             :initform nil       :accessor key        :disabled t :type string)
-;;    (:name parent            :initarg :parent          :initform nil       :accessor parent     :disabled nil :type group)
-;;    (:name name              :initarg :name            :initform nil       :accessor name       :disabled nil :type string)
-;;    (:name active            :initarg :active          :initform nil       :accessor active     :disabled nil :type bool)
-;;    (:name empty             :initarg :empty           :initform nil       :accessor empty      :disabled t :type bool)
-;;    (:name order             :initarg :order           :initform 1000      :accessor order      :disabled nil :type int)
-;;    (:name keyoptions        :initarg :keyoptions      :initform nil       :accessor keyoptions :disabled t :type string)
-;;    (:name delivery-price    :initarg :delivery-price  :initform nil       :accessor delivery-price :disabled t :type int)
-;;    (:name ymlshow           :initarg :ymlshow         :initform nil       :accessor ymlshow    :disabled t :type string)
-;;    (:name pic               :initarg :pic             :initform nil       :accessor pic        :disabled nil :type string)
-;;    (:name icon              :initarg :icon            :initform nil       :accessor icon       :disabled nil :type string)
-;;    (:name childs            :initarg :childs          :initform nil       :accessor childs     :disabled t :type string)
-;;    (:name filters           :initarg :filters         :initform nil       :accessor filters    :disabled t :type string)
-;;    (:name fullfilter        :initarg :fullfilter      :initform nil       :accessor fullfilter :disabled t :type string)
-;;    (:name products          :initarg :products        :initform nil       :accessor products   :disabled t :type string)
-;;    (:name vendors           :initarg :vendors         :initform (make-hash-table :test #'equal) :accessor vendors :disabled t :type string)
-;;    (:name descr             :initarg :descr           :initform nil       :accessor descr      :disabled nil :type string)
-;;    ))
-
 
 ;; (new-classes.make-class-and-methods
 ;;  'product
-;;  '((:name articul           :initarg :articul         :initform nil                          :accessor articul :disabled t :type string)
-;;    (:name parent            :initarg :parent          :initform nil                          :accessor parent :disabled nil :type group)
-;;    (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string)
-;;    (:name name              :initarg :name            :initform ""                           :accessor name :disabled nil :type string)
-;;    (:name realname          :initarg :realname        :initform ""                           :accessor realname :disabled nil :type string)
-;;    (:name price             :initarg :price           :initform 0                            :accessor price :disabled nil :type int)
-;;    (:name siteprice         :initarg :siteprice       :initform 0                            :accessor siteprice :disabled nil :type int)
-;;    (:name bonuscount        :initarg :bonuscount      :initform 0                            :accessor bonuscount :disabled nil :type int)
-;;    (:name date-modified     :initarg :date-modified   :initform (get-universal-time)         :accessor date-modified :disabled t :type time)
-;;    (:name date-created       :initarg :date-created   :initform (get-universal-time)         :accessor date-created :disabled t :type time)
-;;    (:name delivery-price    :initarg :delivery-price  :initform nil                          :accessor delivery-price :disabled t :type int)
-;;    (:name active            :initarg :active          :initform t                            :accessor active :disabled nil :type bool)
-;;    (:name predzakaz         :initarg :predzakaz       :initform nil                          :accessor predzakaz :disabled nil :type bool)
-;;    (:name newbie            :initarg :newbie          :initform t                            :accessor newbie :disabled nil :type bool)
-;;    (:name sale              :initarg :sale            :initform t                            :accessor sale :disabled nil :type bool)
-;;    (:name descr             :initarg :descr           :initform ""                           :accessor descr :disabled nil :type textedit)
-;;    (:name shortdescr        :initarg :shortdescr      :initform ""                           :accessor shortdescr :disabled nil :type textedit)
-;;    (:name count-transit     :initarg :count-transit   :initform 0                            :accessor count-transit :disabled t :type int)
-;;    (:name count-total       :initarg :count-total     :initform 0                            :accessor count-total :disabled t :type int)
-;;    (:name optgroups         :initarg :optgroups       :initform nil                          :accessor optgroups :disabled t :type string)))
+;;  '((:name key               :initform ""                     :disabled t     :type string      :serialize t)
+;;    (:name articul           :initform nil                    :disabled t     :type int         :serialize t)
+;;    (:name name-provider     :initform ""                     :disabled nil   :type string      :serialize t)
+;;    (:name name-seo          :initform ""                     :disabled nil   :type string      :serialize t)
+;;    (:name siteprice         :initform 0                      :disabled nil   :type int         :serialize t)
+;;    (:name delta-price       :initform 0                      :disabled nil   :type int         :serialize t)
+;;    (:name bonuscount        :initform 0                      :disabled nil   :type int         :serialize t)
+;;    (:name delivery-price    :initform 0                      :disabled nil   :type int         :serialize t)
+;;    (:name active            :initform t                      :disabled nil   :type bool        :serialize nil)
+;;    (:name preorder          :initform nil                    :disabled nil   :type bool        :serialize t)
+;;    (:name newbie            :initform t                      :disabled nil   :type bool        :serialize t)
+;;    (:name sale              :initform t                      :disabled nil   :type bool        :serialize t)
+;;    (:name parents           :initform nil                    :disabled nil   :type group-list  :serialize t)
+;;    (:name date-modified     :initform (get-universal-time)   :disabled t     :type time        :serialize t)
+;;    (:name date-created      :initform (get-universal-time)   :disabled t     :type time        :serialize t)
+;;    (:name seo-text          :initform ""                     :disabled nil   :type textedit    :serialize t)
+;;    (:name count-transit     :initform 0                      :disabled t     :type int         :serialize t)
+;;    (:name count-total       :initform 0                      :disabled t     :type int         :serialize t)
+;;    (:name optgroups         :initform nil                    :disabled t     :type optgroups   :serialize t)))
+
+
+
+
+;; (new-classes.make-class-and-methods
+;;  'group
+;;  '((:name key               :initform nil                             :disabled t   :type string       :serialize t)
+;;    (:name parents           :initform nil                             :disabled nil :type group-list   :serialize t)
+;;    (:name name              :initform nil                             :disabled nil :type string       :serialize t)
+;;    (:name active            :initform nil                             :disabled nil :type bool         :serialize t)
+;;    (:name empty             :initform nil                             :disabled t   :type bool         :serialize nil)
+;;    (:name order             :initform 1000                            :disabled nil :type int          :serialize t)
+;;    (:name ymlshow           :initform nil                             :disabled t   :type bool         :serialize t)
+;;    (:name pic               :initform nil                             :disabled nil :type string       :serialize t)
+;;    (:name icon              :initform nil                             :disabled nil :type string       :serialize t)
+;;    (:name delivery-price    :initdorm 0                               :disabled nil :type int          :serialize t)
+;;    (:name groups            :initform nil                             :disabled t   :type group-list   :serialize t)
+;;    (:name products          :initform nil                             :disabled t   :type product-list :serialize t)
+;;    (:name filters           :initform nil                             :disabled t   :type string       :serialize nil)
+;;    (:name fullfilter        :initform nil                             :disabled t   :type string       :serialize nil)
+;;    (:name vendors           :initform (make-hash-table :test #'equal) :disabled t   :type string       :serialize nil)
+;;    (:name seo-text          :initform nil                             :disabled nil :type textedit     :serialize t)
+;;    (:name keyoptions        :initform nil                             :disabled t   :type keyoptions   :serialize t)))
+
 
 ;; (new-classes.make-class-and-methods
 ;;  'optgroup
@@ -153,7 +155,7 @@
 ;; (new-classes.make-class-and-methods
 ;;  'producers
 ;;  '((:name producers         :initarg :producers         :initform nil       :accessor producers :disabled t :type string)
-;;    (:name key               :initarg :key               :initform ""          :accessor key :disabled t :type string)
+;;    (:name key               :initarg :key             :initform ""          :accessor key :disabled t :type string)
 ;;    (:name producersall      :initarg :producersall      :initform nil       :accessor producersall :disabled t :type string)))
 
 

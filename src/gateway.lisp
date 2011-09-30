@@ -17,6 +17,7 @@
         "NIL"
         (progn
           (cond ((string= "0" (hunchentoot:get-parameter "num"))
+
                  ;; Обработка последнего пакета
                  (progn
                    ;; Делаем все продукты неактивными
@@ -31,6 +32,7 @@
                    ;; Обрабатываем все сохраненные пакеты
                    (loop :for packet :in (reverse *load-list*) :do
                       (process packet))
+
                    ;;создаем новый yml файл
                    (create-yml-file)
                    ;; Заполняем siteprice если он равен 0
@@ -42,6 +44,7 @@
                    (setf *load-list* nil)
                    (setf *order* nil)
                    "last"))
+
                 ((string= "1" (hunchentoot:get-parameter "num"))
                  ;; Обработка первого пакета
                  (progn
