@@ -30,7 +30,7 @@
 
 
 (defun transform.serialize-old-group (object)
-  (format nil "{\"key\":~a,\"parents\":~a,\"name\":~a,\"active\":~a,\"order\":~a,\"ymlshow\":~a,\"pic\":~a,\"icon\":~a,\"deliveryPrice\":~a,\"seo-text\":~a,\"keyoptions\":~a}~%"
+  (format nil "{\"key\":~a,\"parents\":~a,\"name\":~a,\"active\":~a,\"order\":~a,\"ymlshow\":~a,\"pic\":~a,\"icon\":~a,\"deliveryPrice\":~a,\"seoText\":~a,\"rawFullfilter\":~a,\"keyoptions\":~a}~%"
           (format nil "\"~a\"" (key object)) ;;key
           (if (not (null (parent object)))
             (format nil "[ \"~a\" ]" (key (parent object)))
@@ -42,7 +42,8 @@
           (format nil "\"~a\"" (object-fields.string-escaping (pic object)));;pic
           (format nil "\"~a\"" (object-fields.string-escaping (icon object)));;icon
           (encode-json-to-string (delivery-price object));;deliveryPrice
-          (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (descr object))));;seo-text
+          (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (raw-fullfilter object))));;seo-text
+          (format nil "\"~a\"" (object-fields.string-replace-newlines (descr object)));;raw-fullfilter
           (if (not (null (keyoptions object)))
               (format nil "[~{~a~^,~}]"
                       (loop :for item :in (keyoptions object) :collect
@@ -50,6 +51,21 @@
                                  (getf item :optgroup)
                                  (getf item :optname))))
               (format nil "null"))))
+
+(defun transform.serialize-old-filter (object)
+  (format nil "{\"key\":~a,\"parents\":~a,\"name\":~a,\"func-string\":~a}~%"
+          (format nil "\"~a\"" (key object)) ;;key
+          (if (not (null (parent object)))
+            (format nil "[ \"~a\" ]" (key (parent object)))
+            (format nil "null")) ;;parents
+          (format nil "\"~a\"" (object-fields.string-escaping (name object)));;name
+          (format nil "\"~a\""
+                  (object-fields.string-escaping
+                   (object-fields.string-replace-newlines (func-string object))));;func-string
+          ))
+
+
+
 
 
 (defun transform.print-to-file (text pathname)
@@ -87,6 +103,19 @@
                      (format file "~a" (transform.serialize-old-group value))))
                *storage*))))
 
+(defun transform.serialize-all-filters-to-file (pathname)
+  (with-open-file (file pathname
+                        :direction :output
+                        :if-exists :supersede
+                        :external-format :utf-8)
+    (let ((cnt 0))
+      (maphash #'(lambda (key value)
+                   (declare (ignore key))
+                   (when (and (not (null value)) (equal (type-of value) 'filter))
+                     (format t "~a ~%" cnt)
+                     (setf cnt (+ 1 cnt))
+                     (format file "~a" (transform.serialize-old-filter value))))
+               *storage*))))
 
 
 (defun transform.unserialize-old-products-to-new ()

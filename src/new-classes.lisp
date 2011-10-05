@@ -53,18 +53,25 @@
 (defmacro new-classes.make-unserialize-method (name class-fields)
   `(list
     (defmethod unserialize (raw (dummy ,name))
-       ;;читаем из файла и декодируем json
-       (let
-           ;;создаем объект с прочитанными из файла полями
-           ((item
-             ,(let ((res (append (list `make-instance) (list `(quote ,name)))))
-                   (mapcar
-                    #'(lambda (field)
-                        (setf res (append res (let ((name (intern (string-upcase (format nil "~a" (getf field :name))) :keyword)))
-                                                `(,name (cdr (assoc ,name raw)))))))
-                    class-fields)
-                   res)))
-         item))
+      ;;читаем из файла и декодируем json
+      (let
+          ;;создаем объект с прочитанными из файла полями
+          ((item
+            ,(let ((res (append (list `make-instance) (list `(quote ,name)))))
+                  (mapcar
+                   #'(lambda (field)
+                       (setf res
+                             (append res
+                                     (let ((name (intern (string-upcase (format nil "~a" (getf field :name))) :keyword))
+                                           (initform (getf field :initform)))
+                                       `(,name
+                                         (let ((val (cdr (assoc ,name raw))))
+                                            (if val
+                                                val
+                                                ,initform)))))))
+                   class-fields)
+                  res)))
+        item))
     (defmethod unserialize-from-file (filepath (dummy ,name))
       (with-open-file (file filepath)
         (loop for line = (read-line file nil 'EOF)
@@ -132,6 +139,23 @@
                                   (keyoptions item)))
   (setf (fullfilter item) (new-classes.decode (fullfilter item) (make-instance 'group-filter))))
 
+(defmethod new-classes.post-unserialize ((item filter))
+  ;;adding newlines instead of #Newline
+  (setf (func-string item) (object-fields.string-add-newlines (func-string item)))
+  ;;evaling func-string to func
+  (setf (func item) (eval (read-from-string (func-string item))))
+  ;; после десериализации в parent лежит список key родительских групп
+  (setf (parents item)
+        (mapcar #'(lambda (parent-key)
+                    (when (not (null parent-key))
+                      (let ((parent (gethash parent-key (storage *global-storage*))))
+                        ;;Если родитель — группа, связать группу с фильтром
+                        (when (equal 'group (type-of parent))
+                          (push item (filters parent))
+                          parent))))
+                (parents item))))
+
+
 
 
 ;;макрос для создания метода сериализации
@@ -175,6 +199,7 @@
 (defun new-classes.unserialize-all ()
   (unserialize-from-file #P"/home/eviltosha/serialize_test/products_old" (make-instance 'product))
   (unserialize-from-file #P"/home/eviltosha/serialize_test/groups" (make-instance 'group))
+  (unserialize-from-file #P"/home/eviltosha/serialize_test/filters" (make-instance 'filter))
   (storage.make-lists)
   (maphash #'(lambda (key value)
                (declare (ignore key))

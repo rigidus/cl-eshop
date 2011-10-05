@@ -4,6 +4,7 @@
     ((storage :initarg :storage :initform (make-hash-table :test #'equal) :accessor storage)
      (products :initarg :products :initform nil :accessor products)
      (groups :initarg :groups :initform nil :accessor groups)
+     (filters :initarg :filters :initform nil :accessor filters)
      (actual-groups :initarg :actual-groups :initform nil :accessor actual-groups)
      (active-products :initarg :active-products :initform nil :accessor active-products)
      (root-groups :initarg :root-groups :initform nil :accessor root-groups)))
@@ -40,6 +41,9 @@
 
 (defun storage.get-groups-list ()
   (storage.round-collect-storage #'(lambda (obj) (equal (type-of obj) 'group))))
+
+(defun storage.get-filters-list ()
+  (storage.round-collect-storage #'(lambda (obj) (equal (type-of obj) 'filter))))
 
 (defun storage.get-actual-groups-list ()
   (storage.round-collect-storage #'(lambda (obj) (and (equal (type-of obj) 'group) (not (empty obj)) (active obj)))))
@@ -96,7 +100,9 @@
     (when (and (active object) (not (empty object)))
       (setf (actual-groups *global-storage*) (storage.edit-in-list (actual-groups *global-storage*) object key)))
     (when (null (parent object))
-      (setf (root-groups *global-storage*) (storage.edit-in-list (root-groups *global-storage*) object key)))))
+      (setf (root-groups *global-storage*) (storage.edit-in-list (root-groups *global-storage*) object key))))
+  (when (equal (type-of object) 'filter)
+    (setf (filters *global-storage*) (storage.edit-in-list (filters *global-storage*) object key))))
 
 
 (defun storage.make-lists ()
@@ -104,7 +110,8 @@
   (setf (actual-groups *global-storage*) (storage.get-actual-groups-list))
   (setf (root-groups *global-storage*) (storage.get-root-groups-list))
   (setf (products *global-storage*) (storage.get-products-list))
-  (setf (active-products *global-storage*) (storage.get-active-products-list)))
+  (setf (active-products *global-storage*) (storage.get-active-products-list))
+  (setf (filters *global-storage*) (storage.get-filters-list)))
 
 
 ;; (setf (storage *global-storage*) *storage*)

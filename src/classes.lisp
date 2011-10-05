@@ -20,6 +20,7 @@
    (products          :initarg :products        :initform nil       :accessor products)
    (vendors           :initarg :vendors         :initform (make-hash-table :test #'equal) :accessor vendors)
    (descr             :initarg :descr           :initform nil       :accessor descr)
+   (raw-fullfilter    :initarg :raw-fullfilter  :initform ""        :accessor raw-fullfilter)
    ))
 
 
@@ -68,7 +69,8 @@
   ((key               :initarg :key             :initform nil       :accessor key)
    (parent            :initarg :parent          :initform nil       :accessor parent)
    (name              :initarg :name            :initform nil       :accessor name)
-   (func              :initarg :func            :initform nil       :accessor func)))
+   (func              :initarg :func            :initform nil       :accessor func)
+   (func-string       :initarg :func-string     :initform nil       :accessor func-string)))
 
 
 (defclass producers ()
@@ -123,6 +125,14 @@
 
 
 ;; (new-classes.make-class-and-methods
+;;  'filter
+;;  '((:name key               :initform ""       :disabled t    :type string)
+;;    (:name parents           :initform nil      :disabled t    :type group-list)
+;;    (:name name              :initform ""       :disabled nil  :type string)
+;;    (:name func              :initform ""       :disabled t    :type string)
+;;    (:name func-string       :initform ""       :disabled t    :type textedit)))
+
+;; (new-classes.make-class-and-methods
 ;;  'optgroup
 ;;  '((:name name              :initarg :name            :initform ""        :accessor name :disabled nil :type string)
 ;;    (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string)
@@ -144,12 +154,7 @@
 ;;    (:name advanced          :initarg :advanced        :initform nil       :accessor advanced :disabled t :type string)))
 
 
-;; (new-classes.make-class-and-methods
-;;  'filter
-;;  '((:name key               :initarg :key             :initform nil       :accessor key :disabled t :type string)
-;;    (:name parent            :initarg :parent          :initform nil       :accessor parent :disabled t :type string)
-;;    (:name name              :initarg :name            :initform nil       :accessor name :disabled nil :type string)
-;;    (:name func              :initarg :func            :initform nil       :accessor func :disabled t :type string)))
+
 
 
 ;; (new-classes.make-class-and-methods
