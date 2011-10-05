@@ -64,14 +64,15 @@
                                                 `(,name (cdr (assoc ,name raw)))))))
                     class-fields)
                    res)))
-         ;;пост-обработка
-         ;;(new-classes.post-unserialize item)
-         ;; Возвращаем десериализованный объект
          item))
     (defmethod unserialize-from-file (filepath (dummy ,name))
-      (let* ((file-content (alexandria:read-file-into-string filepath))
-             (raw (decode-json-from-string file-content)))
-        (unserialize raw dummy)))))
+      (with-open-file (file filepath)
+        (loop for line = (read-line file nil 'EOF)
+           until (eq line 'EOF)
+           do
+             (let ((item (unserialize (decode-json-from-string line)
+                                      dummy)))
+               (storage.add-new-object item (key item))))))))
 
 
 ;;вызывается после десереализации продукта
@@ -88,25 +89,31 @@
                 (parents item)))
   ;;active - если имеется в наличии и цена > 0
   (setf (active item) (and (> (count-total item) 0) (> (siteprice item) 0)))
+  ;;adding newlines instead of #Newline
+  (setf (seo-text item) (object-fields.string-add-newlines (seo-text item)))
   ;;преобразуем optgroups из списка alist в список plist
-  (let ((optgroups (optgroups item)))
+  (let ((optgroups))
     ;;преобразуем optgroups (1 уровень)
     (setf optgroups
           (mapcar #'(lambda (optgroup)
                       (alist-to-plist optgroup))
-                  optgroups))
+                  (optgroups item)))
     ;;преобразуем значение :options в plist (2 уровень)
-    (mapcar #'(lambda (optgroup)
-                (setf (getf optgroup :options)
-                      (mapcar #'(lambda (option)
-                                  (alist-to-plist option))
-                              (getf optgroup :options))))
-            optgroups)
-    (setf (optgroups item) optgroups)))
+    (setf optgroups (mapcar #'(lambda (optgroup)
+                          (let ((optgroup-plist
+                                 (mapcar #'(lambda (option)
+                                             (alist-to-plist option))
+                                         (getf optgroup :options))))
+                            (list :name (getf optgroup :name) :options optgroup-plist)))
+                      optgroups))
+    (setf (optgroups item) optgroups))
+  )
 
 
 ;;вызывается после десереализации группы
 (defmethod new-classes.post-unserialize ((item group))
+  ;;adding newlines instead of #Newline
+  (setf (seo-text item) (object-fields.string-add-newlines (seo-text item)))
   ;; после десериализации в parent лежит список key родительских групп
   (setf (parents item)
         (mapcar #'(lambda (parent-key)
@@ -131,18 +138,23 @@
 (defmacro new-classes.make-serialize-method (name class-fields)
   `(list
     (defmethod serialize-entity ((object ,name))
-      (format nil "{~%~{~a~^, ~%~}~%}"
-              ,(cons
-                `list
-                (mapcar #'(lambda (field)
-                            `(format nil "~a : ~a"
-                                     (encode-json-to-string (quote ,(getf field :name)))
-                                     (,(intern (string-upcase
-                                                (format nil "object-fields.~a-field-serialize" (getf field :type))))
-                                       (,(getf field :name)  object))))
-                        (remove-if-not #'(lambda (field)
-                                           (getf field :serialize))
-                                       class-fields)))))
+      (format nil "{~{~a~^,~}}"
+              (remove-if #'null
+                         ,(cons
+                           `list
+                           (mapcar #'(lambda (field)
+                                       `(let ((field-value (,(getf field :name) object)))
+                                          (when (and field-value
+                                                     (string/= (format nil "~a" field-value) "")
+                                                     (not (equal field-value ,(getf field :initform))))
+                                            (format nil "~a:~a"
+                                                    (encode-json-to-string (quote ,(getf field :name)))
+                                                    (,(intern (string-upcase
+                                                               (format nil "object-fields.~a-field-serialize" (getf field :type))))
+                                                      field-value)))))
+                                   (remove-if-not #'(lambda (field)
+                                                      (getf field :serialize))
+                                                  class-fields))))))
     (defmethod serialize-to-file ((object ,name) pathname)
       (with-open-file (file pathname
                             :direction :output
@@ -150,82 +162,25 @@
                             :external-format :utf-8)
         (format file "~a" (serialize-entity object))))))
 
+(defun new-classes.serialize-list-to-file (object-list filepath)
+  (with-open-file (file filepath
+                              :direction :output
+                              :if-exists :supersede
+                              :external-format :utf-8)
+    (mapcar #'(lambda (object)
+                (format file "~a~%" (serialize-entity object)))
+            object-list)))
 
 
+(defun new-classes.unserialize-all ()
+  (unserialize-from-file #P"/home/eviltosha/serialize_test/products_old" (make-instance 'product))
+  (unserialize-from-file #P"/home/eviltosha/serialize_test/groups" (make-instance 'group))
+  (storage.make-lists)
+  (maphash #'(lambda (key value)
+               (declare (ignore key))
+               (new-classes.post-unserialize value))
+           (storage *global-storage*)))
 
-;; (defmacro new-classes.make-serialize-method (name class-fields)
-;;   `(defmethod serialize ((object ,name))
-;;      (let* ((raw-breadcrumbs (new-classes.breadcrumbs object))
-;;             (path-list (mapcar #'(lambda (elt)
-;;                                    (getf elt :key))
-;;                                (getf raw-breadcrumbs :breadcrumbelts)))
-;;             (current-dir (format nil "~a~a/" *path-to-bkps*
-;;                                  (format nil "~{/~a~}" path-list)))
-;;          (pathname (format nil "~a~a" current-dir (articul object))))
-;;        ;; Создаем директорию, если ее нет
-;;        (ensure-directories-exist current-dir)
-;;        ;; Сохраняем файл продукта
-;;        (let* ((json-string (format nil "{~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"date-modified\": ~a,~%  \"date-created\": ~a,~%  \"bonuscount\": ~a,~% \"predzakaz\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"optgroups\": ~a, \"delivery-price\": ~a~%}"
-;;                                 (encode-json-to-string (articul object))
-;;                                 (format nil "\"~a\"" (stripper (name object)))
-;;                                 (format nil "\"~a\"" (stripper (realname object)))
-;;                                 (encode-json-to-string (price object))
-;;                                 (encode-json-to-string (siteprice object))
-;;                                 (encode-json-to-string (date-modified object))
-;;                                 (encode-json-to-string (date-created object))
-;;                                 (encode-json-to-string (bonuscount object))
-;;                                 (encode-json-to-string (predzakaz object))
-;;                                 (encode-json-to-string (active object))
-;;                                 (encode-json-to-string (newbie object))
-;;                                 (encode-json-to-string (sale object))
-;;                                 (format nil "\"~a\"" (stripper (descr object)))
-;;                                 (format nil "\"~a\""(stripper (shortdescr object)))
-;;                                 (encode-json-to-string (count-transit object))
-;;                                 (encode-json-to-string (count-total object))
-;;                                 (if (null (optgroups object))
-;;                                     (format nil " null")
-;;                                     (format nil " [    ~{~a~^,~}~%   ]~%"
-;;                                             (mapcar #'(lambda (optgroup)
-;;                                                         (serialize optgroup))
-;;                                                     (optgroups object)))
-;;                                     )
-;;                                 (encode-json-to-string (delivery-price object))
-;;                                 )))
-;;       ;; (print (descr object))
-;;       (with-open-file (file pathname
-;;                             :direction :output
-;;                             :if-exists :supersede
-;;                             :external-format :utf-8)
-;;         ;; (format t json-string)
-;;         (format file "~a" json-string)))
-;;     pathname))
-
-
-;; (defun new-classes.breadcrumbs (in &optional out)
-;;   (cond ((equal (type-of in) 'product)
-;;          (progn
-;;            (push (list :key (articul in) :val (name in)) out)
-;;            (setf in (car (parents in)))))
-;;         ((equal (type-of in) 'group)
-;;          (progn
-;;            (push (list :key (key in) :val (name in)) out)
-;;            (setf in (parent in))))
-;;         ((equal (type-of in) 'filter)
-;;          (progn
-;;            (push (list :key (key in) :val (name in)) out)
-;;            (setf in (parent in))))
-;;         (t (if (null in)
-;;                ;; Конец рекурсии
-;;                (return-from new-classes.breadcrumbs
-;;                  (list :breadcrumbelts (butlast out)
-;;                        :breadcrumbtail (car (last out))))
-;;                ;; else - Ищем по строковому значению
-;;                (let ((parent (gethash in *storage*)))
-;;                  (cond ((equal 'group (type-of parent)) (setf in parent))
-;;                        ((null parent) (return-from new-classes.breadcrumbs (list :breadcrumbelts (butlast out)
-;;                                                                      :breadcrumbtail (car (last out)))))
-;;                        (t (error "breadcrumb link error")))))))
-;;   (breadcrumbs in out))
 
 ;;создание класса и методов отображения (в админке), изменения (из админки),
 ;;сереализации (в файл) и десеарелизации (из файла)

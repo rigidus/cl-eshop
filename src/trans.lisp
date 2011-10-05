@@ -97,7 +97,7 @@
                       "tv-video-audio"
                       "foto-and-video"
                       "rashodnye-materialy"
-                      "bytovaya-technika")
+                      "bytovaya-technika"))
         (setf t-storage *storage*))
       (setf *storage* t-storage)
       (sb-ext:gc :full t)

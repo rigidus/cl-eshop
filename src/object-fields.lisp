@@ -21,6 +21,10 @@
                              (format nil "~a" char)))
                string)))
 
+(defun object-fields.string-add-newlines (string)
+  "Adding newline characters instead of #Newline"
+  (replace-all string "#Newline" (string #\Newline)))
+
 ;;набор функций для показа, изменения и сериализации различных типов полей в админке
 ;;object-fields.*-field-view - просмотр
 ;;object-fields.*-field-get-data - декодирование из списка post-запроса
@@ -61,7 +65,7 @@
   string)
 
 (defun object-fields.textedit-field-serialize (text)
-  (object-fields.string-field-serialize text))
+  (object-fields.string-field-serialize (object-fields.string-replace-newlines text)))
 
 
 ;;time, человекопонятное время
@@ -126,7 +130,7 @@
                           (object-fields.group-branch child open-groups field-name)
                         (setf child-open (or child-open branch-opened))
                         branch))
-                  (storage.get-group-children group)))
+                  (groups group)))
     (values-list (list
                   (soy.class_forms:group-tree-branch (list :opened child-open
                                                            :hashkey (key group)
@@ -147,7 +151,7 @@
 
 
 (defun object-fields.group-list-field-serialize (groups)
-  (format nil "[ ~{\"~a\"~^, ~}]"
+  (format nil "[~{\"~a\"~^,~}]"
           (mapcar #'(lambda (group)
                       (key group))
                   groups)))
@@ -160,16 +164,24 @@
   (object-fields.string-field-get-data string))
 
 (defun object-fields.optgroups-field-serialize (optgroups)
-  (format nil "[~{~a~^, ~%~%~}]"
-          (mapcar #'(lambda (optgroup)
-                           (format nil "{\"name\" : \"~a\", ~%  \"options\" : ~%[~{~a~^, ~%~}]}"
-                                   (getf optgroup :name)
-                                   (mapcar #'(lambda (option)
-                                               (format nil "{\"name\" : \"~a\" ,~%\"value\" : \"~a\"}"
-                                                       (getf option :name)
-                                                       (getf option :value)))
-                                           (getf optgroup :options))))
-                  optgroups)))
+  (let ((entity
+         (remove-if #'null
+                    (mapcar #'(lambda (optgroup)
+                                (let ((name (getf optgroup :name))
+                                      (options (remove-if #'null
+                                                          (mapcar #'(lambda (option)
+                                                                      (let ((name (getf option :name))
+                                                                            (value (getf option :value)))
+                                                                        (when (and name value (string/= name "") (string/= value ""))
+                                                                          (format nil "{\"name\":\"~a\",\"value\":\"~a\"}"
+                                                                                  name value))))
+                                                                  (getf optgroup :options)))))
+                                  (when (and name options (string/= name ""))
+                                    (format nil "{\"name\":\"~a\",\"options\":[~{~a~^,~}]}"
+                                            name options))))
+                            optgroups))))
+    (when entity
+      (format nil "[~{~a~^,~}]" entity))))
 
 
 
@@ -187,7 +199,7 @@
       (list (gethash string-list (storage *global-storage*)))))
 
 (defun object-fields.product-list-field-serialize (products)
-  (format nil "[ ~{\"~a\"~^, ~}]"
+  (format nil "[~{\"~a\"~^,~}]"
           (mapcar #'(lambda (product)
                       (key product))
                   products)))
@@ -201,9 +213,9 @@
   (object-fields.string-field-get-data string))
 
 (defun object-fields.keyoptions-field-serialize (keyoptions)
-  (format nil "[~{~a~^, ~%~%~}]"
+  (format nil "[~{~a~^,~}]"
           (mapcar #'(lambda (keyoption)
-                           (format nil "{\"optgroup\" : \"~a\", ~%  \"optname\" : \"~a\"}"
+                           (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\"}"
                                    (getf keyoption :optgroup)
                                    (getf keyoption :optname)))
                   keyoptions)))

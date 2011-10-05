@@ -114,7 +114,7 @@
 ;;    (:name icon              :initform nil                             :disabled nil :type string       :serialize t)
 ;;    (:name delivery-price    :initdorm 0                               :disabled nil :type int          :serialize t)
 ;;    (:name groups            :initform nil                             :disabled t   :type group-list   :serialize t)
-;;    (:name products          :initform nil                             :disabled t   :type product-list :serialize t)
+;;    (:name products          :initform nil                             :disabled t   :type product-list :serialize nil)
 ;;    (:name filters           :initform nil                             :disabled t   :type string       :serialize nil)
 ;;    (:name fullfilter        :initform nil                             :disabled t   :type string       :serialize nil)
 ;;    (:name vendors           :initform (make-hash-table :test #'equal) :disabled t   :type string       :serialize nil)

@@ -32,7 +32,9 @@
 (defun transform.serialize-old-group (object)
   (format nil "{\"key\":~a,\"parents\":~a,\"name\":~a,\"active\":~a,\"order\":~a,\"ymlshow\":~a,\"pic\":~a,\"icon\":~a,\"deliveryPrice\":~a,\"seo-text\":~a,\"keyoptions\":~a}~%"
           (format nil "\"~a\"" (key object)) ;;key
-          (format nil "[ \"~a\" ]" (key (parent object))) ;;parents
+          (if (not (null (parent object)))
+            (format nil "[ \"~a\" ]" (key (parent object)))
+            (format nil "null")) ;;parents
           (format nil "\"~a\"" (object-fields.string-escaping (name object)));;name
           (encode-json-to-string (active object));;active
           (encode-json-to-string (order object));;order
@@ -40,12 +42,14 @@
           (format nil "\"~a\"" (object-fields.string-escaping (pic object)));;pic
           (format nil "\"~a\"" (object-fields.string-escaping (icon object)));;icon
           (encode-json-to-string (delivery-price object));;deliveryPrice
-          (format nil "\"~a\"" (object-fields.string-escaping (descr object)));;seo-text
-          (format nil "~{~a~}"
-                  (loop :for item :in (keyoptions object) :collect
-                     (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\"},"
-                             (getf item :optgroup)
-                             (getf item :optname))))))
+          (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (descr object))));;seo-text
+          (if (not (null (keyoptions object)))
+              (format nil "[~{~a~^,~}]"
+                      (loop :for item :in (keyoptions object) :collect
+                         (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\"}"
+                                 (getf item :optgroup)
+                                 (getf item :optname))))
+              (format nil "null"))))
 
 
 (defun transform.print-to-file (text pathname)
@@ -63,21 +67,68 @@
     (let ((cnt 0))
       (maphash #'(lambda (key value)
                    (declare (ignore key))
-                   (when (equal (type-of value) 'product)
+                   (when (and (not (null value)) (equal (type-of value) 'product))
                      (format t "~a ~%" cnt)
                      (setf cnt (+ 1 cnt))
                      (format file "~a" (transform.serialize-old-product value))))
                *storage*))))
 
+(defun transform.serialize-all-groups-to-file (pathname)
+  (with-open-file (file pathname
+                        :direction :output
+                        :if-exists :supersede
+                        :external-format :utf-8)
+    (let ((cnt 0))
+      (maphash #'(lambda (key value)
+                   (declare (ignore key))
+                   (when (and (not (null value)) (equal (type-of value) 'group))
+                     (format t "~a ~%" cnt)
+                     (setf cnt (+ 1 cnt))
+                     (format file "~a" (transform.serialize-old-group value))))
+               *storage*))))
+
+
 
 (defun transform.unserialize-old-products-to-new ()
-  (with-open-file (file #P"/home/eviltosha/test.txt")
+  (with-open-file (file #P"/home/eviltosha/serialize_test/products.bkp")
     (loop for line = (read-line file nil 'foo)
        until (eq line 'foo)
        do
          ;; (format t "~a~%" line)
          (let ((product (unserialize (decode-json-from-string line)
                                      (make-instance 'product))))
-           (setf (gethash (key product) (storage *global-storage*)) product)
+           (storage.add-new-object product (key product))
            ;; (format t "~a~%" (key product))))))
            ))))
+
+
+(defun transform.unserialize-old-groups-to-new ()
+  (with-open-file (file #P"/home/eviltosha/test-groups.txt")
+    (loop for line = (read-line file nil 'foo)
+       until (eq line 'foo)
+       do
+         (format t "~a~%" line)
+         (let ((group (unserialize (decode-json-from-string line)
+                                     (make-instance 'group))))
+           (storage.add-new-object group (key group))
+           (format t "~a~%" (key group))))))
+
+(defun transform.post-processing-groups ()
+  (mapcar #'(lambda (group)
+              (new-classes.post-unserialize group))
+          (groups *global-storage*)))
+
+(defun transform.post-processing-products ()
+  (mapcar #'(lambda (product)
+              (new-classes.post-unserialize product)
+              (log5:log-for test "~a ~a" (sb-kernel::control-stack-usage)
+                            (sb-kernel::binding-stack-usage)))
+          (products *global-storage*))
+  "post processing finished")
+
+
+(defun transform.post-processing ()
+  (storage.make-lists)
+  (transform.post-processing-groups)
+  (transform.post-processing-products))
+
