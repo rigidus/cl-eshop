@@ -16,9 +16,10 @@
 (export '*path-to-conf*)
 (defparameter *path-to-pics* (format nil "~ahtpics" (user-homedir-pathname)))
 (export '*path-to-pics*)
+(defparameter *path-to-product-pics* (format nil "~ahtpics1" (user-homedir-pathname)))
+(export '*path-to-product-pics*)
 (defparameter *path-to-logs* (format nil "~aeshop-logs" (user-homedir-pathname)))
 (export '*path-to-logs*)
-
 
 ;; ORDER
 (defparameter *path-order-id-file* "order-id.txt")

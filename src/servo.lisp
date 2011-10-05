@@ -633,15 +633,27 @@ is replaced with replacement."
   (values (format nil "~$"  (- base real))
           (format nil "~1$" (- 100 (/ (* real 100) base)))))
 
-
 (defun get-pics (articul)
-  (let ((path (format nil "~a/big/~a/*.jpg" *path-to-pics* articul)))
+  (let* ((articul-str (format nil "~a" articul))
+         (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  articul-str  "\\1/\\1\\2" ))
+         (path (format nil "~a/big/~a/*.jpg" *path-to-product-pics* path-art)))
+    (wlog path)
     (loop
        :for pic
        :in (ignore-errors (directory path))
        :collect (format nil "~a.~a"
                         (pathname-name pic)
                         (pathname-type pic)))))
+
+
+;; (defun get-pics (articul)
+;;   (let ((path (format nil "~a/big/~a/*.jpg" *path-to-pics* articul)))
+;;     (loop
+;;        :for pic
+;;        :in (ignore-errors (directory path))
+;;        :collect (format nil "~a.~a"
+;;                         (pathname-name pic)
+;;                         (pathname-type pic)))))
 
 
 (defmethod get-keyoptions ((object product))
@@ -1060,3 +1072,11 @@ is replaced with replacement."
      :for (key . value)
      :in alist
      :nconc (list (intern (format nil "~a" key) :keyword) value)))
+
+
+;;
+(defun servo.compile-soy (&rest tmpl-name)
+  (mapcar #'(lambda (fname)
+              (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
+                (closure-template:compile-template :common-lisp-backend pathname)))
+          tmpl-name))

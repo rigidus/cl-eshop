@@ -72,21 +72,23 @@
 ;;переименовывает все картинки для продукта
 (defun rename-product-all-pics (product)
   (when (not (rename-check product))
-    (let ((articul (articul product)))
+    (let* ((articul (articul product))
+           (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  (format nil "~a" articul)  "\\1/\\1\\2" )))
       (loop
          :for folder
          :in (list "big" "goods" "middle" "minigoods" "small")
          :do (rename-in-folder product
-                               (format nil "~a/~a/~a" *path-to-pics* folder articul))))))
+                               (format nil "~a/~a/~a" *path-to-product-pics* folder path-art))))))
 
 
 (defun rename-force-product-all-pics (product)
-  (let ((articul (articul product)))
+  (let* ((articul (articul product))
+         (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  (format nil "~a" articul)  "\\1/\\1\\2" )))
     (loop
        :for folder
        :in (list "big" "goods" "middle" "minigoods" "small")
        :do (rename-in-folder product
-                             (format nil "~a/~a/~a" *path-to-pics* folder articul)))))
+                             (format nil "~a/~a/~a" *path-to-product-pics* folder path-art)))))
 
 
 ;; берет картинки из указанной папки и конвертирует в 5 папок для продукта
@@ -94,7 +96,8 @@
   (if (directory-exists-p path-to-folder)
       (let* ((articul (articul product))
              (name (realname product))
-             (counter 0))
+             (counter 0)
+             (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  (format nil "~a" articul)  "\\1/\\1\\2" )))
         (wlog (format nil "Start converting images for product ~a from folder ~a~%"
                 articul path-to-folder))
         (loop
@@ -114,9 +117,9 @@
                 (rename-convert
                  (format nil "~a" pic)
                  (format nil "~a/~a/~a/~a.jpg"
-                         *path-to-pics*
+                         *path-to-product-pics*
                          folder
-                         articul
+                         path-art
                          new-name)
                  size-w
                  size-h))
@@ -234,8 +237,9 @@
 
 (defun rename-remove-product-pics (product)
   (let* ((articul (articul product))
-         (dirs (list "big" "goods" "middle" "minigoods" "small")))
+         (dirs (list "big" "goods" "middle" "minigoods" "small"))
+         (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})" (format nil "~a" articul) "\\1/\\1\\2" )))
     (loop
        :for dir
        :in dirs
-       :do (rename-remove-folder (format nil "~a/~a/~a" *path-to-pics* dir articul)))))
+       :do (rename-remove-folder (format nil "~a/~a/~a" *path-to-product-pics* dir path-art)))))

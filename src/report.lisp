@@ -15,13 +15,14 @@
           "родительская группа"
           "secret")
   (maphash #'(lambda (k v)
+               (declare (ignore k))
                (let ((id "нет")
                      (name "нет")
                      (name-real "нет")
                      (name-yml "нет")
                      (desc "нет")
                      (img "нет")
-                     (option "нет")
+                     (options "нет")
                      (active "нет")
                      (group-name "нет")
                      (parent-group-name "нет")
@@ -38,7 +39,8 @@
                                   "есть"
                                   "нет"))
                    (setf img (length (get-pics (articul v))))
-                   (setf options (if (not (null (optgroups v)))
+                   (setf options ;;(if (not (null (optgroups v)))
+                                   (if (is-valide-option v)
                                      "есть"
                                      "нет"))
                    (setf active (if (active v)
@@ -67,9 +69,24 @@
                    )))
            *storage*))
 
+(defun is-valide-option (product)
+  (let ((flag nil))
+    (mapcar #'(lambda (v) (mapcar #'(lambda (l)
+                                      (when (and (not (equal (name v) "Secret"))
+                                               l
+                                               (value l)
+                                               (not (equal (value l) ""))
+                                               (not (equal (value l) "Производитель"))
+                                               (not (equal (value l) "Модель")))
+
+                                          (setf flag t)))
+                       (options v)))
+        (optgroups product))
+  flag
+  ))
 
 (defun write-groups (stream)
-  (format stream "~a;~a;~a;~a;~%"
+  (format stream "~a;~a;~a;~a;%"
           "Название категории"
           "url страницы"
           "Active"
@@ -89,6 +106,25 @@
                                   "yes"
                                   "no"))
                    ))
+           *storage*))
+
+(defun write-groups-active-product-num (stream)
+  (format stream "~a;~a;~a;~a;~%"
+          "Название категории"
+          "url страницы"
+          "Active"
+          "кол-во товаров")
+  (maphash #'(lambda (k v)
+               (declare (ignore k))
+               (when (equal (type-of v)
+                              'group)
+                 (format stream "\"~a\";http://www.320-8080.ru/~a;~a;~a;~%"
+                           (stripper (name v))
+                           (key v)
+                           (if (active v)
+                               "yes"
+                               "no")
+                           (length (remove-if-not #'active (get-recursive-products v))))))
            *storage*))
 
 
@@ -158,7 +194,7 @@
 (defun create-report (file-name report-func)
   (let ((filename (format nil "~a/~a" *path-to-dropbox* file-name)))
     (with-open-file
-        (stream filename :direction :output :if-exists :supersede)
+        (stream filename :direction :output :if-exists :supersede :external-format :cp1251)
       (funcall report-func stream))))
 
 
@@ -267,7 +303,7 @@
                   (setf (predzakaz p) t)
                   (serialize p))))
           (list "166545"
-                "166578"
+                ;; "166578"
               "166579"
               "166580"
               "166581"
@@ -277,6 +313,7 @@
               "167533"
               "167534"
               "167535"))
+
 
   ;; (maphash #'(lambda (k v)
   ;;              (declare (ignore k))
@@ -322,7 +359,9 @@
 
 
 ;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
-;; (create-report "xls/products.csv" #'write-products-report)
+;; (time (create-report "xls/products.csv" #'write-products-report))
 ;; (create-report "seo/report-groups.csv" #'write-groups)
 ;; (create-report "seo/report-products.csv" #'write-products)
 ;; (create-report "seo/report-vendors.csv" #'write-vendors)
+;; (create-report "seo/write-groups-active-product-num.csv" #'write-groups-active-product-num)
+

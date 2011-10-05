@@ -25,6 +25,7 @@
   (multiple-value-bind (dirs files filters vendors)
       (explore-dir path)
     (values
+     ;; (sb-ext:gc :full t)
      (mapcar #'process-dir dirs)
      (mapcar #'process-file files)
      (mapcar #'process-filter filters)
@@ -50,7 +51,19 @@
   (let* ((name (pathname-name file))
          (candidat (parse-integer name :junk-allowed t)))
     (if (string= (format nil "~a" candidat) name)
-        (unserialize (format nil "~a" file) (make-instance 'product))
+        (progn
+          (when (gethash name *storage*)
+              (let* ((object (gethash name *storage*))
+                     (raw-breadcrumbs (breadcrumbs object))
+                     (path-list (mapcar #'(lambda (elt)
+                                            (getf elt :key))
+                                        (getf raw-breadcrumbs :breadcrumbelts)))
+                     (current-dir (format nil "~a~a/" *path-to-bkps*
+                                          (format nil "~{/~a~}" path-list)))
+                     (pathname (format nil "~a~a" current-dir (articul object))))
+              (wlog pathname)
+              (wlog file)))
+          (unserialize (format nil "~a" file) (make-instance 'product)))
         nil)))
 
 
@@ -86,6 +99,7 @@
       (sb-ext:gc :full t)
       (let ((*storage* (make-hash-table :test #'equal)))
         (recursive-explore *path-to-bkps*)
+        ;; (process-dir (format nil "~a/~a" *path-to-bkps* "noutbuki-i-komputery/"))
         (setf t-storage *storage*))
       (setf *storage* t-storage)
       (sb-ext:gc :full t)
@@ -135,6 +149,7 @@
 
 (defun safely-restore()
   (restore-from-files)
+  (static-pages.restore)
   (use-revert-history)
   (copy-price-to-siteprice)
   (dtd)
@@ -160,15 +175,15 @@
 ;;                  (if product
 ;;                      (progn
 ;;                        (incf old)
-;;                        (setf (product:descr product)
+;;                        (setf (descr product)
 ;;                              (getf v :descr))
-;;                        (setf (product:shortdescr product)
+;;                        (setf (shortdescr product)
 ;;                              (getf v :shortdescr))
-;;                        (setf (product:options product)
+;;                        (setf (options product)
 ;;                              (trans-options (getf v :result-options))))
 ;;                      (let* ((group-id (getf v :group_id))
 ;;                             (grp-lst (gethash group-id grp nil)))
-;;                        (product::serialize2
+;;                        (:serialize2
 ;;                         ;; (ignore-errors
 ;;                         (make-instance 'product
 ;;                                        :id (getf v :id)
@@ -203,27 +218,27 @@
 ;;                    (print v)
 ;;                    )
 ;;                  ;; name
-;;                  (setf (product:name (gethash articul trans:*product*))
+;;                  (setf (name (gethash articul trans:*product*))
 ;;                        (getf v :name))
 ;;                  ;; realname
-;;                  (setf (product:realname (gethash articul trans:*product*))
+;;                  (setf (realname (gethash articul trans:*product*))
 ;;                        (getf v :realname))
 ;;                  ;; descr
-;;                  (setf (product:descr (gethash articul trans:*product*))
+;;                  (setf (descr (gethash articul trans:*product*))
 ;;                        (getf v :descr))
 ;;                  ;; shortdescr
-;;                  (setf (product:shortdescr (gethash articul trans:*product*))
+;;                  (setf (shortdescr (gethash articul trans:*product*))
 ;;                        (getf v :shortdescr))
 ;;                  ;; options
 ;;                  (if (and (equal 'optlist:optlist (type-of new-opt))
 ;;                           (not (null (gethash articul trans:*product*))))
 ;;                      (progn
-;;                        (setf (product:options (gethash articul trans:*product*))
+;;                        (setf (options (gethash articul trans:*product*))
 ;;                              new-opt))
 ;;                      ;; else
 ;;                      (print "err!"))
 ;;                  ;; save
-;;                  (product:serialize (gethash articul trans:*product*))
+;;                  (serialize (gethash articul trans:*product*))
 ;;                  articul))
 ;;            tmp)
 ;;   (sb-ext:gc :full t)

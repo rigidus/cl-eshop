@@ -17,7 +17,6 @@
         "NIL"
         (progn
           (cond ((string= "0" (hunchentoot:get-parameter "num"))
-
                  ;; Обработка последнего пакета
                  (progn
                    ;; Делаем все продукты неактивными
@@ -32,7 +31,6 @@
                    ;; Обрабатываем все сохраненные пакеты
                    (loop :for packet :in (reverse *load-list*) :do
                       (process packet))
-
                    ;;создаем новый yml файл
                    (create-yml-file)
                    ;; Заполняем siteprice если он равен 0
@@ -44,7 +42,6 @@
                    (setf *load-list* nil)
                    (setf *order* nil)
                    "last"))
-
                 ((string= "1" (hunchentoot:get-parameter "num"))
                  ;; Обработка первого пакета
                  (progn
@@ -94,7 +91,7 @@
                (name      (cdr (assoc :name elt)))
                (realname  (cdr (assoc :realname elt)))
                (count-total    (cdr (assoc :count--total elt)))
-               (count-transit  (ceiling (arnesi:parse-float (cdr (assoc :count--transit elt))))))
+               (count-transit  (cdr (assoc :count--transit elt))))
            ;;(wlog data)
            ;; Нам не нужны продукты с нулевой ценой (вероятно это группы продуктов)
            (when (equal 0 price)
@@ -223,13 +220,22 @@ Content-Transfer-Encoding: base64
             ;; (ekkprice product)        ekkprice
             (count-total product)     (if count-total
                                           (ceiling (arnesi:parse-float count-total))
-                                          (if (count-total product)
-                                              (count-total product)
-                                              0))
+                                          (if (and count-transit
+                                                   (= count-transit 0)
+                                                   (equal (count-total product)
+                                                          (count-transit product)))
+                                              0
+                                              (if (count-total product)
+                                                  (count-total product)
+                                                  0)))
             (active product)          (if (= (count-total product) 0) nil t)
             (newbie product)	        (if (string= "0" isnew) nil t)
             (sale product)            (if (string= "0" isspec) nil t)
-            (count-transit  product)  count-transit)
+            (count-transit  product)  (if count-transit
+                                          (ceiling (arnesi:parse-float count-transit))
+                                          (if (count-transit product)
+                                              (count-transit product)
+                                              0)))
       (setf (gethash (format nil "~a" articul) *storage*) product))))
 
 ;; (setf (siteprice (gethash "154278" *storage*)) 7290)

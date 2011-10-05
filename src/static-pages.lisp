@@ -6,13 +6,26 @@
 
 
 
+;; загрузка статей из папки
+(defun static-pages.process-dir (path &optional (ctype "article"))
+  (let ((files))
+    (mapcar #'(lambda (x)
+                (if (not (cl-fad:directory-pathname-p x))
+                    (push x files)))
+            (directory (format nil "~a/*.art" path)))
+    (mapcar #'(lambda (file)
+                (wlog ctype)
+                (unserialize (format nil "~a" file) (make-instance 'article :ctype ctype)))
+            files)))
+
+
 ;;заргузка статических страниц из файлов
 (defun static-pages.restore ()
   (let ((t-storage))
       (wlog "START:RESTOR:static-pages")
       (sb-ext:gc :full t) ;; запуск сборщика мусора
       (let ((*storage-articles* (make-hash-table :test #'equal)))
-        (process-articles-dir *path-to-static-pages* "static")
+        (static-pages.process-dir *path-to-static-pages* "static")
         (setf t-storage *storage-articles*))
       (setf static-pages.*storage* t-storage)
       (maphash #'(lambda (k v)

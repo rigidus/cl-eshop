@@ -14,8 +14,9 @@
     (pathname (concatenate 'string *path-to-dropbox* "/htimgs/" (subseq full-uri (search "/img/" full-uri))))))
 
 (restas:define-route request-static-route-pic ("/pic/*")
-  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
-    (pathname (concatenate 'string  *path-to-pics* "/" (subseq full-uri (+ 5 (search "/pic/" full-uri)))))))
+  (let* ((full-uri (format nil "~a" (restas:request-full-uri)))
+         (path-to-img (ppcre:regex-replace ".*/pic/(\\w{1,})/(\\d{1,3})(\\d{0,})/(.*)$" full-uri "\\1/\\2/\\2\\3/\\4")))
+    (pathname (format nil "~a/~a" *path-to-product-pics* path-to-img))))
 
 (restas:define-route request-static-route-css ("/css/*")
   (let ((full-uri (format nil "~a" (restas:request-full-uri))))

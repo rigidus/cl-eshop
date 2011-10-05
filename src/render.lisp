@@ -136,8 +136,8 @@
       (get-procent (price object) (siteprice object))
     (let ((pics (get-pics (articul object))))
       (default-page
-          (product:content (list :menu (menu object)
-                         :breadcrumbs (product:breadcrumbs (breadcrumbs object))
+          (soy.product:content (list :menu (menu object)
+                         :breadcrumbs (soy.product:breadcrumbs (breadcrumbs object))
                          :articul (articul object)
                          :name (realname object)
                          :siteprice (siteprice object)
@@ -159,11 +159,11 @@
                                                                            (optgroups object)))))
                                     (if (null optlist)
                                         nil
-                                        (product:optlist (list :optgroups optlist))))
-                         :accessories (product:accessories)
-                         :reviews (product:reviews)
-                         :simular (product:simulars)
-                         :others (product:others
+                                        (soy.product:optlist (list :optgroups optlist))))
+                         :accessories (soy.product:accessories)
+                         :reviews (soy.product:reviews)
+                         :simular (soy.product:simulars)
+                         :others (soy.product:others
                                   (list :others (mapcar #'(lambda (x)
                                                             (if (equal 'product (type-of x))
                                                                 (view x)
@@ -322,13 +322,13 @@
                                  (restas:render-object designer option)))
                          (options object))))
     (if (not (null (remove-if  #'(lambda (v) (null v)) options)))
-        (product:optgroup (list :name (name object)
+        (soy.product:optgroup (list :name (name object)
                                 :options options))
         "")))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object option))
-  (product:option (list :name (name object)
+  (soy.product:option (list :name (name object)
                         :value (if (and (equal (optype object) :bool)
                                         (boolflag object))
                                    (format nil "~a ~a" "<img src=\"img/ok.png\" alt=\"*\"/>" (value object))

@@ -197,7 +197,7 @@
   (if (equal (ctype object) "static")
       (root:main (list :keywords "" ;;keywords
                        :description "" ;;description
-                       :title "test" ;(title object)
+                       :title "" ;;(name object)
                        :header (root:header (append (list :logged (root:notlogged)
                                                           :cart (root:cart))
                                                     (main-page-show-banner "line" (banner *main-page.storage*))))

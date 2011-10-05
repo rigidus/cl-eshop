@@ -48,6 +48,7 @@
 (defun main-page-products-show (storage num)
   (let ((full-daily-list (main-page-get-active-product-list storage))
         (daily-list))
+    ;; (print full-daily-list)
       ;;для блока дэйли должно быть не менее 6 товаров
       (if (> (length full-daily-list) num)
           ;; если активных товаров хватает для демонстрации на главной
@@ -59,7 +60,8 @@
             (format nil "WARN: Main page daily ~a products"  (length full-daily-list))
             (setf daily-list (main-page-get-randoms-from-weight-list full-daily-list num))))
       (mapcar #'(lambda (v) (main-page-view-product (car v) storage))
-              daily-list)))
+              daily-list)
+      ))
 
 ;;отображение товаров дня
 (defun main-page-show-banner (type storage)
@@ -73,8 +75,11 @@
                                   storage)))
           (progn
             (wlog "WARN: No banner")))
-     (list :url (nth 1 (opts banner))
-           :src (nth 2 (opts banner)))))
+      (if banner
+          (list :url (nth 1 (opts banner))
+                :src (nth 2 (opts banner)))
+          (list :url ""
+                :src ""))))
 
 ;;отображение отзыва
 (defun main-page-show-lastreview (storage)
@@ -105,7 +110,10 @@
              :best (soy.main-page:best (list :items (main-page-products-show (best *main-page.storage*) 12)))
              :hit (soy.main-page:hit (list :items (main-page-products-show (hit *main-page.storage*) 2)))
              :new  (soy.main-page:new (list :items (main-page-products-show (new *main-page.storage*) 6)))
-             :post (soy.main-page:post (list :items (articles-view-articles (subseq (articles.sort (get-articles-list)) 0 6))))
+             :post (let ((articles (articles.sort (get-articles-list))))
+                     (if articles
+                         (soy.main-page:post (list :items (articles-view-articles (subseq articles 0 6))))
+                         (soy.main-page:post (list :items nil))))
              :plus (soy.main-page:plus)))
       :KEYWORDS "компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :DESCRIPTION "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
@@ -175,6 +183,8 @@
 
 ;;получить позицию элемента в списке с весами
 (defun main-page-get-num-in-weight-list (input-list weight)
+  ;; (wlog input-list)
+  ;; (wlog weight)
   (let ((cur-pos 0)
         (cur-weight 0))
     (mapcar #'(lambda (v)
@@ -195,21 +205,29 @@
         (sum-weight 0)
         (current-list input-list))
     ;;уменьшаем count до длинны списка если надо
+    ;; (wlog count)
     (if (< (length input-list)
            count)
         (setf count (length input-list)))
     (mapcar #'(lambda (v) (setf sum-weight (+ sum-weight (cdr v))))
             input-list)
-    ;; (print sum-weight)
+    ;; (wlog (format nil "summ: ~a" sum-weight))
     (setf result (loop
                     :for n
                     :from 1 to count
-                    :collect (let* ((weight-pos (random sum-weight))
-                                    (pos (main-page-get-num-in-weight-list current-list weight-pos))
-                                    (element (nth pos current-list)))
-                               ;; (print pos)
-                               ;; (print weight-pos)
+                    :collect (let* ((weight-pos 0)
+                                    (pos 0)
+                                    (element nil))
+                               ;; (wlog (format nil "do ~a" sum-weight))
+                               (when (> sum-weight 0)
+                                   (setf weight-pos (random sum-weight))
+                                   (setf pos (main-page-get-num-in-weight-list current-list weight-pos)))
+                               (setf element (nth pos current-list))
+                               ;; (wlog (format nil "pos: ~a | ~a" pos  weight-pos))
+                               ;; (print)
                                (setf sum-weight (- sum-weight (cdr element)))
+                               ;; (wlog (cdr element))
+                               ;; (wlog sum-weight)
                                (setf current-list (remove-if #'(lambda (v)
                                                                  (equal v element))
                                                              current-list))

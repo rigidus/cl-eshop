@@ -85,6 +85,13 @@
                                      ;; :deliveryprice delivery-price
                                      :pic picname
                                      )))))))
+      ((string= type "price")
+       (let* ((articul (nth 1 args))
+              (product (gethash articul *storage*)))
+         (when product
+           (let ((siteprice (siteprice product)))
+             (format nil "~a"
+                     (get-format-price siteprice))))))
       (t
        (format nil "<!-- unknown format -->~%")))))
 
