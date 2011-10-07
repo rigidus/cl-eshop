@@ -206,6 +206,79 @@
                (new-classes.post-unserialize value))
            (storage *global-storage*)))
 
+(defun new-classes.parent (item)
+  "Returns main parent of item"
+  (car (parents item)))
+
+(defun new-classes.breadcrumbs (in &optional out)
+  "Processing parents until nil, creating breadcrumbs"
+  (if (not (null in))
+      (progn
+        (if (equal (type-of in) 'product)
+            (push (list :key (articul in) :val (name-seo in)) out)
+            (push (list :key (key in) :val (name in)) out))
+        (setf in (new-classes.parent in))
+        (new-classes.breadcrumbs in out))
+      ;; else -  end of recursion
+      (list :breadcrumbelts (butlast out)
+            :breadcrumbtail (car (last out)))))
+
+(defun new-classes.get-root-parent (item)
+  (let ((parent (new-classes.parent item)))
+    (if (or (null item) (null parent))
+        item
+        (new-classes.get-root-parent parent))))
+
+
+(defun new-classes.menu-sort (a b)
+  "Function for sorting groups by order field"
+  (if (or (null (order a))
+          (null (order b)))
+      nil
+      ;; else
+      (< (order a)
+         (order b))))
+
+
+(defun new-classes.menu (&optional current-object)
+  "Creating left menu"
+  (let* ((root-groups (root-groups *global-storage*))
+        (current-root (new-classes.get-root-parent current-object))
+        (divider-list (list "setevoe-oborudovanie" "foto-and-video" "rashodnye-materialy"))
+        (src-lst
+         (mapcar #'(lambda (val)
+                     (if (equal (key val) (key current-root))
+                         ;; This is current
+                         (leftmenu:selected
+                          (list :divider (notevery #'(lambda (divider)
+                                                       (string/= (key val) divider))
+                                                   divider-list)
+                                :key (key val)
+                                :name (name val)
+                                :icon (icon val)
+                                :subs (loop
+                                         :for child
+                                         :in (sort
+                                              (remove-if #'(lambda (g)
+                                                             (or
+                                                              (empty g)
+                                                              (not (active g))))
+                                                         (groups val))
+                                              #'menu-sort)
+                                         :collect
+                                         (list :key  (key child) :name (name child)))
+                                ))
+                         ;; else - this is ordinal
+                         (leftmenu:ordinal (list :divider (notevery #'(lambda (divider)
+                                                                        (string/= (key val) divider))
+                                                                    divider-list)
+                                                 :key  (key val)
+                                                 :name (name val)
+                                                 :icon (icon val)))
+                         ))
+                 (sort root-groups #'new-classes.menu-sort))))
+      (leftmenu:main (list :elts src-lst))))
+
 
 ;;создание класса и методов отображения (в админке), изменения (из админки),
 ;;сереализации (в файл) и десеарелизации (из файла)
