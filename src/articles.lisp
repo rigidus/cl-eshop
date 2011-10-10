@@ -114,6 +114,7 @@
      *storage-articles*)
     articles))
 
+
 (defun get-articles-by-tags (articles-list &optional tags)
   (let ((articles))
     (if (or (null tags)
@@ -197,7 +198,7 @@
   (if (equal (ctype object) "static")
       (root:main (list :keywords "" ;;keywords
                        :description "" ;;description
-                       :title "" ;;(name object)
+                       :title (name object)
                        :header (root:header (append (list :logged (root:notlogged)
                                                           :cart (root:cart))
                                                     (main-page-show-banner "line" (banner *main-page.storage*))))
@@ -223,6 +224,10 @@
                                                                                     :name (name object)
                                                                                     :date (time.article-encode-date object)
                                                                                     :body (prerender-string-replace (body object))
+                                                                                    :articles (let ((articles (articles.sort (remove-if #'(lambda(v)(equal v object)) (get-articles-list)))))
+                                                                                                (if articles
+                                                                                                    (articles-view-articles (subseq articles 0 7))
+                                                                                                    nil))
                                                                                     :tags
                                                                                     (if (< 0 (hash-table-count (tags object)))
                                                                                         (soy.articles:articles-tags
@@ -233,4 +238,7 @@
                                                                                               :collect key)))
                                                                                         "")
                                                                                     ))
-                                       :rightblock  ""))))))
+                                       :rightblock (soy.articles:r_b_articles (list :articles (let ((articles (articles.sort (remove-if #'(lambda(v)(equal v object)) (get-articles-list)))))
+                                                                                                (if articles
+                                                                                                    (articles-view-articles (subseq articles 0 10))
+                                                                                                    nil))))))))))

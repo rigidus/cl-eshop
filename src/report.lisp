@@ -2,8 +2,10 @@
 
 
 (defun write-products-report (stream)
-  (format stream "~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~%"
+  (format stream "~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~%"
           "артикул"
+          "цена магазина"
+          "цена сайта"
           "имя"
           "имя real"
           "имя yml"
@@ -54,8 +56,10 @@
                    (setf secret "Нет")
                    (with-option v "Secret" "Checked"
                                 (setf secret (value option)))
-                   (format stream "~a;\"~a\";\"~a\";\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~a;~%"
+                   (format stream "~a;~a;~a;\"~a\";\"~a\";\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~a;~%"
                            id
+                           (price v)
+                           (siteprice v)
                            name
                            name-real
                            name-yml

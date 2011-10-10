@@ -1,5 +1,5 @@
 (defsystem eshop
-    ;; :depends-on (#:restas #:cl-json #:arnesi #:closure-template #:log5)
+    :depends-on (#:restas #:cl-json #:arnesi #:closure-template #:log5)
     :components
     ((:module "src"
               :components
@@ -8,8 +8,8 @@
                (:file "eshop-config" :depends-on ("time"))
                (:file "errors" :depends-on ("eshop-config"))
                (:file "log" :depends-on ("errors"))
-               (:file "new-classes" :depends-on ("log"))
-               (:file "classes" :depends-on ("new-classes"))
+               ;;(:file "new-classes" :depends-on ("log"))
+               (:file "classes" :depends-on ("log"))
                (:file "serializers" :depends-on ("classes"))
                (:file "servo" :depends-on ("serializers"))
                (:file "trans" :depends-on ("servo"))

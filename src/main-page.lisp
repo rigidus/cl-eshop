@@ -98,6 +98,7 @@
            :ico (nth 0 (opts item))
            :city (nth 1 (opts item)))))
 
+
 ;;отображение главной страницы
 (defun main-page-show (&optional (request-str ""))
   (default-page

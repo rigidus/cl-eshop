@@ -196,4 +196,4 @@
           (eshop::childs group)))
 
 
-(car (remove-if-not #'(lambda (v) (search "8008" (sb-thread:thread-name v))) (sb-thread:list-all-threads)))
+(remove-if-not #'(lambda (v) (search "worker" (sb-thread:thread-name v))) (sb-thread:list-all-threads))

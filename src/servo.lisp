@@ -559,6 +559,7 @@
 										 (equal x #\")
 										 (equal x #\\)
                                          (equal x #\~)
+                                         (equal x #\Newline)
 										 ))
 									   (push x $ret)))
                              (let ((ret (coerce (reverse $ret) 'string)))
@@ -637,7 +638,7 @@ is replaced with replacement."
   (let* ((articul-str (format nil "~a" articul))
          (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  articul-str  "\\1/\\1\\2" ))
          (path (format nil "~a/big/~a/*.jpg" *path-to-product-pics* path-art)))
-    (wlog path)
+    ;; (wlog path)
     (loop
        :for pic
        :in (ignore-errors (directory path))
@@ -1067,12 +1068,6 @@ is replaced with replacement."
               (string-upcase (subseq title 0 1))
               (subseq title 1))))
 
-(defun alist-to-plist (alist)
-  (loop
-     :for (key . value)
-     :in alist
-     :nconc (list (intern (format nil "~a" key) :keyword) value)))
-
 
 ;;
 (defun servo.compile-soy (&rest tmpl-name)
@@ -1080,3 +1075,32 @@ is replaced with replacement."
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
                 (closure-template:compile-template :common-lisp-backend pathname)))
           tmpl-name))
+
+
+(defun alist-to-plist (alist)
+  (if (not (equal (type-of alist) 'cons))
+      alist
+      ;;else
+      (loop
+         :for (key . value)
+         :in alist
+         :nconc (list (intern (format nil "~a" key) :keyword) value))))
+
+
+(defun servo.plist-to-unique (plist)
+  (let ((result ))
+    (loop
+       :while plist
+       :do (let ((key (car plist))
+                 (value (cadr plist)))
+             (setf (getf result key)
+                   (if (getf result key)
+                       (append
+                        (if (eq (type-of (getf result key)) 'cons)
+                            (getf result key)
+                            (list (getf result key)))
+                        (list value))
+                       ;;else
+                       value)))
+       (setf plist (cddr plist)))
+    result))

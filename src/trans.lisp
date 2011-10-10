@@ -99,7 +99,6 @@
       (sb-ext:gc :full t)
       (let ((*storage* (make-hash-table :test #'equal)))
         (recursive-explore *path-to-bkps*)
-        ;; (process-dir (format nil "~a/~a" *path-to-bkps* "noutbuki-i-komputery/"))
         (setf t-storage *storage*))
       (setf *storage* t-storage)
       (sb-ext:gc :full t)

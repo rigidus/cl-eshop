@@ -280,8 +280,12 @@
    :return-code hunchentoot:+http-not-found+
    :content-type "text/html"))
 
-(restas:define-route request-route ("/request")
-  (oneclickcart-page (request-get-plist)))
+;; (restas:define-route request-route ("/request")
+;;   (oneclickcart-page (request-get-plist)))
+
+(restas:define-route request-route ("/request1")
+  (oneclickcart.page (request-get-plist)))
+
 
 
 (defun bts-view-page ()

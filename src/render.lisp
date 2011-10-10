@@ -151,12 +151,15 @@
                          :subst (format nil "/~a" (articul object))
                          :pics (cdr pics)
                          :firstpic (if (null pics) nil (car pics))
-                         :optlist (let ((optlist  (remove-if #'null (mapcar #'(lambda (optgroup)
-                                                                     ;;не отображать группу опций с именем "Secret"
-                                                                     (if (not (string= (name optgroup)
-                                                                                      "Secret"))
-                                                                        (restas:render-object designer optgroup)))
-                                                                           (optgroups object)))))
+                         :optlist (let ((optlist
+                                         (remove-if
+                                          #'null
+                                          (mapcar #'(lambda (optgroup)
+                                                      ;;не отображать группу опций с именем "Secret"
+                                                      (if (not (string= (name optgroup)
+                                                                        "Secret"))
+                                                          (restas:render-object designer optgroup)))
+                                                  (optgroups object)))))
                                     (if (null optlist)
                                         nil
                                         (soy.product:optlist (list :optgroups optlist))))
