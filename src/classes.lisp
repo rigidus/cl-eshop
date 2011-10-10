@@ -20,6 +20,7 @@
    (products          :initarg :products        :initform nil       :accessor products)
    (vendors           :initarg :vendors         :initform (make-hash-table :test #'equal) :accessor vendors)
    (descr             :initarg :descr           :initform nil       :accessor descr)
+   (raw-fullfilter    :initarg :raw-fullfilter  :initform ""        :accessor raw-fullfilter)
    ))
 
 
@@ -68,7 +69,8 @@
   ((key               :initarg :key             :initform nil       :accessor key)
    (parent            :initarg :parent          :initform nil       :accessor parent)
    (name              :initarg :name            :initform nil       :accessor name)
-   (func              :initarg :func            :initform nil       :accessor func)))
+   (func              :initarg :func            :initform nil       :accessor func)
+   (func-string       :initarg :func-string     :initform nil       :accessor func-string)))
 
 
 (defclass producers ()

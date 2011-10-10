@@ -30,6 +30,7 @@
                              :active (cdr (assoc :active raw))
                              :empty (cdr (assoc :empty raw))
                              :order (cdr (assoc :order raw))
+                             :raw-fullfilter (cdr (assoc :fullfilter raw))
                              :fullfilter (unserialize (cdr (assoc :fullfilter raw)) (make-instance 'group-filter))
                              :keyoptions keyoptions
                              :delivery-price (cdr (assoc :delivery-price raw))
@@ -274,6 +275,7 @@
                              :parent parent
                              :name (cdr (assoc :name raw))
                              :func (eval (read-from-string (cdr (assoc :func raw))))
+                             :func-string (cdr (assoc :func raw))
                              )))
     (when (equal 'group (type-of parent))
       (setf (filters parent)
