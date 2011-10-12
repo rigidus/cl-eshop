@@ -20,6 +20,18 @@
   (car (parents object)))
 ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+(defun storage.get-all-child-groups (root &optional (sort-f #'catalog.alphabet-group-sort-f))
+  (sort
+   (let ((children (groups root))
+         (res))
+     (if (null children)
+         (list root)
+         (progn
+           (mapcar #'(lambda (root)
+                       (setf res (append res (storage.get-all-child-groups root sort-f))))
+                   children)
+           res))) sort-f))
+
 (defun storage.round-collect-storage (checker &optional (compare t compare-supplied-p))
   "Processing storage and creating list according to checker function. Sorting with passed comparator"
   (let ((result))
