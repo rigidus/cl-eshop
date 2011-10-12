@@ -65,7 +65,6 @@
                            ""
                            (catalog:seotext (list :text descr))))))))))
 
-;; (maphash #'(lambda (k v ) (print k)) (vendors (gethash "monobloki" *storage*)))
 
 (defmacro with-option (product optgroup-name option-name body)
   `(mapcar #'(lambda (optgroup)
@@ -77,21 +76,6 @@
                              options))))
            (optgroups ,product)))
 
-;; (let ((product (gethash "100001" (storage *global-storage*)))
-;;       (value))
-  ;; (with-option1 product \"Аккумулятор\" \"Время автономной работы, ч\"
-  ;;              (setf value (value option)))
-  ;; (mapcar #'(lambda (optgroup)
-  ;;             (when (string= (getf optgroup :name) "Общее")
-  ;;                 (wlog (getf optgroup :name))
-  ;;                 (let ((options (getf optgroup :options)))
-  ;;                    (mapcar #'(lambda (option)
-  ;;                                (if (string= (getf option :name)
-  ;;                                             "Интерфейс")
-  ;;                                    (setf value (getf option :value))))
-  ;;                            options))))
-  ;;          (optgroups product))
-  ;; value)
 
 (defmacro with-option1 (product optgroup-name option-name body)
   `(mapcar #'(lambda (optgroup)
@@ -171,12 +155,6 @@
             filter-options)
     result-flag))
 
-;; (filter-test (gethash "noutbuki" *storage*) "http://dev.320-8080.ru/noutbuki?fullfilter=1")
-;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&fullfilter=1#producer")
-;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
-;; ( make-get-str "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
-;; (filter-test (gethash "noutbuki" *storage*) "http://www.320-8080.ru/noutbuki?&warranty-1=1&fullfilter=1")
-
 ;;фильтрация по значениям опции
 (defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)
   (let ((number 0)
@@ -217,26 +195,6 @@
        (if (string= ,dummy-var "")
            (filter-with-check-options key-name option-group-name product request-plist filter-options)
            (filter-with-check-values key-name option-group-name ,dummy-var product request-plist filter-options)))))
-
-
-     ;; (let ((value-p (getf request-plist (intern (string-upcase (format nil "~a" (symbol-name ,key))) :keyword)))
-     ;;       (value-x ""))
-     ;;   (with-option product
-     ;;     ,optgroup-name ,dummy-var
-     ;;     (setf value-x (value option)))
-     ;;   (print filter-options)
-     ;;   (cond
-     ;;     ((null value-p)
-     ;;      t)
-     ;;     ((null value-x)
-     ;;      nil)
-     ;;     (t
-     ;;      (progn
-     ;;        (setf value-p (parse-integer value-p))
-     ;;        (let ((opt-val (nth value-p filter-options)))
-     ;;          (if (string= opt-val "Любой")
-     ;;              t
-     ;;              (string= value-x opt-val)))))))))
 
 
 (defmacro with-radio (key optgroup-name option-name)
@@ -310,52 +268,6 @@
                         stop-page-line)))
       (values result page-line-string)
       )))
-
-
-    ;; (loop :for elt :in sequence :do
-    ;;    (if (< i (* (- page 1) pagesize))
-    ;;        (progn
-    ;;          (setf head (cdr head))
-    ;;          (incf i))
-    ;;        (return)))
-    ;; (setf i 0)
-    ;; (loop :for elt :in head :do
-    ;;    (if (> pagesize i)
-    ;;        (progn
-    ;;          (push elt ret)
-    ;;          (incf i))
-    ;;        (return)))
-    ;; (let* ((size (floor (length sequence) pagesize))
-    ;;        (show-pages
-    ;;         (sort
-    ;;          (remove-if #'(lambda (x)
-    ;;                         (or (not (plusp x))
-    ;;                             (< size  x)))
-    ;;                     (remove-duplicates
-    ;;                      (append '(1 2 3) (list (- page 1) page (+ page 1)) (list (- size 2) (- size 1) size))))
-    ;;          #'(lambda (a b)
-    ;;              (< a b))))
-    ;;        (tmp 0)
-    ;;        (res))
-    ;;   (loop :for i :in show-pages :do
-    ;;      (let ((plist request-get-plist))
-    ;;        (when (not (equal tmp (- i 1)))
-    ;;          (push "<span>&hellip;</span>" res))
-    ;;        (setf tmp i)
-    ;;        (setf (getf plist :page) (format nil "~a" i))
-    ;;        (push (if (equal page i)
-    ;;                  (format nil "<a class=\"active\" href=\"?~a\">~a</a>"
-    ;;                          (make-get-str plist)
-    ;;                          i)
-    ;;                  ;; else
-    ;;                  (format nil "<a href=\"?~a\">~a</a>"
-    ;;                          (make-get-str plist)
-    ;;                          i))
-    ;;              res)))
-    ;;   (values
-    ;;    (reverse ret)
-    ;;    (format nil "~{~a&nbsp;&nbsp;&nbsp;&nbsp;~}" (reverse res))
-    ;;    ))))
 
 
 (defun menu-sort (a b)
@@ -670,80 +582,10 @@ is replaced with replacement."
                         (pathname-type pic)))))
 
 
-;; (defun get-pics (articul)
-;;   (let ((path (format nil "~a/big/~a/*.jpg" *path-to-pics* articul)))
-;;     (loop
-;;        :for pic
-;;        :in (ignore-errors (directory path))
-;;        :collect (format nil "~a.~a"
-;;                         (pathname-name pic)
-;;                         (pathname-type pic)))))
 
-
-(defmethod get-keyoptions ((object product))
-  (let ((parent (parent object)))
-    (when (null parent)
-      (return-from get-keyoptions nil))
-    (mapcar #'(lambda (pair)
-                (let ((optgroup (getf pair :optgroup))
-                      (optname  (getf pair :optname))
-                      (optvalue))
-                  (mapcar #'(lambda (option)
-                              (if (string= (name option) optgroup)
-                                  (let ((options (options option)))
-                                    (mapcar #'(lambda (opt)
-                                                (if (string= (name opt) optname)
-                                                    (setf optvalue (value opt))))
-                                            options))))
-                          (optgroups object))
-                  (list :optgroup optgroup
-                        :optname optname
-                        :optvalue optvalue)
-                  ))
-            (keyoptions parent))))
-
-;; (defun get-format-price (p)
-;;   (let ((rs (format nil "~a" p))
-;;         (str (reverse (format nil "~a" p))))
-;;     (when (< 3 (length str))
-;;       (let ((st1 (reverse (subseq str 0 3)))
-;;             (st2 (reverse (subseq str 3))))
-;;         (setf rs (format nil "~a ~a" st2 st1))))
-;;     rs))
-;; Теперь немного короче
 (defun get-format-price (p)
   (format nil "~,,' ,3:d" p))
 
-
-
-(defmethod view ((object product))
-  (let ((pics (get-pics (articul object))))
-    (let ((group (parent object)))
-      ;; (when (not (null group))
-      (list :articul (articul object)
-            :name (realname object)
-            :groupname (if (null group)
-                           "group not found"
-                           (name group))
-            :groupkey  (if (null group)
-                           ""
-                           (key  group))
-            :price (siteprice object)
-            :formatprice (get-format-price (siteprice object))
-            :bestprice (> (price object) (siteprice object))
-            :firstpic (car pics)
-            :keyopts (get-keyoptions object)
-            :oneclickbutton  (if (not (predzakaz object))
-                                 (soy.buttons:add-one-click (list :articul (articul object))))
-            :addbutton (if (predzakaz object)
-                           (soy.buttons:add-predzakaz (list :articul (articul object)))
-                           (soy.buttons:add-product-cart (list :articul (articul object)
-                                                               :name (realname object)
-                                                               :pic (if (null pics) nil (car pics))
-                                                               :deliveryprice (delivery-price object)
-                                                               :siteprice (price object)
-                                                               :price (siteprice object))))
-            ))))
 
 
 ;; выбор нескольких случайных элементов из списка
@@ -767,52 +609,6 @@ is replaced with replacement."
                                element)))
     result))
 
-(defmethod relink ((object product))
-  (let ((rs (list nil nil nil nil))
-        (temp-rs1)
-        (temp-rs2))
-    (when (not (equal 'group (type-of (parent object))))
-      (print object)
-      (return-from relink rs))
-    ;;2 случайных товара из списка
-    (setf temp-rs1 (get-randoms-from-list
-                   ;; список активных товаров той же группы и того же производителя
-                   ;; кроме его самого
-                   (let* ((base-vendor))
-                     (with-option object "Общие характеристики" "Производитель"
-                                  (setf base-vendor (value option)))
-                     (remove-if-not
-                      #'(lambda (x)
-                          (and (not (equal x object))
-                               (active x)
-                               (let ((vendor))
-                                 (with-option x "Общие характеристики" "Производитель"
-                                              (setf vendor (value option)))
-                                 (equal vendor base-vendor))))
-                      (products (parent object))))
-                   2))
-    ;;4 случайных товара из списка
-    (setf temp-rs2 (get-randoms-from-list
-                    ;;список всех активных товаров кроме object
-                    (let ((all))
-                      (maphash #'(lambda (k v)
-                                   (when (and (equal 'product (type-of v))
-                                              (active v)
-                                              (not (equal v object)))
-                                     ;; (print v)
-                                     (push v all)))
-                               *storage*)
-                      all)
-                    4))
-    ;; (print temp-rs1)
-    ;; (print temp-rs2)
-    (loop
-       :for item in (append temp-rs1 temp-rs2)
-       :for n
-       :from 1 to 4
-       :collect item)))
-
-
 
 (defun product-sort (products operation getter)
   (sort (copy-list products) #'(lambda (a b)
@@ -830,23 +626,6 @@ is replaced with replacement."
                 (setf option (cadr val))))
           malformed-filter-list)
   option))
-
-;; (let ((functions (mapcar #'(lambda (elt)
-;;                              (cons (eval (car (last elt)))
-;;                                      (get-filter-function-option elt)))
-;;                              (base (fullfilter (gethash "noutbuki" *storage*))))))
-;;   (mapcar #'(lambda (filter-group)
-;;               (let ((advanced-filters (cadr filter-group)))
-;;                 (mapcar #'(lambda (advanced-filter)
-;;                             (nconc functions (list (cons (eval (car (last advanced-filter)))
-;;                                                    (get-filter-function-option advanced-filter)))))
-;;                         advanced-filters)))
-;;           (advanced (fullfilter (gethash "noutbuki" *storage*))))
-;;   ;; (format t "~&~{~a~%~}" functions)
-;;   (loop
-;;      :for function :in functions
-;;      :finally (return t)
-;;      :do (format t "~&~a ~a" (car function) (cdr function))))
 
 ;; TODO: удалить из кода
 (defmethod filter-controller ((object group) request-get-plist)
@@ -948,7 +727,6 @@ is replaced with replacement."
                      (setf showflag t)))))
       showflag))
 
-;; (is-need-to-show-advanced (fullfilter (gethash "noutbuki" *storage*)) (url-to-request-get-plist "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-0=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&frequency-f=&frequency-t=&ram-f=&ram-t=&harddrive-f=&harddrive-t=&videoram-f=&videoram-t=&fullfilter=1#producer"))
 
 (defun is-need-to-show-advanced (fullfilter request-get-plist)
   (let ((flag nil))
@@ -1019,44 +797,21 @@ is replaced with replacement."
         contents)))
 
 
-;; (url-to-request-get-plist "http://www.320-8080.ru/komputery?vendor=%D0%A6%D0%B8F%D1%80%D1%8B")
-
 (defmethod vendor-controller ((object group) request-get-plist)
   (let* ((result-products))
     (mapcar #'(lambda (product)
                 (let ((vendor))
                   (with-option product "Общие характеристики" "Производитель"
                                (setf vendor (value option)))
-                  ;; (format t "~%[~a] : [~a] : [~a]"
-                  ;;         (string-downcase (string-trim '(#\Space #\Tab #\Newline) vendor))
-                  ;;         (string-downcase (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " "))
-                  ;;         ;; (loop :for ch :across (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ") :do
-                  ;;         ;;    (format t "~:c." ch))
-                  ;;         )
-                  ;; vendor (getf request-get-plist :vendor))
-
-                  ;; Временно отключил унификацию по регистру
-                  ;; (if (string=
-                  ;;      (string-downcase
-                  ;;       (string-trim '(#\Space #\Tab #\Newline) vendor))
-                  ;;      (string-downcase
-                  ;;       (string-trim '(#\Space #\Tab #\Newline)
-                  ;;                    (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " "))))
-                  ;;     (push product result-products))))
-
                   (if (string=
-                        (string-trim '(#\Space #\Tab #\Newline) vendor)
-                        (string-trim '(#\Space #\Tab #\Newline)
-                                     (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ")))
+                       (string-trim '(#\Space #\Tab #\Newline) vendor)
+                       (string-trim '(#\Space #\Tab #\Newline)
+                                    (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ")))
                       (push product result-products))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   ))
-
-            ;; (remove-if-not #'(lambda (product)
-            ;;                    (active product))
-                           ;; (get-recursive-products object))
             (get-recursive-products object)
-           )
+            )
     result-products))
 
 (defmethod vendor-filter-controller (product request-get-plist)
@@ -1092,7 +847,6 @@ is replaced with replacement."
               (subseq title 1))))
 
 
-;;
 (defun servo.compile-soy (&rest tmpl-name)
   (mapcar #'(lambda (fname)
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
@@ -1111,7 +865,8 @@ is replaced with replacement."
 
 
 (defun servo.plist-to-unique (plist)
-  (let ((result ))
+  "Remove duplacating keys"
+  (let ((result))
     (loop
        :while plist
        :do (let ((key (car plist))
@@ -1127,3 +882,10 @@ is replaced with replacement."
                        value)))
        (setf plist (cddr plist)))
     result))
+
+
+(defun servo.diff-percentage (full part)
+  "Returns difference in percents. (1 - part / full) * 100%"
+  (if (or (null full) (null part) (equal 0 full))
+      nil
+      (format nil "~1$" (* (- 1 (/ part full)) 100))))

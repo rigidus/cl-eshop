@@ -133,81 +133,184 @@
 
 
 
+(defmethod render.view ((object product))
+  (let ((pics (get-pics (articul object))))
+    (let ((group (new-classes.parent object)))
+      ;; (when (not (null group))
+      (list :articul (articul object)
+            :name (name-seo object)
+            :groupname (if (null group)
+                           "group not found"
+                           (name group))
+            :groupkey  (if (null group)
+                           ""
+                           (key group))
+            :price (siteprice object)
+            :formatprice (get-format-price (siteprice object))
+            :bestprice (> (delta-price object) 0)
+            :firstpic (car pics)
+            ;; :keyopts (get-keyoptions object)
+            :oneclickbutton  (if (not (preorder object))
+                                 (soy.buttons:add-one-click (list :articul (articul object))))
+            :addbutton (if (preorder object)
+                           (soy.buttons:add-predzakaz (list :articul (articul object)))
+                           (soy.buttons:add-product-cart (list :articul (articul object)
+                                                               :name (name-seo object)
+                                                               :pic (if (null pics) nil (car pics))
+                                                               :deliveryprice (delivery-price object)
+                                                               :siteprice (price object)
+                                                               :price (siteprice object))))
+            ))))
+
+
+(defun render.render-optgroups (optgroups)
+  (let ((optlist
+         (remove-if
+          #'null
+          (mapcar
+           #'(lambda (optgroup)
+               ;;не отображать группу опций с именем "Secret"
+               (if (string/= (getf optgroup :name)
+                             "Secret")
+                   (let ((options
+                          (mapcar #'(lambda (option)
+                                      (soy.product:option
+                                       (list :name (getf option :name)
+                                             :value (getf option :value))))
+                                  (getf optgroup :options))))
+                     (if (not (null (remove-if
+                                     #'null
+                                     options)))
+                         (soy.product:optgroup (list :name (getf optgroup :name)
+                                                     :options options))
+                         ""))))
+           optgroups))))
+    (if (null optlist)
+        nil
+        (soy.product:optlist (list :optgroups optlist)))))
+
+(defmethod render.get-keyoptions ((object product))
+  (let ((parent (new-classes.parent object)))
+    (when parent
+      (mapcar #'(lambda (pair)
+                  (let ((key-optgroup (getf pair :optgroup))
+                        (key-optname  (getf pair :optname))
+                        (optvalue))
+                    (mapcar #'(lambda (optgroup)
+                                (when (string= (getf optgroup :name) key-optgroup)
+                                    (let ((options (getf optgroup :options)))
+                                      (mapcar #'(lambda (option)
+                                                  (if (string= (getf option :name) key-optname)
+                                                      (setf optvalue (getf option :value))))
+                                              options))))
+                            (optgroups object))
+                    (list :optgroup key-optgroup
+                          :optname key-optname
+                          :optvalue optvalue)))
+              (keyoptions parent)))))
+
+(defmethod render.relink ((object product))
+  (let ((temp-rs1)
+        (temp-rs2))
+    ;;2 случайных товара из списка
+    (setf temp-rs1 (get-randoms-from-list
+                   ;; список активных товаров той же группы и того же производителя
+                   ;; кроме его самого
+                   (let* ((base-vendor))
+                     (with-option1 object "Общие характеристики" "Производитель"
+                                   (setf base-vendor (getf option :value)))
+                     (remove-if-not
+                      #'(lambda (x)
+                          (and (not (equal x object))
+                               (active x)
+                               (let ((vendor))
+                                 (with-option1 x "Общие характеристики" "Производитель"
+                                              (setf vendor (getf option :value)))
+                                 (equal vendor base-vendor))))
+                      (products (new-classes.parent object))))
+                   2))
+    ;;4 случайных товара из списка
+    (setf temp-rs2 (get-randoms-from-list
+                    ;;список всех активных товаров кроме object
+                    (let ((all))
+                      (mapcar #'(lambda (v)
+                                  (when (not (equal v object))
+                                     ;; (print v)
+                                    (push v all)))
+                              (active-products *global-storage*))
+                      all)
+                    4))
+    (loop
+       :for item in (append temp-rs1 temp-rs2)
+       :for n
+       :from 1 to 4
+       :collect item)))
+
 (defmethod restas:render-object ((designer eshop-render) (object product))
-  (multiple-value-bind (diffprice procent)
-      (get-procent (price object) (siteprice object))
-    (let ((pics (get-pics (articul object))))
-      (default-page
-          (soy.product:content (list :menu (menu object)
-                         :breadcrumbs (soy.product:breadcrumbs (breadcrumbs object))
-                         :articul (articul object)
-                         :name (realname object)
-                         :siteprice (siteprice object)
-                         :storeprice (price object)
-                         :bestprice (> (price object) (siteprice object))
-                         :formatsiteprice (get-format-price (siteprice object))
-                         :formatstoreprice (get-format-price (price object))
-                         :equalprice (= (siteprice object) (price object))
-                         :diffprice diffprice
-                         :procent procent
-                         :subst (format nil "/~a" (articul object))
-                         :pics (cdr pics)
-                         :firstpic (if (null pics) nil (car pics))
-                         :optlist (let ((optlist
-                                         (remove-if
-                                          #'null
-                                          (mapcar #'(lambda (optgroup)
-                                                      ;;не отображать группу опций с именем "Secret"
-                                                      (if (not (string= (name optgroup)
-                                                                        "Secret"))
-                                                          (restas:render-object designer optgroup)))
-                                                  (optgroups object)))))
-                                    (if (null optlist)
-                                        nil
-                                        (soy.product:optlist (list :optgroups optlist))))
-                         :accessories (soy.product:accessories)
-                         :reviews (soy.product:reviews)
-                         :simular (soy.product:simulars)
-                         :others (soy.product:others
-                                  (list :others (mapcar #'(lambda (x)
-                                                            (if (equal 'product (type-of x))
-                                                                (view x)
-                                                                (list :aricul "0"
-                                                                      :name ""
-                                                                      :pic "/img/temp/i6.jpg"
-                                                                      :price "0"
-                                                                      :siteprice "0" :subst ""
-                                                                      :firstpic "/img/temp/i6.jpg")))
-                                                        (relink object))))
-                         :keyoptions (get-keyoptions object)
-                         :active (active object)
-                         :descr (descr object)
-                         :shortdescr (shortdescr object)
-                         :dontshdev (gethash (articul object) *special-products*)
-                         :seotextflag (or (and (descr object)
-                                               (not (string= "" (stripper (descr object)))))
-                                          (and (shortdescr object)
-                                               (not (string= "" (stripper (shortdescr object))))))
-                         :predzakaz (predzakaz object)
-                         :addproductcart (if (predzakaz object)
-                                             (soy.buttons:add-predzakaz (list :articul (articul object)))
-                                             (soy.buttons:add-product-cart (list :articul (articul object)
-                                                                                 :name (realname object)
-                                                                                 :pic (if (null pics) nil (car pics))
-                                                                                 :siteprice (siteprice object)
-                                                                                 :price (price object)
-                                                                                 ;; :deliveryprice (delivery-price object)
-                                                                                 )))
-                         :addoneclick (if (not (predzakaz object))
-                                          (soy.buttons:add-one-click (list :articul (articul object))))))
-          :keywords (format nil "~a"
-                            (realname object))
-          :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
-                               (realname object))
-          :title (string-convertion-for-title
-                  (format nil "~a купить в ЦиFры - цена, фотография и описание, продажа ~a с гарантией и доставкой в ЦиFры 320-8080"
-                          (realname object)
-                          (realname object)))))))
+  (let* ((pics (get-pics (articul object)))
+         (diff-percent (servo.diff-percentage (price object) (siteprice object))))
+    (default-page
+        (soy.product:content (list :menu (new-classes.menu object)
+                                   :breadcrumbs (soy.product:breadcrumbs (new-classes.breadcrumbs object))
+                                   :articul (articul object)
+                                   :name (name-seo object)
+                                   :siteprice (siteprice object)
+                                   :storeprice (price object)
+                                   :bestprice (> (delta-price object) 0)
+                                   :formatsiteprice (get-format-price (siteprice object))
+                                   :formatstoreprice (get-format-price (price object))
+                                   :equalprice (= (delta-price object) 0)
+                                   :diffprice (delta-price object)
+                                   :procent diff-percent
+                                   :subst (format nil "/~a" (articul object))
+                                   :pics (cdr pics)
+                                   :firstpic (if (null pics) nil (car pics))
+                                   :optlist (render.render-optgroups (optgroups object))
+                                   :accessories (soy.product:accessories)
+                                   :reviews (soy.product:reviews)
+                                   :simular (soy.product:simulars)
+                                   :others (soy.product:others
+                                            (list :others (mapcar #'(lambda (x)
+                                                                      (if (equal 'product (type-of x))
+                                                                          (render.view x)
+                                                                          (list :aricul "0"
+                                                                                :name ""
+                                                                                :pic "/img/temp/i6.jpg"
+                                                                                :price "0"
+                                                                                :siteprice "0" :subst ""
+                                                                                :firstpic "/img/temp/i6.jpg")))
+                                                                  (render.relink object))))
+                                   :keyoptions (render.get-keyoptions object)
+                                   :active (active object)
+                                   ;; :descr (descr object)
+                                   :shortdescr (seo-text object)
+                                   ;; :dontshdev (gethash (articul object) *special-products*)
+                                   :seotextflag (and (not (null (seo-text object)))
+                                                     (string/= (seo-text object) ""))
+                                                ;; (or (and (descr object)
+                                                ;;          (not (string= "" (stripper (descr object)))))
+                                                ;;     (and (shortdescr object)
+                                                ;;          (not (string= "" (stripper (shortdescr object))))))
+                                   :predzakaz (preorder object)
+                                   :addproductcart (if (preorder object)
+                                                       (soy.buttons:add-predzakaz (list :articul (articul object)))
+                                                       (soy.buttons:add-product-cart (list :articul (articul object)
+                                                                                           :name (name-seo object)
+                                                                                           :pic (if (null pics) nil (car pics))
+                                                                                           :siteprice (siteprice object)
+                                                                                           :price (price object)
+                                                                                           ;; :deliveryprice (delivery-price object)
+                                                                                           )))
+                                   :addoneclick (if (not (preorder object))
+                                                    (soy.buttons:add-one-click (list :articul (articul object))))))
+        :keywords (format nil "~a"
+                          (name-seo object))
+        :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
+                             (name-seo object))
+        :title (string-convertion-for-title
+                (format nil "~a купить в ЦиFры - цена, фотография и описание, продажа ~a с гарантией и доставкой в ЦиFры 320-8080"
+                        (name-seo object)
+                        (name-seo object))))))
 
 
 (defun make-producters-lists(list &optional (column-number 4))
@@ -313,30 +416,4 @@
                                 name-2
                                 grname-3
                                 name-3))))))))
-
-
-
-(defmethod restas:render-object ((designer eshop-render) (object optgroup))
-  (let ((options (mapcar #'(lambda (option)
-                             (if ( not (or (null (value option))
-                                           ;; Не отображать опции в пустыми значениями
-                                           (string=  (string-trim
-                                                      '(#\Space #\Tab #\Newline)
-                                                      (value option))
-                                                     "")))
-                                 (restas:render-object designer option)))
-                         (options object))))
-    (if (not (null (remove-if  #'(lambda (v) (null v)) options)))
-        (soy.product:optgroup (list :name (name object)
-                                :options options))
-        "")))
-
-
-(defmethod restas:render-object ((designer eshop-render) (object option))
-  (soy.product:option (list :name (name object)
-                        :value (if (and (equal (optype object) :bool)
-                                        (boolflag object))
-                                   (format nil "~a ~a" "<img src=\"img/ok.png\" alt=\"*\"/>" (value object))
-                                   (value object)))))
-
 
