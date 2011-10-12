@@ -50,8 +50,8 @@
   (let* ((request-list (request-list))
          (key (cadr request-list))
          (filter (caddr request-list))
-         (grp (gethash key *storage*))
-         (fltr (gethash filter *storage*)))
+         (grp (gethash key (storage *global-storage*)))
+         (fltr (gethash filter (storage *global-storage*))))
     (and (not (null grp))
          (not (null fltr))
          (equal (type-of grp) 'group)
@@ -59,7 +59,7 @@
          (equal (key (parent fltr)) key))))
 
 (defun route-filter (filter)
-  (gethash filter *storage*))
+  (gethash filter (storage *global-storage*)))
 
 (restas:define-route filter/-route ("/:key/:filter/" :requirement #'test-route-filter)
   (route-filter filter))
@@ -71,7 +71,7 @@
 ;; STORAGE OBJECT
 
 (defun test-route-storage-object ()
-  (let ((obj (gethash (cadr (request-list)) *storage*)))
+  (let ((obj (gethash (cadr (request-list)) (storage *global-storage*))))
     (if (not (null obj))
         (if (and (equal (type-of obj)
                         'group)
@@ -90,7 +90,7 @@
 
 
 (defun route-storage-object (key)
-  (gethash key *storage*))
+  (gethash key (storage *global-storage*)))
 
 (restas:define-route storage-object-route  ("/:key" :requirement #'test-route-storage-object)
   (route-storage-object key))
@@ -123,36 +123,36 @@
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
 
 ;; STATIC
-(defparameter *static-pages* (list ;;"delivery"
-                                   ;;"about"
-                                   ;;"faq"
-                                   ;; "kakdobratsja"
-                                   ;; "kaksvjazatsja"
-                                   ;; "levashovsky"
-                                   ;; "partners"
-                                   ;; "payment"
-                                   ;; "servicecenter"
-                                   ;; "otzyvy"
-                                   ;; "pricesc"
-                                   ;; "warrantyservice"
-                                   ;; "warranty"
-                                   ;; "moneyback"
-                                   ;; "dilers"
-                                   ;; "corporate"
-                                   ;; "vacancy"
-                                   ;; "bonus"
-                                   ;; "burunduk"
-                                   ;; "listservice"
-                                   ;; "suslik"
-                                   ;; "god_kills_a_kitten"
-                                   ))
+;; (defparameter *static-pages* (list ;;"delivery"
+;;                                    ;;"about"
+;;                                    ;;"faq"
+;;                                    ;; "kakdobratsja"
+;;                                    ;; "kaksvjazatsja"
+;;                                    ;; "levashovsky"
+;;                                    ;; "partners"
+;;                                    ;; "payment"
+;;                                    ;; "servicecenter"
+;;                                    ;; "otzyvy"
+;;                                    ;; "pricesc"
+;;                                    ;; "warrantyservice"
+;;                                    ;; "warranty"
+;;                                    ;; "moneyback"
+;;                                    ;; "dilers"
+;;                                    ;; "corporate"
+;;                                    ;; "vacancy"
+;;                                    ;; "bonus"
+;;                                    ;; "burunduk"
+;;                                    ;; "listservice"
+;;                                    ;; "suslik"
+;;                                    ;; "god_kills_a_kitten"
+;;                                    ))
 
 
-(defmacro static ()
-  `(progn ,@(mapcar #'(lambda (x)
-                        `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
-                           (static-page)))
-                    *static-pages*)))
+;; (defmacro static ()
+;;   `(progn ,@(mapcar #'(lambda (x)
+;;                         `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
+;;                            (static-page)))
+;;                     *static-pages*)))
 
 ;; (static)
 
@@ -272,7 +272,7 @@
 (restas:define-route not-found-route ("*any")
   (restas:abort-route-handler
    (babel:string-to-octets
-     (default-page (sitemap-page t)
+     (default-page "test" ;;(sitemap-page t)
       :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
       :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге")

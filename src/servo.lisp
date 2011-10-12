@@ -55,7 +55,7 @@
                (let ((vndr (getf (request-get-plist) :vendor)))
                  (if (null vndr)
                      ;; show group descr
-                     (let ((descr (descr object)))
+                     (let ((descr (seo-text object)))
                        (if (null descr)
                            ""
                            (catalog:seotext (list :text descr))))
@@ -67,15 +67,38 @@
 
 ;; (maphash #'(lambda (k v ) (print k)) (vendors (gethash "monobloki" *storage*)))
 
-
-
-
 (defmacro with-option (product optgroup-name option-name body)
   `(mapcar #'(lambda (optgroup)
                (if (string= (name optgroup) ,optgroup-name)
                    (let ((options (options optgroup)))
                      (mapcar #'(lambda (option)
                                  (if (string= (name option) ,option-name)
+                                     ,body))
+                             options))))
+           (optgroups ,product)))
+
+;; (let ((product (gethash "100001" (storage *global-storage*)))
+;;       (value))
+  ;; (with-option1 product \"Аккумулятор\" \"Время автономной работы, ч\"
+  ;;              (setf value (value option)))
+  ;; (mapcar #'(lambda (optgroup)
+  ;;             (when (string= (getf optgroup :name) "Общее")
+  ;;                 (wlog (getf optgroup :name))
+  ;;                 (let ((options (getf optgroup :options)))
+  ;;                    (mapcar #'(lambda (option)
+  ;;                                (if (string= (getf option :name)
+  ;;                                             "Интерфейс")
+  ;;                                    (setf value (getf option :value))))
+  ;;                            options))))
+  ;;          (optgroups product))
+  ;; value)
+
+(defmacro with-option1 (product optgroup-name option-name body)
+  `(mapcar #'(lambda (optgroup)
+               (if (string= (getf optgroup :name) ,optgroup-name)
+                   (let ((options (getf optgroup :options)))
+                     (mapcar #'(lambda (option)
+                                 (if (string= (getf option :name) ,option-name)
                                      ,body))
                              options))))
            (optgroups ,product)))

@@ -13,10 +13,10 @@
 (defvar *global-storage* (make-instance 'global-storage))
 
 ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-(defun storage.get-main-product-parent (product)
-  (car (parents product)))
-
 (defmethod storage.main-parent ((object group))
+  (car (parents object)))
+
+(defmethod storage.main-parent ((object product))
   (car (parents object)))
 ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

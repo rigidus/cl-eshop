@@ -55,6 +55,7 @@
             "main-page.soy"
             "new-catalog.soy"
             "class_forms.soy"
+            "admin.soy"
             )))
 
 (print "Compiling all templates")

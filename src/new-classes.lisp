@@ -73,13 +73,17 @@
                   res)))
         item))
     (defmethod unserialize-from-file (filepath (dummy ,name))
-      (with-open-file (file filepath)
-        (loop for line = (read-line file nil 'EOF)
-           until (eq line 'EOF)
-           do
-             (let ((item (unserialize (decode-json-from-string line)
-                                      dummy)))
-               (storage.add-new-object item (key item))))))))
+      (let ((num 0))
+        (with-open-file (file filepath)
+          (loop for line = (read-line file nil 'EOF)
+             until (eq line 'EOF)
+             do
+               (let ((item (unserialize (decode-json-from-string line)
+                                        dummy)))
+                 (incf num)
+                 (if (equal (mod num 1000) 0)
+                     (wlog (key item)))
+                 (storage.add-new-object item (key item)))))))))
 
 
 ;;вызывается после десереализации продукта
@@ -122,15 +126,17 @@
   ;;adding newlines instead of #Newline
   (setf (seo-text item) (object-fields.string-add-newlines (seo-text item)))
   ;; после десериализации в parent лежит список key родительских групп
-  (setf (parents item)
-        (mapcar #'(lambda (parent-key)
-                    (when (not (null parent-key))
-                      (let ((parent (gethash parent-key (storage *global-storage*))))
-                        ;;Если родитель — группа, связать группу с данной
-                        (when (equal 'group (type-of parent))
-                          (push item (groups parent))
-                          parent))))
-                (parents item)))
+  (let ((parents (copy-list (parents item))))
+    (setf (parents item)
+          (mapcar #'(lambda (parent-key)
+                      (when (not (null parent-key))
+                        (gethash parent-key (storage *global-storage*))))
+                  parents))
+    ;;проставление ссылок у родителей на данную группу
+    (mapcar #'(lambda (parent)
+                (when parent
+                  (push item (groups parent))))
+            (parents item)))
   (mapcar #'(lambda (child)
               (setf (empty item) (or (empty item) (active child)))) (products item))
   (setf (keyoptions item) (mapcar #'(lambda (pair)
@@ -197,9 +203,12 @@
 
 
 (defun new-classes.unserialize-all ()
-  (unserialize-from-file #P"/home/eviltosha/serialize_test/products_old" (make-instance 'product))
-  (unserialize-from-file #P"/home/eviltosha/serialize_test/groups" (make-instance 'group))
-  (unserialize-from-file #P"/home/eviltosha/serialize_test/filters" (make-instance 'filter))
+  ;; (unserialize-from-file #P"/home/webadmin/test/products" (make-instance 'product))
+  ;; (unserialize-from-file #P"/home/webadmin/test/groups" (make-instance 'group))
+  ;; (unserialize-from-file #P"/home/webadmin/test/filters" (make-instance 'filter))
+  (unserialize-from-file #P"/home/wolfor/test/products" (make-instance 'product))
+  (unserialize-from-file #P"/home/wolfor/test/groups" (make-instance 'group))
+  (unserialize-from-file #P"/home/wolfor/test/filters" (make-instance 'filter))
   (storage.make-lists)
   (maphash #'(lambda (key value)
                (declare (ignore key))
@@ -224,10 +233,12 @@
             :breadcrumbtail (car (last out)))))
 
 (defun new-classes.get-root-parent (item)
-  (let ((parent (new-classes.parent item)))
-    (if (or (null item) (null parent))
-        item
-        (new-classes.get-root-parent parent))))
+  (if (and item
+           (not (equal "" item)))
+      (let ((parent (new-classes.parent item)))
+        (if (or (null item) (null parent))
+            item
+            (new-classes.get-root-parent parent)))))
 
 
 (defun new-classes.menu-sort (a b)
@@ -240,44 +251,46 @@
          (order b))))
 
 
+;;TODO временно убрана проверка на пустые группы, тк это поле невалидно
 (defun new-classes.menu (&optional current-object)
   "Creating left menu"
   (let* ((root-groups (root-groups *global-storage*))
-        (current-root (new-classes.get-root-parent current-object))
-        (divider-list (list "setevoe-oborudovanie" "foto-and-video" "rashodnye-materialy"))
-        (src-lst
-         (mapcar #'(lambda (val)
-                     (if (equal (key val) (key current-root))
-                         ;; This is current
-                         (leftmenu:selected
-                          (list :divider (notevery #'(lambda (divider)
-                                                       (string/= (key val) divider))
-                                                   divider-list)
-                                :key (key val)
-                                :name (name val)
-                                :icon (icon val)
-                                :subs (loop
-                                         :for child
-                                         :in (sort
-                                              (remove-if #'(lambda (g)
-                                                             (or
-                                                              (empty g)
-                                                              (not (active g))))
-                                                         (groups val))
-                                              #'menu-sort)
-                                         :collect
-                                         (list :key  (key child) :name (name child)))
-                                ))
-                         ;; else - this is ordinal
-                         (leftmenu:ordinal (list :divider (notevery #'(lambda (divider)
-                                                                        (string/= (key val) divider))
-                                                                    divider-list)
-                                                 :key  (key val)
-                                                 :name (name val)
-                                                 :icon (icon val)))
-                         ))
-                 (sort root-groups #'new-classes.menu-sort))))
-      (leftmenu:main (list :elts src-lst))))
+         (current-root (new-classes.get-root-parent current-object))
+         (divider-list (list "setevoe-oborudovanie" "foto-and-video" "rashodnye-materialy"))
+         (src-lst
+          (mapcar #'(lambda (val)
+                      (if (and current-root
+                               (equal (key val) (key current-root)))
+                          ;; This is current
+                          (leftmenu:selected
+                           (list :divider (notevery #'(lambda (divider)
+                                                        (string/= (key val) divider))
+                                                    divider-list)
+                                 :key (key val)
+                                 :name (name val)
+                                 :icon (icon val)
+                                 :subs (loop
+                                          :for child
+                                          :in (sort
+                                               (remove-if #'(lambda (g)
+                                                              (or
+                                                               ;; (empty g)
+                                                               (not (active g))))
+                                                          (groups val))
+                                               #'menu-sort)
+                                          :collect
+                                          (list :key  (key child) :name (name child)))
+                                 ))
+                          ;; else - this is ordinal
+                          (leftmenu:ordinal (list :divider (notevery #'(lambda (divider)
+                                                                         (string/= (key val) divider))
+                                                                     divider-list)
+                                                  :key  (key val)
+                                                  :name (name val)
+                                                  :icon (icon val)))
+                          ))
+                  (sort root-groups #'new-classes.menu-sort))))
+    (leftmenu:main (list :elts src-lst))))
 
 
 ;;создание класса и методов отображения (в админке), изменения (из админки),
@@ -288,3 +301,61 @@
   (eval `(new-classes.make-edit-method ,name ,list-fields))
   (eval `(new-classes.make-unserialize-method ,name ,list-fields))
   (eval `(new-classes.make-serialize-method ,name ,list-fields)))
+
+
+(new-classes.make-class-and-methods
+ 'product
+ '((:name key               :initform ""                     :disabled t     :type string      :serialize t)
+   (:name articul           :initform nil                    :disabled t     :type int         :serialize t)
+   (:name name-provider     :initform ""                     :disabled nil   :type string      :serialize t)
+   (:name name-seo          :initform ""                     :disabled nil   :type string      :serialize t)
+   (:name siteprice         :initform 0                      :disabled nil   :type int         :serialize t)
+   (:name delta-price       :initform 0                      :disabled nil   :type int         :serialize t)
+   (:name bonuscount        :initform 0                      :disabled nil   :type int         :serialize t)
+   (:name delivery-price    :initform 0                      :disabled nil   :type int         :serialize t)
+   (:name active            :initform t                      :disabled nil   :type bool        :serialize nil)
+   (:name preorder          :initform nil                    :disabled nil   :type bool        :serialize t)
+   (:name newbie            :initform t                      :disabled nil   :type bool        :serialize t)
+   (:name sale              :initform t                      :disabled nil   :type bool        :serialize t)
+   (:name parents           :initform nil                    :disabled nil   :type group-list  :serialize t)
+   (:name date-modified     :initform (get-universal-time)   :disabled t     :type time        :serialize t)
+   (:name date-created      :initform (get-universal-time)   :disabled t     :type time        :serialize t)
+   (:name seo-text          :initform ""                     :disabled nil   :type textedit    :serialize t)
+   (:name count-transit     :initform 0                      :disabled t     :type int         :serialize t)
+   (:name count-total       :initform 0                      :disabled t     :type int         :serialize t)
+   (:name optgroups         :initform nil                    :disabled t     :type optgroups   :serialize t)))
+
+;; для того чтобы работали фильтры
+(defmethod price ((object product))
+  (+ (siteprice object) (delta-price object)))
+
+
+(new-classes.make-class-and-methods
+ 'group
+ '((:name key               :initform nil                             :disabled t   :type string       :serialize t)
+   (:name parents           :initform nil                             :disabled nil :type group-list   :serialize t)
+   (:name name              :initform nil                             :disabled nil :type string       :serialize t)
+   (:name active            :initform nil                             :disabled nil :type bool         :serialize t)
+   (:name empty             :initform nil                             :disabled t   :type bool         :serialize nil)
+   (:name order             :initform 1000                            :disabled nil :type int          :serialize t)
+   (:name ymlshow           :initform nil                             :disabled t   :type bool         :serialize t)
+   (:name pic               :initform nil                             :disabled nil :type string       :serialize t)
+   (:name icon              :initform nil                             :disabled nil :type string       :serialize t)
+   (:name delivery-price    :initdorm 0                               :disabled nil :type int          :serialize t)
+   (:name groups            :initform nil                             :disabled t   :type group-list   :serialize t)
+   (:name products          :initform nil                             :disabled t   :type product-list :serialize nil)
+   (:name filters           :initform nil                             :disabled t   :type string       :serialize nil)
+   (:name fullfilter        :initform nil                             :disabled t   :type string       :serialize nil)
+   (:name vendors           :initform (make-hash-table :test #'equal) :disabled t   :type string       :serialize nil)
+   (:name seo-text          :initform nil                             :disabled nil :type textedit     :serialize t)
+   (:name keyoptions        :initform nil                             :disabled t   :type keyoptions   :serialize t)))
+
+
+(new-classes.make-class-and-methods
+ 'filter
+ '((:name key               :initform ""       :disabled t    :type string)
+   (:name parents           :initform nil      :disabled t    :type group-list)
+   (:name name              :initform ""       :disabled nil  :type string)
+   (:name func              :initform ""       :disabled t    :type string)
+   (:name func-string       :initform ""       :disabled t    :type textedit)))
+

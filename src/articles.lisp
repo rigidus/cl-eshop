@@ -66,7 +66,7 @@
                     (push x files)))
             (directory (format nil "~a/*" path)))
     (mapcar #'(lambda (file)
-                (wlog ctype)
+                (wlog file)
                 (unserialize (format nil "~a" file) (make-instance 'article :ctype ctype)))
             files)))
 

@@ -36,4 +36,8 @@
                (:file "images" :depends-on ("oneclickcart")) ;; imagemagic
                (:file "spike" :depends-on ("images"))
                (:file "static-pages" :depends-on ("spike"))
+               (:file "object-fields" :depends-on ("static-pages"))
+               (:file "storage" :depends-on ("object-fields"))
+               (:file "new-classes" :depends-on ("storage"))
+               (:file "admin-gateway" :depends-on ("new-classes"))
                ))))

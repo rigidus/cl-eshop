@@ -77,6 +77,91 @@
   ((producers         :initarg :producers         :initform nil       :accessor producers)
    (producersall      :initarg :producersall      :initform nil       :accessor producersall)))
 
+;; (new-classes.make-class-and-methods
+;;  'product
+;;  '((:name key               :initform ""                     :disabled t     :type string      :serialize t)
+;;    (:name articul           :initform nil                    :disabled t     :type int         :serialize t)
+;;    (:name name-provider     :initform ""                     :disabled nil   :type string      :serialize t)
+;;    (:name name-seo          :initform ""                     :disabled nil   :type string      :serialize t)
+;;    (:name siteprice         :initform 0                      :disabled nil   :type int         :serialize t)
+;;    (:name delta-price       :initform 0                      :disabled nil   :type int         :serialize t)
+;;    (:name bonuscount        :initform 0                      :disabled nil   :type int         :serialize t)
+;;    (:name delivery-price    :initform 0                      :disabled nil   :type int         :serialize t)
+;;    (:name active            :initform t                      :disabled nil   :type bool        :serialize nil)
+;;    (:name preorder          :initform nil                    :disabled nil   :type bool        :serialize t)
+;;    (:name newbie            :initform t                      :disabled nil   :type bool        :serialize t)
+;;    (:name sale              :initform t                      :disabled nil   :type bool        :serialize t)
+;;    (:name parents           :initform nil                    :disabled nil   :type group-list  :serialize t)
+;;    (:name date-modified     :initform (get-universal-time)   :disabled t     :type time        :serialize t)
+;;    (:name date-created      :initform (get-universal-time)   :disabled t     :type time        :serialize t)
+;;    (:name seo-text          :initform ""                     :disabled nil   :type textedit    :serialize t)
+;;    (:name count-transit     :initform 0                      :disabled t     :type int         :serialize t)
+;;    (:name count-total       :initform 0                      :disabled t     :type int         :serialize t)
+;;    (:name optgroups         :initform nil                    :disabled t     :type optgroups   :serialize t)))
+
+
+
+
+;; (new-classes.make-class-and-methods
+;;  'group
+;;  '((:name key               :initform nil                             :disabled t   :type string       :serialize t)
+;;    (:name parents           :initform nil                             :disabled nil :type group-list   :serialize t)
+;;    (:name name              :initform nil                             :disabled nil :type string       :serialize t)
+;;    (:name active            :initform nil                             :disabled nil :type bool         :serialize t)
+;;    (:name empty             :initform nil                             :disabled t   :type bool         :serialize nil)
+;;    (:name order             :initform 1000                            :disabled nil :type int          :serialize t)
+;;    (:name ymlshow           :initform nil                             :disabled t   :type bool         :serialize t)
+;;    (:name pic               :initform nil                             :disabled nil :type string       :serialize t)
+;;    (:name icon              :initform nil                             :disabled nil :type string       :serialize t)
+;;    (:name delivery-price    :initdorm 0                               :disabled nil :type int          :serialize t)
+;;    (:name groups            :initform nil                             :disabled t   :type group-list   :serialize t)
+;;    (:name products          :initform nil                             :disabled t   :type product-list :serialize nil)
+;;    (:name filters           :initform nil                             :disabled t   :type string       :serialize nil)
+;;    (:name fullfilter        :initform nil                             :disabled t   :type string       :serialize nil)
+;;    (:name vendors           :initform (make-hash-table :test #'equal) :disabled t   :type string       :serialize nil)
+;;    (:name seo-text          :initform nil                             :disabled nil :type textedit     :serialize t)
+;;    (:name keyoptions        :initform nil                             :disabled t   :type keyoptions   :serialize t)))
+
+
+;; (new-classes.make-class-and-methods
+;;  'filter
+;;  '((:name key               :initform ""       :disabled t    :type string)
+;;    (:name parents           :initform nil      :disabled t    :type group-list)
+;;    (:name name              :initform ""       :disabled nil  :type string)
+;;    (:name func              :initform ""       :disabled t    :type string)
+;;    (:name func-string       :initform ""       :disabled t    :type textedit)))
+
+;; (new-classes.make-class-and-methods
+;;  'optgroup
+;;  '((:name name              :initarg :name            :initform ""        :accessor name :disabled nil :type string)
+;;    (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string)
+;;    (:name options           :initarg :options         :initform nil       :accessor options :disabled t :type string)))
+
+;; (new-classes.make-class-and-methods
+;;  'option
+;;  '((:name name              :initarg :name            :initform ""        :accessor name :disabled nil :type string)
+;;    (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string)
+;;    (:name value             :initarg :value           :initform ""        :accessor value :disabled nil :type string)
+;;    (:name optype            :initarg :optype          :initform nil       :accessor optype :disabled t :type string)
+;;    (:name boolflag          :initarg :boolflag        :initform nil       :accessor boolflag :disabled nil :type bool)))
+
+;; (new-classes.make-class-and-methods
+;;  'group-filter
+;;  '((:name name              :initarg :name            :initform nil       :accessor name :disabled nil :type string)
+;;    (:name key               :initarg :key             :initform ""                           :accessor key :disabled t :type string)
+;;    (:name base              :initarg :base            :initform nil       :accessor base :disabled t :type string)
+;;    (:name advanced          :initarg :advanced        :initform nil       :accessor advanced :disabled t :type string)))
+
+
+
+
+
+;; (new-classes.make-class-and-methods
+;;  'producers
+;;  '((:name producers         :initarg :producers         :initform nil       :accessor producers :disabled t :type string)
+;;    (:name key               :initarg :key             :initform ""          :accessor key :disabled t :type string)
+;;    (:name producersall      :initarg :producersall      :initform nil       :accessor producersall :disabled t :type string)))
+
 
 (defmacro make-integer-writer (field)
   `(defmethod (setf ,field) (value (item product))
@@ -168,7 +253,7 @@
 
 (defmethod get-recursive-products ((object group))
   (let ((products (products object)))
-    (loop :for child :in (childs object) :do
+    (loop :for child :in (groups object) :do
        (setf products (append products (get-recursive-products child))))
     products))
 

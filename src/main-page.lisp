@@ -25,18 +25,20 @@
 ;; цена из хранилища товаров
 (defun main-page-view-product (key storage)
   (let* ((dp (gethash key storage))
-         (p (gethash (key dp) *storage*))
+         (p (gethash (key dp) (storage *global-storage*)))
+         (price (+ (siteprice p) (delta-price p)))
+         (parent (storage.main-parent p))
          (p-list (list :articul (articul p)
                        :name (name dp)
                        :siteprice (siteprice p)
-                       :price (price p)
+                       :price price
                        :showsiteprice (get-format-price (siteprice p))
-                       :showprice (get-format-price (price p))
+                       :showprice (get-format-price price)
                        :url (articul p)
                        :options (opts dp)
-                       :grouplink (aif (parent p)
+                       :grouplink (aif parent
                                        (key it))
-                       :groupname (aif (parent p)
+                       :groupname (aif parent
                                        (name it))
                        ;; :deliveryprice (delivery-price p)
                        :pic (car (get-pics (articul p)))))
@@ -48,20 +50,21 @@
 (defun main-page-products-show (storage num)
   (let ((full-daily-list (main-page-get-active-product-list storage))
         (daily-list))
-    ;; (print full-daily-list)
-      ;;для блока дэйли должно быть не менее 6 товаров
-      (if (> (length full-daily-list) num)
-          ;; если активных товаров хватает для демонстрации на главной
-          (progn
-            ;; выбираем 6 случайных товаров с учетом их веса
-            (setf daily-list (main-page-get-randoms-from-weight-list full-daily-list num)))
-          ;; если не хватает
-          (progn
-            (format nil "WARN: Main page daily ~a products"  (length full-daily-list))
-            (setf daily-list (main-page-get-randoms-from-weight-list full-daily-list num))))
-      (mapcar #'(lambda (v) (main-page-view-product (car v) storage))
-              daily-list)
-      ))
+    ;; (wlog full-daily-list)
+    ;;для блока дэйли должно быть не менее 6 товаров
+    (if (> (length full-daily-list) num)
+        ;; если активных товаров хватает для демонстрации на главной
+        (progn
+          ;; выбираем 6 случайных товаров с учетом их веса
+          (setf daily-list (main-page-get-randoms-from-weight-list full-daily-list num)))
+        ;; если не хватает
+        (progn
+          (format nil "WARN: Main page daily ~a products"  (length full-daily-list))
+          (setf daily-list (main-page-get-randoms-from-weight-list full-daily-list num))))
+    ;; (wlog "DB-1")
+    (mapcar #'(lambda (v) (main-page-view-product (car v) storage))
+            daily-list)
+    ))
 
 ;;отображение товаров дня
 (defun main-page-show-banner (type storage)
@@ -103,7 +106,7 @@
 (defun main-page-show (&optional (request-str ""))
   (default-page
       (root:content
-       (list :menu (menu request-str)
+       (list :menu (new-classes.menu request-str)
              :dayly  (soy.main-page:daily (list :items (main-page-products-show (daily *main-page.storage*) 6)))
              :banner (soy.main-page:banner (main-page-show-banner "center" (banner *main-page.storage*)))
              :olist (soy.main-page:olist)
@@ -148,7 +151,7 @@
   (let ((rs))
     (maphash #'(lambda (k v)
                  (when v
-                   (let ((p (gethash (key v) *storage*)))
+                   (let ((p (gethash (key v) (storage *global-storage*))))
                      (if (and (not (null p))
                               (active p)
                               (< (date-start v) (get-universal-time) (date-finish v)))
@@ -176,7 +179,8 @@
   (let ((rs))
     (maphash #'(lambda (k v)
                  (when v
-                   (if (< (date-start v) (get-universal-time) (date-finish v))
+                   (if (and (gethash (key v) (storage *global-storage*))
+                        (< (date-start v) (get-universal-time) (date-finish v)))
                        (push (cons k (weight v)) rs)
                        (wlog (format nil "WARN:~a" k)))))
              storage)

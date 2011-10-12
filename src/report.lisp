@@ -82,6 +82,7 @@
                                                (not (equal (value l) ""))
                                                (not (equal (value l) "Производитель"))
                                                (not (equal (value l) "Модель")))
+                                          (print (value l))
 
                                           (setf flag t)))
                        (options v)))
