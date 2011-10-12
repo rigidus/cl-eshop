@@ -14,8 +14,9 @@
     (pathname (concatenate 'string *path-to-dropbox* "/htimgs/" (subseq full-uri (search "/img/" full-uri))))))
 
 (restas:define-route request-static-route-pic ("/pic/*")
-  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
-    (pathname (concatenate 'string  *path-to-pics* "/" (subseq full-uri (+ 5 (search "/pic/" full-uri)))))))
+  (let* ((full-uri (format nil "~a" (restas:request-full-uri)))
+         (path-to-img (ppcre:regex-replace ".*/pic/(\\w{1,})/(\\d{1,3})(\\d{0,})/(.*)$" full-uri "\\1/\\2/\\2\\3/\\4")))
+    (pathname (format nil "~a/~a" *path-to-product-pics* path-to-img))))
 
 (restas:define-route request-static-route-css ("/css/*")
   (let ((full-uri (format nil "~a" (restas:request-full-uri))))
@@ -49,8 +50,8 @@
   (let* ((request-list (request-list))
          (key (cadr request-list))
          (filter (caddr request-list))
-         (grp (gethash key *storage*))
-         (fltr (gethash filter *storage*)))
+         (grp (gethash key (storage *global-storage*)))
+         (fltr (gethash filter (storage *global-storage*))))
     (and (not (null grp))
          (not (null fltr))
          (equal (type-of grp) 'group)
@@ -58,7 +59,7 @@
          (equal (key (parent fltr)) key))))
 
 (defun route-filter (filter)
-  (gethash filter *storage*))
+  (gethash filter (storage *global-storage*)))
 
 (restas:define-route filter/-route ("/:key/:filter/" :requirement #'test-route-filter)
   (route-filter filter))
@@ -70,7 +71,7 @@
 ;; STORAGE OBJECT
 
 (defun test-route-storage-object ()
-  (let ((obj (gethash (cadr (request-list)) *storage*)))
+  (let ((obj (gethash (cadr (request-list)) (storage *global-storage*))))
     (if (not (null obj))
         (if (and (equal (type-of obj)
                         'group)
@@ -89,7 +90,7 @@
 
 
 (defun route-storage-object (key)
-  (gethash key *storage*))
+  (gethash key (storage *global-storage*)))
 
 (restas:define-route storage-object-route  ("/:key" :requirement #'test-route-storage-object)
   (route-storage-object key))
@@ -110,48 +111,48 @@
 ;; CATALOG
 
 (restas:define-route catalog-page-route ("/catalog")
-  (default-page (catalog-entity)
+  (default-page (catalog.catalog-entity)
       :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
       :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
 
 (restas:define-route sitemap-page-route ("/sitemap")
-  (default-page (sitemap-page)
+  (default-page (catalog.sitemap-page)
       :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
       :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
 
 ;; STATIC
-(defparameter *static-pages* (list ;;"delivery"
-                                   ;;"about"
-                                   ;;"faq"
-                                   ;; "kakdobratsja"
-                                   ;; "kaksvjazatsja"
-                                   ;; "levashovsky"
-                                   ;; "partners"
-                                   ;; "payment"
-                                   ;; "servicecenter"
-                                   ;; "otzyvy"
-                                   ;; "pricesc"
-                                   ;; "warrantyservice"
-                                   ;; "warranty"
-                                   ;; "moneyback"
-                                   ;; "dilers"
-                                   ;; "corporate"
-                                   ;; "vacancy"
-                                   ;; "bonus"
-                                   ;; "burunduk"
-                                   ;; "listservice"
-                                   ;; "suslik"
-                                   ;; "god_kills_a_kitten"
-                                   ))
+;; (defparameter *static-pages* (list ;;"delivery"
+;;                                    ;;"about"
+;;                                    ;;"faq"
+;;                                    ;; "kakdobratsja"
+;;                                    ;; "kaksvjazatsja"
+;;                                    ;; "levashovsky"
+;;                                    ;; "partners"
+;;                                    ;; "payment"
+;;                                    ;; "servicecenter"
+;;                                    ;; "otzyvy"
+;;                                    ;; "pricesc"
+;;                                    ;; "warrantyservice"
+;;                                    ;; "warranty"
+;;                                    ;; "moneyback"
+;;                                    ;; "dilers"
+;;                                    ;; "corporate"
+;;                                    ;; "vacancy"
+;;                                    ;; "bonus"
+;;                                    ;; "burunduk"
+;;                                    ;; "listservice"
+;;                                    ;; "suslik"
+;;                                    ;; "god_kills_a_kitten"
+;;                                    ))
 
 
-(defmacro static ()
-  `(progn ,@(mapcar #'(lambda (x)
-                        `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
-                           (static-page)))
-                    *static-pages*)))
+;; (defmacro static ()
+;;   `(progn ,@(mapcar #'(lambda (x)
+;;                         `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
+;;                            (static-page)))
+;;                     *static-pages*)))
 
 ;; (static)
 
@@ -269,9 +270,10 @@
 
 ;;необходимо отдавать 404 ошибку для несуществеющих страниц
 (restas:define-route not-found-route ("*any")
+  (log5:log-for test "error 404: ~a" any)
   (restas:abort-route-handler
    (babel:string-to-octets
-     (default-page (sitemap-page t)
+     (default-page (catalog.sitemap-page t)
       :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
       :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге")
@@ -279,8 +281,12 @@
    :return-code hunchentoot:+http-not-found+
    :content-type "text/html"))
 
-(restas:define-route request-route ("/request")
-  (oneclickcart-page (request-get-plist)))
+;; (restas:define-route request-route ("/request")
+;;   (oneclickcart-page (request-get-plist)))
+
+(restas:define-route request-route ("/request1")
+  (oneclickcart.page (request-get-plist)))
+
 
 
 (defun bts-view-page ()

@@ -24,4 +24,5 @@
 
 ;;количество непустых фильтров у группы
 (defun num-nonempty-filters (object)
-  (length (remove-if #'(lambda (fil) (is-empty-filtered-list object fil)) (filters object))))
+  (length (remove-if #'(lambda (fil) (is-empty-filtered-list object fil))
+                     (filters object))))

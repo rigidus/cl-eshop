@@ -55,7 +55,7 @@
                (let ((vndr (getf (request-get-plist) :vendor)))
                  (if (null vndr)
                      ;; show group descr
-                     (let ((descr (descr object)))
+                     (let ((descr (seo-text object)))
                        (if (null descr)
                            ""
                            (catalog:seotext (list :text descr))))
@@ -67,15 +67,38 @@
 
 ;; (maphash #'(lambda (k v ) (print k)) (vendors (gethash "monobloki" *storage*)))
 
-
-
-
 (defmacro with-option (product optgroup-name option-name body)
   `(mapcar #'(lambda (optgroup)
                (if (string= (name optgroup) ,optgroup-name)
                    (let ((options (options optgroup)))
                      (mapcar #'(lambda (option)
                                  (if (string= (name option) ,option-name)
+                                     ,body))
+                             options))))
+           (optgroups ,product)))
+
+;; (let ((product (gethash "100001" (storage *global-storage*)))
+;;       (value))
+  ;; (with-option1 product \"Аккумулятор\" \"Время автономной работы, ч\"
+  ;;              (setf value (value option)))
+  ;; (mapcar #'(lambda (optgroup)
+  ;;             (when (string= (getf optgroup :name) "Общее")
+  ;;                 (wlog (getf optgroup :name))
+  ;;                 (let ((options (getf optgroup :options)))
+  ;;                    (mapcar #'(lambda (option)
+  ;;                                (if (string= (getf option :name)
+  ;;                                             "Интерфейс")
+  ;;                                    (setf value (getf option :value))))
+  ;;                            options))))
+  ;;          (optgroups product))
+  ;; value)
+
+(defmacro with-option1 (product optgroup-name option-name body)
+  `(mapcar #'(lambda (optgroup)
+               (if (string= (getf optgroup :name) ,optgroup-name)
+                   (let ((options (getf optgroup :options)))
+                     (mapcar #'(lambda (option)
+                                 (if (string= (getf option :name) ,option-name)
                                      ,body))
                              options))))
            (optgroups ,product)))
@@ -634,15 +657,27 @@ is replaced with replacement."
   (values (format nil "~$"  (- base real))
           (format nil "~1$" (- 100 (/ (* real 100) base)))))
 
-
 (defun get-pics (articul)
-  (let ((path (format nil "~a/big/~a/*.jpg" *path-to-pics* articul)))
+  (let* ((articul-str (format nil "~a" articul))
+         (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  articul-str  "\\1/\\1\\2" ))
+         (path (format nil "~a/big/~a/*.jpg" *path-to-product-pics* path-art)))
+    ;; (wlog path)
     (loop
        :for pic
        :in (ignore-errors (directory path))
        :collect (format nil "~a.~a"
                         (pathname-name pic)
                         (pathname-type pic)))))
+
+
+;; (defun get-pics (articul)
+;;   (let ((path (format nil "~a/big/~a/*.jpg" *path-to-pics* articul)))
+;;     (loop
+;;        :for pic
+;;        :in (ignore-errors (directory path))
+;;        :collect (format nil "~a.~a"
+;;                         (pathname-name pic)
+;;                         (pathname-type pic)))))
 
 
 (defmethod get-keyoptions ((object product))
@@ -667,14 +702,18 @@ is replaced with replacement."
                   ))
             (keyoptions parent))))
 
+;; (defun get-format-price (p)
+;;   (let ((rs (format nil "~a" p))
+;;         (str (reverse (format nil "~a" p))))
+;;     (when (< 3 (length str))
+;;       (let ((st1 (reverse (subseq str 0 3)))
+;;             (st2 (reverse (subseq str 3))))
+;;         (setf rs (format nil "~a ~a" st2 st1))))
+;;     rs))
+;; Теперь немного короче
 (defun get-format-price (p)
-  (let ((rs (format nil "~a" p))
-        (str (reverse (format nil "~a" p))))
-    (when (< 3 (length str))
-      (let ((st1 (reverse (subseq str 0 3)))
-            (st2 (reverse (subseq str 3))))
-        (setf rs (format nil "~a ~a" st2 st1))))
-    rs))
+  (format nil "~,,' ,3:d" p))
+
 
 
 (defmethod view ((object product))
@@ -1052,6 +1091,15 @@ is replaced with replacement."
               (string-upcase (subseq title 0 1))
               (subseq title 1))))
 
+
+;;
+(defun servo.compile-soy (&rest tmpl-name)
+  (mapcar #'(lambda (fname)
+              (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
+                (closure-template:compile-template :common-lisp-backend pathname)))
+          tmpl-name))
+
+
 (defun alist-to-plist (alist)
   (if (not (equal (type-of alist) 'cons))
       alist
@@ -1079,4 +1127,3 @@ is replaced with replacement."
                        value)))
        (setf plist (cddr plist)))
     result))
-

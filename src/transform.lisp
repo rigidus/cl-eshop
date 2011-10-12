@@ -30,7 +30,7 @@
 
 
 (defun transform.serialize-old-group (object)
-  (format nil "{\"key\":~a,\"parents\":~a,\"name\":~a,\"active\":~a,\"order\":~a,\"ymlshow\":~a,\"pic\":~a,\"icon\":~a,\"deliveryPrice\":~a,\"seoText\":~a,\"rawFullfilter\":~a,\"keyoptions\":~a}~%"
+  (format nil "{\"key\":~a,\"parents\":~a,\"name\":~a,\"active\":~a,\"order\":~a,\"ymlshow\":~a,\"pic\":~a,\"icon\":~a,\"deliveryPrice\":~a,\"seoText\":~a,\"fullfilter\":~a,\"keyoptions\":~a}~%"
           (format nil "\"~a\"" (key object)) ;;key
           (if (not (null (parent object)))
             (format nil "[ \"~a\" ]" (key (parent object)))

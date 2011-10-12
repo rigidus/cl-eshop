@@ -77,7 +77,6 @@
   ((producers         :initarg :producers         :initform nil       :accessor producers)
    (producersall      :initarg :producersall      :initform nil       :accessor producersall)))
 
-
 ;; (new-classes.make-class-and-methods
 ;;  'product
 ;;  '((:name key               :initform ""                     :disabled t     :type string      :serialize t)
@@ -254,7 +253,7 @@
 
 (defmethod get-recursive-products ((object group))
   (let ((products (products object)))
-    (loop :for child :in (childs object) :do
+    (loop :for child :in (groups object) :do
        (setf products (append products (get-recursive-products child))))
     products))
 

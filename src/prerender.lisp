@@ -19,6 +19,7 @@
       ((string= type "pic")
        (let* ((size (string-trim '(#\Space) (nth 1 args)))
               (articul (string-trim '(#\Space) (nth 2 args)))
+              (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  (format nil "~a" articul)  "\\1/\\1\\2" ))
               (number (- (parse-integer
                           (string-trim '(#\Space) (nth 3 args))) 1))
               (product (gethash articul *storage*))
@@ -36,11 +37,12 @@
          (if (and (not picname) (get-pics articul))
              (setf picname (car (get-pics articul))))
          (when (and product (realname product) picname)
-           (let ((path (format nil "~a/~a/~a" size articul picname)))
+           (let* ((path (format nil "~a/~a/~a" size articul picname))
+                  (path* (format nil "~a/~a/~a" size path-art picname)))
              (if (and (not height) (not width))
                  (multiple-value-bind
                        (width height)
-                     (images-get-dimensions (format nil "~a/~a" *path-to-pics* path))
+                     (images-get-dimensions (format nil "~a/~a" *path-to-product-pics* path*))
                    (setf style (images-style-for-resize width height 600))))
              (format nil "<a href=\"/~a\" title=\"~a\">~%
                                    <img src=\"/pic/~a\" alt=\"~a\" style=\"~a\"/>~%
@@ -56,7 +58,7 @@
               (product (gethash articul *storage*))
               (name (realname product))
               (siteprice (siteprice product))
-              (delivery-price (delivery-price product))
+              ;; (delivery-price (delivery-price product))
               (picname (car (get-pics articul))))
          (format nil "<area shape=\"rect\" coords=\"~a,~a,~a,~a\"
                      href=\"#add\" ~a>"
@@ -65,9 +67,33 @@
                   (list :articul articul
                         :name name
                         :siteprice siteprice
-                        :deliveryprice delivery-price
+                        ;; :deliveryprice delivery-price
                         :pic picname
                         )))))
+      ((string= type "buy")
+       (let* ((articul (nth 1 args))
+              (product (gethash articul *storage*)))
+         (when product
+           (let ((name (realname product))
+                 (siteprice (siteprice product))
+                 ;; (delivery-price (delivery-price product))
+                 (picname (car (get-pics articul))))
+             (format nil "<big class=\"price\"><b>~a</b><var> руб.</var></big>~a"
+                     (get-format-price siteprice)
+                     (soy.buttons:add-product-cart
+                               (list :articul articul
+                                     :name name
+                                     :siteprice siteprice
+                                     ;; :deliveryprice delivery-price
+                                     :pic picname
+                                     )))))))
+      ((string= type "price")
+       (let* ((articul (nth 1 args))
+              (product (gethash articul *storage*)))
+         (when product
+           (let ((siteprice (siteprice product)))
+             (format nil "~a"
+                     (get-format-price siteprice))))))
       (t
        (format nil "<!-- unknown format -->~%")))))
 

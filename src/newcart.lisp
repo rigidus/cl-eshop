@@ -139,7 +139,7 @@
           (setf pricesum sm)))
     (if (not (null products))
         (default-page
-            (soy.newcart:cart-content (list :accessories (product:accessories)
+            (soy.newcart:cart-content (list :accessories (soy.product:accessories)
                                             :products (format nil "~{~a~}"
                                                   (mapcar #'(lambda (x)
                                                               (print (cart:product x))
@@ -260,9 +260,11 @@
                                 :name name
                                 :family ""
                                 :addr addr
+                                :isdelivery "Доставка" ;; Самовывоз
                                 :phone phone
                                 :email email
-                                :date (time.get-date-time)
+                                :date (time.get-date)
+                                :time (time.get-time)
                                 :comment (cond  ((string= delivery-type "express") courier_comment)
                                                 ((string= delivery-type "pickup") pickup_comment)
                                                 (t ""))
@@ -281,6 +283,8 @@
             (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
             (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
             (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
+            ;; (send-mail (list "samoylenco@alpha-pc.com") client-mail filename tks-mail order-id)
+            (send-mail (list "slamly@gmail.com") client-mail filename tks-mail order-id)
             ;; (print email)
             ;; артикул 099999 и доставка 107209
             ;; сделать валидацию пользовательского email

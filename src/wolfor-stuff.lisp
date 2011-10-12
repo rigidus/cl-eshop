@@ -196,3 +196,4 @@
           (eshop::childs group)))
 
 
+;; (remove-if-not #'(lambda (v) (search "worker" (sb-thread:thread-name v))) (sb-thread:list-all-threads))
