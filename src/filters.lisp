@@ -26,3 +26,12 @@
 (defun num-nonempty-filters (object)
   (length (remove-if #'(lambda (fil) (is-empty-filtered-list object fil))
                      (filters object))))
+
+
+(let* ((gr (gethash "noutbuki" (storage *global-storage*)))
+       (filt (car (filters gr)))
+       (prod  (car (get-recursive-products gr))))
+  (wlog (name gr))
+  (wlog (func-string filt))
+  (wlog (name-seo prod))
+  (funcall (func filt) prod))
