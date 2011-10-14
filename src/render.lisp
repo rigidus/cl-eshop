@@ -85,7 +85,7 @@
                                  (catalog:centerproduct
                                   (list
                                    :sorts (sorts request-get-plist)
-                                   :producers (restas:render-object designer (make-producers object))
+                                   :producers "";;(restas:render-object designer (make-producers object))
                                    :accessories (catalog:accessories)
                                    :pager pager
                                    :products

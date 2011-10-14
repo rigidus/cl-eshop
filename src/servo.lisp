@@ -804,9 +804,9 @@ is replaced with replacement."
                   (with-option product "Общие характеристики" "Производитель"
                                (setf vendor (value option)))
                   (if (string=
-                       (string-trim '(#\Space #\Tab #\Newline) vendor)
-                       (string-trim '(#\Space #\Tab #\Newline)
-                                    (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ")))
+                       (string-downcase (string-trim '(#\Space #\Tab #\Newline) vendor))
+                       (string-downcase (string-trim '(#\Space #\Tab #\Newline)
+                                    (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " "))))
                       (push product result-products))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   ))
@@ -819,9 +819,9 @@ is replaced with replacement."
        (with-option product "Общие характеристики" "Производитель"
                     (setf vendor (value option)))
        (string=
-            (string-trim '(#\Space #\Tab #\Newline) vendor)
-            (string-trim '(#\Space #\Tab #\Newline)
-                         (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ")))))
+            (string-downcase (string-trim '(#\Space #\Tab #\Newline) vendor))
+            (string-downcase (string-trim '(#\Space #\Tab #\Newline)
+                         (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " "))))))
 
 ;;; Функция, добавляющая в хлебные крошки вендора, если он присутствует
 ;;; в get запросе.
