@@ -102,14 +102,15 @@
        (and (<= value-f value-x)
             (>= value-t value-x)))))
 
+
 (defmacro with-range (key optgroup-name option-name)
   `(lambda (product request-plist filter-options)
      (let ((value-f (getf request-plist (intern (string-upcase (format nil "~a-f" (symbol-name ,key))) :keyword)))
            (value-t (getf request-plist (intern (string-upcase (format nil "~a-t" (symbol-name ,key))) :keyword)))
            (value-x 0))
-       (with-option product
+       (with-option1 product
          ,optgroup-name ,option-name
-         (setf value-x (value option)))
+         (setf value-x (getf option :value)))
        (when (null value-x)
          (setf value-x "0"))
        (when (null value-f)
@@ -129,64 +130,66 @@
 
 ;;Фильтруем по наличию опции
 (defun filter-with-check-options (key-name option-group-name product request-plist filter-options)
-  (let ((number 0)
-        (result-flag t))
-    (mapcar #'(lambda (option-name)
-                (let ((value-p (getf request-plist
-                                     (intern (string-upcase
-                                              (format nil "~a-~a"
-                                                      key-name
-                                                      number))
-                                             :keyword))))
-                  (incf number)
-                  (when (equal value-p "1")
-                    (let ((value-x))
-                      (mapcar #'(lambda (optgroup)
-                                  (if (string= (name optgroup) option-group-name)
-                                      (progn
-                                        (let ((options (options optgroup)))
-                                          (mapcar #'(lambda (option)
-                                                      (if (string= (name option) option-name)
-                                                          (setf value-x (value option))))
-                                                  options)))))
-                              (optgroups product))
-                      (if (not (string= value-x "Есть"))
-                          (setf result-flag nil))))))
-            filter-options)
-    result-flag))
+  t)
+  ;; (let ((number 0)
+  ;;       (result-flag t))
+  ;;   (mapcar #'(lambda (option-name)
+  ;;               (let ((value-p (getf request-plist
+  ;;                                    (intern (string-upcase
+  ;;                                             (format nil "~a-~a"
+  ;;                                                     key-name
+  ;;                                                     number))
+  ;;                                            :keyword))))
+  ;;                 (incf number)
+  ;;                 (when (equal value-p "1")
+  ;;                   (let ((value-x))
+  ;;                     (mapcar #'(lambda (optgroup)
+  ;;                                 (if (string= (name optgroup) option-group-name)
+  ;;                                     (progn
+  ;;                                       (let ((options (options optgroup)))
+  ;;                                         (mapcar #'(lambda (option)
+  ;;                                                     (if (string= (name option) option-name)
+  ;;                                                         (setf value-x (value option))))
+  ;;                                                 options)))))
+  ;;                             (optgroups product))
+  ;;                     (if (not (string= value-x "Есть"))
+  ;;                         (setf result-flag nil))))))
+  ;;           filter-options)
+  ;;   result-flag))
 
 ;;фильтрация по значениям опции
 (defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)
-  (let ((number 0)
-        (result-flag nil)
-        (request-flag t)
-        (value-x nil))
-    (with-option product
-      option-group-name option-name
-      (setf value-x (value option)))
-    ;; (format t "~&Значение опции: ~a ключ: ~a " value-x key-name)
-    (mapcar #'(lambda (option-value)
-                (let ((value-p (getf request-plist
-                                     (intern (string-upcase
-                                              (format nil "~a-~a"
-                                                      key-name
-                                                      number))
-                                             :keyword))))
-                  (incf number)
-                  ;; (format t "~&Опция в запросе: ~a ~a" option-value value-p)
-                  (when (equal value-p "1")
-                    (setf request-flag nil)
-                    ;; (format t "~&Опция в запросе: ~a" option-value)
-                    (if (string= value-x option-value)
-                        (setf result-flag t)))))
-            filter-options)
-    ;; DBG
-    ;; (if (string= (format nil "~a" key-name) "WARRANTY")
-    ;;     (progn
-    ;;       (print filter-options) ;;158712
-    ;;       (format t "~a-- ~a : ~a" (articul product)  result-flag request-flag)))
-    (or result-flag
-        request-flag)))
+  t)
+  ;; (let ((number 0)
+  ;;       (result-flag nil)
+  ;;       (request-flag t)
+  ;;       (value-x nil))
+  ;;   (with-option product
+  ;;     option-group-name option-name
+  ;;     (setf value-x (value option)))
+  ;;   ;; (format t "~&Значение опции: ~a ключ: ~a " value-x key-name)
+  ;;   (mapcar #'(lambda (option-value)
+  ;;               (let ((value-p (getf request-plist
+  ;;                                    (intern (string-upcase
+  ;;                                             (format nil "~a-~a"
+  ;;                                                     key-name
+  ;;                                                     number))
+  ;;                                            :keyword))))
+  ;;                 (incf number)
+  ;;                 ;; (format t "~&Опция в запросе: ~a ~a" option-value value-p)
+  ;;                 (when (equal value-p "1")
+  ;;                   (setf request-flag nil)
+  ;;                   ;; (format t "~&Опция в запросе: ~a" option-value)
+  ;;                   (if (string= value-x option-value)
+  ;;                       (setf result-flag t)))))
+  ;;           filter-options)
+  ;;   ;; DBG
+  ;;   ;; (if (string= (format nil "~a" key-name) "WARRANTY")
+  ;;   ;;     (progn
+  ;;   ;;       (print filter-options) ;;158712
+  ;;   ;;       (format t "~a-- ~a : ~a" (articul product)  result-flag request-flag)))
+  ;;   (or result-flag
+  ;;       request-flag)))
 
 (defmacro with-check (key optgroup-name dummy-var)
   `(lambda (product request-plist filter-options)
@@ -201,9 +204,9 @@
   `(lambda (product request-plist filter-options)
      (let ((value-p (getf request-plist (intern (string-upcase (format nil "~a" (symbol-name ,key))) :keyword)))
            (value-x ""))
-       (with-option product
+       (with-option1 product
          ,optgroup-name ,option-name
-         (setf value-x (value option)))
+         (setf value-x (getf option :value)))
        (cond
          ((null value-p)
           t)
