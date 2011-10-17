@@ -363,8 +363,8 @@
       (default-page
           (catalog:content
            (list :name (name object)
-                 :breadcrumbs (catalog:breadcrumbs (breadcrumbs object))
-                 :menu (menu object)
+                 :breadcrumbs (catalog:breadcrumbs (new-classes.breadcrumbs object))
+                 :menu (new-classes.menu object)
                  :rightblocks (append
                                (if (= 0 (num-nonempty-filters (new-classes.parent object)))
                                    nil
@@ -381,13 +381,13 @@
                  :subcontent (catalog:centerproduct
                               (list
                                :sorts (sorts request-get-plist)
-                               :producers (restas:render-object designer (make-producers (new-classes.parent object)))
+                               :producers "";;(restas:render-object designer (make-producers (new-classes.parent object)))
                                :accessories (catalog:accessories)
                                :pager pager
                                :products (loop
                                             :for product
                                             :in  paginated
-                                            :collect (view product))))))
+                                            :collect (render.view product))))))
           :keywords (format nil "~a ~a" grname fltr-name)
           :description (format nil "~a ~a" grname fltr-name)
           :title (let ((vendor (getf (request-get-plist) :vendor))
