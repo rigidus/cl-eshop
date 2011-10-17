@@ -182,7 +182,8 @@
                    (if (and (gethash (key v) (storage *global-storage*))
                         (< (date-start v) (get-universal-time) (date-finish v)))
                        (push (cons k (weight v)) rs)
-                       (wlog (format nil "WARN:~a" k)))))
+                       ;; (wlog (format nil "WARN:~a" k))
+                       )))
              storage)
     rs))
 

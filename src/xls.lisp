@@ -137,6 +137,8 @@
                                                                          :name (getf option :name)
                                                                          :value (getf option :value))))))
                  (product (gethash (format nil "~a" articul) *storage*)))
+            ;; (if (equal articul 151299)
+            ;;     (wlog "!!!"))
             (if (null product)
                 (format nil "warn: product ~a (articul ~a) not found, ignore (file: ~a)" realname articul file)
                 (progn

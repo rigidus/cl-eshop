@@ -130,32 +130,31 @@
 
 ;;Фильтруем по наличию опции
 (defun filter-with-check-options (key-name option-group-name product request-plist filter-options)
-  t)
-  ;; (let ((number 0)
-  ;;       (result-flag t))
-  ;;   (mapcar #'(lambda (option-name)
-  ;;               (let ((value-p (getf request-plist
-  ;;                                    (intern (string-upcase
-  ;;                                             (format nil "~a-~a"
-  ;;                                                     key-name
-  ;;                                                     number))
-  ;;                                            :keyword))))
-  ;;                 (incf number)
-  ;;                 (when (equal value-p "1")
-  ;;                   (let ((value-x))
-  ;;                     (mapcar #'(lambda (optgroup)
-  ;;                                 (if (string= (name optgroup) option-group-name)
-  ;;                                     (progn
-  ;;                                       (let ((options (options optgroup)))
-  ;;                                         (mapcar #'(lambda (option)
-  ;;                                                     (if (string= (name option) option-name)
-  ;;                                                         (setf value-x (value option))))
-  ;;                                                 options)))))
-  ;;                             (optgroups product))
-  ;;                     (if (not (string= value-x "Есть"))
-  ;;                         (setf result-flag nil))))))
-  ;;           filter-options)
-  ;;   result-flag))
+  (let ((number 0)
+        (result-flag t))
+    (mapcar #'(lambda (option-name)
+                (let ((value-p (getf request-plist
+                                     (intern (string-upcase
+                                              (format nil "~a-~a"
+                                                      key-name
+                                                      number))
+                                             :keyword))))
+                  (incf number)
+                  (when (equal value-p "1")
+                    (let ((value-x))
+                      (mapcar #'(lambda (optgroup)
+                                  (if (string= (getf optgroup :name) option-group-name)
+                                      (progn
+                                        (let ((options (getf optgroup :options)))
+                                          (mapcar #'(lambda (option)
+                                                      (if (string= (getf option :name) option-name)
+                                                          (setf value-x (getf option :value))))
+                                                  options)))))
+                              (optgroups product))
+                      (if (not (string= value-x "Есть"))
+                          (setf result-flag nil))))))
+            filter-options)
+    result-flag))
 
 ;;фильтрация по значениям опции
 (defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)

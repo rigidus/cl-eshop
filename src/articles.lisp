@@ -163,7 +163,7 @@
                    10)
       (default-page
           (static:main
-           (list :menu (menu)
+           (list :menu (new-classes.menu)
                  :breadcrumbs breadcrumbs
                  :subcontent  (soy.articles:articles-main
                                (list :menu menu
@@ -204,7 +204,7 @@
                                                     (main-page-show-banner "line" (banner *main-page.storage*))))
                        :footer (root:footer)
                        :content  (static:main
-                                 (list :menu (menu)
+                                 (list :menu (new-classes.menu)
                                        :breadcrumbs (bredcrumbs object)
                                        :subcontent  (body object)
                                        :rightblock  (rightblock object)))
@@ -217,7 +217,7 @@
                                                   :cart (root:cart)))
                        :footer (root:footer)
                        :content (static:main
-                                 (list :menu (menu)
+                                 (list :menu (new-classes.menu)
                                        :breadcrumbs (get-article-breadcrumbs object)
                                        :subcontent  (soy.articles:article-big (list :sharebuttons (soy.articles:share-buttons
                                                                                                    (list :key (key object)))
