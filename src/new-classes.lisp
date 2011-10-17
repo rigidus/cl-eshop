@@ -41,7 +41,7 @@
 
 ;;декодирование fullfilter
 (defmethod new-classes.decode (in-string (dummy group-filter))
-  (if (null in-string)
+  (if (or (string= in-string "") (null in-string))
       nil
       (let* ((tmp (read-from-string in-string)))
         (make-instance 'group-filter
@@ -88,6 +88,9 @@
 
 ;;вызывается после десереализации продукта
 (defmethod new-classes.post-unserialize ((item product))
+  ;; setting product vendor
+  (with-option1 item "Общие характеристики" "Производитель"
+                (setf (vendor item) (getf option :value)))
   ;; после десериализации в parent лежит список key родительских групп
   (setf (parents item)
         (mapcar #'(lambda (parent-key)
@@ -125,6 +128,13 @@
 (defmethod new-classes.post-unserialize ((item group))
   ;;adding newlines instead of #Newline
   (setf (seo-text item) (object-fields.string-add-newlines (seo-text item)))
+  (setf (fullfilter item) (object-fields.string-add-newlines (fullfilter item)))
+  (when (equal (type-of (vendors-seo item)) 'cons)
+    (setf (vendors-seo item) (mapcar #'object-fields.string-add-newlines
+                                     (copy-list (vendors-seo item))))
+    ;;convert vendors-seo from list to hashtable
+    (setf (vendors-seo item) (servo.list-to-hashtasble
+                              (copy-list (vendors-seo item)))))
   ;; после десериализации в parent лежит список key родительских групп
   (let ((parents (copy-list (parents item))))
     (setf (parents item)
@@ -203,13 +213,16 @@
 
 
 (defun new-classes.unserialize-all ()
+  (sb-ext:gc :full t)
   ;; (unserialize-from-file #P"/home/webadmin/test/products" (make-instance 'product))
   ;; (unserialize-from-file #P"/home/webadmin/test/groups" (make-instance 'group))
   ;; (unserialize-from-file #P"/home/webadmin/test/filters" (make-instance 'filter))
-  (unserialize-from-file #P"/home/wolfor/test/products" (make-instance 'product))
-  (unserialize-from-file #P"/home/wolfor/test/groups" (make-instance 'group))
-  (unserialize-from-file #P"/home/wolfor/test/filters" (make-instance 'filter))
+  (unserialize-from-file #P"/home/eviltosha/serialize_test/products" (make-instance 'product))
+  (unserialize-from-file #P"/home/eviltosha/serialize_test/groups" (make-instance 'group))
+  (unserialize-from-file #P"/home/eviltosha/serialize_test/filters" (make-instance 'filter))
+  (wlog "Making lists")
   (storage.make-lists)
+  (wlog "Post unserialize!")
   (maphash #'(lambda (key value)
                (declare (ignore key))
                (new-classes.post-unserialize value))
@@ -323,7 +336,9 @@
    (:name seo-text          :initform ""                     :disabled nil   :type textedit    :serialize t)
    (:name count-transit     :initform 0                      :disabled t     :type int         :serialize t)
    (:name count-total       :initform 0                      :disabled t     :type int         :serialize t)
-   (:name optgroups         :initform nil                    :disabled t     :type optgroups   :serialize t)))
+   (:name optgroups         :initform nil                    :disabled t     :type optgroups   :serialize t)
+   (:name vendor            :initform ""                     :disabled nil   :type string      :serialize t)))
+
 
 ;; для того чтобы работали фильтры
 (defmethod price ((object product))
@@ -346,7 +361,7 @@
    (:name products          :initform nil                             :disabled t   :type product-list :serialize nil)
    (:name filters           :initform nil                             :disabled t   :type string       :serialize nil)
    (:name fullfilter        :initform nil                             :disabled t   :type string       :serialize nil)
-   (:name vendors           :initform (make-hash-table :test #'equal) :disabled t   :type string       :serialize nil)
+   (:name vendors-seo       :initform (make-hash-table :test #'equal) :disabled t   :type string       :serialize nil)
    (:name seo-text          :initform nil                             :disabled nil :type textedit     :serialize t)
    (:name keyoptions        :initform nil                             :disabled t   :type keyoptions   :serialize t)))
 

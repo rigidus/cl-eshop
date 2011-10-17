@@ -30,7 +30,7 @@
 
 
 (defun transform.serialize-old-group (object)
-  (format nil "{\"key\":~a,\"parents\":~a,\"name\":~a,\"active\":~a,\"order\":~a,\"ymlshow\":~a,\"pic\":~a,\"icon\":~a,\"deliveryPrice\":~a,\"seoText\":~a,\"fullfilter\":~a,\"keyoptions\":~a}~%"
+  (format nil "{\"key\":~a,\"parents\":~a,\"name\":~a,\"active\":~a,\"order\":~a,\"ymlshow\":~a,\"pic\":~a,\"icon\":~a,\"deliveryPrice\":~a,\"seoText\":~a,\"fullfilter\":~a,\"keyoptions\":~a, \"vendorsSeo\":~a}~%"
           (format nil "\"~a\"" (key object)) ;;key
           (if (not (null (parent object)))
             (format nil "[ \"~a\" ]" (key (parent object)))
@@ -42,15 +42,17 @@
           (format nil "\"~a\"" (object-fields.string-escaping (pic object)));;pic
           (format nil "\"~a\"" (object-fields.string-escaping (icon object)));;icon
           (encode-json-to-string (delivery-price object));;deliveryPrice
-          (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (raw-fullfilter object))));;seo-text
-          (format nil "\"~a\"" (object-fields.string-replace-newlines (descr object)));;raw-fullfilter
+          (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (descr object))));;seo-text
+          (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (raw-fullfilter object))));;raw-fullfilter
           (if (not (null (keyoptions object)))
               (format nil "[~{~a~^,~}]"
                       (loop :for item :in (keyoptions object) :collect
                          (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\"}"
                                  (getf item :optgroup)
                                  (getf item :optname))))
-              (format nil "null"))))
+              (format nil "null"))
+          (when (vendors object)
+            (object-fields.textedit-hashtable-field-serialize (vendors object)))))
 
 (defun transform.serialize-old-filter (object)
   (format nil "{\"key\":~a,\"parents\":~a,\"name\":~a,\"func-string\":~a}~%"
