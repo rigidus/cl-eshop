@@ -883,9 +883,24 @@ is replaced with replacement."
        (setf plist (cddr plist)))
     result))
 
+(defun servo.list-to-hashtasble (list)
+  "Converting list (hash1 val1 hash2 val2...) to hashtable"
+  (let ((res (make-hash-table :test #'equal)))
+    (loop
+       for x from 0 to (- (length list) 1)
+       when (not (oddp x))
+       do
+         (let ((key (nth x list))
+               (value (nth (+ 1 x) list)))
+           (setf (gethash key res) value)))
+    res))
+
+
+
 
 (defun servo.diff-percentage (full part)
   "Returns difference in percents. (1 - part / full) * 100%"
   (if (or (null full) (null part) (equal 0 full))
       nil
       (format nil "~1$" (* (- 1 (/ part full)) 100))))
+

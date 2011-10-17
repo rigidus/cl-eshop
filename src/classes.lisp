@@ -97,7 +97,8 @@
 ;;    (:name seo-text          :initform ""                     :disabled nil   :type textedit    :serialize t)
 ;;    (:name count-transit     :initform 0                      :disabled t     :type int         :serialize t)
 ;;    (:name count-total       :initform 0                      :disabled t     :type int         :serialize t)
-;;    (:name optgroups         :initform nil                    :disabled t     :type optgroups   :serialize t)))
+;;    (:name optgroups         :initform nil                    :disabled t     :type optgroups   :serialize t)
+;;    (:name vendor            :initform ""                     :disabled nil   :type string      :serialize t)))
 
 
 
@@ -118,7 +119,7 @@
 ;;    (:name products          :initform nil                             :disabled t   :type product-list :serialize nil)
 ;;    (:name filters           :initform nil                             :disabled t   :type string       :serialize nil)
 ;;    (:name fullfilter        :initform nil                             :disabled t   :type string       :serialize nil)
-;;    (:name vendors           :initform (make-hash-table :test #'equal) :disabled t   :type string       :serialize nil)
+;;    (:name vendors-seo       :initform (make-hash-table :test #'equal) :disabled t   :type string       :serialize nil)
 ;;    (:name seo-text          :initform nil                             :disabled nil :type textedit     :serialize t)
 ;;    (:name keyoptions        :initform nil                             :disabled t   :type keyoptions   :serialize t)))
 
