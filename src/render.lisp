@@ -36,7 +36,7 @@
                              ;; Отображаем группы
                              (catalog:centergroup
                               (list
-                               :producers nil;;(restas:render-object designer (make-producers object))
+                               :producers nil ;;(render.show-producers (storage.get-recursive-products object))
                                :accessories (catalog:accessories)
                                :groups (let* ((object (gethash "noutbuki-i-komputery" (storage *global-storage*)))
                                               (sort-groups (sort (remove-if-not #'active (groups object)) #'menu-sort)))
@@ -85,7 +85,7 @@
                                  (catalog:centerproduct
                                   (list
                                    :sorts (sorts request-get-plist)
-                                   :producers "";;(restas:render-object designer (make-producers object))
+                                   :producers (render.show-producers (storage.get-recursive-products object))
                                    :accessories (catalog:accessories)
                                    :pager pager
                                    :products
@@ -323,40 +323,21 @@
                          result-list))
                 collect item)))
 
-
-(defmethod restas:render-object ((designer eshop-render) (object producers))
-  (let ((url-parameters (request-get-plist)))
-    (remf url-parameters :page)
-    (multiple-value-bind (base hidden)
-        (cut 12 (mapcar #'(lambda (x)
-                            (setf (getf url-parameters :vendor) (hunchentoot:url-encode (car x)))
-                            (list :vendor (car x)
-                                  :cnt (cadr x)
-                                  :link (format nil "?~a" (make-get-str url-parameters))))
-                        (cond
-                          ((getf (request-get-plist) :showall)
-                           (producersall object))
-                          (t (producers object)))))
-      (catalog:producers (list :vendorblocks (make-producters-lists base)
-                               :vendorhiddenblocks (make-producters-lists hidden))))))
-
-
 (defmethod restas:render-object ((designer eshop-render) (object filter))
-  (log5:log-for test "TEST")
+  ;; (log5:log-for test "TEST")
   (let ((products-list (remove-if-not (func object)
-                                     (remove-if-not #'active
-                                                    (get-recursive-products (new-classes.parent object)))))
+                                      (storage.get-recursive-products (new-classes.parent object))))
         (request-get-plist (request-get-plist))
         (fltr-name  (name object))
         (grname (name (new-classes.parent object))))
     (if (null (getf request-get-plist :sort))
         (setf (getf request-get-plist :sort) "pt"))
     (if (getf (request-get-plist) :vendor)
-        (setf products-list products-list))
-              ;; (remove-if-not #'(lambda (p)
-              ;;                    (vendor-filter-controller p (request-get-plist)))
-              ;;                products-list)))
-    (log5:log-for test "~&filter ~{~a|~}" request-get-plist)
+        (setf products-list
+              (remove-if-not #'(lambda (p)
+                                 (vendor-filter-controller p (request-get-plist)))
+                             products-list)))
+    ;; (log5:log-for test "~&filter ~{~a|~}" request-get-plist)
     (with-sorted-paginator
         products-list
       request-get-plist
@@ -381,7 +362,7 @@
                  :subcontent (catalog:centerproduct
                               (list
                                :sorts (sorts request-get-plist)
-                               :producers "";;(restas:render-object designer (make-producers (new-classes.parent object)))
+                               :producers (render.show-producers products-list)
                                :accessories (catalog:accessories)
                                :pager pager
                                :products (loop
@@ -417,3 +398,21 @@
                                 grname-3
                                 name-3))))))))
 
+
+
+(defmethod render.show-producers ((products list))
+  (let* ((vendors (storage.get-vendors products))
+         (url-parameters nil);;(request-get-plist))
+         (veiws nil))
+    (remf url-parameters :page)
+    (maphash #'(lambda (k x)
+                 (setf (getf url-parameters :vendor) (hunchentoot:url-encode k))
+                 (push (list :vendor k
+                             :cnt x
+                             :link (format nil "?~a" (make-get-str url-parameters)))
+                       veiws))
+             vendors)
+    (multiple-value-bind (base hidden)
+        (cut 12 veiws)
+      (catalog:producers (list :vendorblocks (make-producters-lists base)
+                               :vendorhiddenblocks (make-producters-lists hidden))))))

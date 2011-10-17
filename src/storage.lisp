@@ -38,12 +38,15 @@
        (setf products (append products (storage.get-recursive-products child))))
     products))
 
-(defmethod storage.get-filtered-products ((object group) &optional (filter #'(lambda (product) (active product))))
+(defmethod storage.get-filtered-products ((object group) &optional (filter #'active))))
   (remove-if-not filter
                  (storage.get-recursive-products object)))
 
 (defmethod storage.get-vendors ((object group))
-  (let ((products-list (storage.get-filtered-products object))
+  (storage.get-vendors (storage.get-filtered-products object)))
+
+(defmethod storage.get-vendors ((object list))
+  (let ((products-list object)
         (vendors (make-hash-table :test #'equal)))
     (mapcar #'(lambda (product)
                 (let ((vendor (vendor product)))
@@ -53,7 +56,6 @@
                         (setf (gethash vendor vendors) 1)))))
             products-list)
     vendors))
-
 
 
 
