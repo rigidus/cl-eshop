@@ -88,9 +88,6 @@
 
 ;;вызывается после десереализации продукта
 (defmethod new-classes.post-unserialize ((item product))
-  ;; setting product vendor
-  (with-option1 item "Общие характеристики" "Производитель"
-                (setf (vendor item) (getf option :value)))
   ;; после десериализации в parent лежит список key родительских групп
   (setf (parents item)
         (mapcar #'(lambda (parent-key)
@@ -121,7 +118,9 @@
                             (list :name (getf optgroup :name) :options optgroup-plist)))
                       optgroups))
     (setf (optgroups item) optgroups))
-  )
+  ;; setting product vendor
+  (with-option1 item "Общие характеристики" "Производитель"
+                (setf (vendor item) (getf option :value))))
 
 
 ;;вызывается после десереализации группы
