@@ -32,6 +32,31 @@
                    children)
            res))) sort-f))
 
+(defmethod storage.get-recursive-products ((object group))
+  (let ((products (products object)))
+    (loop :for child :in (groups object) :do
+       (setf products (append products (storage.get-recursive-products child))))
+    products))
+
+(defmethod storage.get-filtered-products ((object group) &optional (filter #'(lambda (product) (active product))))
+  (remove-if-not filter
+                 (storage.get-recursive-products object)))
+
+(defmethod storage.get-vendors ((object group))
+  (let ((products-list (storage.get-filtered-products object))
+        (vendors (make-hash-table :test #'equal)))
+    (mapcar #'(lambda (product)
+                (let ((vendor (vendor product)))
+                  (when (and vendor (string/= "" vendor))
+                    (if (gethash vendor vendors)
+                        (incf (gethash vendor vendors))
+                        (setf (gethash vendor vendors) 1)))))
+            products-list)
+    vendors))
+
+
+
+
 (defun storage.round-collect-storage (checker &optional (compare t compare-supplied-p))
   "Processing storage and creating list according to checker function. Sorting with passed comparator"
   (let ((result))
@@ -124,7 +149,4 @@
   (setf (products *global-storage*) (storage.get-products-list))
   (setf (active-products *global-storage*) (storage.get-active-products-list))
   (setf (filters *global-storage*) (storage.get-filters-list)))
-
-
-;; (setf (storage *global-storage*) *storage*)
 
