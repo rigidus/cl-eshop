@@ -82,7 +82,9 @@
 
 
 (defmethod ƒ ((ifl pathname) (obn nko))
-  (let ((rs) (otp))
+  (let ((rs)
+        (otp)
+        (log-output *standard-output*))
     (setf otp (with-output-to-string (*standard-output*)
                    (let* ((proc (sb-ext:run-program
                                  (xls2csv obn)
@@ -90,39 +92,41 @@
                           (optgroups)
                           (fields))
                      (with-open-stream (in (sb-ext:process-output proc))
-                       (loop :for i from 1 do
-                          (tagbody loop-body
-                             (handler-case
-                                 (let ((ist (read-line in)))
-                                   (tagbody dec
-                                      (multiple-value-bind (line esf)
-                                          (ƒ ist px)
-                                        (when esf
-                                          (setf ist (concatenate 'string ist (read-line in)))
-                                          (incf i)
-                                          (go dec))
-                                        (unless (null line)
-                                          (cond ((null optgroups) (setf optgroups line))
-                                                ((null fields) (setf fields line))
-                                                (t (handler-case
-                                                       (let ((val (ƒ (list :line line
-                                                                           :optgroups optgroups
-                                                                           :fields fields)
-                                                                     px)))
-                                                         (wlog "")
-                                                         (wlog val)
-                                                         (push val rs))
-                                                     (SB-INT:SIMPLE-PARSE-ERROR () nil))))))))
-                               (END-OF-FILE () (return i)))))))))
+                       (loop
+                          :for ist = (read-line in nil)
+                          :until (or (null ist)
+                                     (string= "" (string-trim "#\," ist)))
+                          :do (progn
+                                (multiple-value-bind (line esf)
+                                    (ƒ ist px)
+                                  (when esf
+                                    (format log-output "~&~a|~a:~a" ifl line esf)
+                                    (error "DTD"))
+                                  (unless (null line)
+                                    (cond ((null optgroups) (setf optgroups line))
+                                          ((null fields) (setf fields line))
+                                          (t (handler-case
+                                                 (let ((val (ƒ (list :line line
+                                                                     :optgroups optgroups
+                                                                     :fields fields)
+                                                               px)))
+                                                   (print "")
+                                                   (print val)
+                                                   (push val rs))
+                                               (SB-INT:SIMPLE-PARSE-ERROR () nil))))))))))))
     rs))
 
 
 (defmethod ƒ ((jct nko) (obn nko))
   (wlog "Processing DTD: {...")
-  (let ((cnt 0))
+  (let ((cnt 0)
+        (items nil)
+        (num-all 0))
     (loop :for file :in (directory (format nil "~a/*.xls" (folder obn))) :do
-       (format t "~%~a. Processing file: ~a" (incf cnt) file)
-       (loop :for item :in (ƒ file px) :do
+       (setf items (reverse (ƒ file px)))
+       (setf num-all (+ num-all (length items)))
+       (wlog (format nil "~a. Processing file: ~a | ~a" (incf cnt) file (length items)))
+       (loop :for item :in items :do
           (let* ((articul (getf item :articul))
                  (realname (getf item :realname))
                  (optgroups (loop :for optgroup :in (getf item :result-options) :collect
@@ -133,9 +137,6 @@
                                                                          :name (getf option :name)
                                                                          :value (getf option :value))))))
                  (product (gethash (format nil "~a" articul) *storage*)))
-            ;; (if (and (not (null articul))
-            ;;               (= articul 141649))
-            ;;          (wlog file))
             (if (null product)
                 (format nil "warn: product ~a (articul ~a) not found, ignore (file: ~a)" realname articul file)
                 (progn
@@ -144,7 +145,7 @@
                   (if (not (string= "" (string-trim '(#\Space #\Tab #\Newline)
                                                     (format nil "~@[~a~]" realname))))
                       (setf (realname product) realname)))))))
-    (wlog (format nil "~%...} successfully processed ~a files" cnt))
+    (wlog (format nil "...} successfully processed ~a files | ~a products" cnt num-all))
     ;;создаем новый yml файл
     (create-yml-file)))
 

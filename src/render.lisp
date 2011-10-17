@@ -342,19 +342,21 @@
 
 
 (defmethod restas:render-object ((designer eshop-render) (object filter))
+  (log5:log-for test "TEST")
   (let ((products-list (remove-if-not (func object)
                                      (remove-if-not #'active
-                                                    (get-recursive-products (parent object)))))
+                                                    (get-recursive-products (new-classes.parent object)))))
         (request-get-plist (request-get-plist))
         (fltr-name  (name object))
-        (grname (name (parent object))))
+        (grname (name (new-classes.parent object))))
     (if (null (getf request-get-plist :sort))
         (setf (getf request-get-plist :sort) "pt"))
     (if (getf (request-get-plist) :vendor)
-        (setf products-list
-              (remove-if-not #'(lambda (p)
-                                 (vendor-filter-controller p (request-get-plist)))
-                             products-list)))
+        (setf products-list products-list))
+              ;; (remove-if-not #'(lambda (p)
+              ;;                    (vendor-filter-controller p (request-get-plist)))
+              ;;                products-list)))
+    (log5:log-for test "~&filter ~{~a|~}" request-get-plist)
     (with-sorted-paginator
         products-list
       request-get-plist
@@ -364,22 +366,22 @@
                  :breadcrumbs (catalog:breadcrumbs (breadcrumbs object))
                  :menu (menu object)
                  :rightblocks (append
-                               (if (= 0 (num-nonempty-filters (parent object)))
+                               (if (= 0 (num-nonempty-filters (new-classes.parent object)))
                                    nil
                                    (list (fullfilter:rightfilter
                                           (list :filters (loop
                                                             :for filter
                                                             :in (remove-if #'(lambda (fil)
-                                                                               (is-empty-filtered-list (parent object) fil))
-                                                                           (filters (parent object)))
-                                                            :collect (make-string-filter (parent object)
+                                                                               (is-empty-filtered-list (new-classes.parent object) fil))
+                                                                           (filters (new-classes.parent object)))
+                                                            :collect (make-string-filter (new-classes.parent object)
                                                                                          filter
                                                                                          (equal object filter)))))))
                                    (rightblocks))
                  :subcontent (catalog:centerproduct
                               (list
                                :sorts (sorts request-get-plist)
-                               :producers (restas:render-object designer (make-producers (parent object)))
+                               :producers (restas:render-object designer (make-producers (new-classes.parent object)))
                                :accessories (catalog:accessories)
                                :pager pager
                                :products (loop

@@ -56,7 +56,7 @@
          (not (null fltr))
          (equal (type-of grp) 'group)
          (equal (type-of fltr) 'filter)
-         (equal (key (parent fltr)) key))))
+         (equal (key (new-classes.parent fltr)) key))))
 
 (defun route-filter (filter)
   (gethash filter (storage *global-storage*)))
