@@ -280,96 +280,6 @@
           (order b))))
 
 
- (defun menu (&optional current-object)
-   (let ((root-groups)
-         (current-key (let* ((breadcrumbs (breadcrumbs current-object))
-                             (first       (getf (car (getf breadcrumbs :breadcrumbelts)) :key)) )
-                        (if (not (null first))
-                            first
-                            (getf (getf breadcrumbs :breadcrumbtail) :key)
-                            ))))
-     (maphash #'(lambda (key val)
-                  (when (and
-                         (equal 'group (type-of val))
-                         (null (parent val))
-                         (active val)
-                         (not (empty val))
-                         ;;проверка на реальное наличие активных товаров
-                         (not (= 0
-                                 (length (remove-if-not #'active (get-recursive-products val))))))
-                    (push val root-groups)))
-              *storage*)
-     (let ((src-lst (mapcar #'(lambda (val)
-                                (if (string= (format nil "~a" current-key) (key val))
-                                    ;; This is current
-                                    (leftmenu:selected
-                                     (list :divider (or
-                                                     (string= (key val) "setevoe-oborudovanie")
-                                                     (string= (key val) "foto-and-video")
-                                                     (string= (key val) "rashodnye-materialy"))
-                                           :key (key val)
-                                           :name (name val)
-                                           :icon (icon val)
-                                           :subs (loop
-                                                    :for child
-                                                    :in (sort
-                                                         (remove-if #'(lambda (g)
-                                                                        (or
-                                                                         (empty g)
-                                                                         (not (active g))
-                                                                         ;;проверка на реальное наличие активных товаров
-                                                                         (= 0
-                                                                            (length
-                                                                             (remove-if-not #'active
-                                                                                            (get-recursive-products g))))
-                                                                         ))
-                                                                    (childs val)) #'menu-sort)
-                                                    :collect
-                                                    (list :key  (key child) :name (name child)))
-                                           ))
-                                    ;; else - this is ordinal
-                                    (leftmenu:ordinal (list :divider (or
-                                                                      (string= (key val) "setevoe-oborudovanie")
-                                                                      (string= (key val) "foto-and-video")
-                                                                      (string= (key val) "rashodnye-materialy"))
-                                                            :key  (key val)
-                                                            :name (name val)
-                                                            :icon (icon val)))
-                                    ))
-                            (sort root-groups #'menu-sort)
-                            ;; root-groups
-                            )))
-       (leftmenu:main (list :elts src-lst)))))
-
-
- (defun breadcrumbs (in &optional out)
-   (cond ((equal (type-of in) 'product)
-          (progn
-            (push (list :key (articul in) :val (name in)) out)
-            (setf in (parent in))))
-         ((equal (type-of in) 'group)
-          (progn
-            (push (list :key (key in) :val (name in)) out)
-            (setf in (parent in))))
-         ((equal (type-of in) 'filter)
-          (progn
-            (push (list :key (key in) :val (name in)) out)
-            (setf in (parent in))))
-         (t (if (null in)
-                ;; Конец рекурсии
-                (return-from breadcrumbs
-                  (list :breadcrumbelts (butlast out)
-                        :breadcrumbtail (car (last out))))
-                ;; else - Ищем по строковому значению
-                (let ((parent (gethash in *storage*)))
-                  (cond ((equal 'group (type-of parent)) (setf in parent))
-                        ((null parent) (return-from breadcrumbs (list :breadcrumbelts (butlast out)
-                                                                      :breadcrumbtail (car (last out)))))
-                        (t (error "breadcrumb link error")))))))
-   (breadcrumbs in out))
-
-
-
  (defun default-page (&optional (content nil) &key keywords description title no-need-cart)
    (root:main (list :keywords keywords
                     :description description
@@ -701,7 +611,6 @@
 
 
 
- ;; (fullfilter (gethash "noutbuki" *storage*))
  (defun if-need-to-show-hidden-block (elt request-get-plist)
    (let ((key (string-downcase (format nil "~a" (nth 0 elt))))
          (showflag nil))

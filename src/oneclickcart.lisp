@@ -37,7 +37,7 @@
                  :bankaccount ""
                  :phone phone
                  :email ""
-                 :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul *storage*)))
+                 :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul (storage *global-storage*))))
                  :products products
                  :deliverysum 0
                  :itogo pricesum)))
@@ -52,7 +52,7 @@
                 :isdelivery "Самовывоз"
                 :date (time.get-date)
                 :time (time.get-time)
-                :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul *storage*)))
+                :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul (storage *global-storage*))))
                 :products products))
     (setf filename (format nil "~a_~a.txt" (time.get-short-date) order-id))
             ;;сорханение заказа
@@ -95,7 +95,7 @@
                  :bankaccount ""
                  :phone phone
                  :email email
-                 :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul *storage*)))
+                 :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul (storage *global-storage*))))
                  :products products
                  :deliverysum 0
                  :itogo pricesum)))
@@ -110,7 +110,7 @@
                 :isdelivery "Самовывоз"
                 :date (time.get-date)
                 :time (time.get-time)
-                :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul *storage*)))
+                :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul (storage *global-storage*))))
                 :products products))
     (setf filename (format nil "~a_~a.txt" (time.get-short-date) order-id))
             ;;сорханение заказа

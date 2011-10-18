@@ -43,7 +43,7 @@
                                    (when (and (not (null articul))
                                               (not (null cnt)))
                                      (setf cnt (parse-integer (format nil "~a" cnt) :junk-allowed t))
-                                     (setf product (gethash articul *storage*))
+                                     (setf product (gethash articul (storage *global-storage*))
                                      (when (and (not (null product))
                                                 (not (= 0 cnt)))
                                        (incf counter)
