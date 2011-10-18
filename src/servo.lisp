@@ -29,14 +29,14 @@
 
 (defmacro sorts (request-get-plist)
   `(let ((variants '(:pt "увеличению цены" :pb "уменьшению цены"))
-         (url-parameters request-get-plist))
+         (url-parameters ,request-get-plist))
      (remf url-parameters :page)
      (remf url-parameters :sort)
      (loop :for sort-field :in variants :by #'cddr :collect
         (let ((key (string-downcase (format nil "~a" sort-field))))
           (setf (getf url-parameters :sort) key)
           (if (string= (string-downcase (format nil "~a" sort-field))
-                       (getf request-get-plist :sort))
+                       (getf ,request-get-plist :sort))
               (list :key key
                     :name (getf variants sort-field)
                     :url (make-get-str url-parameters)

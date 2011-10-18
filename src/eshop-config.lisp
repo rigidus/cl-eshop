@@ -24,6 +24,9 @@
 ;; ORDER
 (defparameter *path-order-id-file* "order-id.txt")
 (export '*path-order-id-file*)
+;; sitemap
+(defparameter *path-sitemap* "sitemap.xml")
+(export '*path-sitemap*)
 
 (defun wlog (s)
   (format t "~&~a> ~a" (time.get-date-time) s))

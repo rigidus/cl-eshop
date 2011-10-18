@@ -157,8 +157,44 @@
     (create-yml-file)))
 
 
+(defmethod xls.process-all-dtd ((jct nko) (obn nko))
+  (wlog "Processing DTD: {...")
+  (let ((cnt 0)
+        (items nil)
+        (num-all 0))
+    (loop :for file :in (directory (format nil "~a/*.xls" (folder obn))) :do
+       (setf items (reverse (ƒ file px)))
+       (setf num-all (+ num-all (length items)))
+       (wlog (format nil "~a. Processing file: ~a | ~a" (incf cnt) file (length items)))
+       (loop :for item :in items :do
+          (let* ((articul (getf item :articul))
+                 (realname (getf item :realname))
+                 (optgroups (loop :for optgroup :in (getf item :result-options) :collect
+                               (list :name (getf optgroup :optgroup_name)
+                                     :options (loop :for option :in (getf optgroup :options) :collect
+                                                 (list  :name (getf option :name)
+                                                        :value (getf option :value))))))
+                 (product (gethash (format nil "~a" articul) (storage *global-storage*))))
+            (let ((pr (gethash articul *xls.product-table*)))
+              (if pr
+                  (wlog (format nil "WARN:~a | ~a | ~a" articul pr file))
+                  (setf (gethash articul *xls.product-table*) file)))
+            (if (null product)
+                (format nil "warn: product ~a (articul ~a) not found, ignore (file: ~a)" realname articul file)
+                (progn
+                  (setf (optgroups product) optgroups)
+                  ;; Если есть значимое realname - перезаписать в продукте
+                  (if (not (string= "" (string-trim '(#\Space #\Tab #\Newline)
+                                                    (format nil "~@[~a~]" realname))))
+                      (setf (name-seo product) realname))
+                  )))))
+    (wlog (format nil "...} successfully processed ~a files | ~a products" cnt num-all))
+    ;;создаем новый yml файл
+    (create-yml-file)))
+
+
 (defun dtd ()
   (setf *xls.product-table* (make-hash-table :test #'equal))
-  (ƒ px px))
+  (xls.process-all-dtd px px))
 
 (export 'dtd)

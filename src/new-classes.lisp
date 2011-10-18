@@ -85,24 +85,7 @@
                      (wlog (key item)))
                  (storage.add-new-object item (key item)))))))))
 
-
-;;вызывается после десереализации продукта
-(defmethod new-classes.post-unserialize ((item product))
-  ;; после десериализации в parent лежит список key родительских групп
-  (setf (parents item)
-        (mapcar #'(lambda (parent-key)
-                    (when (not (null parent-key))
-                      (let ((parent (gethash parent-key (storage *global-storage*))))
-                        ;;Если родитель продукта — группа, связать группу с этим продуктом
-                        (when (equal 'group (type-of parent))
-                          (push item (products parent))
-                          parent))))
-                (parents item)))
-  ;;active - если имеется в наличии и цена > 0
-  (setf (active item) (and (> (count-total item) 0) (> (siteprice item) 0)))
-  ;;adding newlines instead of #Newline
-  (setf (seo-text item) (object-fields.string-add-newlines (seo-text item)))
-  ;;преобразуем optgroups из списка alist в список plist
+(defmethod new-classes.get-transform-optgroups ((item product))
   (let ((optgroups))
     ;;преобразуем optgroups (1 уровень)
     (setf optgroups
@@ -117,7 +100,31 @@
                                          (getf optgroup :options))))
                             (list :name (getf optgroup :name) :options optgroup-plist)))
                       optgroups))
-    (setf (optgroups item) optgroups))
+    optgroups))
+
+;;вызывается после десереализации продукта
+(defmethod new-classes.post-unserialize ((item product))
+  ;; после десериализации в parent лежит список key родительских групп
+  (setf (parents item)
+        (mapcar #'(lambda (parent-key)
+                    (when (not (null parent-key))
+                      (let ((parent (gethash parent-key (storage *global-storage*))))
+                        ;;Если родитель продукта — группа, связать группу с этим продуктом
+                        (when (equal 'group (type-of parent))
+                          (push item (products parent))
+                          parent))))
+                (parents item)))
+  ;; проверка цены, если цена в ИМ ноль, а дельта положительная нужно изменить цену
+  (when  (and (= (siteprice item) 0)
+              (> (delta-price item) 0))
+    (setf (siteprice item) (delta-price item))
+    (setf (delta-price item) 0))
+  ;;active - если имеется в наличии и цена > 0
+  (setf (active item) (and (> (count-total item) 0) (> (siteprice item) 0)))
+  ;;adding newlines instead of #Newline
+  (setf (seo-text item) (object-fields.string-add-newlines (seo-text item)))
+  ;;преобразуем optgroups из списка alist в список plist
+  (setf (optgroups item) (new-classes.get-transform-optgroups item))
   ;; setting product vendor
   (with-option1 item "Общие характеристики" "Производитель"
                 (setf (vendor item) (getf option :value))))
@@ -214,7 +221,7 @@
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-  (unserialize-from-file (pathname (format nil "~atest/products" (user-homedir-pathname))) (make-instance 'product))
+  (unserialize-from-file (pathname (format nil "~atest/products.bkp" (user-homedir-pathname))) (make-instance 'product))
   (unserialize-from-file (pathname (format nil "~atest/groups" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
@@ -228,6 +235,28 @@
 (defun new-classes.parent (item)
   "Returns main parent of item"
   (car (parents item)))
+
+(defun new-classes.DBG-unserialize-products ()
+  "Одноразовый перенос олдовых характеристик поверх хранилища продуктов и проставление производителя"
+  (let ((original-storage (storage *global-storage*))
+        (*global-storage* (make-instance 'global-storage)))
+    (unserialize-from-file (pathname (format nil "~atest/products" (user-homedir-pathname))) (make-instance 'product))
+    ;; на данном этапе в *global-storage* только продукты
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (when (and (equal (type-of v) 'product)
+                            (optgroups v))
+                   (let ((item (gethash (key v) original-storage)))
+                     (when item
+                       ;;преобразуем optgroups из списка alist в список plist
+                       (setf (optgroups item)
+                             (new-classes.get-transform-optgroups v))
+                       (with-option1 item "Общие характеристики" "Производитель"
+                                     (setf (vendor item) (getf option :value)))))))
+             (storage *global-storage*)))
+  ;;необходимо освободить память от уже не нужных продуктов
+  (sb-ext:gc :full t))
+
 
 (defun new-classes.breadcrumbs (in &optional out)
   "Processing parents until nil, creating breadcrumbs"
