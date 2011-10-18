@@ -171,6 +171,7 @@
                 (parents item))))
 
 
+(defmethod new-classes.post-unserialize ((item article)))
 
 
 ;;макрос для создания метода сериализации

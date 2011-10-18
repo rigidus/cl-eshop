@@ -8,6 +8,7 @@
 
 (in-package #:eshop)
 
+(defvar *xls.product-table* (make-hash-table :test #'equal))
 
 (defclass nko ()
   ((folder  :initarg :folder  :initform nil :accessor folder)
@@ -137,6 +138,10 @@
                                                                          :name (getf option :name)
                                                                          :value (getf option :value))))))
                  (product (gethash (format nil "~a" articul) *storage*)))
+            (let ((pr (gethash articul *xls.product-table*)))
+              (if pr
+                  (wlog (format nil "WARN:~a | ~a | ~a" articul pr file))
+                  (setf (gethash articul *xls.product-table*) file)))
             ;; (if (equal articul 151299)
             ;;     (wlog "!!!"))
             (if (null product)
@@ -153,6 +158,7 @@
 
 
 (defun dtd ()
+  (setf *xls.product-table* (make-hash-table :test #'equal))
   (ƒ px px))
 
 (export 'dtd)
