@@ -38,9 +38,12 @@
        (setf products (append products (storage.get-recursive-products child))))
     products))
 
-(defmethod storage.get-filtered-products ((object group) &optional (filter #'active))))
+(defmethod storage.get-filtered-products ((object group) &optional (filter #'active))
   (remove-if-not filter
                  (storage.get-recursive-products object)))
+
+(defgeneric storage.get-vendors (object)
+  (:documentation ""))
 
 (defmethod storage.get-vendors ((object group))
   (storage.get-vendors (storage.get-filtered-products object)))
