@@ -224,7 +224,7 @@
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
   (unserialize-from-file (pathname (format nil "~atest/products.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/groups1.bkp" (user-homedir-pathname))) (make-instance 'group))
+  (unserialize-from-file (pathname (format nil "~atest/groups.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)
@@ -243,6 +243,7 @@
   (let ((original-storage (storage *global-storage*))
         (*global-storage* (make-instance 'global-storage)))
     (unserialize-from-file (pathname (format nil "~atest/products" (user-homedir-pathname))) (make-instance 'product))
+    (unserialize-from-file (pathname (format nil "~atest/groups" (user-homedir-pathname))) (make-instance 'group))
     ;; на данном этапе в *global-storage* только продукты
     (maphash #'(lambda (k v)
                  (declare (ignore k))
@@ -255,6 +256,18 @@
                              (new-classes.get-transform-optgroups v))
                        (with-option1 item "Общие характеристики" "Производитель"
                                      (setf (vendor item) (getf option :value)))))))
+             (storage *global-storage*))
+    ;; на данном этапе в *global-storage* только продукты
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (when (and (equal (type-of v) 'group)
+                            (fullfilter v))
+                   (let ((item (gethash (key v) original-storage)))
+                     (when item
+                       (let ((filter (fullfilter v)))
+                         (setf filter (object-fields.string-add-newlines filter))
+                         (setf filter (new-classes.decode filter (make-instance 'group-filter)))
+                         (setf (fullfilter item) filter))))))
              (storage *global-storage*)))
   ;;необходимо освободить память от уже не нужных продуктов
   (sb-ext:gc :full t))

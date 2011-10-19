@@ -367,18 +367,9 @@
                  :breadcrumbs (catalog:breadcrumbs (new-classes.breadcrumbs object))
                  :menu (new-classes.menu object)
                  :rightblocks (append
-                               (if (= 0 (num-nonempty-filters (new-classes.parent object)))
-                                   nil
-                                   (list (fullfilter:rightfilter
-                                          (list :filters (loop
-                                                            :for filter
-                                                            :in (remove-if #'(lambda (fil)
-                                                                               (is-empty-filtered-list (new-classes.parent object) fil))
-                                                                           (filters (new-classes.parent object)))
-                                                            :collect (make-string-filter (new-classes.parent object)
-                                                                                         filter
-                                                                                         (equal object filter)))))))
-                                   (rightblocks))
+                               (render.get-oneclick-filters (new-classes.parent object)
+                                                            (getf request-get-plist :showall))
+                               (rightblocks))
                  :subcontent (catalog:centerproduct
                               (list
                                :sorts (sorts request-get-plist)
