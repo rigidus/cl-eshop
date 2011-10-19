@@ -41,15 +41,16 @@
           (if (not (null (parent object)))
             (format nil "[ \"~a\" ]" (key (parent object)))
             (format nil "null")) ;;parents
-          (format nil "\"~a\"" (object-fields.string-escaping (name object)));;name
+          (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-delete-newlines (name object))));;name
           (encode-json-to-string (active object));;active
           (encode-json-to-string (order object));;order
           (encode-json-to-string (ymlshow object));;ymlshow
           (format nil "\"~a\"" (object-fields.string-escaping (pic object)));;pic
           (format nil "\"~a\"" (object-fields.string-escaping (icon object)));;icon
-          (encode-json-to-string (delivery-price object));;deliveryPrice
+          "null" ;;(encode-json-to-string (delivery-price object));;deliveryPrice
           (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (descr object))));;seo-text
-          (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (raw-fullfilter object))));;raw-fullfilter
+          "\"\"" ;; (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (raw-fullfilter object))))
+          ;;raw-fullfilter
           (if (not (null (keyoptions object)))
               (format nil "[~{~a~^,~}]"
                       (loop :for item :in (keyoptions object) :collect
