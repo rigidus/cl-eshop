@@ -44,7 +44,7 @@
 ;;при несоответствии хотя бы одной - возвращает nil
 (defun rename-check (product)
   (let* ((articul (articul product))
-         (name (realname product))
+         (name (name-seo product))
          (pics (get-pics articul))
          (result t))
     (dotimes (i (length pics))
@@ -65,7 +65,7 @@
        :do (incf counter)
        (with-open-file (file pic)
          (rename-file file (rename-new-name
-                            (realname product) counter))))))
+                            (name-seo product) counter))))))
 
 
 
@@ -95,7 +95,7 @@
 (defun rename-convert-from-folder (product path-to-folder)
   (if (directory-exists-p path-to-folder)
       (let* ((articul (articul product))
-             (name (realname product))
+             (name (name-seo product))
              (counter 0)
              (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  (format nil "~a" articul)  "\\1/\\1\\2" )))
         (wlog (format nil "Start converting images for product ~a from folder ~a~%"
@@ -213,7 +213,7 @@
            :do (let* ((path (format nil "~a" folder)))
                  (if (directory-exists-p path)
                      (let* ((articul (car (last (split "/" path))))
-                            (product (gethash articul *storage*)))
+                            (product (gethash articul (storage *global-storage*))))
                        (rename-convert-from-folder product path)
                        (rename-copy-folder path (format nil "~a~a/" backup articul))
                        (rename-remove-folder path)

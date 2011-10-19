@@ -38,7 +38,7 @@
 
          (if (and (not picname) (get-pics articul))
              (setf picname (car (get-pics articul))))
-         (when (and product (realname product) picname)
+         (when (and product (name-seo product) picname)
            (let* ((path (format nil "~a/~a/~a" size articul picname))
                   (path* (format nil "~a/~a/~a" size path-art picname)))
              (if (and (not height) (not width))
@@ -49,7 +49,7 @@
              (format nil "<a href=\"/~a\" title=\"~a\">~%
                                    <img src=\"/pic/~a\" alt=\"~a\" style=\"~a\"/>~%
                                 </a>~%"
-                     articul (realname product) path (realname product) style)))))
+                     articul (name-seo product) path (name-seo product) style)))))
       ;;вставка области для маппинга
       ((string= type "area")
        (let* ((c1 (nth 1 args))

@@ -145,7 +145,7 @@
         (child-open nil)
         (children)
         (checked nil))
-    (log5:log-for test "~&GROUP:~a ~{~a~}" (key group) (groups group))
+    ;; (log5:log-for test "~&GROUP:~a ~{~a~}" (key group) (groups group))
     ;;выясняем нужно ли открывать группу
     (mapcar #'(lambda (open-group)
                 (when (eq (key group) (key open-group))
@@ -209,8 +209,9 @@
                                     (format nil "{\"name\":\"~a\",\"options\":[~{~a~^,~}]}"
                                             name options))))
                             optgroups))))
-    (when entity
-      (format nil "[~{~a~^,~}]" entity))))
+    (if entity
+      (format nil "[~{~a~^,~}]" entity)
+      "null")))
 
 
 

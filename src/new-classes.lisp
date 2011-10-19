@@ -102,6 +102,19 @@
                       optgroups))
     optgroups))
 
+
+(defun new-classes.bind-product-to-group (product group)
+  "Bind product to group, and push product to group's children"
+  (when (every #'(lambda (parent)
+                   (string/= (key group) (key parent)))
+               (parents product))
+    (pushnew group (parents product)))
+  (when (every #'(lambda (child)
+                   (string/= (key product) (key child)))
+               (products group))
+    (pushnew product (products group))))
+
+
 ;;вызывается после десереализации продукта
 (defmethod new-classes.post-unserialize ((item product))
   ;; после десериализации в parent лежит список key родительских групп
@@ -223,8 +236,8 @@
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-  (unserialize-from-file (pathname (format nil "~atest/products.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/groups.bkp" (user-homedir-pathname))) (make-instance 'group))
+  (unserialize-from-file (pathname (format nil "~atest/products2.bkp" (user-homedir-pathname))) (make-instance 'product))
+  (unserialize-from-file (pathname (format nil "~atest/groups2.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)

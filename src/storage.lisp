@@ -42,6 +42,9 @@
   (remove-if-not filter
                  (storage.get-recursive-products object)))
 
+(defmethod storage.get-filtered-products ((object cons) &optional (filter #'active))
+  (remove-if-not filter object))
+
 (defgeneric storage.get-vendors (object)
   (:documentation ""))
 

@@ -20,6 +20,9 @@
 (restas:define-route admin-testeditor-key-route ("/admin/testeditor" :method :post)
   (show-admin-page "testeditor"))
 
+(restas:define-route admin-parenting-key-route ("/admin/parenting" :method :post)
+  (show-admin-page "parenting"))
+
 ;;шаблоны
 (defun admin-compile-templates ()
   (mapcar #'(lambda (fname)
@@ -55,7 +58,6 @@
   (let* ((post-data (hunchentoot:raw-post-data))
          (new-post-data (alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*)))
          (post-data-plist))
-
     (when (not (null post-data))
       (setf post-data (sb-ext:octets-to-string post-data :external-format :utf8))
       (setf post-data-plist  (let ((result))
@@ -107,6 +109,37 @@
                                                                                :name "testeditor"
                                                                                :value "<p>This is some <strong>sample text</strong>.
                                                                                        You are using <a href=\"http://ckeditor.com/\">CKEditor</a>.</p>")))
+                                            ((string= key "parenting")
+                                             ;; (log5:log-for debug-console "~a~%" (hunchentoot:post-parameters hunchentoot:*request*))
+                                             (when new-post-data
+                                               ;; (log5:log-for debug-console "~a~%" (hunchentoot:post-parameters hunchentoot:*request*))
+                                               (setf new-post-data (servo.plist-to-unique new-post-data))
+                                               ;; (log5:log-for debug-console "---->#######  ~a~%" (getf new-post-data :groups))
+                                               (let ((products (if (equal (type-of (getf new-post-data :products)) 'cons)
+                                                                   (getf new-post-data :products)
+                                                                   (list (getf new-post-data :products))))
+                                                     (groups (if (equal (type-of (getf new-post-data :groups)) 'cons)
+                                                                 (getf new-post-data :groups)
+                                                                   (list (getf new-post-data :groups)))))
+                                                 (mapcar #'(lambda (product)
+                                                             (mapcar #'(lambda (group)
+                                                                         (new-classes.bind-product-to-group
+                                                                          (gethash product (storage *global-storage*))
+                                                                          (gethash group (storage *global-storage*))))
+                                                                     groups))
+                                                         products))
+                                               ;; (log5:log-for debug-console "----> ~a~%" new-post-data)
+                                               )
+                                             (let ((unparented-products (storage.get-filtered-products (products *global-storage*)
+                                                                                                       #'(lambda (item)
+                                                                                                           (null (new-classes.parent item))))))
+                                               (soy.class_forms:parenting-page
+                                                (list :products (mapcar #'(lambda (product)
+                                                                            (soy.class_forms:unparented-product-checkbox
+                                                                             (list :key (key product)
+                                                                                   :name (name-seo product))))
+                                                                        unparented-products)
+                                                      :groups (object-fields.group-list-field-view nil "GROUPS" nil)))))
                                             (t (format nil "~a" key)))))))))
 
 
