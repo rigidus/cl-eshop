@@ -19,10 +19,12 @@
       ((string= type "pic")
        (let* ((size (string-trim '(#\Space) (nth 1 args)))
               (articul (string-trim '(#\Space) (nth 2 args)))
-              (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  (format nil "~a" articul)  "\\1/\\1\\2" ))
+              (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"
+                                               (format nil "~a" articul)
+                                               "\\1/\\1\\2" ))
               (number (- (parse-integer
                           (string-trim '(#\Space) (nth 3 args))) 1))
-              (product (gethash articul *storage*))
+              (product (gethash articul (storage *global-storage*)))
               (picname (nth number (get-pics articul)))
               (height (nth 5 args))
               (width (nth 4 args))
@@ -55,8 +57,8 @@
               (c3 (nth 3 args))
               (c4 (nth 4 args))
               (articul (nth 5 args))
-              (product (gethash articul *storage*))
-              (name (realname product))
+              (product (gethash articul (storage *global-storage*)))
+              (name (name-seo product))
               (siteprice (siteprice product))
               ;; (delivery-price (delivery-price product))
               (picname (car (get-pics articul))))
@@ -70,11 +72,12 @@
                         ;; :deliveryprice delivery-price
                         :pic picname
                         )))))
+      ;;вставка кнопки покупки
       ((string= type "buy")
        (let* ((articul (nth 1 args))
-              (product (gethash articul *storage*)))
+              (product (gethash articul (storage *global-storage*))))
          (when product
-           (let ((name (realname product))
+           (let ((name (name-seo product))
                  (siteprice (siteprice product))
                  ;; (delivery-price (delivery-price product))
                  (picname (car (get-pics articul))))
@@ -89,7 +92,7 @@
                                      )))))))
       ((string= type "price")
        (let* ((articul (nth 1 args))
-              (product (gethash articul *storage*)))
+              (product (gethash articul (storage *global-storage*))))
          (when product
            (let ((siteprice (siteprice product)))
              (format nil "~a"

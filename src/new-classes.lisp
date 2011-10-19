@@ -133,8 +133,8 @@
 ;;вызывается после десереализации группы
 (defmethod new-classes.post-unserialize ((item group))
   ;;adding newlines instead of #Newline
-  (setf (seo-text item) (object-fields.string-add-newlines (seo-text item)))
-  (setf (fullfilter item) (object-fields.string-add-newlines (fullfilter item)))
+  (when (seo-text item)
+    (setf (seo-text item) (object-fields.string-add-newlines (seo-text item))))
   (when (equal (type-of (vendors-seo item)) 'cons)
     (setf (vendors-seo item) (mapcar #'object-fields.string-add-newlines
                                      (copy-list (vendors-seo item))))
@@ -159,7 +159,9 @@
                                       (list :optgroup (cdr (assoc :optgroup pair))
                                             :optname (cdr (assoc :optname pair))))
                                   (keyoptions item)))
-  (setf (fullfilter item) (new-classes.decode (fullfilter item) (make-instance 'group-filter))))
+  (when (raw-fullfilter item)
+    (setf (fullfilter item) (object-fields.string-add-newlines (raw-fullfilter item)))
+    (setf (fullfilter item) (new-classes.decode (fullfilter item) (make-instance 'group-filter)))))
 
 (defmethod new-classes.post-unserialize ((item filter))
   ;;adding newlines instead of #Newline
@@ -222,7 +224,7 @@
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
   (unserialize-from-file (pathname (format nil "~atest/products.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/groups" (user-homedir-pathname))) (make-instance 'group))
+  (unserialize-from-file (pathname (format nil "~atest/groups1.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)
@@ -373,23 +375,24 @@
 
 (new-classes.make-class-and-methods
  'group
- '((:name key               :initform nil                             :disabled t   :type string       :serialize t)
-   (:name parents           :initform nil                             :disabled nil :type group-list   :serialize t)
-   (:name name              :initform nil                             :disabled nil :type string       :serialize t)
-   (:name active            :initform nil                             :disabled nil :type bool         :serialize t)
-   (:name empty             :initform nil                             :disabled t   :type bool         :serialize nil)
-   (:name order             :initform 1000                            :disabled nil :type int          :serialize t)
-   (:name ymlshow           :initform nil                             :disabled t   :type bool         :serialize t)
-   (:name pic               :initform nil                             :disabled nil :type string       :serialize t)
-   (:name icon              :initform nil                             :disabled nil :type string       :serialize t)
-   (:name delivery-price    :initdorm 0                               :disabled nil :type int          :serialize t)
-   (:name groups            :initform nil                             :disabled t   :type group-list   :serialize t)
-   (:name products          :initform nil                             :disabled t   :type product-list :serialize nil)
-   (:name filters           :initform nil                             :disabled t   :type string       :serialize nil)
-   (:name fullfilter        :initform nil                             :disabled t   :type string       :serialize nil)
-   (:name vendors-seo       :initform (make-hash-table :test #'equal) :disabled t   :type string       :serialize nil)
-   (:name seo-text          :initform nil                             :disabled nil :type textedit     :serialize t)
-   (:name keyoptions        :initform nil                             :disabled t   :type keyoptions   :serialize t)))
+ '((:name key               :initform nil                             :disabled t   :type string                    :serialize t)
+   (:name parents           :initform nil                             :disabled nil :type group-list                :serialize t)
+   (:name name              :initform nil                             :disabled nil :type string                    :serialize t)
+   (:name active            :initform nil                             :disabled nil :type bool                      :serialize t)
+   (:name empty             :initform nil                             :disabled t   :type bool                      :serialize nil)
+   (:name order             :initform 1000                            :disabled nil :type int                       :serialize t)
+   (:name ymlshow           :initform nil                             :disabled t   :type bool                      :serialize t)
+   (:name pic               :initform nil                             :disabled nil :type string                    :serialize t)
+   (:name icon              :initform nil                             :disabled nil :type string                    :serialize t)
+   (:name delivery-price    :initdorm 0                               :disabled nil :type int                       :serialize t)
+   (:name groups            :initform nil                             :disabled t   :type group-list                :serialize nil)
+   (:name products          :initform nil                             :disabled t   :type product-list              :serialize nil)
+   (:name filters           :initform nil                             :disabled t   :type string                    :serialize nil)
+   (:name fullfilter        :initform nil                             :disabled t   :type string                    :serialize nil)
+   (:name raw-fullfilter    :initform nil                             :disabled t   :type string                    :serialize t)
+   (:name vendors-seo       :initform (make-hash-table :test #'equal) :disabled t   :type textedit-hashtable        :serialize t)
+   (:name seo-text          :initform nil                             :disabled nil :type textedit                  :serialize t)
+   (:name keyoptions        :initform nil                             :disabled t   :type keyoptions                :serialize t)))
 
 
 (new-classes.make-class-and-methods
