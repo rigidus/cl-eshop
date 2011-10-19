@@ -8,126 +8,143 @@
 
 (setf *default-render-method* (make-instance 'eshop-render))
 
-(defmethod restas:render-object ((designer eshop-render) (object group))
-  (default-page
+(defmethod render.get-oneclick-filters ((group group) &optional (full nil))
+  "Отобрадение фильтров в один клик"
+  (let ((products)
+        (filters))
+    (setf products (if full
+                      (storage.get-filtered-products group #'atom)
+                      (storage.get-filtered-products group #'active)))
+    (setf filters (filters.get-filters group products))
+    (if filters
+        (list (fullfilter:rightfilter
+               (list :filters (mapcar #'(lambda (v)
+                                          (filters.make-string-filter (car v)
+                                                                      (cdr v)))
+                                      filters))))
+        nil)))
+
+
+
+(defmethod render.render ((object group) &optional (parameters (request-get-plist)))
+  (let ((name (name object)))
+    (default-page
       (catalog:content
-       (list :name (name object)
+       (list :name name
              :breadcrumbs (catalog:breadcrumbs (breadcrumbs-add-vendor (new-classes.breadcrumbs object)))
              :menu (new-classes.menu object)
              :rightblocks (append
-                            (if (= 0 (num-nonempty-filters object))
-                                nil
-                                (list (fullfilter:rightfilter
-                                       (list :filters (loop :for filter
-                                                         :in (remove-if
-                                                              #'(lambda (fil)
-                                                                  (is-empty-filtered-list object fil))
-                                                              (filters object))
-                                                         :collect (make-string-filter object filter))))))
-                            ;;fullfilter
-                            (let ((ret (rightblocks)))
-                              (if (not (null (fullfilter object)))
-                                  (push (restas:render-object designer (fullfilter object)) ret))
-                              ret)
-                            )
+                           (render.get-oneclick-filters object
+                                                        (getf parameters :showall))
+                           ;;fullfilter
+                           (let ((ret (rightblocks)))
+                             (if (not (null (fullfilter object)))
+                                 (push (render.render (fullfilter object) parameters) ret))
+                             ret))
              :subcontent  (if (and (null (products object))
-                                  (null (getf (request-get-plist) :fullfilter))
-                                  (null (getf (request-get-plist) :vendor)))
-                             ;; Отображаем группы
-                             (catalog:centergroup
-                              (list
-                               :producers nil ;;(render.show-producers (storage.get-recursive-products object))
-                               :accessories (catalog:accessories)
-                               :groups (let* ((object (gethash "noutbuki-i-komputery" (storage *global-storage*)))
-                                              (sort-groups (sort (remove-if-not #'active (groups object)) #'menu-sort)))
-                                         (mapcar #'(lambda (child)
-                                                     (list
-                                                      :is-active (active child)
-                                                      :name (name child)
-                                                      :key (key child)
-                                                      :cnt (let ((products (get-recursive-products child)))
-                                                             (if (null products)
-                                                                 "-"
-                                                                 (length (remove-if-not #'active products))))
-                                                      :pic (pic child)
-                                                      :filters (let ((filters (remove-if #'(lambda (filter)
-                                                                                     (is-empty-filtered-list child filter))
-                                                                                 (filters child))))
-                                                                 (mapcar #'(lambda (filter)
-                                                                             (list :name (name filter)
-                                                                                   :groupkey (key child)
-                                                                                   :key (key filter)
-                                                                                   :num (format nil "(~a)"
-                                                                                                (get-filtered-product-list-len child filter))
-                                                                                   ))
-                                                                         filters))))
-                                                 sort-groups))))
-                             ;;else
-                             (let ((products-list
-                                    (if (getf (request-get-plist) :showall)
-                                        (copy-list (products object))
-                                        (remove-if-not #'(lambda (product)
-                                                           (active product))
-                                                       (get-recursive-products object))))
-                                   (request-get-plist (request-get-plist)))
-                               (if (null (getf request-get-plist :sort))
-                                   (setf (getf request-get-plist :sort) "pt"))
-                               (if (getf (request-get-plist) :vendor)
-                                   (setf products-list
-                                         (remove-if-not #'(lambda (p)
-                                                            (vendor-filter-controller p (request-get-plist)))
-                                                            products-list)))
-                               (if (getf (request-get-plist) :fullfilter)
-                                   (setf products-list (fullfilter-controller products-list  object (request-get-plist))))
-                               (with-sorted-paginator
-                                   products-list
-                                 request-get-plist
-                                 (catalog:centerproduct
-                                  (list
-                                   :sorts (sorts request-get-plist)
-                                   :producers (render.show-producers (storage.get-recursive-products object))
-                                   :accessories (catalog:accessories)
-                                   :pager pager
-                                   :products
-                                   (loop
-                                      :for product :in  paginated :collect (render.view product)))))))
-             ))
-      :keywords (format nil "~a" (name object))
-      :description (format nil "~a" (name object))
-      :title (let ((vendor (getf (request-get-plist) :vendor)))
+                                   (null (getf parameters :fullfilter))
+                                   (null (getf parameters :vendor)))
+                              ;; Отображаем группы
+                              (catalog:centergroup
+                               (list
+                                :producers (if (getf parameters :showall)
+                                               (render.show-producers (storage.get-filtered-products object #'atom))
+                                               nil)
+                                :accessories (catalog:accessories)
+                                :groups (let ((sort-groups (sort (remove-if-not #'active (groups object)) #'menu-sort)))
+                                          (mapcar #'(lambda (child)
+                                                      (let* ((show-func (if (getf parameters :showall)
+                                                                            #'atom
+                                                                            #'active))
+                                                             (products (storage.get-filtered-products child show-func))
+                                                             (filters (filters.get-filters child products)))
+                                                        (list
+                                                         :is-active (active child)
+                                                         :name (name child)
+                                                         :key (key child)
+                                                         :cnt (if products
+                                                                  (length products)
+                                                                  "-")
+                                                         :pic (pic child)
+                                                         :filters (mapcar #'(lambda (v)
+                                                                              (let ((filter (car v))
+                                                                                    (num (cdr v)))
+                                                                                (list :name (name filter)
+                                                                                      :groupkey (key child)
+                                                                                      :key (key filter)
+                                                                                      :num (format nil "(~a)" num))))
+                                                                            filters))))
+                                                      sort-groups))))
+                              ;;else
+                              (let ((products-list (if (getf parameters :showall)
+                                                       (storage.get-filtered-products object #'atom)
+                                                       (storage.get-filtered-products object #'active))))
+                                (if (null (getf parameters :sort))
+                                    (setf (getf parameters :sort) "pt"))
+                                (if (getf parameters :vendor)
+                                    (setf products-list
+                                          (remove-if-not #'(lambda (p)
+                                                             (vendor-filter-controller p parameters))
+                                                         products-list)))
+                                (if (getf parameters :fullfilter)
+                                    (setf products-list (fullfilter-controller products-list object parameters)))
+                                (with-sorted-paginator
+                                    products-list
+                                  parameters
+                                  (catalog:centerproduct
+                                   (list
+                                    :sorts (sorts parameters)
+                                    :producers (render.show-producers (if (getf parameters :showall)
+                                                                          (storage.get-filtered-products object #'atom)
+                                                                          (storage.get-filtered-products object #'active)))
+                                    :accessories (catalog:accessories)
+                                    :pager pager
+                                    :products
+                                    (loop
+                                       :for product :in  paginated :collect (render.view product)))))))))
+      :keywords name
+      :description name
+      :title (let ((vendor (getf parameters :vendor)))
                (string-convertion-for-title
                 (if vendor
                     (format nil "~a ~a - купить ~a ~a по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
-                            (sklonenie (name object) 1)
+                            (sklonenie name 1)
                             vendor
-                            (sklonenie (name object) 2)
+                            (sklonenie name 2)
                             vendor
-                            (sklonenie (name object) 3)
+                            (sklonenie name 3)
                             vendor)
                     (format nil "~a - купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
-                            (sklonenie (name object) 1)
-                            (sklonenie (name object) 2)
-                            (sklonenie (name object) 3)))))))
+                            (sklonenie name 1)
+                            (sklonenie name 2)
+                            (sklonenie name 3))))))))
 
 
-(defmethod restas:render-object ((designer eshop-render) (object group-filter))
+
+
+
+(defmethod render.render ((object group-filter) &optional (parameters (request-get-plist)))
   (fullfilter:container
    (list :name (name object)
-         :vendor (getf (request-get-plist) :vendor)
-         :sort (getf (request-get-plist) :sort)
+         :vendor (getf parameters :vendor)
+         :sort (getf parameters :sort)
          :base (format nil "~{~a~}"
                        (mapcar #'(lambda (elt)
-                                   (filter-element elt (request-get-plist)))
+                                   (filter-element elt parameters))
                                (base object)))
          :advanced (format nil "~{~a~}"
                            (mapcar #'(lambda (elt)
                                        (fullfilter:group
                                         (list :name (car elt)
                                               :elts (mapcar #'(lambda (inelt)
-                                                                (filter-element inelt (request-get-plist)))
+                                                                (filter-element inelt parameters))
                                                             (cadr elt)))))
                                    (advanced object)))
-         :isshowadvanced (is-need-to-show-advanced object (request-get-plist)))))
+         :isshowadvanced (is-need-to-show-advanced object parameters))))
+
+
+(defmethod restas:render-object ((designer eshop-render) (object group-filter))
+  (render.render object))
 
 
 
@@ -324,12 +341,15 @@
                 collect item)))
 
 (defmethod restas:render-object ((designer eshop-render) (object filter))
-  ;; (log5:log-for test "TEST")
-  (let ((products-list (remove-if-not (func object)
-                                      (storage.get-recursive-products (new-classes.parent object))))
-        (request-get-plist (request-get-plist))
+  (let ((request-get-plist (request-get-plist))
         (fltr-name  (name object))
-        (grname (name (new-classes.parent object))))
+        (grname (name (new-classes.parent object)))
+        (products-list)
+        (all-products-list))
+    (setf all-products-list (if (getf request-get-plist :showall)
+                                (storage.get-filtered-products (new-classes.parent object) #'atom)
+                                (storage.get-filtered-products (new-classes.parent object) #'active)))
+    (setf products-list (remove-if-not (func object) all-products-list))
     (if (null (getf request-get-plist :sort))
         (setf (getf request-get-plist :sort) "pt"))
     (if (getf (request-get-plist) :vendor)
@@ -362,7 +382,7 @@
                  :subcontent (catalog:centerproduct
                               (list
                                :sorts (sorts request-get-plist)
-                               :producers (render.show-producers products-list)
+                               :producers (render.show-producers all-products-list)
                                :accessories (catalog:accessories)
                                :pager pager
                                :products (loop
@@ -416,3 +436,7 @@
         (cut 12 veiws)
       (catalog:producers (list :vendorblocks (make-producters-lists base)
                                :vendorhiddenblocks (make-producters-lists hidden))))))
+
+
+(defmethod restas:render-object ((designer eshop-render) (object group))
+   (render.render object))

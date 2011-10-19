@@ -16,8 +16,8 @@
 	(maphash #'(lambda (key val)
                  (when (and (equal (type-of val) 'product)
                             (active val)
-                            (not (null (parent val))))
-                   (let ((name (string-downcase (format nil "~a" (name val)))))
+                            (not (null (new-classes.parent val))))
+                   (let ((name (string-downcase (format nil "~a" (name-seo val)))))
                      (mapcar #'(lambda (word)
                                  (let* ((search-result (search word name))
                                         (tmp (gethash key results (list :name name :rel 0))))
@@ -25,7 +25,7 @@
                                      (setf (getf tmp :rel) (+ 1 (getf tmp :rel)))
                                      (setf (gethash key results) tmp))))
                              wordlist))))
-             *storage*)
+             (storage *global-storage*))
     ;; Преобразуем хэш с элементами вида (list :name "xxx" :rel "yyy") в список для сортировки
 	(maphash #'(lambda (key val)
 				 (push (list* :id key val) result-list))
@@ -37,7 +37,7 @@
 	  (setf sorted-list (subseq sorted-list 0 size)))
     ;; Возвращаем список продуктов
 	(mapcar #'(lambda (x)
-				(gethash (getf x :id) *storage*))
+				(gethash (getf x :id) (storage *global-storage*)))
 			sorted-list)))
 
 
@@ -48,7 +48,7 @@
 	(if (null articul)
         (search-engine q 50)
         ;; else
-		(let ((result (gethash (format nil "~a" articul) *storage*)))
+		(let ((result (gethash (format nil "~a" articul) (storage *global-storage*))))
           (if (null result)
               (search-engine q 50)
               (list result))))))
@@ -82,7 +82,7 @@
                  :in (remove-if #'(lambda (x)
                                     (null (active x)))
                                 products)
-                 :collect (view product)
+                 :collect (render.view product)
                  ))))
 
 
@@ -92,7 +92,7 @@
     (catalog:content
      (list :name "Поиск мысли..."
            :breadcrumbs "<a href=\"/catalog\">Каталог</a> / Поиск"
-           :menu (menu)
+           :menu (new-classes.menu)
            :rightblocks (list (catalog:rightblock1)
                               (catalog:rightblock2))
            :subcontent (if (null centercontent)

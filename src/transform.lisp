@@ -9,24 +9,30 @@
           (format nil "\"~a\"" (object-fields.string-escaping (realname object)));;name-seo
           (encode-json-to-string (siteprice object));;siteprice
           (encode-json-to-string (- (price object) (siteprice object)));;delta-price
-          (encode-json-to-string (date-modified object));;date-modified
-          (encode-json-to-string (date-created object));;date-created
+          (encode-json-to-string nil) ;;DBG (date-modified object));;date-modified
+          (encode-json-to-string nil) ;;DBG (date-created object));;date-created
           (encode-json-to-string (bonuscount object));;bonuscount
           (encode-json-to-string (predzakaz object));;preorder
           (encode-json-to-string (newbie object));;newbie
           (encode-json-to-string (sale object));;sale
           (format nil "\"~a\"" (object-fields.string-escaping (object-fields.string-replace-newlines (shortdescr object))));;seo-text
-          (encode-json-to-string (count-transit object));;count-transit
-          (encode-json-to-string (count-total object));;count-total
-          (if (null (optgroups object));;optgroups
-              (format nil " null")
-              (format nil " [~{~a~^,~}]"
-                      (mapcar #'(lambda (optgroup)
-                                  (serialize optgroup))
-                              (optgroups object)))
-              )
-          (encode-json-to-string (delivery-price object));;delivery-price
-          (format nil "[ \"~a\" ]" (key (parent object))))) ;;parent
+          (encode-json-to-string (if (active object)
+                                     (count-transit object)
+                                     0));;count-transit
+          (encode-json-to-string (if (active object)
+                                     (count-total object)
+                                     0));;count-total
+          ;; (if (null (optgroups object));;optgroups
+              (format nil "null")
+              ;; (format nil " [~{~a~^,~}]"
+              ;;         (mapcar #'(lambda (optgroup)
+              ;;                     (serialize optgroup))
+              ;;                 (optgroups object)))
+              ;; )
+          (encode-json-to-string nil) ;;DBG (delivery-price object));;delivery-price
+          (aif (parent object)
+               (format nil "[ \"~a\" ]" (key it))
+               "null"))) ;;parent
 
 
 (defun transform.serialize-old-group (object)
@@ -118,48 +124,4 @@
                      (setf cnt (+ 1 cnt))
                      (format file "~a" (transform.serialize-old-filter value))))
                *storage*))))
-
-
-(defun transform.unserialize-old-products-to-new ()
-  (with-open-file (file #P"/home/eviltosha/serialize_test/products.bkp")
-    (loop for line = (read-line file nil 'foo)
-       until (eq line 'foo)
-       do
-         ;; (format t "~a~%" line)
-         (let ((product (unserialize (decode-json-from-string line)
-                                     (make-instance 'product))))
-           (storage.add-new-object product (key product))
-           ;; (format t "~a~%" (key product))))))
-           ))))
-
-
-(defun transform.unserialize-old-groups-to-new ()
-  (with-open-file (file #P"/home/eviltosha/test-groups.txt")
-    (loop for line = (read-line file nil 'foo)
-       until (eq line 'foo)
-       do
-         (format t "~a~%" line)
-         (let ((group (unserialize (decode-json-from-string line)
-                                     (make-instance 'group))))
-           (storage.add-new-object group (key group))
-           (format t "~a~%" (key group))))))
-
-(defun transform.post-processing-groups ()
-  (mapcar #'(lambda (group)
-              (new-classes.post-unserialize group))
-          (groups *global-storage*)))
-
-(defun transform.post-processing-products ()
-  (mapcar #'(lambda (product)
-              (new-classes.post-unserialize product)
-              (log5:log-for test "~a ~a" (sb-kernel::control-stack-usage)
-                            (sb-kernel::binding-stack-usage)))
-          (products *global-storage*))
-  "post processing finished")
-
-
-(defun transform.post-processing ()
-  (storage.make-lists)
-  (transform.post-processing-groups)
-  (transform.post-processing-products))
 
