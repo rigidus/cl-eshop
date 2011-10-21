@@ -122,3 +122,48 @@
       (setf r (encode-universal-time 0 0 0 date month year)))
     r))
 
+
+
+
+(defun time.encode.backup (&optional (timestamp (get-universal-time)))
+  "кодирование и декодирование даты вида 2011-09-30_12:01:23"
+  (multiple-value-bind (second minute hour date month year) (decode-universal-time timestamp)
+    (format nil
+            "~d-~2,'0d-~2,'0d_~2,'0d:~2,'0d:~2,'0d"
+            year
+            month
+            date
+            hour
+            minute
+            second)))
+
+(defun time.decode.backup (input-string)
+  "декодирование даты вида 2011-09-30_12:01:23"
+    (let ((r 0)
+          (counts)
+          (dates)
+          (times)
+          (date)
+          (month)
+          (year)
+          (minute)
+          (hour)
+          (second))
+      (when (and (not (null input-string))
+                 (not (string= ""
+                               (stripper input-string))))
+        ;; разделяем на даты и на часы минуты
+        (setf counts (split-sequence:split-sequence #\_  input-string))
+        ;; получаем год месяц и день
+        (setf dates (split-sequence:split-sequence #\- (first counts)))
+        ;; получаем часы и минуты
+        (setf times (split-sequence:split-sequence #\: (second counts)))
+        ;; установки переменных
+        (setf year (parse-integer (first dates)))
+        (setf month (parse-integer (second dates)))
+        (setf date (parse-integer (third dates)))
+        (setf hour (parse-integer (first times)))
+        (setf minute (parse-integer (second times)))
+        (setf second (parse-integer (third times)))
+      (setf r (encode-universal-time second minute hour date month year)))
+    r))

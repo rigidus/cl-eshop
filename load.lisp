@@ -1,21 +1,13 @@
 (require 'asdf)
-(print "LOAD LIBS:")
 
+(defun cl-eshop-path (name &rest filenames)
+  (pathname (format nil "~{~a~^/~}" (append (list (user-homedir-pathname) name) filenames))))
 
-(defun cl-eshop-path (&rest filenames)
-  (pathname (format nil "~{~a~^/~}" (append (list (user-homedir-pathname) "cl-restas-eshop") filenames))))
-
-(defun cl-eshop-push-asdf (name)
-  (push (truename (cl-eshop-path "libs" name)) asdf:*central-registry*))
-
-(defun cl-eshop-load-asdf (name)
-  (asdf:operate 'asdf:load-op (intern (string-upcase (format nil "~a" name)))))
-
-;; (requie
+(defun cl-eshop-push-asdf (home filename)
+  (push (truename (cl-eshop-path home "libs" filename)) asdf:*central-registry*))
 
 (defparameter cl-eshop-libs
   (list
-   ;; ""
    ;; "slime-2011-09-01" ;; актуальный swank
    "slime-archimag" ;; SWANK
    "alexandria"     ;; hunch
@@ -54,10 +46,14 @@
    "esrap" ;; closure-template | packrat parser http://nikodemus.github.com/esrap/
    "log5" ;; логирование | logging framework http://common-lisp.net/project/log5/
    ;; "cl-store" ;; сохранение данных | Serialization Package http://common-lisp.net/project/cl-store/
+   "drakma-1.2.4" ;;http клиент для тестов
    ))
 
 
-(push (truename (pathname (format nil "~a~a" (user-homedir-pathname) "cl-restas-eshop"))) asdf:*central-registry*)
-;; регистрация дерикторий библиотек
-(mapcar #'cl-eshop-push-asdf cl-eshop-libs)
+;; "cl-restas-eshop"
+(defun load.register-libs (name)
+  (push (truename (pathname (format nil "~a~a" (user-homedir-pathname) name))) asdf:*central-registry*)
+  ;; регистрация дерикторий библиотек
+  (mapcar #'(lambda (v) (cl-eshop-push-asdf name v))
+                    cl-eshop-libs))
 

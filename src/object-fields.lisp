@@ -23,12 +23,14 @@
 
 (defun object-fields.string-delete-newlines (string)
   "Замена символов перевода каретки на пробел (актуально при сериализации имен групп)"
-  (format nil "~{~a~}"
-          (map 'list #'(lambda (char)
-                         (if (char-equal #\Newline char)
-                             (format nil " ")
-                             (format nil "~a" char)))
-               string)))
+  ;; (format nil "~{~a~}"
+  ;;         (map 'list #'(lambda (char)
+  ;;                        (if (char-equal #\Newline char)
+  ;;                            (format nil " ")
+  ;;                            (format nil "~a" char)))
+  ;;              string))
+  ;; было очень долго
+  (substitute #\  #\Newline string))
 
 (defun object-fields.string-add-newlines (string)
   "Adding newline characters instead of #Newline"

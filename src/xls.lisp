@@ -188,9 +188,7 @@
                                                     (format nil "~@[~a~]" realname))))
                       (setf (name-seo product) realname))
                   )))))
-    (wlog (format nil "...} successfully processed ~a files | ~a products" cnt num-all))
-    ;;создаем новый yml файл
-    (create-yml-file)))
+    (wlog (format nil "...} successfully processed ~a files | ~a products" cnt num-all))))
 
 
 (defun dtd ()

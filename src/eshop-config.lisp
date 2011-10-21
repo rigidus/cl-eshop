@@ -28,6 +28,13 @@
 (defparameter *path-sitemap* "sitemap.xml")
 (export '*path-sitemap*)
 
+;; Список email для рассылки писем от ошибках выгрузки 1с
+(defvar *conf.emails.gateway.warn* (list "CallCenter@alpha-pc.com"
+                                         "Supplers@alpha-pc.com"
+                                         "web_design@alpha-pc.com"
+                                         "wolforus@gmail.com"
+                                         "slamly@gmail.com"))
+
 (defun wlog (s)
   (format t "~&~a> ~a" (time.get-date-time) s))
 

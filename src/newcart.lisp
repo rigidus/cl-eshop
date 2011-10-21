@@ -54,7 +54,7 @@
                                        (setf sum-counter (+ sum-counter cnt))
                                        (list :numpos counter
                                              :count cnt
-                                             :name (realname product)
+                                             :name (name-seo product)
                                              :price price
                                              ;;данные для корзины
                                              :siteprice (siteprice product)
@@ -282,9 +282,9 @@
             (send-mail (list "stetoscop@gmail.com") client-mail filename  tks-mail order-id)
             (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
             (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
+            (send-mail (list "slamly@gmail.com") client-mail filename tks-mail order-id)
             (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
             ;; (send-mail (list "samoylenco@alpha-pc.com") client-mail filename tks-mail order-id)
-            (send-mail (list "slamly@gmail.com") client-mail filename tks-mail order-id)
             ;; (print email)
             ;; артикул 099999 и доставка 107209
             ;; сделать валидацию пользовательского email
