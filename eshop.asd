@@ -17,8 +17,7 @@
                (:file "render" :depends-on ("routes"))
                (:file "cart" :depends-on ("render"))
                (:file "generics" :depends-on ("cart"))
-               (:file "gateway" :depends-on ("generics"))
-               (:file "search" :depends-on ("gateway"))
+               (:file "search" :depends-on ("generics"))
                (:file "xls" :depends-on ("search"))  ;;необходима xls2csv | sudo apt-get install catdoc
                (:file "yml" :depends-on ("xls"))
                (:file "articles" :depends-on ("yml"))
@@ -40,4 +39,6 @@
                (:file "object-fields" :depends-on ("static-pages"))
                (:file "new-classes" :depends-on ("storage"))
                (:file "admin-gateway" :depends-on ("new-classes"))
+               (:file "gateway" :depends-on ("admin-gateway"))
+               (:file "email" :depends-on ("gateway"))
                ))))

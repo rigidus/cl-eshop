@@ -33,12 +33,12 @@
                  (when (equal (type-of v)
                               'product)
                    (setf id (articul v))
-                   (setf name (stripper (name v)))
-                   (setf name-real (stripper (realname v)))
-                   (with-option v "Secret" "Yandex"
-                                (setf name-yml (stripper (value option))))
-                   (setf desc (if (and (not (null (shortdescr v)))
-                                       (not (string= "" (stripper (shortdescr v)))))
+                   (setf name (stripper (name-provider v)))
+                   (setf name-real (stripper (name-seo v)))
+                   (with-option1 v "Secret" "Yandex"
+                                (setf name-yml (stripper (getf option :value))))
+                   (setf desc (if (and (not (null (seo-text v)))
+                                       (not (string= "" (stripper (seo-text v)))))
                                   "есть"
                                   "нет"))
                    (setf img (length (get-pics (articul v))))
@@ -49,14 +49,14 @@
                    (setf active (if (active v)
                                     "да"
                                     "нет"))
-                   (setf group-name (if (not (null (parent v)))
-                                        (stripper (name (parent v)))))
-                   (setf parent-group-name (if (and (not (null (parent v)))
-                                                    (not (null (parent (parent v)))))
-                                               (stripper (name (parent (parent v))))))
+                   (setf group-name (if (not (null (new-classes.parent v)))
+                                        (stripper (name (new-classes.parent v)))))
+                   (setf parent-group-name (if (and (not (null (new-classes.parent v)))
+                                                    (not (null (new-classes.parent (new-classes.parent v)))))
+                                               (stripper (name (new-classes.parent (new-classes.parent v))))))
                    (setf secret "Нет")
-                   (with-option v "Secret" "Checked"
-                                (setf secret (value option)))
+                   (with-option1 v "Secret" "Checked"
+                                (setf secret (getf option :value)))
                    (format stream "~a;~a;~a;\"~a\";\"~a\";\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~a;~a;~%"
                            id
                            (price v)
@@ -73,7 +73,7 @@
                            secret
                            (gethash (articul v) *xls.product-table*))
                    )))
-           *storage*))
+           (storage *global-storage*)))
 
 (defun is-valide-option (product)
   (let ((flag nil))
@@ -113,7 +113,7 @@
                                   "yes"
                                   "no"))
                    ))
-           *storage*))
+           (storage *global-storage*)))
 
 (defun write-groups-active-product-num (stream)
   (format stream "~a;~a;~a;~a;~%"
@@ -132,7 +132,7 @@
                                "yes"
                                "no")
                            (length (remove-if-not #'active (get-recursive-products v))))))
-           *storage*))
+           (storage *global-storage*)))
 
 
 
@@ -168,7 +168,7 @@
                                "yes"
                                "no")
                            desc)))
-             *storage*)))
+             (storage *global-storage*))))
 
 
 (defun write-vendors (stream)
@@ -196,7 +196,7 @@
                                            "yes"
                                            "no"))))
                          (producersall (make-producers v)))))
-           *storage*))
+           (storage *global-storage*)))
 
 (defun create-report (file-name report-func)
   (let ((filename (format nil "~a/~a" *path-to-dropbox* file-name)))
@@ -226,7 +226,7 @@
                                  "no")
                              (price v)
                              (siteprice v)))))
-           *storage*))
+           (storage *global-storage*)))
 
 (defun show-last-history (stream)
   (when (not (null *history*))
@@ -235,7 +235,7 @@
                  (declare (ignore k))
                  (when (equal (type-of v) 'product)
                    (setf (active v) nil)))
-             *storage*)
+             (storage *global-storage*))
     (loop :for packet :in (reverse (caddr (car *history*))) :do
        (format stream "~a" (sb-ext:octets-to-string packet :external-format :cp1251)))))
 
@@ -263,16 +263,16 @@
                                "Siteprice > Price"))))
 
 
-                          ;; (setf (active (gethash "160420" *storage*)) nil)
-                          ;; (serialize (gethash "160420" *storage*))
-                          ;; (setf (active (gethash "165359" *storage*)) nil)
-                          ;; (serialize (gethash "165359" *storage*))
-                          ;; (setf (active (gethash "165360" *storage*)) nil)
-                          ;; (serialize (gethash "165360" *storage*))
-;; (setf (active (gethash "157499" *storage*)) nil)
-;; (serialize (gethash "157499" *storage*))
-;; (setf (active (gethash "153599" *storage*)) nil)
-;; (serialize (gethash "153599" *storage*))
+                          ;; (setf (active (gethash "160420" (storage *global-storage*))) nil)
+                          ;; (serialize (gethash "160420" (storage *global-storage*)))
+                          ;; (setf (active (gethash "165359" (storage *global-storage*))) nil)
+                          ;; (serialize (gethash "165359" (storage *global-storage*)))
+                          ;; (setf (active (gethash "165360" (storage *global-storage*))) nil)
+                          ;; (serialize (gethash "165360" (storage *global-storage*)))
+;; (setf (active (gethash "157499" (storage *global-storage*))) nil)
+;; (serialize (gethash "157499" (storage *global-storage*)))
+;; (setf (active (gethash "153599" (storage *global-storage*))) nil)
+;; (serialize (gethash "153599" (storage *global-storage*)))
 
 
 
@@ -282,7 +282,7 @@
 
 (defun post-proccess-gateway ()
     (mapcar #'(lambda (v)
-                (let ((p (gethash v *storage*))
+                (let ((p (gethash v (storage *global-storage*)))
                   ;; (p (make-instance 'product
                   ;;                   :key v
                   ;;                   :articul v))
@@ -290,10 +290,10 @@
               ;; (if p1
                   ;; (setf p p1))
               (when (not (null p))
-                  (setf (predzakaz p) t)
+                  (setf (preorder p) t)
                   (setf (active p) t)
                   (serialize p)
-                  (setf (gethash v *storage*) p)
+                  (setf (gethash v (storage *global-storage*)) p)
                   (setf (gethash v *special-products*) p))))
         (list
          "711265"
@@ -305,9 +305,9 @@
          "999777"
          ))
   (mapcar #'(lambda (v)
-              (let ((p (gethash v *storage*)))
+              (let ((p (gethash v (storage *global-storage*))))
                 (when (not (null p))
-                  (setf (predzakaz p) t)
+                  (setf (preorder p) t)
                   (serialize p))))
           (list "166545"
                 ;; "166578"
@@ -329,7 +329,7 @@
   ;;                (when (not (delivery-price v))
   ;;                    (wlog (name v))
   ;;                    (setf (delivery-price v) 300))))
-  ;;          *storage*)
+  ;;          (storage *global-storage*))
   )
 
 
@@ -357,7 +357,7 @@
 ;;              (article (car words))
 ;;              (price (parse-integer (cadr words)))
 ;;              (siteprice (parse-integer (caddr words)))
-;;              (prod (gethash article *storage*)))
+;;              (prod (gethash article (storage *global-storage*))))
 ;;         (format t "~&~a: ~a ~a" article price siteprice)
 ;;         (if prod
 ;;             (setf (price prod) price)

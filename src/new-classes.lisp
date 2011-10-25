@@ -1,4 +1,4 @@
-(in-package #:eshop)
+1(in-package #:eshop)
 
 ;;макрос для создания класса по списку параметров
 (defmacro new-classes.make-class (name class-fields)
@@ -256,7 +256,6 @@
   (let ((original-storage (storage *global-storage*))
         (*global-storage* (make-instance 'global-storage)))
     (unserialize-from-file (pathname (format nil "~atest/products" (user-homedir-pathname))) (make-instance 'product))
-    (unserialize-from-file (pathname (format nil "~atest/groups" (user-homedir-pathname))) (make-instance 'group))
     ;; на данном этапе в *global-storage* только продукты
     (maphash #'(lambda (k v)
                  (declare (ignore k))
@@ -269,8 +268,16 @@
                              (new-classes.get-transform-optgroups v))
                        (with-option1 item "Общие характеристики" "Производитель"
                                      (setf (vendor item) (getf option :value)))))))
-             (storage *global-storage*))
-    ;; на данном этапе в *global-storage* только продукты
+             (storage *global-storage*)))
+  ;;необходимо освободить память от уже не нужных продуктов
+  (sb-ext:gc :full t))
+
+(defun new-classes.DBG-unserialize-groups ()
+  "Одноразовый перенос олдовых характеристик поверх хранилища продуктов и проставление производителя"
+  (let ((original-storage (storage *global-storage*))
+        (*global-storage* (make-instance 'global-storage)))
+    (unserialize-from-file (pathname (format nil "~atest/groups" (user-homedir-pathname))) (make-instance 'group))
+    ;; на данном этапе в *global-storage* только группы
     (maphash #'(lambda (k v)
                  (declare (ignore k))
                  (when (and (equal (type-of v) 'group)
@@ -284,6 +291,7 @@
              (storage *global-storage*)))
   ;;необходимо освободить память от уже не нужных продуктов
   (sb-ext:gc :full t))
+
 
 
 (defun new-classes.breadcrumbs (in &optional out)

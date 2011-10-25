@@ -240,7 +240,7 @@
                                element)))
     result))
 
-(defun main-page-restore ()
+(defun main-page.restore ()
   (let ((t-storage))
     (wlog "Start (main-page-restore):")
     (let ((*main-page.storage* (make-instance 'main-page-storage)))

@@ -72,9 +72,9 @@
 
 
 ;;
-(defun restore-articles-from-files ()
+(defun articles.restore ()
   (let ((t-storage))
-      (wlog "start load articles....{")
+      (wlog "start loadc articles....{")
       (sb-ext:gc :full t)
       (let ((*storage-articles* (make-hash-table :test #'equal)))
         (process-articles-dir *path-to-articles* "article")
