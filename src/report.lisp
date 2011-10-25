@@ -290,7 +290,7 @@
               ;; (if p1
                   ;; (setf p p1))
               (when (not (null p))
-                  (setf (predzakaz p) t)
+                  (setf (preorder p) t)
                   (setf (active p) t)
                   (serialize p)
                   (setf (gethash v (storage *global-storage*)) p)
@@ -307,7 +307,7 @@
   (mapcar #'(lambda (v)
               (let ((p (gethash v (storage *global-storage*))))
                 (when (not (null p))
-                  (setf (predzakaz p) t)
+                  (setf (preorder p) t)
                   (serialize p))))
           (list "166545"
                 ;; "166578"

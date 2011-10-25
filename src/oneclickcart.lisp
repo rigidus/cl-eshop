@@ -36,8 +36,8 @@
                  :addr "Левашовский пр., д.12"
                  :bankaccount ""
                  :phone phone
-                 :email ""
-                 :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul (storage *global-storage*))))
+                 :email email
+                 :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (preorder (gethash articul (storage *global-storage*))))
                  :products products
                  :deliverysum 0
                  :itogo pricesum)))
@@ -48,11 +48,11 @@
                 :family ""
                 :addr "Левашовский пр., д.12"
                 :phone phone
-                :email ""
+                :email email
                 :isdelivery "Самовывоз"
                 :date (time.get-date)
                 :time (time.get-time)
-                :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul (storage *global-storage*))))
+                :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (preorder (gethash articul (storage *global-storage*))))
                 :products products))
     (setf filename (format nil "~a_~a.txt" (time.get-short-date) order-id))
             ;;сорханение заказа
@@ -60,11 +60,11 @@
     ;; удаление страных символов
     (setf client-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) client-mail))
     (setf tks-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) (sendmail:mailfile mail-file)))
-    (send-mail (list "internetorder@alpha-pc.com") client-mail filename tks-mail order-id)
-    (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
-    (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
-    (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
-    (send-mail (list "slamly@gmail.com") client-mail filename tks-mail order-id)
+    (mapcar #'(lambda (email)
+                (send-mail (list email) client-mail filename tks-mail order-id))
+            *conf.emails.cart*)
+    (if (not (string= email ""))
+        (send-client-mail (list email) client-mail order-id))
     order-id))
 
 
@@ -95,7 +95,7 @@
                  :bankaccount ""
                  :phone phone
                  :email email
-                 :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul (storage *global-storage*))))
+                 :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (preorder (gethash articul (storage *global-storage*))))
                  :products products
                  :deliverysum 0
                  :itogo pricesum)))
@@ -110,7 +110,7 @@
                 :isdelivery "Самовывоз"
                 :date (time.get-date)
                 :time (time.get-time)
-                :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul (storage *global-storage*))))
+                :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (preorder (gethash articul (storage *global-storage*))))
                 :products products))
     (setf filename (format nil "~a_~a.txt" (time.get-short-date) order-id))
             ;;сорханение заказа
@@ -118,11 +118,9 @@
     ;; удаление страных символов
     (setf client-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) client-mail))
     (setf tks-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) (sendmail:mailfile mail-file)))
-    (send-mail (list "internetorder@alpha-pc.com") client-mail filename tks-mail order-id)
-    (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
-    (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
-    (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
-    (send-mail (list "slamly@gmail.com") client-mail filename tks-mail order-id)
+    (mapcar #'(lambda (email)
+                (send-mail (list email) client-mail filename tks-mail order-id))
+            *conf.emails.cart*)
     (if (not (string= email ""))
         (send-client-mail (list email) client-mail order-id))
     order-id))

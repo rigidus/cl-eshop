@@ -29,11 +29,22 @@
 (export '*path-sitemap*)
 
 ;; Список email для рассылки писем от ошибках выгрузки 1с
-(defvar *conf.emails.gateway.warn* (list "CallCenter@alpha-pc.com"
-                                         "Supplers@alpha-pc.com"
+(defvar *conf.emails.gateway.warn* (list "Supplers@alpha-pc.com"
                                          "web_design@alpha-pc.com"
                                          "wolforus@gmail.com"
                                          "slamly@gmail.com"))
+;; Список email для заказов
+(defvar *conf.emails.cart* (list "internetorder@alpha-pc.com"
+                                 "stetoscop@gmail.com"
+                                 "shop@320-8080.ru"
+                                 "zakaz320@yandex.ru"
+                                 "slamly@gmail.com"
+                                 "wolforus@gmail.com"
+                                 "CallCenter@alpha-pc.com"))
+
+
+
+
 
 (defun wlog (s)
   (format t "~&~a> ~a" (time.get-date-time) s))

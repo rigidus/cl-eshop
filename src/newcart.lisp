@@ -278,15 +278,10 @@
             ;; удаление страных символов
             (setf client-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) client-mail))
             (setf tks-mail (remove-if #'(lambda(c) (< 10000 (char-code c))) (sendmail:mailfile mail-file)))
-            (send-mail (list "internetorder@alpha-pc.com") client-mail filename tks-mail order-id)
-            (send-mail (list "stetoscop@gmail.com") client-mail filename  tks-mail order-id)
-            (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
-            (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
-            (send-mail (list "slamly@gmail.com") client-mail filename tks-mail order-id)
-            (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
-            ;; (send-mail (list "samoylenco@alpha-pc.com") client-mail filename tks-mail order-id)
-            ;; (print email)
-            ;; артикул 099999 и доставка 107209
+            (mapcar #'(lambda (email)
+                        (send-mail (list email) client-mail filename tks-mail order-id))
+                    *conf.emails.cart*)
+                        ;; артикул 099999 и доставка 107209
             ;; сделать валидацию пользовательского email
             (if (not (string= email ""))
                 (send-client-mail (list email) client-mail order-id))

@@ -2,9 +2,11 @@
 
 (defparameter *history* nil)
 (defparameter *single-history* nil)
+
 (defparameter *load-list* nil)
 (defparameter *order* nil)
 (defparameter *serialize-check-flag* t)
+
 
 ;; (length *history*)
 ;; (length (json:decode-json-from-string
@@ -20,23 +22,22 @@
                  ;; Обработка последнего пакета
                  (progn
                    ;; Делаем все продукты неактивными
-                   (maphash #'(lambda (k v)
-                                (declare (ignore k))
-                                (when (equal (type-of v) 'product)
-                                  (setf (active v) nil)))
-                            *storage*)
-                   ;; Засылаем последний пакет в *load-list* и *order*
                    (push raw *load-list*)
                    (push (hunchentoot:get-parameter "num") *order*)
                    ;; Обрабатываем все сохраненные пакеты
-                   (loop :for packet :in (reverse *load-list*) :do
-                      (process packet))
+                   (let ((data))
+                     (loop :for packet :in (reverse *load-list*) :do
+                        (setf data (append (json:decode-json-from-string
+                                            (sb-ext:octets-to-string packet :external-format :cp1251)) data)))
+                     (gateway.process-products data)
+                     (gateway.update-actives data))
                    ;;создаем новый yml файл
-                   (create-yml-file)
+                   ;;(create-yml-file)
                    ;; Заполняем siteprice если он равен 0
-                   (copy-price-to-siteprice)
+                   ;; (copy-price-to-siteprice)
                    ;; Сохраняем *load-list* и *order* для истории
-                   (push (list (time.get-date-time) *order* *load-list*) *history*)
+                   ;; (push (list (time.get-date-time) *order* *load-list*) *history*)
+                   (gateway.store-history (list (list (time.get-date-time) *order* *load-list*)))
                    ;; Обнуляем *load-list* и *order* (если приходит 1 пакет, то он num=0)
                    (post-proccess-gateway)
                    (setf *load-list* nil)
@@ -58,9 +59,10 @@
                    (let ((name (hunchentoot:get-parameter "user")))
                      (wlog "GATEWAY::Single")
                      ;; сохраняем запрос
-                     (push (list (time.get-date-time) name raw) *single-history*)
+                     (gateway.store-singles (list (list (time.get-date-time) name raw)))
                      ;; обрабатываем данные пришедшие в одиночном запросе
-                     (process raw)
+                     (gateway.process-products (json:decode-json-from-string
+                                                (sb-ext:octets-to-string raw :external-format :cp1251)))
                      ;; возможно тут необходимо пересчитать списки активных товаров или еще что-то
                      "single")))
                 (t
@@ -101,7 +103,7 @@
                                              price
                                              siteprice))
                (mapcar #'(lambda (email)
-                           (email.send-mail-warn email mailbody (format nil "price ~a" (articul product))))
+                           (email.send-mail-warn (list email) mailbody (format nil "price ~a" (articul product))))
                            *conf.emails.gateway.warn*)
                ))))
      t))
@@ -148,16 +150,19 @@
        (use-revert-history)))
 
 
- (defun gateway.process-product (articul price siteprice isnew isspec name realname count-total count-transit bonuscount)
-   (let ((product (aif (gethash (format nil "~a" articul) (storage *global-storage*))
-                       it
-                       (make-instance 'product :articul articul))))
+ (defun gateway.process-product (articul price1 siteprice isnew isspec name realname count-total count-transit bonuscount)
+   (let* ((old-product (gethash (format nil "~a" articul) (storage *global-storage*)))
+          (product (aif old-product
+                        it
+                        (make-instance 'product :articul articul)))
+          (price (ceiling (arnesi:parse-float price1))))
      ;; (wlog product)
      ;; (wlog count-total)
      (when (and (equal (type-of product) 'product)
                 (gateway.check-price product price siteprice))
        ;; (gateway-check-1c-name product name)
-       (setf (articul product)         articul
+       (setf (key product)             articul
+             (articul product)         articul
              (name-provider product)            (if (and (not (null name))
                                                 (not (equal "" name)))
                                            name
@@ -180,7 +185,7 @@
              (count-total product)     (if count-total
                                            (ceiling (arnesi:parse-float count-total))
                                            (if (and count-transit
-                                                    (= count-transit 0)
+                                                    (= (ceiling (arnesi:parse-float count-transit)) 0)
                                                     (equal (count-total product)
                                                            (count-transit product)))
                                                0
@@ -195,7 +200,10 @@
                                            (if (count-transit product)
                                                (count-transit product)
                                                0)))
-       (setf (gethash (format nil "~a" articul) *storage*) product))))
+       (if (not old-product)
+           (storage.edit-object product))
+       ;; (setf (gethash (format nil "~a" articul) *storage*) product)
+       )))
 
 
 (defun gateway.store-single-gateway (raws &optional (timestamp (get-universal-time)))
@@ -236,7 +244,7 @@
   (loop :for elt  :in items :collect
      (block iteration
        (let ((articul   (ceiling (arnesi:parse-float (cdr (assoc :id elt)))))
-             (price     (ceiling (arnesi:parse-float (cdr (assoc :price elt)))))
+             (price     (cdr (assoc :price elt)))
              (siteprice (ceiling (arnesi:parse-float (cdr (assoc :price--site elt)))))
              (bonuscount  (ceiling (arnesi:parse-float (cdr (assoc :bonuscount elt)))))
              (isnew     (cdr (assoc :isnew  elt)))
@@ -249,8 +257,9 @@
          (when (equal 0 price)
            (wlog elt)
            (return-from iteration))
-         (if (< 100000 price)
-             (wlog elt))
+         ;; (if (< 100000 price)
+         ;;     (wlog elt))
+         ;; (wlog articul)
          (gateway.process-product articul price siteprice isnew isspec name realname count-total count-transit bonuscount)
          ))))
 
@@ -283,8 +292,25 @@
                         (string<= (subseq line 0 19) finish))
                  ;; (wlog (subseq line 21))
                  (setf data (json:decode-json-from-string (subseq line 21)))
-                 (wlog data))
+                 ;; (wlog data)
+                 (gateway.process-products data))
                )))))
+
+;; (defparameter *articuls* (make-hash-table :test #'equal))
+
+(defun gateway.update-actives (data)
+  (let ((articuls (make-hash-table :test #'equal)))
+    (mapcar #'(lambda (v)
+                (let ((articul (format nil "~a" (cdr (assoc :id v)))))
+
+                  (setf (gethash articul articuls) t)))
+                data)
+    ;; (wlog articuls)
+    (mapcar #'(lambda (v)
+                (when (not (gethash (format nil "~a" (articul v)) articuls))
+                    (setf (active v) nil)))
+            (products *global-storage*))
+  ))
 
 
 (defun gateway.restore-history (&optional (timestamp (get-universal-time)))
@@ -314,8 +340,13 @@
                      ;; (wlog (length data))
                      ;; (gateway.process-products data)
                      )))
-          (wlog (length data))
+          ;; (wlog (length data))
           (gateway.process-products data)
-          ;; (gateway.restore-singles lastgateway-ts timestamp)
-          ))
-    ))
+          (gateway.update-actives data)
+          (gateway.restore-singles lastgateway-ts timestamp))))
+  "test")
+
+(defun gateway.store-singles (history)
+    (mapcar #'(lambda (v)
+                (gateway.store-single-gateway (object-fields.string-delete-newlines (sb-ext:octets-to-string (third v) :external-format :cp1251)) (time.decode-gateway-time (car v))))
+            history))
