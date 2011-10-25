@@ -8,9 +8,6 @@
 (restas:define-route admin/-route ("/admin/")
   (show-admin-page))
 
-(restas:define-route admin-key-route ("/admin/:key")
-  (show-admin-page key))
-
 (restas:define-route admin-actions-key-route ("/admin/actions" :method :post)
   (show-admin-page "actions"))
 
@@ -23,6 +20,12 @@
 (restas:define-route admin-parenting-key-route ("/admin/parenting" :method :post)
   (show-admin-page "parenting"))
 
+(restas:define-route admin-table-test-route ("/admin/tabletest")
+  (admin.show-table-test))
+
+(restas:define-route admin-key-route ("/admin/:key")
+  (show-admin-page key))
+
 ;;шаблоны
 (defun admin-compile-templates ()
   (mapcar #'(lambda (fname)
@@ -30,12 +33,12 @@
                 (closure-template:compile-template :common-lisp-backend pathname)))
           '("admin.soy"
             "class_forms.soy"
+            "admin-table.soy"
             )))
 
 ;;обновление главной страницы
 (defun admin-update ()
   (admin-compile-templates))
-
 
 (defun show-gateway-history ()
   (let ((history-list
@@ -51,7 +54,6 @@
                "<li><a href=\"/admin/history\">gateway</a></li>"
                "<li><a href=\"/admin/actions\">actions</a></li>"
                ))))
-
 
 
 (defun show-admin-page (&optional (key nil))
@@ -109,6 +111,8 @@
                                                                                :name "testeditor"
                                                                                :value "<p>This is some <strong>sample text</strong>.
                                                                                        You are using <a href=\"http://ckeditor.com/\">CKEditor</a>.</p>")))
+                                            ;; ((string= key "tabletest")
+                                            ;;  (admin.show-table-test))
                                             ((string= key "parenting")
                                              ;; (log5:log-for debug-console "~a~%" (hunchentoot:post-parameters hunchentoot:*request*))
                                              (when new-post-data
@@ -142,6 +146,20 @@
                                                       :groups (object-fields.group-list-field-view nil "GROUPS" nil)))))
                                             (t (format nil "~a" key)))))))))
 
+(defun admin.show-table-test ()
+  (soy.admin-table:test-html (list
+                              :script (soy.admin-table:test-js (list :data
+                                                                     (admin.get-test-data))))))
+
+(defun admin.get-test-data ()
+     "[
+            { name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224' },
+            { name: 'Bart', email: 'bart@simpsons.com', phone: '555-222-1234' },
+            { name: 'Homer', email: 'home@simpsons.com', phone: '555-222-1244' },
+            { name: 'Marge', email: 'marge@simpsons.com', phone: '555-222-1254' }
+      ]")
 
 
 (sb-thread:make-thread (lambda () (format t "Hello, world")))
+
+
