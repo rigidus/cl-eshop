@@ -22,7 +22,7 @@
               (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  (format nil "~a" articul)  "\\1/\\1\\2" ))
               (number (- (parse-integer
                           (string-trim '(#\Space) (nth 3 args))) 1))
-              (product (gethash articul *storage*))
+              (product (gethash articul (storage *global-storage*)))
               (picname (nth number (get-pics articul)))
               (height (nth 5 args))
               (width (nth 4 args))
@@ -33,10 +33,9 @@
          (if width
              (setf style (format nil "~awidth:~apx;" style
                                  (string-trim '(#\Space) width))))
-
          (if (and (not picname) (get-pics articul))
              (setf picname (car (get-pics articul))))
-         (when (and product (realname product) picname)
+         (when (and product (name-seo product) picname)
            (let* ((path (format nil "~a/~a/~a" size articul picname))
                   (path* (format nil "~a/~a/~a" size path-art picname)))
              (if (and (not height) (not width))
@@ -47,7 +46,7 @@
              (format nil "<a href=\"/~a\" title=\"~a\">~%
                                    <img src=\"/pic/~a\" alt=\"~a\" style=\"~a\"/>~%
                                 </a>~%"
-                     articul (realname product) path (realname product) style)))))
+                     articul (name-seo product) path (name-seo product) style)))))
       ;;вставка области для маппинга
       ((string= type "area")
        (let* ((c1 (nth 1 args))
@@ -55,8 +54,8 @@
               (c3 (nth 3 args))
               (c4 (nth 4 args))
               (articul (nth 5 args))
-              (product (gethash articul *storage*))
-              (name (realname product))
+              (product (gethash articul (storage *global-storage*)))
+              (name (name-seo product))
               (siteprice (siteprice product))
               ;; (delivery-price (delivery-price product))
               (picname (car (get-pics articul))))
@@ -72,9 +71,9 @@
                         )))))
       ((string= type "buy")
        (let* ((articul (nth 1 args))
-              (product (gethash articul *storage*)))
+              (product (gethash articul (storage *global-storage*))))
          (when product
-           (let ((name (realname product))
+           (let ((name (name-seo product))
                  (siteprice (siteprice product))
                  ;; (delivery-price (delivery-price product))
                  (picname (car (get-pics articul))))
@@ -89,7 +88,7 @@
                                      )))))))
       ((string= type "price")
        (let* ((articul (nth 1 args))
-              (product (gethash articul *storage*)))
+              (product (gethash articul (storage *global-storage*))))
          (when product
            (let ((siteprice (siteprice product)))
              (format nil "~a"

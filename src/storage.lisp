@@ -130,6 +130,7 @@
 
 (defun storage.edit-object (object &optional (key nil key-supplied-p))
   "Editing or adding object to storage and edit it in appropriate lists"
+  ;; (log5
   (when (not key-supplied-p)
     (setf key (key object)))
   (setf (gethash key (storage *global-storage*)) object)
