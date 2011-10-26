@@ -19,7 +19,9 @@
       ((string= type "pic")
        (let* ((size (string-trim '(#\Space) (nth 1 args)))
               (articul (string-trim '(#\Space) (nth 2 args)))
-              (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"  (format nil "~a" articul)  "\\1/\\1\\2" ))
+              (path-art  (ppcre:regex-replace  "(\\d{1,3})(\\d{0,})"
+                                               (format nil "~a" articul)
+                                               "\\1/\\1\\2" ))
               (number (- (parse-integer
                           (string-trim '(#\Space) (nth 3 args))) 1))
               (product (gethash articul (storage *global-storage*)))
@@ -69,6 +71,7 @@
                         ;; :deliveryprice delivery-price
                         :pic picname
                         )))))
+      ;;вставка кнопки покупки
       ((string= type "buy")
        (let* ((articul (nth 1 args))
               (product (gethash articul (storage *global-storage*))))

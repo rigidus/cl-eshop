@@ -1,90 +1,90 @@
  ;;;;;;;;;;;;;;;;;
- ;; newcart.lisp
+;; newcart.lisp
  ;;;;;;;;;;;;;;;;;
 
- (in-package #:eshop)
+(in-package #:eshop)
 
- ;;категория для логирования
- (log5:defcategory :newcart-log)
+;;категория для логирования
+(log5:defcategory :newcart-log)
 
- ;;старт логирования ошибок в стандартный поток ошибок
- (log5:start-sender 'newcart-sender
-                    (log5:stream-sender :location *error-output*)
-                    :category-spec 'log5:warn+
-                    :output-spec '("WARN:: " log5:message))
+;;старт логирования ошибок в стандартный поток ошибок
+(log5:start-sender 'newcart-sender
+                   (log5:stream-sender :location *error-output*)
+                   :category-spec 'log5:warn+
+                   :output-spec '("WARN:: " log5:message))
 
- ;;обновление страницы
- (defun newcart-update ()
-   (newcart-compile-templates))
+;;обновление страницы
+(defun newcart-update ()
+  (newcart-compile-templates))
 
- ;;шаблоны
- (defun newcart-compile-templates ()
-   (mapcar #'(lambda (fname)
-               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
-                 (closure-template:compile-template :common-lisp-backend pathname)))
-           '("index.html"
-             "newcart.soy"
-             "footer.html")))
+;;шаблоны
+(defun newcart-compile-templates ()
+  (mapcar #'(lambda (fname)
+              (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
+                (closure-template:compile-template :common-lisp-backend pathname)))
+          '("index.html"
+            "newcart.soy"
+            "footer.html")))
 
- (newcart-update)
+(newcart-update)
 
- ;; возвращает список отображений продуктов, количество, суммарную цену заказа
- (defun newcart-cart-products (alist)
-   (let ((counter 0)
-         (sum-counter 0)
-         (sum 0)
-         (res-list))
-      ;; (error (print alist))
-      (setf res-list (mapcar #'(lambda (item)
-                                 (let ((articul (cdr (assoc :id  item)))
-                                       (cnt     (cdr (assoc :count item)))
-                                       (product)
-                                       (price 0))
-                                   (when (and (not (null articul))
-                                              (not (null cnt)))
-                                     (setf cnt (parse-integer (format nil "~a" cnt) :junk-allowed t))
-                                     (setf product (gethash articul (storage *global-storage*)))
-                                     (when (and (not (null product))
-                                                (not (= 0 cnt)))
-                                       (incf counter)
-                                       (setf price (if (= 0 (siteprice product))
-                                                       (price product)
-                                                       (siteprice product)))
-                                       (setf sum (+ sum (* cnt price)))
-                                       (setf sum-counter (+ sum-counter cnt))
-                                       (list :numpos counter
-                                             :count cnt
-                                             :name (name-seo product)
-                                             :price price
-                                             ;;данные для корзины
-                                             :siteprice (siteprice product)
-                                             :articul (if (= 5 (length articul))
-                                                          (format nil "0~a" articul)
-                                                          articul)
-                                             :url (format nil "/~a" articul)
-                                             :firstpic (car (get-pics articul))
-                                             ;;для sendmail
-                                             :cnt cnt)))))
-                             alist))
-      (values-list (list res-list sum-counter sum))))
-
-
- (defun newcart-tovar (n)
-   (let ((k n))
-     (if (< 20 n)
-         (setf k (mod n 10)))
-     (if (= 0 k)
-         "товаров"
-         (if (= 1 k)
-             "товар"
-             (if (> 5 k)
-                 "товара"
-                 "товаров")))))
+;; возвращает список отображений продуктов, количество, суммарную цену заказа
+(defun newcart-cart-products (alist)
+  (let ((counter 0)
+        (sum-counter 0)
+        (sum 0)
+        (res-list))
+    ;; (error (print alist))
+    (setf res-list (mapcar #'(lambda (item)
+                               (let ((articul (cdr (assoc :id  item)))
+                                     (cnt     (cdr (assoc :count item)))
+                                     (product)
+                                     (price 0))
+                                 (when (and (not (null articul))
+                                            (not (null cnt)))
+                                   (setf cnt (parse-integer (format nil "~a" cnt) :junk-allowed t))
+                                   (setf product (gethash articul (storage *global-storage*)))
+                                   (when (and (not (null product))
+                                              (not (= 0 cnt)))
+                                     (incf counter)
+                                     (setf price (if (= 0 (siteprice product))
+                                                     (price product)
+                                                     (siteprice product)))
+                                     (setf sum (+ sum (* cnt price)))
+                                     (setf sum-counter (+ sum-counter cnt))
+                                     (list :numpos counter
+                                           :count cnt
+                                           :name (name-seo product)
+                                           :price price
+                                           ;;данные для корзины
+                                           :siteprice (siteprice product)
+                                           :articul (if (= 5 (length articul))
+                                                        (format nil "0~a" articul)
+                                                        articul)
+                                           :url (format nil "/~a" articul)
+                                           :firstpic (car (get-pics articul))
+                                           ;;для sendmail
+                                           :cnt cnt)))))
+                           alist))
+    (values-list (list res-list sum-counter sum))))
 
 
+(defun newcart-tovar (n)
+  (let ((k n))
+    (if (< 20 n)
+        (setf k (mod n 10)))
+    (if (= 0 k)
+        "товаров"
+        (if (= 1 k)
+            "товар"
+            (if (> 5 k)
+                "товара"
+                "товаров")))))
 
 
- ;;отображение страницы
+
+
+;;отображение страницы
 (defun newcart-show (&optional (request-str ""))
   (declare (ignore request-str))
   (let ((cart-cookie (hunchentoot:cookie-in "cart"))
@@ -131,20 +131,20 @@
         (count)
         (pricesum))
     (when (not (null cart-cookie))
-        (setf cart (json:decode-json-from-string cart-cookie))
-        (multiple-value-bind (lst cnt sm) (newcart-cart-products cart)
-          (setf products (remove-if #'null lst))
-          ;; (print products)
-          (setf count cnt)
-          (setf pricesum sm)))
+      (setf cart (json:decode-json-from-string cart-cookie))
+      (multiple-value-bind (lst cnt sm) (newcart-cart-products cart)
+        (setf products (remove-if #'null lst))
+        ;; (print products)
+        (setf count cnt)
+        (setf pricesum sm)))
     (if (not (null products))
         (default-page
             (soy.newcart:cart-content (list :accessories (soy.product:accessories)
                                             :products (format nil "~{~a~}"
-                                                  (mapcar #'(lambda (x)
-                                                              (print (cart:product x))
-                                                              (soy.newcart:cart-product x))
-                                                          products))))
+                                                              (mapcar #'(lambda (x)
+                                                                          (print (cart:product x))
+                                                                          (soy.newcart:cart-product x))
+                                                                      products))))
             :no-need-cart t)
         ;; страница для пустой корзины с автоматическим редиректом на главную
         (soy.newcart:fullpage (list :head (soy.newcart:head-redirect (list :timeout 5
@@ -231,47 +231,47 @@
             (format t "EKK: ~a" ekk)
             (setf client-mail
                   (sendmail:clientmail
-                 (list :datetime (time.get-date-time)
-                       :order_id order-id
-                       :name name
-                       :family "" ;; Фамилия не передается отдельно
-                       :paytype (cond ((string= payment "payment_method-1") "Наличными")
-                                      ((string= payment "payment_method-2") "Кредитной картой")
-                                      ((string= payment "payment_method-3") "Безналичный расчет")
-                                      ((string= payment "payment_method-4") "Банковским переводом")
-                                      (t payment))
-                       :deliverytype (cond ((string= delivery-type "express") "Курьер")
-                                           ((string= delivery-type "pickup") "Самовывоз")
-                                           (t delivery-type))
-                       :addr addr
-                       :bankaccount (if (string= payment "payment_method-4")
-                                        bankaccount)
-                       :phone phone
-                       :ekk ekk
-                       :email email
-                       :comment (cond  ((string= delivery-type "express") courier_comment)
-                                                           ((string= delivery-type "pickup") pickup_comment)
-                                                           (t ""))
-                       :products products
-                       :deliverysum deliverysum
-                       :itogo (+ pricesum deliverysum))))
+                   (list :datetime (time.get-date-time)
+                         :order_id order-id
+                         :name name
+                         :family "" ;; Фамилия не передается отдельно
+                         :paytype (cond ((string= payment "payment_method-1") "Наличными")
+                                        ((string= payment "payment_method-2") "Кредитной картой")
+                                        ((string= payment "payment_method-3") "Безналичный расчет")
+                                        ((string= payment "payment_method-4") "Банковским переводом")
+                                        (t payment))
+                         :deliverytype (cond ((string= delivery-type "express") "Курьер")
+                                             ((string= delivery-type "pickup") "Самовывоз")
+                                             (t delivery-type))
+                         :addr addr
+                         :bankaccount (if (string= payment "payment_method-4")
+                                          bankaccount)
+                         :phone phone
+                         :ekk ekk
+                         :email email
+                         :comment (cond  ((string= delivery-type "express") courier_comment)
+                                         ((string= delivery-type "pickup") pickup_comment)
+                                         (t ""))
+                         :products products
+                         :deliverysum deliverysum
+                         :itogo (+ pricesum deliverysum))))
             (setf mail-file (list :order_id order-id
-                                :ekk ekk
-                                :name name
-                                :family ""
-                                :addr addr
-                                :isdelivery "Доставка" ;; Самовывоз
-                                :phone phone
-                                :email email
-                                :date (time.get-date)
-                                :time (time.get-time)
-                                :comment (cond  ((string= delivery-type "express") courier_comment)
-                                                ((string= delivery-type "pickup") pickup_comment)
-                                                (t ""))
-                                :products (append products
-                                                  (if (string= delivery-type "express")
-                                                      (list (list :articul "107209"
-                                                                  :cnt "1"))))))
+                                  :ekk ekk
+                                  :name name
+                                  :family ""
+                                  :addr addr
+                                  :isdelivery "Доставка" ;; Самовывоз
+                                  :phone phone
+                                  :email email
+                                  :date (time.get-date)
+                                  :time (time.get-time)
+                                  :comment (cond  ((string= delivery-type "express") courier_comment)
+                                                  ((string= delivery-type "pickup") pickup_comment)
+                                                  (t ""))
+                                  :products (append products
+                                                    (if (string= delivery-type "express")
+                                                        (list (list :articul "107209"
+                                                                    :cnt "1"))))))
             (setf filename (format nil "~a_~a.txt" (time.get-short-date) order-id))
             ;;сорханение заказа
             (save-order-text order-id client-mail)
@@ -306,7 +306,7 @@
                                                    ((string= payment "payment_method-3")
                                                     "<p class=\"h2\">Покупка в кредит</p>")
                                                    ((string= payment "payment_method-4")
-                                                     (format nil "<p class=\"h2\">Оплата по безналичному расчету</p>
+                                                    (format nil "<p class=\"h2\">Оплата по безналичному расчету</p>
 						                             <p>Реквизиты:<br/>~a</p>" bankaccount))
                                                    (t nil))
                                      :addr (if (string= delivery-type "pickup")

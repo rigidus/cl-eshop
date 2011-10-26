@@ -64,7 +64,7 @@
             "menu.html"             "banner.html"
             "notlogged.html"
             "cart-widget.html"      "cart.html"               "checkout.html"
-            "admin.html"
+            "admin.html"            "admin-table.soy"
             "search.html"
             "agent.html"            "update.html"
             "header.html"           "static.html"
