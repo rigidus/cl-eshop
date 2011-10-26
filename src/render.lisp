@@ -164,7 +164,11 @@
             :formatprice (get-format-price (siteprice object))
             :bestprice (> (delta-price object) 0)
             :firstpic (car pics)
-            ;; :keyopts (get-keyoptions object)
+            :promotiontext (let ((value))
+                             (with-option1 object "Secret" "Продающий текст"
+                                           (setf value (getf option :value)))
+                             value)
+            :keyopts nil;;(render.get-keyoptions object)
             :oneclickbutton  (if (not (preorder object))
                                  (soy.buttons:add-one-click (list :articul (articul object))))
             :addbutton (if (preorder object)
@@ -327,18 +331,33 @@
                         (name-seo object)
                         (name-seo object))))))
 
+(defun render.make-producters-lists(list  &key cut (columns 4) (uncut 0))
+  (let ((len (truncate (length list) columns))
+        (cur 0)
+        (fin 0)
+        (rs)
+        (delta cut)
+        (delta2 uncut))
+    (if (or (and cut
+                 (> cut len))
+            (null cut))
+        (setf delta len))
+    (if (or (and uncut
+                 (> uncut len))
+            (null uncut))
+        (setf delta2 len))
+    (print delta2)
+    (loop
+       :for i from 1 to columns
+       :do (progn
+             (setf fin (+ cur delta))
+             (if (> fin (length list))
+                 (setf fin (length list)))
+             (push (subseq list (+ cur delta2) fin) rs)
+             (setf cur (+ cur len)))
+       )
+    (remove-if #'null (reverse rs))))
 
-(defun make-producters-lists(list &optional (column-number 4))
-  (loop
-     for current-list on list
-     for i from 1 to column-number
-     collect (loop for item in current-list
-                by #'(lambda (list)
-                       (let ((result-list list))
-                         (loop for j from 1 to column-number
-                            do (setf result-list (cdr result-list)))
-                         result-list))
-                collect item)))
 
 (defmethod restas:render-object ((designer eshop-render) (object filter))
   (let ((request-get-plist (request-get-plist))
@@ -413,7 +432,7 @@
 
 (defmethod render.show-producers ((products list))
   (let* ((vendors (storage.get-vendors products))
-         (url-parameters nil);;(request-get-plist))
+         (url-parameters );;(request-get-plist))
          (veiws nil))
     (remf url-parameters :page)
     (maphash #'(lambda (k x)
@@ -423,10 +442,14 @@
                              :link (format nil "?~a" (make-get-str url-parameters)))
                        veiws))
              vendors)
-    (multiple-value-bind (base hidden)
-        (cut 12 veiws)
-      (catalog:producers (list :vendorblocks (make-producters-lists base)
-                               :vendorhiddenblocks (make-producters-lists hidden))))))
+    (print (length veiws))
+    (setf veiws (sort veiws #'string<= :key #'(lambda (v) (getf v :vendor))))
+    (catalog:producers
+     (list
+                        :vendorblocks (render.make-producters-lists
+                                       veiws :columns 4 :cut 3)
+                        :vendorhiddenblocks (render.make-producters-lists
+                                             veiws :columns 4 :uncut 3)))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object group))

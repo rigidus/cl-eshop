@@ -329,7 +329,7 @@
 ;;TODO временно убрана проверка на пустые группы, тк это поле невалидно
 (defun new-classes.menu (&optional current-object)
   "Creating left menu"
-  (let* ((root-groups (root-groups *global-storage*))
+  (let* ((root-groups (storage.get-root-groups-list) );;(root-groups *global-storage*))
          (current-root (new-classes.get-root-parent current-object))
          (divider-list (list "setevoe-oborudovanie" "foto-and-video" "rashodnye-materialy"))
          (src-lst

@@ -89,7 +89,7 @@
                                                                                          (stripper yml-name))
                                                                                 (string= "No"
                                                                                          (stripper yml-name)))
-                                                                            (name-provider product)
+                                                                            (name-seo product)
                                                                             yml-name))
                                                               :description nil
                                                               )))))))
