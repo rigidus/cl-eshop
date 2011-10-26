@@ -346,12 +346,45 @@
                  (> uncut len))
             (null uncut))
         (setf delta2 len))
-    (print delta2)
+    ;; (print delta2)
     (loop
        :for i from 1 to columns
        :do (progn
              (setf fin (+ cur delta))
              (if (> fin (length list))
+                 (setf fin (length list)))
+             (if (= i columns)
+                 (setf fin (length list)))
+             (push (subseq list (+ cur delta2) fin) rs)
+             (setf cur (+ cur len)))
+       )
+    (remove-if #'null (reverse rs))))
+
+
+
+(defun render.make-producters-lists1(list  &key cut (columns 4) (uncut 0))
+  (let ((len (truncate (length list) columns))
+        (cur 0)
+        (fin 0)
+        (rs)
+        (delta cut)
+        (delta2 uncut))
+    (if (or (and cut
+                 (> cut len))
+            (null cut))
+        (setf delta len))
+    (if (or (and uncut
+                 (> uncut len))
+            (null uncut))
+        (setf delta2 len))
+    ;; (print delta2)
+    (loop
+       :for i from 1 to columns
+       :do (progn
+             (setf fin (+ cur delta))
+             (if (> fin (length list))
+                 (setf fin (length list)))
+             (if (= i columns)
                  (setf fin (length list)))
              (push (subseq list (+ cur delta2) fin) rs)
              (setf cur (+ cur len)))
@@ -446,10 +479,10 @@
     (setf veiws (sort veiws #'string<= :key #'(lambda (v) (getf v :vendor))))
     (catalog:producers
      (list
-                        :vendorblocks (render.make-producters-lists
-                                       veiws :columns 4 :cut 3)
-                        :vendorhiddenblocks (render.make-producters-lists
-                                             veiws :columns 4 :uncut 3)))))
+      :vendorblocks (render.make-producters-lists
+                     veiws :columns 4 :cut 3)
+      :vendorhiddenblocks (render.make-producters-lists
+                           veiws :columns 4 :uncut 3)))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object group))
