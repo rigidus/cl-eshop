@@ -9,6 +9,9 @@
 (in-package #:eshop)
 
 (defvar *xls.product-table* (make-hash-table :test #'equal))
+(defvar *xls.errors* nil)
+(defvar *xls.errors-num* 0)
+
 
 (defclass nko ()
   ((folder  :initarg :folder  :initform nil :accessor folder)
@@ -177,12 +180,22 @@
                  (product (gethash (format nil "~a" articul) (storage *global-storage*))))
             (let ((pr (gethash articul *xls.product-table*)))
               (if pr
-                  (wlog (format nil "WARN:~a | ~a | ~a" articul pr file))
+                  (progn
+                    (wlog (format nil "WARN:~a | ~a | ~a" articul pr file))
+                    (setf *xls.errors* (concatenate 'string (format nil "<tr><td>~a</td>
+                                                                         <td><a href=\"http://320-8080.ru/~a\">~a</a></td>
+                                                                         <td>~a</td>
+                                                                         <td>~a</td></tr>" articul articul realname
+                                                                         (car (last (split-sequence:split-sequence #\/ (format nil "~a" pr))))
+                                                                         (car (last (split-sequence:split-sequence #\/ (format nil "~a" file))))) *xls.errors*))
+                    (setf *xls.errors-num* (+ *xls.errors-num* 1)))
                   (setf (gethash articul *xls.product-table*) file)))
             (if (null product)
                 (format nil "warn: product ~a (articul ~a) not found, ignore (file: ~a)" realname articul file)
                 (progn
                   (setf (optgroups product) optgroups)
+                  (with-option1 product "Общие характеристики" "Производитель"
+                                (setf (vendor product) (getf option :value)))
                   ;; Если есть значимое realname - перезаписать в продукте
                   (if (not (string= "" (string-trim '(#\Space #\Tab #\Newline)
                                                     (format nil "~@[~a~]" realname))))
@@ -192,7 +205,15 @@
 
 
 (defun dtd ()
-  (setf *xls.product-table* (make-hash-table :test #'equal))
-  (xls.process-all-dtd px px))
+  (let ((*xls.errors* "<table>")
+        (*xls.errors-num* 0))
+    (setf *xls.product-table* (make-hash-table :test #'equal))
+    (xls.process-all-dtd px px)
+    (setf *xls.errors* (concatenate 'string "</table>" *xls.errors*))
+    (mapcar #'(lambda (email)
+                (email.send-mail-warn (list email) *xls.errors* (format nil "дубли в dtd: ~a" *xls.errors-num*)))
+            *conf.emails.xls.warn*)
+    ;; *xls.errors*
+    ))
 
 (export 'dtd)

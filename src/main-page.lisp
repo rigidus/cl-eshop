@@ -86,7 +86,7 @@
 
 ;;отображение отзыва
 (defun main-page-show-lastreview (storage)
-  (let ((items (main-page-get-active-items storage))
+  (let ((items (main-page-get-active-views storage))
         (item (make-instance 'main-page-product)))
       ;;должен быть хотябы один баннер
       (if (> (length items) 0)
@@ -186,6 +186,19 @@
                        )))
              storage)
     rs))
+
+;;получить список активных элементов
+(defun main-page-get-active-views (storage)
+  (let ((rs))
+    (maphash #'(lambda (k v)
+                 (when v
+                   (if  (< (date-start v) (get-universal-time) (date-finish v))
+                        (push (cons k (weight v)) rs)
+                       ;; (wlog (format nil "WARN:~a" k))
+                       )))
+             storage)
+    rs))
+
 
 ;;получить позицию элемента в списке с весами
 (defun main-page-get-num-in-weight-list (input-list weight)
