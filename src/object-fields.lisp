@@ -81,7 +81,7 @@
 
 ;;textedit-hashtable, hashtable of texteditfields
 (defun object-fields.textedit-hashtable-field-view (value name disabled)
-  (object-fields.string-field-view name value disabled))
+  (object-fields.string-field-view value name disabled))
 
 (defun object-fields.textedit-hashtable-field-get-data (string)
   (object-fields.string-field-get-data string))
@@ -219,7 +219,7 @@
 
 ;;products, список продуктов(-детей)
 (defun object-fields.product-list-field-view (value name disabled)
-  (object-fields.string-field-view name value disabled))
+  (object-fields.string-field-view value name disabled))
 
 
 (defun object-fields.product-list-field-get-data (string-list)
@@ -239,10 +239,24 @@
 
 ;;keyoptions
 (defun object-fields.keyoptions-field-view (value name disabled)
-  (object-fields.string-field-view name value disabled))
+  (soy.class_forms:keyoptions-field
+   (list :keyoptions (let ((cnt 0))
+                       (mapcar #'(lambda (keyoption)
+                                   (incf cnt)
+                                   (soy.class_forms:keyoption-field
+                                    (append keyoption (list :number (- cnt 1)))))
+                               value))
+         :emptyfield (soy.class_forms:keyoption-field (list
+                                                        :number (format nil "' + $~aCnt + '"
+                                                                        name)))
+         :name name
+         :number (- (length value) 1)
+         :disabled disabled)))
+
 
 (defun object-fields.keyoptions-field-get-data (string)
-  (object-fields.string-field-get-data string))
+  string)
+  ;; (mapcar #'alist-to-plist (decode-json-from-string string)))
 
 (defun object-fields.keyoptions-field-serialize (keyoptions)
   (format nil "[~{~a~^,~}]"
@@ -250,4 +264,33 @@
                            (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\"}"
                                    (getf keyoption :optgroup)
                                    (getf keyoption :optname)))
+                  keyoptions)))
+
+
+(defun object-fields.catalog-keyoptions-field-view (value name disabled)
+  (let ((name "catalogkeyoptions"))
+    (soy.class_forms:catalog-keyoptions-field
+     (list :keyoptions (let ((cnt 0))
+                         (mapcar #'(lambda (keyoption)
+                                     (incf cnt)
+                                     (soy.class_forms:catalog-keyoption-field
+                                      (append keyoption (list :number (- cnt 1)))))
+                                 value))
+           :emptyfield (soy.class_forms:catalog-keyoption-field (list
+                                                                 :number (format nil "' + $~aCnt + '"
+                                                                                 name)))
+           :name name
+           :number (- (length value) 1)
+           :disabled disabled))))
+
+(defun object-fields.catalog-keyoptions-field-get-data (string)
+   string)
+
+(defun object-fields.catalog-keyoptions-field-serialize (keyoptions)
+  (format nil "[~{~a~^,~}]"
+          (mapcar #'(lambda (keyoption)
+                           (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\",\"showname\":\"~a\"}"
+                                   (getf keyoption :optgroup)
+                                   (getf keyoption :optname)
+                                   (getf keyoption :showname)))
                   keyoptions)))
