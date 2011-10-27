@@ -191,7 +191,6 @@
 ;;   (gateway-page))
 
 (restas:define-route gateway/post-route ("/gateway" :method :post)
-  "404")
   (gateway-page))
 
 

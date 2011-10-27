@@ -246,7 +246,7 @@
                                  (with-option1 x "Общие характеристики" "Производитель"
                                               (setf vendor (getf option :value)))
                                  (equal vendor base-vendor))))
-                      (products (new-classes.parent object))))
+                      (storage.get-filtered-products (new-classes.parent object))))
                    2))
     ;;4 случайных товара из списка
     (setf temp-rs2 (get-randoms-from-list
@@ -256,7 +256,7 @@
                                   (when (not (equal v object))
                                      ;; (print v)
                                     (push v all)))
-                              (active-products *global-storage*))
+                            (storage.get-filtered-products (products *global-storage*)))
                       all)
                     4))
     (loop
