@@ -38,6 +38,8 @@
                    (setf secret "Нет")
                    (with-option1 v "Secret" "Checked"
                                  (setf secret (getf option :value)))
+                   (if (string= (format nil "~a" id) "172466")
+                       (wlog v))
                    (format stream "~a;~a;~a;\"~a\";\"~a\";\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~a;~a;~a~%"
                            id (price v) (siteprice v) name name-real
                            name-yml desc img options active group-name
@@ -346,3 +348,18 @@
 ;; (create-report "seo/report-vendors.csv" #'write-vendors)
 ;; (create-report "seo/write-groups-active-product-num.csv" #'write-groups-active-product-num)
 
+;; (let ((res)
+;;       (res1))
+;;   (maphash #'(lambda (k v)
+;;                (if (equal (type-of k)
+;;                           (type-of 12345))
+;;                    (push v res)))
+;;            (storage *global-storage*))
+;;   (print (length res))
+;;   (mapcar #'(lambda (v)
+;;               (let ((key (key v)))
+;;                 (setf (key v) (format nil "~a" key))
+;;                 (storage.edit-object v)
+;;                 (remhash key (storage *global-storage*))))
+;;               res)
+;;   (print (length res1)))

@@ -164,7 +164,7 @@
      (when (and (equal (type-of product) 'product)
                 (gateway.check-price product price siteprice))
        ;; (gateway-check-1c-name product name)
-       (setf (key product)             articul
+       (setf (key product)             (format nil "~a" articul)
              (articul product)         articul
              (name-provider product)            (if (and (not (null name))
                                                 (not (equal "" name)))
