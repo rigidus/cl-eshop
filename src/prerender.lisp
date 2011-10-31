@@ -35,7 +35,6 @@
          (if width
              (setf style (format nil "~awidth:~apx;" style
                                  (string-trim '(#\Space) width))))
-
          (if (and (not picname) (get-pics articul))
              (setf picname (car (get-pics articul))))
          (when (and product (name-seo product) picname)

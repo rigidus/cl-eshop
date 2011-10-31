@@ -247,7 +247,7 @@
                                  (with-option1 x "Общие характеристики" "Производитель"
                                               (setf vendor (getf option :value)))
                                  (equal vendor base-vendor))))
-                      (products (new-classes.parent object))))
+                      (storage.get-filtered-products (new-classes.parent object))))
                    2))
     ;;4 случайных товара из списка
     (setf temp-rs2 (get-randoms-from-list
@@ -257,7 +257,7 @@
                                   (when (not (equal v object))
                                      ;; (print v)
                                     (push v all)))
-                              (active-products *global-storage*))
+                            (storage.get-filtered-products (products *global-storage*)))
                       all)
                     4))
     (loop
@@ -347,12 +347,45 @@
                  (> uncut len))
             (null uncut))
         (setf delta2 len))
-    (print delta2)
+    ;; (print delta2)
     (loop
        :for i from 1 to columns
        :do (progn
              (setf fin (+ cur delta))
              (if (> fin (length list))
+                 (setf fin (length list)))
+             (if (= i columns)
+                 (setf fin (length list)))
+             (push (subseq list (+ cur delta2) fin) rs)
+             (setf cur (+ cur len)))
+       )
+    (remove-if #'null (reverse rs))))
+
+
+
+(defun render.make-producters-lists1(list  &key cut (columns 4) (uncut 0))
+  (let ((len (truncate (length list) columns))
+        (cur 0)
+        (fin 0)
+        (rs)
+        (delta cut)
+        (delta2 uncut))
+    (if (or (and cut
+                 (> cut len))
+            (null cut))
+        (setf delta len))
+    (if (or (and uncut
+                 (> uncut len))
+            (null uncut))
+        (setf delta2 len))
+    ;; (print delta2)
+    (loop
+       :for i from 1 to columns
+       :do (progn
+             (setf fin (+ cur delta))
+             (if (> fin (length list))
+                 (setf fin (length list)))
+             (if (= i columns)
                  (setf fin (length list)))
              (push (subseq list (+ cur delta2) fin) rs)
              (setf cur (+ cur len)))
@@ -447,10 +480,10 @@
     (setf veiws (sort veiws #'string<= :key #'(lambda (v) (getf v :vendor))))
     (catalog:producers
      (list
-                        :vendorblocks (render.make-producters-lists
-                                       veiws :columns 4 :cut 3)
-                        :vendorhiddenblocks (render.make-producters-lists
-                                             veiws :columns 4 :uncut 3)))))
+      :vendorblocks (render.make-producters-lists
+                     veiws :columns 4 :cut 3)
+      :vendorhiddenblocks (render.make-producters-lists
+                           veiws :columns 4 :uncut 3)))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object group))

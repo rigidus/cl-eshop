@@ -198,3 +198,15 @@
 
 ;; (remove-if-not #'(lambda (v) (search "worker" (sb-thread:thread-name v))) (sb-thread:list-all-threads))
 ;; (mapcar #'sb-thread:terminate-thread (remove-if-not #'(lambda (v) (search "worker" (sb-thread:thread-name v))) (sb-thread:list-all-threads)))
+
+;; (mapcar #'sb-thread:terminate-thread
+;;         (remove-if-not #'(lambda (v) (or (search "contro" (sb-thread:thread-name v))
+;;                                  (search "repl" (sb-thread:thread-name v))
+;;                                  (search "auto-flush" (sb-thread:thread-name v))
+;;                                  (search "reader" (sb-thread:thread-name v))
+;;                                  ))
+;;                (sb-thread:list-all-threads)))
+
+
+;; (length (mapcar #'(lambda (v) (equal (type-of v) 'products) (products *global-storage*))))
+;; (length (products *global-storage*))
