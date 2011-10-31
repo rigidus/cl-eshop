@@ -810,3 +810,35 @@
       nil
       (format nil "~1$" (* (- 1 (/ part full)) 100))))
 
+(defun servo.diff-price (product-1 product-2)
+  (abs (/ (- (siteprice product-1) (siteprice product-2))
+          (siteprice product-1))))
+
+(defun servo.get-option (product opgroup optname)
+  (let ((res))
+    (with-option1 product
+      opgroup optname
+      (setf res (getf option :value)))
+    res))
+
+(defun servo.get-product-vendor (product)
+  (servo.get-option product
+                    "Общие характеристики"
+                    "Производитель"))
+
+(defun servo.find-relative-product-list (product &optional (coef 2))
+  (when (new-classes.parent product)
+    (let* ((vendor (servo.get-product-vendor product))
+          (diff-list
+           (mapcar #'(lambda (a)
+                       (let ((diff
+                              (if (equal (servo.get-product-vendor a) vendor)
+                                  1
+                                  coef)))
+                         (cons (* diff (servo.diff-price product a))
+                               a)))
+                   (copy-list (products (new-classes.parent product))))))
+      (mapcar #'cdr
+              (sort diff-list
+                    #'(lambda (a b)
+                        (< (car a) (car b))))))))

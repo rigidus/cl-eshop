@@ -1,4 +1,4 @@
-1(in-package #:eshop)
+(in-package #:eshop)
 
 ;;макрос для создания класса по списку параметров
 (defmacro new-classes.make-class (name class-fields)

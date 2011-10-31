@@ -94,9 +94,9 @@
                                             ((string= key "edit")
                                              (let* ((key (getf (request-get-plist) :key))
                                                     (item (gethash key (storage *global-storage*)))
-                                                    (item-fields (new-classes.make-fields item))
+                                                    (item-fields (when item (new-classes.make-fields item)))
                                                     (post-data new-post-data))
-                                               (when post-data
+                                               (when (and item post-data)
                                                  (log5:log-for debug-console "~a~%" new-post-data)
                                                  ;; (log5:log-for debug-console "#####   ~a~%"
                                                  ;;               (getf post-data
@@ -105,6 +105,7 @@
                                                  (log5:log-for debug-console "~a~%" post-data)
                                                  (log5:log-for debug-console "----> ~a~%" (getf post-data :parents))
                                                  (new-classes.edit-fields item post-data)
+                                                 (object-fields.product-groups-fix item)
                                                  (setf item-fields (new-classes.make-fields item)))
                                                (if item
                                                    (soy.class_forms:formwindow
@@ -175,7 +176,7 @@
 
            (when (and (string/= "" optgroup) (string/= "" optname))
              (push (list :optgroup optgroup :optname optname) keyoptions))))
-    (setf result (append result (list :keyoptions keyoptions)))
+    (setf result (append result (list :keyoptions (nreverse keyoptions))))
     ;;catalog keyoptions
     (loop
        for cnt from 0
@@ -190,7 +191,7 @@
                               (intern (string-upcase (format nil "catalog-keyoption-sn-~a" cnt)) :keyword))))
            (when (and (string/= "" optgroup) (string/= "" optname) (string/= "" showname))
              (push (list :optgroup optgroup :optname optname :showname showname) catalog-keyoptions))))
-         (setf result (append result (list :catalog-keyoptions catalog-keyoptions)))
+         (setf result (append result (list :catalog-keyoptions (nreverse catalog-keyoptions))))
     result))
 
 
