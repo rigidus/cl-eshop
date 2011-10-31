@@ -149,6 +149,7 @@
                                                                              (list :key (key product)
                                                                                    :name (name-seo product))))
                                                                         unparented-products)
+                                                      :length (length unparented-products)
                                                       :groups (object-fields.group-list-field-view nil "GROUPS" nil)))))
                                             (t (format nil "~a" key)))))))))
 

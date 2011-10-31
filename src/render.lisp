@@ -193,9 +193,10 @@
                              "Secret")
                    (let ((options
                           (mapcar #'(lambda (option)
-                                      (soy.product:option
-                                       (list :name (getf option :name)
-                                             :value (getf option :value))))
+                                      (when (string/= (getf option :value) "")
+                                        (soy.product:option
+                                         (list :name (getf option :name)
+                                               :value (getf option :value)))))
                                   (getf optgroup :options))))
                      (if (not (null (remove-if
                                      #'null
