@@ -31,7 +31,7 @@
     (default-page
       (catalog:content
        (list :name name
-             :breadcrumbs (catalog:breadcrumbs (breadcrumbs-add-vendor (new-classes.breadcrumbs object)))
+             :breadcrumbs (catalog:breadcrumbs (breadcrumbs-add-vendor1 (new-classes.breadcrumbs object) parameters))
              :menu (new-classes.menu object)
              :rightblocks (append
                            (render.get-oneclick-filters object

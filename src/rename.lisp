@@ -214,11 +214,12 @@
                  (if (directory-exists-p path)
                      (let* ((articul (car (last (split "/" path))))
                             (product (gethash articul (storage *global-storage*))))
-                       (rename-convert-from-folder product path)
-                       (rename-copy-folder path (format nil "~a~a/" backup articul))
-                       (rename-remove-folder path)
+                       (when product
+                           (rename-convert-from-folder product path)
+                           (rename-copy-folder path (format nil "~a~a/" backup articul))
+                           (rename-remove-folder path)
+                           )
                        )))))
-
       ;;else
       (wlog (format nil "Folder doesn't exist!~%"))))
 
