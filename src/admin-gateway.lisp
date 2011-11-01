@@ -174,7 +174,7 @@
 
            (when (and (string/= "" optgroup) (string/= "" optname))
              (push (list :optgroup optgroup :optname optname) keyoptions))))
-    (setf result (append result (list :keyoptions keyoptions)))
+    (setf result (append result (list :keyoptions (reverse keyoptions))))
     ;;catalog keyoptions
     (loop
        for cnt from 0
@@ -186,10 +186,12 @@
                (optname (getf post-data
                               (intern (string-upcase (format nil "catalog-keyoption-on-~a" cnt)) :keyword)))
                (showname (getf post-data
-                              (intern (string-upcase (format nil "catalog-keyoption-sn-~a" cnt)) :keyword))))
+                              (intern (string-upcase (format nil "catalog-keyoption-sn-~a" cnt)) :keyword)))
+               (units (getf post-data
+                              (intern (string-upcase (format nil "catalog-keyoption-un-~a" cnt)) :keyword))))
            (when (and (string/= "" optgroup) (string/= "" optname) (string/= "" showname))
-             (push (list :optgroup optgroup :optname optname :showname showname) catalog-keyoptions))))
-         (setf result (append result (list :catalog-keyoptions catalog-keyoptions)))
+             (push (list :optgroup optgroup :optname optname :showname showname :units units) catalog-keyoptions))))
+         (setf result (append result (list :catalog-keyoptions (reverse catalog-keyoptions))))
     result))
 
 

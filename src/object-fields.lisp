@@ -289,8 +289,9 @@
 (defun object-fields.catalog-keyoptions-field-serialize (keyoptions)
   (format nil "[~{~a~^,~}]"
           (mapcar #'(lambda (keyoption)
-                           (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\",\"showname\":\"~a\"}"
+                           (format nil "{\"optgroup\":\"~a\",\"optname\":\"~a\",\"showname\":\"~a\,\"units\":\"~a\"}"
                                    (getf keyoption :optgroup)
                                    (getf keyoption :optname)
-                                   (getf keyoption :showname)))
+                                   (getf keyoption :showname)
+                                   (getf keyoption :units)))
                   keyoptions)))
