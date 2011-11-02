@@ -388,10 +388,8 @@
 
 ;; (mapcar #'(lambda (v) (setf (active v) nil))
 ;;  (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
-
 ;; (mapcar #'(lambda (v) (setf (active v) nil))
 ;;  (storage.get-filtered-products (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))))
-
 
 ;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
 ;; (time (create-report "xls/products.csv" #'write-products-report))
