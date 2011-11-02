@@ -244,3 +244,17 @@
        :for dir
        :in dirs
        :do (rename-remove-folder (format nil "~a/~a/~a" *path-to-product-pics* dir path-art)))))
+
+
+
+
+;; (mapcar #'(lambda (v)
+;;             (let ((p (gethash (format nil "~a" v) (storage *global-storage*))))
+;;               (wlog p)
+;;               (rename-remove-product-pics p)
+;;             ))
+;;         '(146466
+;;           164899
+;;           171810
+;;           163964
+;;           146440))
