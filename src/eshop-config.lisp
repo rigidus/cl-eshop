@@ -72,7 +72,7 @@
             "yml.html"                "fullfilter.html"
             "sendmail.html"
             "404.html"
-            "articles.soy"         "sitemap.html"            "newcart.soy"
+            "articles.soy"         "sitemap.soy"            "newcart.soy"
             "oneclickcart.soy"
              "buttons.soy"
             "main-page.soy"

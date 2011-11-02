@@ -299,22 +299,21 @@
                  (gateway.process-products data))
                )))))
 
-;; (defparameter *articuls* (make-hash-table :test #'equal))
+(defparameter *articuls* (make-hash-table :test #'equal))
 
 (defun gateway.update-actives (data)
   (let ((articuls (make-hash-table :test #'equal)))
     (mapcar #'(lambda (v)
                 (let ((articul (format nil "~a" (cdr (assoc :id v)))))
-
-                  (setf (gethash articul articuls) t)))
+                  (setf (gethash articul *articuls*) t)))
                 data)
     ;; (wlog articuls)
-    (mapcar #'(lambda (v)
-                (when (and (not (gethash (format nil "~a" (articul v)) articuls))
-                          (active v))
-                    (setf (active v) nil)
-                    (storage.edit-object v)))
-            (products *global-storage*))
+    ;; (mapcar #'(lambda (v)
+    ;;             (when (and (not (gethash (format nil "~a" (articul v)) articuls))
+    ;;                       (active v))
+    ;;                 (setf (active v) nil)
+    ;;                 (storage.edit-object v)))
+    ;;         (products *global-storage*))
   ))
 
 
@@ -350,6 +349,7 @@
           (gateway.process-products data)
           (gateway.update-actives data)
           (gateway.restore-singles lastgateway-ts timestamp)
+          (post-proccess-gateway)
           )))
   "test")
 

@@ -151,6 +151,14 @@
   (when (equal (type-of (vendors-seo item)) 'cons)
     (setf (vendors-seo item) (mapcar #'object-fields.string-add-newlines
                                      (copy-list (vendors-seo item))))
+    ;;convert vendors key to downcase
+    (setf (vendors-seo item) (let ((num 0))
+                               (mapcar #'(lambda (v)
+                                           (incf num)
+                                           (if (oddp num)
+                                               (string-downcase v)
+                                               v))
+                                       (vendors-seo item))))
     ;;convert vendors-seo from list to hashtable
     (setf (vendors-seo item) (servo.list-to-hashtasble
                               (copy-list (vendors-seo item)))))
@@ -158,21 +166,42 @@
   (let ((parents (copy-list (parents item))))
     (setf (parents item)
           (mapcar #'(lambda (parent-key)
-                      (when (not (null parent-key))
-                        (gethash parent-key (storage *global-storage*))))
+                      ;;в случае если на месте ключей уже лежат группы
+                      (if (equal (type-of parent-key) 'group)
+                          parent-key
+                          (if parent-key
+                              (gethash parent-key (storage *global-storage*)))))
                   parents))
-    ;;проставление ссылок у родителей на данную группу
-    (mapcar #'(lambda (parent)
-                (when parent
-                  (push item (groups parent))))
-            (parents item)))
-  (mapcar #'(lambda (child)
-              (setf (empty item) (or (empty item) (active child)))) (products item))
-  (setf (keyoptions item) (mapcar #'(lambda (pair)
-                                      (list :optgroup (cdr (assoc :optgroup pair))
-                                            :optname (cdr (assoc :optname pair))))
-                                  (keyoptions item)))
-  (when (raw-fullfilter item)
+    ;; удаляем nil для битых ключей
+    ;; TODO обрабатывать исключение если ключи не были найдены
+    (setf (parents item) (remove-if #'null (parents item)))
+    ;; проставление ссылок у родителей на данную группу
+    (let ((is-parent-link (remove-if-not #'(lambda (v) (equal item v))
+                                         (parents item))))
+      (when (not is-parent-link)
+        (mapcar #'(lambda (parent)
+                    (when parent
+                      (push item (groups parent))))
+                (parents item)))))
+  (setf (empty item) (not (null (remove-if-not #'active (products item)))))
+  (let ((keys (keyoptions item)))
+    ;;проверка на то нужно ли перерабатывать ключеве опции
+    (if (and keys
+             (not (atom keys))
+             (not (atom (car keys)))
+             (not (atom (caar keys))))
+        (setf (keyoptions item) (mapcar #'(lambda (pair)
+                                            (list :optgroup (cdr (assoc :optgroup pair))
+                                                  :optname (cdr (assoc :optname pair))))
+                                        (keyoptions item)))))
+  ;;TODO эта проверка нужна для постобработки групп дессериализованных их старых быкапов, когда фулфильтры хранились прямо в fullfilter
+  (when (and (null (raw-fullfilter item))
+             (fullfilter item)
+             (atom (fullfilter item)))
+    (setf (raw-fullfilter item) (concatenate 'string "" (fullfilter item)))
+    (setf (fullfilter item) nil))
+  (when (and (raw-fullfilter item)
+             (null (fullfilter item)))
     (setf (fullfilter item) (object-fields.string-add-newlines (raw-fullfilter item)))
     (setf (fullfilter item) (new-classes.decode (fullfilter item) (make-instance 'group-filter)))))
 

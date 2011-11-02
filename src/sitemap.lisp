@@ -15,7 +15,7 @@
 (defun sitemap-push-format-r (r)
   ;; (push r *sitemap-routs-storage*)
   (incf *sitemap-num-routs*)
-  (format *sitemap-stream* "~&~a" (sitemap:route r)))
+  (format *sitemap-stream* "~&~a" (soy.sitemap:route r)))
 
 ;;статические страницы
 (defun sitemap-static-routes ()
@@ -128,9 +128,9 @@
   (let ((*sitemap-routs-storage* nil)
         (*sitemap-num-routs* 0)
         (*sitemap-stream* stream))
-    (format *sitemap-stream* "~&~a" (sitemap:head))
+    (format *sitemap-stream* "~&~a" (soy.sitemap:head))
     (sitemap-all-routes)
-    (format *sitemap-stream* "~&~a" (sitemap:tail))
+    (format *sitemap-stream* "~&~a" (soy.sitemap:tail))
     *sitemap-num-routs*))
 
 

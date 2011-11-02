@@ -46,24 +46,24 @@
                     :name (getf variants sort-field)))))))
 
 
-(defmacro rightblocks ()
-  `(list (catalog:rightblock1)
-         (catalog:rightblock2)
-         (if (not (equal 'group (type-of object)))
-             ""
-             (progn
-               (let ((vndr (getf (request-get-plist) :vendor)))
-                 (if (null vndr)
-                     ;; show group descr
-                     (let ((descr (seo-text object)))
+(defmethod rightblocks ((object group) (parameters list))
+  (list (catalog:rightblock1)
+        (catalog:rightblock2)
+        (if (not (equal 'group (type-of object)))
+            ""
+            (progn
+              (let ((vndr (getf parameters :vendor)))
+                (if (null vndr)
+                    ;; show group descr
+                    (let ((descr (seo-text object)))
+                      (if (null descr)
+                          ""
+                          (catalog:seotext (list :text descr))))
+                    ;; show vendor descr
+                     (let ((descr (gethash (string-downcase vndr) (vendors-seo object))))
                        (if (null descr)
                            ""
-                           (catalog:seotext (list :text descr))))
-                     ;; show vendor descr
-                     (let ((descr (gethash vndr (vendors-seo object))))
-                        (if (null descr)
-                            ""
-                            (catalog:seotext (list :text descr))))))))))
+                           (catalog:seotext (list :text descr))))))))))
 
 
  (defmacro with-option (product optgroup-name option-name body)
