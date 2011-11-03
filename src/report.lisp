@@ -300,6 +300,11 @@
               "167534"
               "167535"))
 
+(mapcar #'(lambda (v) (setf (active v) nil))
+ (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
+(mapcar #'(lambda (v) (setf (active v) nil))
+ (storage.get-filtered-products (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))))
+
 
   ;; (maphash #'(lambda (k v)
   ;;              (declare (ignore k))
