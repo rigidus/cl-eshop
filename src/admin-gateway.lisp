@@ -74,6 +74,10 @@
       (let ((action (getf post-data-plist :action)))
         (if (not (null action))
             (cond
+              ((string= "do-gc" action)
+               (progn
+                 (setf post-data (with-output-to-string (*standard-output*)  (room)))
+                 (sb-ext:gc :full t)))
               ((string= "report-products" action)
                (progn
                  (let ((name (format nil "reports/products-report-~a.csv" (time.encode.backup-filename))))
@@ -108,7 +112,8 @@
                                             ((string= key "history")
                                              (format nil "~{~a<br>~}" (show-gateway-history)))
                                             ((string= key "actions")
-                                             (soy.admin:action-buttons (list :post new-post-data)))
+                                             (soy.admin:action-buttons (list :post new-post-data
+                                                                             :info post-data)))
                                             ((string= key "edit")
                                              (let* ((key (getf (request-get-plist) :key))
                                                     (item (gethash key (storage *global-storage*)))
