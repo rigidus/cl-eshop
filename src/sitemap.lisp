@@ -12,21 +12,16 @@
 (defparameter *sitemap-routs-storage* nil)
 (defparameter *sitemap-stream* nil)
 
-(defun sitemap-push-format-r (r)
-  ;; (push r *sitemap-routs-storage*)
-  (incf *sitemap-num-routs*)
-  (format *sitemap-stream* "~&~a" (sitemap:route r)))
-
 (defun sitemap.get-groups-routes ()
   (remove-if #'null
-            (mapcar #'(lambda (group)
-                        (when (and (active group)
-                                   (not (empty group)))
-                          (list :loc (format nil "http://www.320-8080.ru/~a" (hunchentoot:url-encode (key group)))
-                                :lastmod *sitemap-lastmod-time*
-                                :changefreq "daily"
-                                :priority "0.5")))
-                    (groups *global-storage*))))
+             (mapcar #'(lambda (group)
+                         (when (and (active group)
+                                    (not (empty group)))
+                           (list :loc (format nil "http://www.320-8080.ru/~a" (hunchentoot:url-encode (key group)))
+                                 :lastmod *sitemap-lastmod-time*
+                                 :changefreq "daily"
+                                 :priority "0.5")))
+                     (groups *global-storage*))))
 
 (defun sitemap.get-products-routes ()
   (mapcar #'(lambda (product)
