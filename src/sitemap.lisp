@@ -113,11 +113,12 @@
 
 
 (defun sitemap.create-sitemap-file ()
-  (format t "~&create Sitemap.XML: ")
+  (wlog "create Sitemap.XML: ")
   (setq *sitemap-lastmod-time* (time.get-lastmod-time))
   (let ((filepath *path-to-conf*)
         (routes (sitemap.get-all-routes-list))
         (number 0))
+    (wlog (format nil "routes num: ~a" (length routes)))
     (loop
        while routes
        do

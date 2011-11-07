@@ -2,28 +2,28 @@
 
 
 ;; ADMIN ROUTE
-(restas:define-route admin-route ("/admin")
+(restas:define-route admin-route ("/administration-super-panel")
   (show-admin-page))
 
-(restas:define-route admin/-route ("/admin/")
+(restas:define-route admin/-route ("/administration-super-panel/")
   (show-admin-page))
 
-(restas:define-route admin-actions-key-route ("/admin/actions" :method :post)
+(restas:define-route admin-actions-key-route ("/administration-super-panel/actions" :method :post)
   (show-admin-page "actions"))
 
-(restas:define-route admin-edit-key-route ("/admin/edit" :method :post)
+(restas:define-route admin-edit-key-route ("/administration-super-panel/edit" :method :post)
   (show-admin-page "edit"))
 
-(restas:define-route admin-testeditor-key-route ("/admin/testeditor" :method :post)
+(restas:define-route admin-testeditor-key-route ("/administration-super-panel/testeditor" :method :post)
   (show-admin-page "testeditor"))
 
-(restas:define-route admin-parenting-key-route ("/admin/parenting" :method :post)
+(restas:define-route admin-parenting-key-route ("/administration-super-panel/parenting" :method :post)
   (show-admin-page "parenting"))
 
-(restas:define-route admin-table-test-route ("/admin/tabletest")
+(restas:define-route admin-table-test-route ("/administration-super-panel/tabletest")
   (admin.show-table-test))
 
-(restas:define-route admin-key-route ("/admin/:key")
+(restas:define-route admin-key-route ("/administration-super-panel/:key")
   (show-admin-page key))
 
 ;;шаблоны
@@ -50,9 +50,9 @@
 (defun show-admin-menu ()
   (admin:menu
    (list :elts
-         (list "<li><a href=\"/admin\"><b>MAIN ADMIN</b></a></li>"
-               "<li><a href=\"/admin/history\">gateway</a></li>"
-               "<li><a href=\"/admin/actions\">actions</a></li>"
+         (list "<li><a href=\"/administration-super-panel\"><b>MAIN ADMIN</b></a></li>"
+               "<li><a href=\"/administration-super-panel/history\">gateway</a></li>"
+               "<li><a href=\"/administration-super-panel/actions\">actions</a></li>"
                ))))
 
 
@@ -74,9 +74,22 @@
       (let ((action (getf post-data-plist :action)))
         (if (not (null action))
             (cond
+              ((string= "report-products" action)
+               (progn
+                 (let ((name (format nil "reports/products-report-~a.csv" (time.encode.backup-filename))))
+                   (setf post-data "DO PRODUCTS REPORT")
+                   (create-report name #'write-products-report))))
+              ((string= "proccess-pictures" action)
+               (progn
+                 (setf post-data "DO proccess-pictures")
+                 (rename-convert-all)))
+              ((string= "dtd" action)
+               (progn
+                 (setf post-data "DO DTD")
+                 (dtd)))
               ((string= "report" action)
                (progn
-                 (let ((name (format nil "seo/write-groups-active-product-num-~a.csv" (time.encode.backup))))
+                 (let ((name (format nil "reports/write-groups-active-product-num-~a.csv" (time.encode.backup-filename))))
                  (setf post-data "DO REPORT")
                  (create-report name #'write-groups-active-product-num))))
               ((string= "restore" action)
