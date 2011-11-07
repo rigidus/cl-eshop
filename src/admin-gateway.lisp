@@ -73,12 +73,17 @@
                                result))
       (let ((action (getf post-data-plist :action)))
         (if (not (null action))
-            (cond ((string= "restore" action)
-                   (progn (setf post-data "DO RESTORE")
-                          (safely-restore)))
-                  ((string= "compile" action)
-                   (setf post-data "DO COMPILE"))
-                  (t (setf post-data (format nil "DON't know action ~a" action)))))))
+            (cond
+              ((string= "report" action)
+               (progn
+                 (let ((name (format nil "seo/write-groups-active-product-num-~a.csv" (time.encode.backup))))
+                 (setf post-data "DO REPORT")
+                 (create-report name #'write-groups-active-product-num))))
+              ((string= "restore" action)
+               (progn (setf post-data "DO RESTORE")))
+              ((string= "compile" action)
+               (setf post-data "DO COMPILE"))
+              (t (setf post-data (format nil "DON't know action ~a" action)))))))
     (soy.admin:main (list :header (soy.admin:shortheader)
                           :footer (soy.admin:footer)
                           :content (admin:content
@@ -94,9 +99,9 @@
                                             ((string= key "edit")
                                              (let* ((key (getf (request-get-plist) :key))
                                                     (item (gethash key (storage *global-storage*)))
-                                                    (item-fields (new-classes.make-fields item))
+                                                    (item-fields (when item (new-classes.make-fields item)))
                                                     (post-data new-post-data))
-                                               (when post-data
+                                               (when (and item post-data)
                                                  (log5:log-for debug-console "~a~%" new-post-data)
                                                  ;; (log5:log-for debug-console "#####   ~a~%"
                                                  ;;               (getf post-data
@@ -105,6 +110,7 @@
                                                  (log5:log-for debug-console "~a~%" post-data)
                                                  (log5:log-for debug-console "----> ~a~%" (getf post-data :parents))
                                                  (new-classes.edit-fields item post-data)
+                                                 (object-fields.product-groups-fix item)
                                                  (setf item-fields (new-classes.make-fields item)))
                                                (if item
                                                    (soy.class_forms:formwindow
@@ -149,8 +155,8 @@
                                                                              (list :key (key product)
                                                                                    :name (name-seo product))))
                                                                         unparented-products)
-                                                      :groups (object-fields.group-list-field-view nil "GROUPS" nil)
-                                                      :length (length unparented-products)))))
+                                                      :length (length unparented-products)
+                                                      :groups (object-fields.group-list-field-view nil "GROUPS" nil)))))
                                             (t (format nil "~a" key)))))))))
 
 (defun admin.show-table-test ()
@@ -175,7 +181,7 @@
 
            (when (and (string/= "" optgroup) (string/= "" optname))
              (push (list :optgroup optgroup :optname optname) keyoptions))))
-    (setf result (append result (list :keyoptions keyoptions)))
+    (setf result (append result (list :keyoptions (nreverse keyoptions))))
     ;;catalog keyoptions
     (loop
        for cnt from 0
@@ -187,10 +193,12 @@
                (optname (getf post-data
                               (intern (string-upcase (format nil "catalog-keyoption-on-~a" cnt)) :keyword)))
                (showname (getf post-data
-                              (intern (string-upcase (format nil "catalog-keyoption-sn-~a" cnt)) :keyword))))
+                              (intern (string-upcase (format nil "catalog-keyoption-sn-~a" cnt)) :keyword)))
+               (units (getf post-data
+                              (intern (string-upcase (format nil "catalog-keyoption-un-~a" cnt)) :keyword))))
            (when (and (string/= "" optgroup) (string/= "" optname) (string/= "" showname))
              (push (list :optgroup optgroup :optname optname :showname showname) catalog-keyoptions))))
-         (setf result (append result (list :catalog-keyoptions catalog-keyoptions)))
+         (setf result (append result (list :catalog-keyoptions (nreverse catalog-keyoptions))))
     result))
 
 

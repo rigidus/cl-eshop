@@ -402,3 +402,6 @@
 ;; (create-report "seo/report-products.csv" #'write-products)
 ;; (create-report "seo/report-vendors.csv" #'write-vendors)
 ;; (create-report "seo/write-groups-active-product-num.csv" #'write-groups-active-product-num)
+
+
+
