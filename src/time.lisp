@@ -174,3 +174,18 @@
         (setf second (parse-integer (third times)))
       (setf r (encode-universal-time second minute hour date month year)))
     r))
+
+
+
+
+(defun time.encode.backup-filename (&optional (timestamp (get-universal-time)))
+  "кодирование и декодирование даты вида 2011-09-30_12-01-23"
+  (multiple-value-bind (second minute hour date month year) (time.get-decode-timestamp timestamp)
+    (format nil
+            "~d-~2,'0d-~2,'0d_~2,'0d-~2,'0d-~2,'0d"
+            year
+            month
+            date
+            hour
+            minute
+            second)))

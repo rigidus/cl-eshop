@@ -30,10 +30,9 @@
                         :do (progn
                               ;; (+ 1 1)
                               (setf data (append (json:decode-json-from-string
-                                            (sb-ext:octets-to-string packet :external-format :cp1251)) data)))
-                     ;; (gateway.process-products data)
-                     ;; (gateway.update-actives data)
-                     ))
+                                            (sb-ext:octets-to-string packet :external-format :cp1251)) data))))
+                     (gateway.process-products data)
+                     (gateway.update-actives data))
                    ;;создаем новый yml файл
                    ;;(create-yml-file)
                    ;; Заполняем siteprice если он равен 0
@@ -64,8 +63,8 @@
                      ;; сохраняем запрос
                      (gateway.store-singles (list (list (time.get-date-time) name raw)))
                      ;; обрабатываем данные пришедшие в одиночном запросе
-                     ;; (gateway.process-products (json:decode-json-from-string
-                     ;;                            (sb-ext:octets-to-string raw :external-format :cp1251)))
+                     (gateway.process-products (json:decode-json-from-string
+                                                (sb-ext:octets-to-string raw :external-format :cp1251)))
                      ;; возможно тут необходимо пересчитать списки активных товаров или еще что-то
                      "single")))
                 (t
