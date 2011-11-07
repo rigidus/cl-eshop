@@ -150,8 +150,8 @@
                                                                              (list :key (key product)
                                                                                    :name (name-seo product))))
                                                                         unparented-products)
-                                                      :length (length unparented-products)
-                                                      :groups (object-fields.group-list-field-view nil "GROUPS" nil)))))
+                                                      :groups (object-fields.group-list-field-view nil "GROUPS" nil)
+                                                      :length (length unparented-products)))))
                                             (t (format nil "~a" key)))))))))
 
 (defun admin.show-table-test ()

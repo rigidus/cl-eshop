@@ -731,10 +731,10 @@
 
 ;;; Функция, добавляющая в хлебные крошки вендора, если он присутствует
 ;;; в get запросе.
-(defun breadcrumbs-add-vendor (breadcrumbs)
+(defun breadcrumbs-add-vendor1 (breadcrumbs parameters)
   (let ((belts (getf breadcrumbs :breadcrumbelts))
         (tail (getf breadcrumbs :breadcrumbtail))
-        (vendor (getf (request-get-plist) :vendor))
+        (vendor (getf parameters :vendor))
         (result breadcrumbs))
     (when (not (null vendor))
       (setf result (list :breadcrumbelts (append belts (list tail))

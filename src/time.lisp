@@ -1,8 +1,15 @@
 (in-package #:eshop)
 
+;;TODO убрать значение в time-zone после рестарта
+(defun time.get-decode-timestamp (&optional timestamp)
+  (let ((ts timestamp))
+    (if (not ts)
+        (setf ts (get-universal-time)))
+    (decode-universal-time ts -4)))
+
 ;; year 2011 month 9 date 30 -> 20110930
 (defun time.get-short-date ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+  (multiple-value-bind (second minute hour date month year) (time.get-decode-timestamp)
     (declare (ignore second minute hour))
     (format nil
             "~d~2,'0d~2,'0d"
@@ -13,7 +20,7 @@
 
 ;; кодирование и декодирование даты вида 2011-09-30 12:01
 (defun time.get-date-time ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+  (multiple-value-bind (second minute hour date month year) (time.get-decode-timestamp)
     (declare (ignore second))
     (format nil
             "~d-~2,'0d-~2,'0d ~2,'0d:~2,'0d"
@@ -53,7 +60,7 @@
     r))
 
 (defun time.get-date ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+  (multiple-value-bind (second minute hour date month year) (time.get-decode-timestamp)
     (declare (ignore second hour minute))
     (format nil
             "~2,'0d.~2,'0d.~2,'0d"
@@ -62,7 +69,7 @@
             (mod year 100))))
 
 (defun time.get-time ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+  (multiple-value-bind (second minute hour date month year) (time.get-decode-timestamp)
     (declare (ignore year month date))
     (format nil
             "~2,'0d:~2,'0d:~2,'0d"
@@ -71,7 +78,7 @@
 
 ;;sitemap-get-lastmod-time
 (defun time.get-lastmod-time ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+  (multiple-value-bind (second minute hour date month year) (time.get-decode-timestamp)
     (declare (ignore second minute hour))
     (format nil
             "~d-~2,'0d-~2,'0d"
@@ -81,7 +88,7 @@
 
 ;;article-encode-data
 (defun time.article-encode-date(article)
-  (multiple-value-bind (second minute hour date month year) (decode-universal-time (date article))
+  (multiple-value-bind (second minute hour date month year) (time.get-decode-timestamp (date article))
     (declare (ignore second minute hour))
     (format nil
             "~2,'0d.~2,'0d.~d"
@@ -100,7 +107,7 @@
 
 
 (defun time.get-full-human-time ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
+  (multiple-value-bind (second minute hour date month year) (time.get-decode-timestamp)
     (format nil
             "~a.~2,'0d.~2,'0d ~a:~a:~a"
             year month date hour minute second)))
@@ -127,7 +134,7 @@
 
 (defun time.encode.backup (&optional (timestamp (get-universal-time)))
   "кодирование и декодирование даты вида 2011-09-30_12:01:23"
-  (multiple-value-bind (second minute hour date month year) (decode-universal-time timestamp)
+  (multiple-value-bind (second minute hour date month year) (time.get-decode-timestamp timestamp)
     (format nil
             "~d-~2,'0d-~2,'0d_~2,'0d:~2,'0d:~2,'0d"
             year
