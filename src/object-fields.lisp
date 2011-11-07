@@ -36,6 +36,35 @@
   "Adding newline characters instead of #Newline"
   (replace-all string "#Newline" (string #\Newline)))
 
+(defmethod object-fields.product-groups-fix ((item product))
+  ;;removing given product from all groups product lists
+  (mapcar #'(lambda (group)
+              (let ((products (copy-list (products group))))
+                (setf (products group)
+                      (remove-if #'(lambda (product)
+                                     (equal (key product) (key item)))
+                                 products))))
+          (groups *global-storage*))
+  ;;adding given product to parents' product lists
+  (mapcar #'(lambda (group)
+              (pushnew item (products group)))
+          (parents item)))
+
+(defmethod object-fields.product-groups-fix ((item group))
+  ;;removing given group from all groups children lists
+  (mapcar #'(lambda (group)
+              (let ((groups (copy-list (groups group))))
+                (setf (groups group)
+                      (remove-if #'(lambda (group)
+                                     (equal (key group) (key item)))
+                                 groups))))
+          (groups *global-storage*))
+  ;;adding given product to parents' product lists
+  (mapcar #'(lambda (group)
+              (pushnew item (groups group)))
+          (parents item)))
+
+
 ;;набор функций для показа, изменения и сериализации различных типов полей в админке
 ;;object-fields.*-field-view - просмотр
 ;;object-fields.*-field-get-data - декодирование из списка post-запроса

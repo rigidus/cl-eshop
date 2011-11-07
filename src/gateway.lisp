@@ -303,9 +303,12 @@
 
 (defun gateway.update-actives (data)
   (let ((articuls (make-hash-table :test #'equal)))
+    ;; (declare (ignore articuls))
     (mapcar #'(lambda (v)
                 (let ((articul (format nil "~a" (cdr (assoc :id v)))))
-
+                  (setf articul (ceiling (arnesi:parse-float articul)))
+                  (setf articul (format nil "~a" articul))
+                  ;; (wlog articul)
                   (setf (gethash articul articuls) t)))
                 data)
     ;; (wlog articuls)
@@ -317,6 +320,9 @@
             (products *global-storage*))
   ))
 
+;; (maphash #'(lambda (k v)
+;;              (declare (ignore
+;;  (storage *global-storage*))
 
 (defun gateway.restore-history (&optional (timestamp (get-universal-time)))
   (let* ((filename (time.encode.backup timestamp))
@@ -350,6 +356,7 @@
           (gateway.process-products data)
           (gateway.update-actives data)
           (gateway.restore-singles lastgateway-ts timestamp)
+          (post-proccess-gateway)
           )))
   "test")
 

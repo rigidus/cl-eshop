@@ -300,6 +300,11 @@
               "167534"
               "167535"))
 
+(mapcar #'(lambda (v) (setf (active v) nil))
+ (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
+(mapcar #'(lambda (v) (setf (active v) nil))
+ (storage.get-filtered-products (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))))
+
 
   ;; (maphash #'(lambda (k v)
   ;;              (declare (ignore k))
@@ -397,3 +402,6 @@
 ;; (create-report "seo/report-products.csv" #'write-products)
 ;; (create-report "seo/report-vendors.csv" #'write-vendors)
 ;; (create-report "seo/write-groups-active-product-num.csv" #'write-groups-active-product-num)
+
+
+

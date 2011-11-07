@@ -37,7 +37,7 @@
                            (render.get-oneclick-filters object
                                                         (getf parameters :showall))
                            ;;fullfilter
-                           (let ((ret (rightblocks)))
+                           (let ((ret (rightblocks object parameters)))
                              (if (and (not (null (fullfilter object)))
                                       (not (equal "" (fullfilter object))))
                                  (push (render.render (fullfilter object) parameters) ret))
@@ -323,7 +323,10 @@
                                    :accessories (soy.product:accessories)
                                    :reviews (soy.product:reviews)
                                    :simular (soy.product:simulars)
-                                   :slogan "Слоган такой"
+                                   :slogan (let ((value))
+                                             (with-option1 object "Secret" "Продающий текст"
+                                                           (setf value (getf option :value)))
+                                             value)
                                    :others (soy.product:others
                                             (list :others (mapcar #'(lambda (x)
                                                                       (if (equal 'product (type-of x))
@@ -446,7 +449,7 @@
                   :rightblocks (append
                                 (render.get-oneclick-filters (new-classes.parent object)
                                                              (getf request-get-plist :showall))
-                                (rightblocks))
+                                (rightblocks (new-classes.parent object) request-get-plist))
                   :subcontent (catalog:centerproduct
                                (list
                                 :sorts (sorts request-get-plist)
@@ -490,7 +493,7 @@
 
  (defmethod render.show-producers ((products list))
    (let* ((vendors (storage.get-vendors products))
-          (url-parameters );;(request-get-plist))
+          (url-parameters (request-get-plist))
           (veiws nil))
      (remf url-parameters :page)
      (maphash #'(lambda (k x)

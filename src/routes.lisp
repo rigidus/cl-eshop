@@ -38,8 +38,14 @@
 (restas:define-route request-route-static-sitemap ("/sitemap.xml")
     (pathname (concatenate 'string *path-to-conf* "/sitemap.xml")))
 
+(restas:define-route request-route-static-sitemap-index ("/sitemap-index.xml")
+    (pathname (concatenate 'string *path-to-conf* "/sitemap-index.xml")))
+
 (restas:define-route request-route-static-sitemap1 ("/sitemap1.xml")
     (pathname (concatenate 'string *path-to-conf* "/sitemap1.xml")))
+
+(restas:define-route request-route-static-sitemap2 ("/sitemap2.xml")
+    (pathname (concatenate 'string *path-to-conf* "/sitemap2.xml")))
 
 
 
@@ -273,7 +279,7 @@
   (log5:log-for test "error 404: ~a" any)
   (restas:abort-route-handler
    (babel:string-to-octets
-     (default-page "404";;(catalog.sitemap-page t)
+     (default-page (catalog.sitemap-page t)
       :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
       :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге")

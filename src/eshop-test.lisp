@@ -96,3 +96,26 @@
 ;;                               result)))
 ;;     (filter-controller object request-get-plist)))
 
+
+
+;; (defun test-is-empty1 (input-list)
+;;   (let ((is-empty))
+;;     (mapcar #'(lambda (v)
+;;                 (setf is-empty (or is-empty (null v))))
+;;             input-list)
+;;     is-empty))
+
+
+;; (defun test-is-empty2 (input-list)
+;;  (not (null (remove-if #'null input-list))))
+
+;; (time (let ((l))
+;;   (loop
+;;      :for i
+;;      :from 1 to 5000000
+;;      :do (progn
+;;            (if (oddp i)
+;;                (push i l)
+;;                (push nil l))))
+;;   ;; (print (length l))
+;;   (test-is-empty2 l)))
