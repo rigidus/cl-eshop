@@ -38,6 +38,8 @@
                    (setf secret "Нет")
                    (with-option1 v "Secret" "Checked"
                                  (setf secret (getf option :value)))
+                   (if (string= (format nil "~a" id) "172466")
+                       (wlog v))
                    (format stream "~a;~a;~a;\"~a\";\"~a\";\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~a;~a;~a~%"
                            id (price v) (siteprice v) name name-real
                            name-yml desc img options active group-name
@@ -79,8 +81,8 @@
                            (if (active v)
                                "yes"
                                "no")
-                           (if (and (not (null (descr v)))
-                                       (not (string= "" (stripper (descr v)))))
+                           (if (and (not (null (seo-text v)))
+                                       (not (string= "" (stripper (seo-text v)))))
                                   "yes"
                                   "no"))
                    ))
@@ -122,18 +124,17 @@
                  (when (equal (type-of v)
                               'product)
                    (setf vendor-name "Нет")
-                   (with-option v "Общие характеристики" "Производитель"
-                                (setf vendor-name (value option)))
-                   (setf desc (if (and (not (null (shortdescr v)))
-                                       (not (string= "" (stripper (shortdescr v)))))
+                   (setf vendor-name (vendor v))
+                   (setf desc (if (and (not (null (seo-text v)))
+                                       (not (string= "" (stripper (seo-text v)))))
                                   "yes"
                                   "no"))
                    (format stream "\"~a\";\"~a\";\"~a\";http://www.320-8080.ru/~a;~a;~a;~%"
-                           (if (not (null (parent v)))
-                               (stripper (name (parent v)))
+                           (if (not (null (new-classes.parent v)))
+                               (stripper (name (new-classes.parent v)))
                                "Нет категории")
                            (stripper vendor-name)
-                           (stripper (realname v))
+                           (stripper (name-seo v))
                            (articul v)
                            (if (active v)
                                "yes"
@@ -153,20 +154,24 @@
                (declare (ignore k))
                (when (and (equal (type-of v)
                             'group)
-                          (null (childs v)))
-                 (mapcar #'(lambda (vendor)
-                             (format stream "\"~a\";\"~a\";http://www.320-8080.ru/~a?vendor=~a;~a;~a;~%"
-                                     (stripper (name v))
-                                     (stripper (car vendor))
-                                     (key v)
-                                     (stripper (car vendor))
-                                     "yes"
-                                     (let ((desc (gethash (car vendor) (vendors v))))
-                                       (if (and (not (null desc))
-                                                (not (string= "" desc)))
-                                           "yes"
-                                           "no"))))
-                         (producersall (make-producers v)))))
+                          (null (groups v)))
+
+                 (maphash #'(lambda (vendor num)
+                              (declare (ignore num))
+                              (format stream "\"~a\";\"~a\";http://www.320-8080.ru/~a?vendor=~a;~a;~a;~%"
+                                      (stripper (name v))
+                                      (stripper vendor)
+                                      (key v)
+                                      (stripper vendor)
+                                       "yes"
+                                       (let ((desc (gethash vendor (vendors-seo v))))
+                                         (if (and (not (null desc))
+                                                  (not (string= "" desc)))
+                                             "yes"
+                                             "no"))))
+                           ;; (producersall (make-producers v)))
+                           (storage.get-vendors (storage.get-filtered-products v #'atom)))
+                 ))
            (storage *global-storage*)))
 
 (defun create-report (file-name report-func)
@@ -339,10 +344,56 @@
 ;;       )))
 
 
+
+;; (let ((res)
+;;       (res1))
+;;   (print "test")
+;;   (maphash #'(lambda (k v)
+;;                (if (equal (type-of (key v))
+;;                           (type-of 132345))
+;;                    (push v res)))
+;;            (storage *global-storage*))
+;;   (print (length res))
+;;   ;; (mapcar #'(lambda (v)
+;;   ;;             (let ((key (key v)))
+;;   ;;               (setf (key v) (format nil "~a" key))
+;;   ;;               (storage.edit-object v)
+;;   ;;               ;; (remhash key (storage *global-storage*)))
+;;   ;;             ))
+;;   ;;         res)
+;;   ;; (print (length res1))
+;;   )
+
+
+;; (let ((res)
+;;       (res1))
+;;   (print "test")
+;;   (maphash #'(lambda (k v)
+;;                (when (and (equal (type-of v) 'group)
+;;                         (equal (fullfilter v) ""))
+;;                  (setf (fullfilter v) nil)
+;;                  (format t "~&~a:~a" k (fullfilter v))))
+;;            (storage *global-storage*))
+;;   (print (length res))
+;;   ;; (mapcar #'(lambda (v)
+;;   ;;             (let ((key (key v)))
+;;   ;;               (setf (key v) (format nil "~a" key))
+;;   ;;               (storage.edit-object v)
+;;   ;;               ;; (remhash key (storage *global-storage*)))
+;;   ;;             ))
+;;   ;;         res)
+;;   ;; (print (length res1))
+;;   )
+
+
+;; (mapcar #'(lambda (v) (setf (active v) nil))
+;;  (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
+;; (mapcar #'(lambda (v) (setf (active v) nil))
+;;  (storage.get-filtered-products (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))))
+
 ;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
 ;; (time (create-report "xls/products.csv" #'write-products-report))
 ;; (create-report "seo/report-groups.csv" #'write-groups)
 ;; (create-report "seo/report-products.csv" #'write-products)
 ;; (create-report "seo/report-vendors.csv" #'write-vendors)
 ;; (create-report "seo/write-groups-active-product-num.csv" #'write-groups-active-product-num)
-

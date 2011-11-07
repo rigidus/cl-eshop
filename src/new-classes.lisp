@@ -1,4 +1,4 @@
-1(in-package #:eshop)
+(in-package #:eshop)
 
 ;;макрос для создания класса по списку параметров
 (defmacro new-classes.make-class (name class-fields)
@@ -236,8 +236,8 @@
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-  (unserialize-from-file (pathname (format nil "~atest/products3.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/groups2.bkp" (user-homedir-pathname))) (make-instance 'group))
+  (unserialize-from-file (pathname (format nil "~atest/products.bkp" (user-homedir-pathname))) (make-instance 'product))
+  (unserialize-from-file (pathname (format nil "~atest/groups.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)

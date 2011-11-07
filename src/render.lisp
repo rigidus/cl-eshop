@@ -31,14 +31,15 @@
     (default-page
       (catalog:content
        (list :name name
-             :breadcrumbs (catalog:breadcrumbs (breadcrumbs-add-vendor (new-classes.breadcrumbs object)))
+             :breadcrumbs (catalog:breadcrumbs (breadcrumbs-add-vendor1 (new-classes.breadcrumbs object) parameters))
              :menu (new-classes.menu object)
              :rightblocks (append
                            (render.get-oneclick-filters object
                                                         (getf parameters :showall))
                            ;;fullfilter
                            (let ((ret (rightblocks)))
-                             (if (not (null (fullfilter object)))
+                             (if (and (not (null (fullfilter object)))
+                                      (not (equal "" (fullfilter object))))
                                  (push (render.render (fullfilter object) parameters) ret))
                              ret))
              :subcontent  (if (and (null (products object))
@@ -124,23 +125,24 @@
 
 
 (defmethod render.render ((object group-filter) &optional (parameters (request-get-plist)))
-  (fullfilter:container
-   (list :name (name object)
-         :vendor (getf parameters :vendor)
-         :sort (getf parameters :sort)
-         :base (format nil "~{~a~}"
-                       (mapcar #'(lambda (elt)
-                                   (filter-element elt parameters))
-                               (base object)))
-         :advanced (format nil "~{~a~}"
-                           (mapcar #'(lambda (elt)
-                                       (fullfilter:group
-                                        (list :name (car elt)
-                                              :elts (mapcar #'(lambda (inelt)
-                                                                (filter-element inelt parameters))
-                                                            (cadr elt)))))
-                                   (advanced object)))
-         :isshowadvanced (is-need-to-show-advanced object parameters))))
+  (when (not (equal "" group-filter))
+             (fullfilter:container
+              (list :name (name object)
+                    :vendor (getf parameters :vendor)
+                    :sort (getf parameters :sort)
+                    :base (format nil "~{~a~}"
+                                  (mapcar #'(lambda (elt)
+                                              (filter-element elt parameters))
+                                          (base object)))
+                    :advanced (format nil "~{~a~}"
+                                      (mapcar #'(lambda (elt)
+                                                  (fullfilter:group
+                                                   (list :name (car elt)
+                                                         :elts (mapcar #'(lambda (inelt)
+                                                                           (filter-element inelt parameters))
+                                                                       (cadr elt)))))
+                                              (advanced object)))
+                    :isshowadvanced (is-need-to-show-advanced object parameters)))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object group-filter))
@@ -162,13 +164,16 @@
                            (key group))
             :price (siteprice object)
             :formatprice (get-format-price (siteprice object))
+            :formatstoreprice (get-format-price
+                               (+ (siteprice object)
+                                  (delta-price object)))
             :bestprice (> (delta-price object) 0)
             :firstpic (car pics)
             :promotiontext (let ((value))
                              (with-option1 object "Secret" "Продающий текст"
                                            (setf value (getf option :value)))
                              value)
-            :keyopts nil;;(render.get-keyoptions object)
+            :keyopts (render.get-catalog-keyoptions object)
             :oneclickbutton  (if (not (preorder object))
                                  (soy.buttons:add-one-click (list :articul (articul object))))
             :addbutton (if (preorder object)
@@ -186,27 +191,54 @@
   (let ((optlist
          (remove-if
           #'null
-          (mapcar
-           #'(lambda (optgroup)
-               ;;не отображать группу опций с именем "Secret"
-               (if (string/= (getf optgroup :name)
-                             "Secret")
-                   (let ((options
-                          (mapcar #'(lambda (option)
-                                      (soy.product:option
-                                       (list :name (getf option :name)
-                                             :value (getf option :value))))
-                                  (getf optgroup :options))))
-                     (if (not (null (remove-if
-                                     #'null
-                                     options)))
-                         (soy.product:optgroup (list :name (getf optgroup :name)
-                                                     :options options))
-                         ""))))
-           optgroups))))
+          (mapcar #'(lambda (optgroup)
+                      ;;не отображать группу опций с именем "Secret"
+                      (if (string/= (getf optgroup :name)
+                                    "Secret")
+                          (let ((options
+                                 (mapcar #'(lambda (option)
+                                             (when (not (equal "" (getf option :value)))
+                                                 (soy.product:option
+                                                  (list :name (getf option :name)
+                                                        :value (getf option :value)))))
+                                         (getf optgroup :options))))
+                            (if (not (null (remove-if
+                                            #'null
+                                            options)))
+                                (soy.product:optgroup (list :name (getf optgroup :name)
+                                                            :options options))
+                                ""))))
+                  optgroups))))
     (if (null optlist)
         nil
         (soy.product:optlist (list :optgroups optlist)))))
+
+(defmethod render.get-catalog-keyoptions ((object product))
+  (let ((parent (new-classes.parent object)))
+    (when parent
+      (remove-if #'null
+                  (mapcar #'(lambda (pair)
+                              (let ((key-optgroup (getf pair :optgroup))
+                                    (key-optname  (getf pair :optname))
+                                    (key-alias  (getf pair :showname))
+                                    (optvalue))
+                                (mapcar #'(lambda (optgroup)
+                                            (when (string= (getf optgroup :name) key-optgroup)
+                                              (let ((options (getf optgroup :options)))
+                                                (mapcar #'(lambda (option)
+                                                            (if (string= (getf option :name) key-optname)
+                                                      (setf optvalue (getf option :value))))
+                                                        options))))
+                                        (optgroups object))
+                                (if (and optvalue
+                                         (not (equal "" optvalue)))
+                                    (list :optgroup key-alias
+                                          :optvalue (if (equal "Есть" optvalue)
+                                                        ""
+                                                        optvalue)))))
+                          (catalog-keyoptions parent))))))
+
+
 
 (defmethod render.get-keyoptions ((object product))
   (let ((parent (new-classes.parent object)))
@@ -267,9 +299,10 @@
 
 (defmethod restas:render-object ((designer eshop-render) (object product))
   (let* ((pics (get-pics (articul object)))
-         (diff-percent (servo.diff-percentage (price object) (siteprice object))))
-    (default-page
-        (soy.product:content (list :menu (new-classes.menu object)
+         (diff-percent (servo.diff-percentage (price object) (siteprice object)))
+         (is-vintage (null (active object)))
+         (product-view))
+    (setf product-view (list :menu (new-classes.menu object)
                                    :breadcrumbs (soy.product:breadcrumbs (new-classes.breadcrumbs object))
                                    :articul (articul object)
                                    :name (name-seo object)
@@ -277,7 +310,9 @@
                                    :storeprice (price object)
                                    :bestprice (> (delta-price object) 0)
                                    :formatsiteprice (get-format-price (siteprice object))
-                                   :formatstoreprice (get-format-price (price object))
+                                   :formatstoreprice (get-format-price
+                                                      (+ (siteprice object)
+                                                         (delta-price object)))
                                    :equalprice (= (delta-price object) 0)
                                    :diffprice (delta-price object)
                                    :procent diff-percent
@@ -288,6 +323,7 @@
                                    :accessories (soy.product:accessories)
                                    :reviews (soy.product:reviews)
                                    :simular (soy.product:simulars)
+                                   :slogan "Слоган такой"
                                    :others (soy.product:others
                                             (list :others (mapcar #'(lambda (x)
                                                                       (if (equal 'product (type-of x))
@@ -303,6 +339,7 @@
                                    :active (active object)
                                    ;; :descr (descr object)
                                    :shortdescr (seo-text object)
+                                   :bestproducts (soy.product:best (list :items (main-page-products-show (best *main-page.storage*) 12)))
                                    ;; :dontshdev (gethash (articul object) *special-products*)
                                    :seotextflag (and (not (null (seo-text object)))
                                                      (string/= (seo-text object) ""))
@@ -322,6 +359,10 @@
                                                                                            )))
                                    :addoneclick (if (not (preorder object))
                                                     (soy.buttons:add-one-click (list :articul (articul object))))))
+    (default-page
+        (if  is-vintage
+            (soy.product:vintage-card product-view)
+            (soy.product:content product-view))
         :keywords (format nil "~a"
                           (name-seo object))
         :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
@@ -331,158 +372,142 @@
                         (name-seo object)
                         (name-seo object))))))
 
-(defun render.make-producters-lists(list  &key cut (columns 4) (uncut 0))
-  (let ((len (truncate (length list) columns))
-        (cur 0)
-        (fin 0)
-        (rs)
-        (delta cut)
-        (delta2 uncut))
-    (if (or (and cut
-                 (> cut len))
-            (null cut))
-        (setf delta len))
-    (if (or (and uncut
-                 (> uncut len))
-            (null uncut))
-        (setf delta2 len))
-    ;; (print delta2)
-    (loop
-       :for i from 1 to columns
-       :do (progn
-             (setf fin (+ cur delta))
-             (if (> fin (length list))
-                 (setf fin (length list)))
-             (if (= i columns)
-                 (setf fin (length list)))
-             (push (subseq list (+ cur delta2) fin) rs)
-             (setf cur (+ cur len)))
-       )
-    (remove-if #'null (reverse rs))))
+
+ (defun render.make-producters-reverse-lists-by-column (list  &optional (columns 4))
+   (let ((len (length list))
+         (rs)
+         (start-pos 0)
+         (segment))
+     (multiple-value-bind (division remainder)
+         (truncate len columns)
+       (loop
+          :for i from 1 to columns
+          :do (progn
+                (setf segment division)
+                (when (< 0 remainder)
+                    (setf segment (+ 1 segment))
+                    (setf remainder (- remainder 1)))
+                ;; (format t "~&~a:~a:~a" start-pos segment remainder)
+                (push (subseq list start-pos (+ start-pos segment)) rs)
+                (setf start-pos (+ start-pos segment)))))
+     rs))
+
+ (defun render.make-producters-base (list  &key (columns 4) cut)
+   (let ((reverse-lists (render.make-producters-reverse-lists-by-column list columns))
+         (rs))
+     (mapcar #'(lambda (v)
+                 (let ((len cut))
+                   (if (or (null cut)
+                           (< (length v) cut))
+                       (setf len (length v)))
+                   (push (subseq v 0 len) rs)))
+             reverse-lists)
+     (remove-if #'null rs)))
+
+ (defun render.make-producters-hidden (list  &key (columns 4) cut)
+   (let ((reverse-lists (render.make-producters-reverse-lists-by-column list columns))
+         (rs))
+     (mapcar #'(lambda (v)
+                 (let ((len cut))
+                   (if (or (null cut)
+                           (< (length v) cut))
+                       (setf len (length v)))
+                   (push (subseq v len) rs)))
+             reverse-lists)
+     (remove-if #'null rs)))
+
+
+ (defmethod restas:render-object ((designer eshop-render) (object filter))
+   (let ((request-get-plist (request-get-plist))
+         (fltr-name  (name object))
+         (grname (name (new-classes.parent object)))
+         (products-list)
+         (all-products-list))
+     (setf all-products-list (if (getf request-get-plist :showall)
+                                 (storage.get-filtered-products (new-classes.parent object) #'atom)
+                                 (storage.get-filtered-products (new-classes.parent object) #'active)))
+     (setf products-list (remove-if-not (func object) all-products-list))
+     (if (null (getf request-get-plist :sort))
+         (setf (getf request-get-plist :sort) "pt"))
+     (if (getf (request-get-plist) :vendor)
+         (setf products-list
+               (remove-if-not #'(lambda (p)
+                                  (vendor-filter-controller p (request-get-plist)))
+                              products-list)))
+     ;; (log5:log-for test "~&filter ~{~a|~}" request-get-plist)
+     (with-sorted-paginator
+         products-list
+       request-get-plist
+       (default-page
+           (catalog:content
+            (list :name (name object)
+                  :breadcrumbs (catalog:breadcrumbs (new-classes.breadcrumbs object))
+                  :menu (new-classes.menu object)
+                  :rightblocks (append
+                                (render.get-oneclick-filters (new-classes.parent object)
+                                                             (getf request-get-plist :showall))
+                                (rightblocks))
+                  :subcontent (catalog:centerproduct
+                               (list
+                                :sorts (sorts request-get-plist)
+                                :producers (render.show-producers all-products-list)
+                                :accessories (catalog:accessories)
+                                :pager pager
+                                :products (loop
+                                             :for product
+                                             :in  paginated
+                                             :collect (render.view product))))))
+           :keywords (format nil "~a ~a" grname fltr-name)
+           :description (format nil "~a ~a" grname fltr-name)
+           :title (let ((vendor (getf (request-get-plist) :vendor))
+                        (name-1 (sklonenie fltr-name 1))
+                        (name-2 (sklonenie fltr-name 2))
+                        (name-3 (sklonenie fltr-name 3))
+                        (grname-1 (sklonenie grname 1))
+                        (grname-2 (sklonenie grname 2))
+                        (grname-3 (sklonenie grname 3)))
+                    (string-convertion-for-title
+                     (if vendor
+                         (format nil "~a ~a ~a - купить ~a ~a ~a по низкой цене, продажа ~a ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
+                                 grname-1
+                                 name-1
+                                 vendor
+                                 grname-2
+                                 name-2
+                                 vendor
+                                 grname-3
+                                 name-3
+                                 vendor)
+                         (format nil "~a ~a - купить ~a ~a  по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
+                                 grname-1
+                                 name-1
+                                 grname-2
+                                 name-2
+                                 grname-3
+                                 name-3))))))))
 
 
 
-(defun render.make-producters-lists1(list  &key cut (columns 4) (uncut 0))
-  (let ((len (truncate (length list) columns))
-        (cur 0)
-        (fin 0)
-        (rs)
-        (delta cut)
-        (delta2 uncut))
-    (if (or (and cut
-                 (> cut len))
-            (null cut))
-        (setf delta len))
-    (if (or (and uncut
-                 (> uncut len))
-            (null uncut))
-        (setf delta2 len))
-    ;; (print delta2)
-    (loop
-       :for i from 1 to columns
-       :do (progn
-             (setf fin (+ cur delta))
-             (if (> fin (length list))
-                 (setf fin (length list)))
-             (if (= i columns)
-                 (setf fin (length list)))
-             (push (subseq list (+ cur delta2) fin) rs)
-             (setf cur (+ cur len)))
-       )
-    (remove-if #'null (reverse rs))))
-
-
-(defmethod restas:render-object ((designer eshop-render) (object filter))
-  (let ((request-get-plist (request-get-plist))
-        (fltr-name  (name object))
-        (grname (name (new-classes.parent object)))
-        (products-list)
-        (all-products-list))
-    (setf all-products-list (if (getf request-get-plist :showall)
-                                (storage.get-filtered-products (new-classes.parent object) #'atom)
-                                (storage.get-filtered-products (new-classes.parent object) #'active)))
-    (setf products-list (remove-if-not (func object) all-products-list))
-    (if (null (getf request-get-plist :sort))
-        (setf (getf request-get-plist :sort) "pt"))
-    (if (getf (request-get-plist) :vendor)
-        (setf products-list
-              (remove-if-not #'(lambda (p)
-                                 (vendor-filter-controller p (request-get-plist)))
-                             products-list)))
-    ;; (log5:log-for test "~&filter ~{~a|~}" request-get-plist)
-    (with-sorted-paginator
-        products-list
-      request-get-plist
-      (default-page
-          (catalog:content
-           (list :name (name object)
-                 :breadcrumbs (catalog:breadcrumbs (new-classes.breadcrumbs object))
-                 :menu (new-classes.menu object)
-                 :rightblocks (append
-                               (render.get-oneclick-filters (new-classes.parent object)
-                                                            (getf request-get-plist :showall))
-                               (rightblocks))
-                 :subcontent (catalog:centerproduct
-                              (list
-                               :sorts (sorts request-get-plist)
-                               :producers (render.show-producers all-products-list)
-                               :accessories (catalog:accessories)
-                               :pager pager
-                               :products (loop
-                                            :for product
-                                            :in  paginated
-                                            :collect (render.view product))))))
-          :keywords (format nil "~a ~a" grname fltr-name)
-          :description (format nil "~a ~a" grname fltr-name)
-          :title (let ((vendor (getf (request-get-plist) :vendor))
-                       (name-1 (sklonenie fltr-name 1))
-                       (name-2 (sklonenie fltr-name 2))
-                       (name-3 (sklonenie fltr-name 3))
-                       (grname-1 (sklonenie grname 1))
-                       (grname-2 (sklonenie grname 2))
-                       (grname-3 (sklonenie grname 3)))
-                   (string-convertion-for-title
-                    (if vendor
-                        (format nil "~a ~a ~a - купить ~a ~a ~a по низкой цене, продажа ~a ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
-                                grname-1
-                                name-1
-                                vendor
-                                grname-2
-                                name-2
-                                vendor
-                                grname-3
-                                name-3
-                                vendor)
-                        (format nil "~a ~a - купить ~a ~a  по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
-                                grname-1
-                                name-1
-                                grname-2
-                                name-2
-                                grname-3
-                                name-3))))))))
-
-
-
-(defmethod render.show-producers ((products list))
-  (let* ((vendors (storage.get-vendors products))
-         (url-parameters );;(request-get-plist))
-         (veiws nil))
-    (remf url-parameters :page)
-    (maphash #'(lambda (k x)
-                 (setf (getf url-parameters :vendor) (hunchentoot:url-encode k))
-                 (push (list :vendor k
-                             :cnt x
-                             :link (format nil "?~a" (make-get-str url-parameters)))
-                       veiws))
-             vendors)
-    (print (length veiws))
-    (setf veiws (sort veiws #'string<= :key #'(lambda (v) (getf v :vendor))))
-    (catalog:producers
-     (list
-      :vendorblocks (render.make-producters-lists
-                     veiws :columns 4 :cut 3)
-      :vendorhiddenblocks (render.make-producters-lists
-                           veiws :columns 4 :uncut 3)))))
+ (defmethod render.show-producers ((products list))
+   (let* ((vendors (storage.get-vendors products))
+          (url-parameters );;(request-get-plist))
+          (veiws nil))
+     (remf url-parameters :page)
+     (maphash #'(lambda (k x)
+                  (setf (getf url-parameters :vendor) (hunchentoot:url-encode k))
+                  (push (list :vendor k
+                              :cnt x
+                              :link (format nil "?~a" (make-get-str url-parameters)))
+                        veiws))
+              vendors)
+     (print (length veiws))
+     (setf veiws (sort veiws #'string<= :key #'(lambda (v) (string-upcase (getf v :vendor)))))
+     (catalog:producers
+      (list
+       :vendorblocks (render.make-producters-base
+                     veiws :cut 3)
+      :vendorhiddenblocks (render.make-producters-hidden
+                           veiws :cut 3)))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object group))

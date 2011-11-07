@@ -57,7 +57,7 @@
                 (wlog (format nil "~&compile-template: ~a" pathname))
                 (closure-template:compile-template :common-lisp-backend pathname)))
           '(
-            "index.html"            "product.html"            "product-accessories.html"
+            "index.html"            "product.soy"            "product-accessories.html"
             "product-reviews.html"  "product-simulars.html"   "product-others.html"
             "catalog.html"          "catalog-in.html"         "catalog-staff.html"
             "footer.html"
