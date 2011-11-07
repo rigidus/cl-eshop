@@ -194,6 +194,21 @@
                                             (list :optgroup (cdr (assoc :optgroup pair))
                                                   :optname (cdr (assoc :optname pair))))
                                         (keyoptions item)))))
+  ;;catalog-keyoptions
+  (let ((keys (catalog-keyoptions item)))
+    ;;проверка на то нужно ли перерабатывать ключеве опции
+    (if (and keys
+             (not (atom keys))
+             (not (atom (car keys)))
+             (not (atom (caar keys)))
+             (not (atom (caaar keys)))
+             (not (atom (caaaar keys))))
+        (setf (catalog-keyoptions item) (mapcar #'(lambda (item)
+                                            (list :optgroup (cdr (assoc :optgroup item))
+                                                  :optname (cdr (assoc :optname item))
+                                                  :showname (cdr (assoc :showname item))
+                                                  :units (cdr (assoc :units item))))
+                                        (catalog-keyoptions item)))))
   ;;TODO эта проверка нужна для постобработки групп дессериализованных их старых быкапов, когда фулфильтры хранились прямо в fullfilter
   (when (and (null (raw-fullfilter item))
              (fullfilter item)
@@ -234,15 +249,18 @@
                          ,(cons
                            `list
                            (mapcar #'(lambda (field)
-                                       `(let ((field-value (,(getf field :name) object)))
+                                       `(let* ((field-value (,(getf field :name) object))
+                                              (encoded-value (when field-value
+                                                               (,(intern (string-upcase
+                                                                          (format nil "object-fields.~a-field-serialize" (getf field :type))))
+                                                                 field-value))))
                                           (when (and field-value
                                                      (string/= (format nil "~a" field-value) "")
-                                                     (not (equal field-value ,(getf field :initform))))
+                                                     (not (equal field-value ,(getf field :initform)))
+                                                     encoded-value)
                                             (format nil "~a:~a"
                                                     (encode-json-to-string (quote ,(getf field :name)))
-                                                    (,(intern (string-upcase
-                                                               (format nil "object-fields.~a-field-serialize" (getf field :type))))
-                                                      field-value)))))
+                                                    encoded-value))))
                                    (remove-if-not #'(lambda (field)
                                                       (getf field :serialize))
                                                   class-fields))))))
@@ -265,8 +283,8 @@
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-  (unserialize-from-file (pathname (format nil "~atest/products.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/groups.bkp" (user-homedir-pathname))) (make-instance 'group))
+  (unserialize-from-file (pathname (format nil "~atest/products-test.bkp" (user-homedir-pathname))) (make-instance 'product))
+  (unserialize-from-file (pathname (format nil "~atest/groups-test.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)

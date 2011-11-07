@@ -197,7 +197,7 @@
                (units (getf post-data
                               (intern (string-upcase (format nil "catalog-keyoption-un-~a" cnt)) :keyword))))
            (when (and (string/= "" optgroup) (string/= "" optname) (string/= "" showname))
-             (push (list :optgroup optgroup :optname optname :showname showname) catalog-keyoptions))))
+             (push (list :optgroup optgroup :optname optname :showname showname :units units) catalog-keyoptions))))
          (setf result (append result (list :catalog-keyoptions (nreverse catalog-keyoptions))))
     result))
 

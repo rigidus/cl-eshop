@@ -116,16 +116,16 @@
   (object-fields.string-field-get-data string))
 
 (defun object-fields.textedit-hashtable-field-serialize (hashtable)
-  (format nil "[~{~a~^,~}]"
-          (let ((res-list))
-            (maphash #'(lambda (vendor seo-text)
-                         (push
-                          (format nil "~a,~a"
-                                  (encode-json-to-string vendor)
-                                  (object-fields.textedit-field-serialize seo-text))
-                          res-list))
-                     hashtable)
-            res-list)))
+  (let ((res-list))
+    (maphash #'(lambda (vendor seo-text)
+                 (push
+                  (format nil "~a,~a"
+                          (encode-json-to-string vendor)
+                          (object-fields.textedit-field-serialize seo-text))
+                  res-list))
+             hashtable)
+    (when res-list
+      (format nil "[~{~a~^,~}]" res-list))))
 
 ;;time, человекопонятное время
 (defun object-fields.time-field-view (value name disabled)
