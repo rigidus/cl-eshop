@@ -75,15 +75,46 @@
     (defmethod unserialize-from-file (filepath (dummy ,name))
       (let ((num 0))
         (with-open-file (file filepath)
-          (loop for line = (read-line file nil 'EOF)
-             until (eq line 'EOF)
-             do
-               (let ((item (unserialize (decode-json-from-string line)
-                                        dummy)))
-                 (incf num)
-                 (if (equal (mod num 1000) 0)
-                     (wlog (key item)))
-                 (storage.add-new-object item (key item)))))))))
+          (let ((curline "")
+                (needconc nil))
+            (loop for line = (read-line file nil 'EOF)
+               until (eq line 'EOF)
+               do
+                 ;; (print (subseq line 0 20))
+                 (let ((str line)
+                       (last-sym (if (= 0 (length line))
+                                     "."
+                                     (subseq line (- (length line) 1))))
+                       (item (unserialize (decode-json-from-string line)
+                                          dummy)))
+                   ;; (print str)
+                   ;; (format t "~%########################### ~a ~%" last-sym)
+                   ;; (if (string= "}" last-sym)
+                   ;;     (progn
+                   ;;       (when needconc
+                   ;;         (setf str (format nil "~a~a" curline str)))
+                   ;;       (setf needconc nil)
+                   ;;       (setf curline "")
+                   ;;       (let ((start (search ",\"optgroups\":" str))
+                   ;;             (fin (search "}]}]" str)))
+                   ;;         (when (and start fin)
+                   ;;           (setf str (format nil "~a~a"
+                   ;;                             (subseq str 0 start)
+                   ;;                             (subseq str (+ 4 fin)))))
+                           ;; (print str)
+                   ;; (setf item (unserialize (decode-json-from-string line)
+                                           ;; dummy)))
+                   (incf num)
+                   (if (equal (mod num 1000) 0)
+                       (wlog (key item)))
+                   (storage.add-new-object item (key item)))
+                 )))))))
+                       ;; ;;else
+                       ;; (if needconc
+                       ;;     (setf curline (format nil "~a~a" curline str))
+                       ;;     (progn
+                       ;;       (setf curline str)
+                       ;;       (setf needconc t))))))))))))
 
 (defmethod new-classes.get-transform-optgroups ((item product))
   (let ((optgroups))
@@ -152,13 +183,14 @@
     (setf (vendors-seo item) (mapcar #'object-fields.string-add-newlines
                                      (copy-list (vendors-seo item))))
     ;;convert vendors key to downcase
-    (setf (vendors-seo item) (let ((num 0))
-                               (mapcar #'(lambda (v)
-                                           (incf num)
-                                           (if (oddp num)
-                                               (string-downcase v)
-                                               v))
-                                       (vendors-seo item))))
+    (when (vendors-seo item)
+      (setf (vendors-seo item) (let ((num 0))
+                                 (mapcar #'(lambda (v)
+                                             (incf num)
+                                             (if (oddp num)
+                                                 (string-downcase v)
+                                                 v))
+                                         (vendors-seo item)))))
     ;;convert vendors-seo from list to hashtable
     (setf (vendors-seo item) (servo.list-to-hashtasble
                               (copy-list (vendors-seo item)))))
@@ -281,8 +313,8 @@
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-  (unserialize-from-file (pathname (format nil "~atest/products-test.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/groups-test2.bkp" (user-homedir-pathname))) (make-instance 'group))
+  (unserialize-from-file (pathname (format nil "~atest/products-new3.bkp" (user-homedir-pathname))) (make-instance 'product))
+  (unserialize-from-file (pathname (format nil "~atest/groups-new3.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)
