@@ -14,12 +14,14 @@
 
 (defun object-fields.string-replace-newlines (string)
   "Processing string and replace newline characters with #Newline"
-  (format nil "~{~a~}"
-          (map 'list #'(lambda (char)
-                         (if (char-equal #\Newline char)
-                             (format nil "#Newline")
-                             (format nil "~a" char)))
-               string)))
+  ;; (format nil "~{~a~}"
+  ;;         (map 'list #'(lambda (char)
+  ;;                        (if (char-equal #\Newline char)
+  ;;                            (format nil "#Newline")
+  ;;                            (format nil "~a" char)))
+  ;;              string)))
+  (regex-replace-all "\\n" string "#Newline"))
+
 
 (defun object-fields.string-delete-newlines (string)
   "Замена символов перевода каретки на пробел (актуально при сериализации имен групп)"
@@ -234,7 +236,7 @@
                                                                             (value (getf option :value)))
                                                                         (when (and name value (string/= name "") (string/= value ""))
                                                                           (format nil "{\"name\":\"~a\",\"value\":\"~a\"}"
-                                                                                  name value))))
+                                                                                  name (object-fields.string-replace-newlines (object-fields.string-escaping value))))))
                                                                   (getf optgroup :options)))))
                                   (when (and name options (string/= name ""))
                                     (format nil "{\"name\":\"~a\",\"options\":[~{~a~^,~}]}"
@@ -297,20 +299,19 @@
 
 
 (defun object-fields.catalog-keyoptions-field-view (value name disabled)
-  (let ((name "catalogkeyoptions"))
-    (soy.class_forms:catalog-keyoptions-field
-     (list :keyoptions (let ((cnt 0))
-                         (mapcar #'(lambda (keyoption)
-                                     (incf cnt)
-                                     (soy.class_forms:catalog-keyoption-field
-                                      (append keyoption (list :number (- cnt 1)))))
-                                 value))
-           :emptyfield (soy.class_forms:catalog-keyoption-field (list
-                                                                 :number (format nil "' + $~aCnt + '"
-                                                                                 name)))
-           :name name
-           :number (- (length value) 1)
-           :disabled disabled))))
+  (soy.class_forms:catalog-keyoptions-field
+   (list :keyoptions (let ((cnt 0))
+                       (mapcar #'(lambda (keyoption)
+                                   (incf cnt)
+                                   (soy.class_forms:catalog-keyoption-field
+                                    (append keyoption (list :number (- cnt 1)))))
+                               value))
+         :emptyfield (soy.class_forms:catalog-keyoption-field (list
+                                                               :number (format nil "' + $~aCnt + '"
+                                                                               name)))
+         :name name
+         :number (- (length value) 1)
+         :disabled disabled)))
 
 (defun object-fields.catalog-keyoptions-field-get-data (string)
    string)
@@ -322,5 +323,5 @@
                                    (getf keyoption :optgroup)
                                    (getf keyoption :optname)
                                    (getf keyoption :showname)
-                                   (getf keyoption :units)))
+                                   (or (getf keyoption :units) "")))
                   keyoptions)))

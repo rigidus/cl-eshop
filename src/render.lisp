@@ -120,10 +120,6 @@
                             (sklonenie name 2)
                             (sklonenie name 3))))))))
 
-
-
-
-
 (defmethod render.render ((object group-filter) &optional (parameters (request-get-plist)))
   (when (not (equal "" object))
              (fullfilter:container
@@ -363,9 +359,10 @@
                                    :addoneclick (if (not (preorder object))
                                                     (soy.buttons:add-one-click (list :articul (articul object))))))
     (default-page
-        (if  is-vintage
-            (soy.product:vintage-card product-view)
-            (soy.product:content product-view))
+        ;; (if  is-vintage
+            ;; (soy.product:vintage-card product-view)
+            (soy.product:content product-view)
+            ;; )
         :keywords (format nil "~a"
                           (name-seo object))
         :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
