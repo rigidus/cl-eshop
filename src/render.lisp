@@ -125,7 +125,7 @@
 
 
 (defmethod render.render ((object group-filter) &optional (parameters (request-get-plist)))
-  (when (not (equal "" group-filter))
+  (when (not (equal "" object))
              (fullfilter:container
               (list :name (name object)
                     :vendor (getf parameters :vendor)

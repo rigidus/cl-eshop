@@ -210,7 +210,8 @@
   ;;TODO эта проверка нужна для постобработки групп дессериализованных их старых быкапов, когда фулфильтры хранились прямо в fullfilter
   (when (and (null (raw-fullfilter item))
              (fullfilter item)
-             (atom (fullfilter item)))
+             (not (equal (type-of (fullfilter item)) 'group-filter)))
+    (wlog (fullfilter item))
     (setf (raw-fullfilter item) (concatenate 'string "" (fullfilter item)))
     (setf (fullfilter item) nil))
   (when (and (raw-fullfilter item)
@@ -281,8 +282,8 @@
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-  (unserialize-from-file (pathname (format nil "~atest/products-test.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/groups-test2.bkp" (user-homedir-pathname))) (make-instance 'group))
+  (unserialize-from-file (pathname (format nil "~atest/products.bkp" (user-homedir-pathname))) (make-instance 'product))
+  (unserialize-from-file (pathname (format nil "~atest/groups.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)
@@ -333,6 +334,24 @@
                          (setf filter (object-fields.string-add-newlines filter))
                          (setf filter (new-classes.decode filter (make-instance 'group-filter)))
                          (setf (fullfilter item) filter))))))
+             (storage *global-storage*)))
+  ;;необходимо освободить память от уже не нужных продуктов
+  (sb-ext:gc :full t))
+
+(defun new-classes.DBG-unserialize-newgroups ()
+  "Одноразовый перенос олдовых характеристик поверх хранилища продуктов и проставление производителя"
+  (let ((original-storage (storage *global-storage*))
+        (*global-storage* (make-instance 'global-storage)))
+    (unserialize-from-file (pathname (format nil "~atest/newgroups.bkp" (user-homedir-pathname))) (make-instance 'group))
+    ;; на данном этапе в *global-storage* только группы
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (when (and (equal (type-of v) 'group)
+                            (catalog-keyoptions v))
+                   (let ((item (gethash (key v) original-storage)))
+                     (when item
+                       (setf (catalog-keyoptions item) (catalog-keyoptions v))
+                       (new-classes.post-unserialize item)))))
              (storage *global-storage*)))
   ;;необходимо освободить память от уже не нужных продуктов
   (sb-ext:gc :full t))

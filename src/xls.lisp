@@ -178,6 +178,8 @@
                                                  (list  :name (getf option :name)
                                                         :value (getf option :value))))))
                  (product (gethash (format nil "~a" articul) (storage *global-storage*))))
+            (if (equal articul 151521)
+                (wlog item))
             (let ((pr (gethash articul *xls.product-table*)))
               (if pr
                   (progn

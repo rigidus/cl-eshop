@@ -210,3 +210,13 @@
 
 ;; (length (mapcar #'(lambda (v) (equal (type-of v) 'products) (products *global-storage*))))
 ;; (length (products *global-storage*))
+
+
+;; (in-package :eshop)
+;; (let ((prs))
+;;   (maphash #'(lambda (k v)
+;;                (declare (ignore k))
+;;                (if (equal (type-of v) 'group)
+;;                    (push v prs)))
+;;    (storage *global-storage*))
+;;   (length prs))
