@@ -26,6 +26,53 @@
 
 
 
+(defmethod render.get-keywords ((object group) &optional (parameters (request-get-plist)))
+  (let* ((name (name object))
+         (vendor (getf parameters :vendor))
+         (page-name))
+    (if vendor
+        (setf page-name (format nil "~a ~a" (sklonenie name 1) vendor))
+        (setf page-name (format nil "~a" (sklonenie name 1))))
+    (format nil "~a, ~a купить, ~a цена, ~a в Санкт-Петербурге, ~a продажа" page-name page-name page-name page-name  page-name)))
+
+(defmethod render.get-keywords ((object product) &optional (parameters (request-get-plist)))
+  (declare (ignore parameters))
+  (let ((page-name (name-seo object)))
+    (format nil "~a, ~a купить, ~a цена, ~a в Санкт-Петербурге, ~a продажа" page-name page-name page-name page-name  page-name)))
+
+
+(defmethod render.get-title ((object group) &optional (parameters (request-get-plist)))
+  (let ((name (name object))
+        (vendor (getf parameters :vendor)))
+               (string-convertion-for-title
+                (if vendor
+                    (format nil "~a ~a - купить ~a ~a по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
+                            (sklonenie name 1)
+                            vendor
+                            (sklonenie name 2)
+                            vendor
+                            (sklonenie name 3)
+                            vendor)
+                    (format nil "~a - купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
+                            (sklonenie name 1)
+                            (sklonenie name 2)
+                            (sklonenie name 3))))))
+
+(defmethod render.get-description ((object group) &optional (parameters (request-get-plist)))
+  (let ((name (name object))
+        (vendor (getf parameters :vendor)))
+               (string-convertion-for-title
+                (if vendor
+                    (format nil "Купить ~a ~a по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
+                            (sklonenie name 2)
+                            vendor
+                            (sklonenie name 3)
+                            vendor)
+                    (format nil "Купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
+                            (sklonenie name 2)
+                            (sklonenie name 3))))))
+
+
 (defmethod render.render ((object group) &optional (parameters (request-get-plist)))
   (let ((name (name object)))
     (default-page
@@ -103,22 +150,9 @@
                                     :products
                                     (loop
                                        :for product :in  paginated :collect (render.view product)))))))))
-      :keywords name
-      :description name
-      :title (let ((vendor (getf parameters :vendor)))
-               (string-convertion-for-title
-                (if vendor
-                    (format nil "~a ~a - купить ~a ~a по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
-                            (sklonenie name 1)
-                            vendor
-                            (sklonenie name 2)
-                            vendor
-                            (sklonenie name 3)
-                            vendor)
-                    (format nil "~a - купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
-                            (sklonenie name 1)
-                            (sklonenie name 2)
-                            (sklonenie name 3))))))))
+        :keywords (render.get-keywords object parameters)
+        :description (render.get-description object parameters)
+        :title (render.get-title object parameters))))
 
 (defmethod render.render ((object group-filter) &optional (parameters (request-get-plist)))
   (when (not (equal "" object))
@@ -363,8 +397,7 @@
             ;; (soy.product:vintage-card product-view)
             (soy.product:content product-view)
             ;; )
-        :keywords (format nil "~a"
-                          (name-seo object))
+        :keywords (render.get-keywords object nil)
         :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
                              (name-seo object))
         :title (string-convertion-for-title

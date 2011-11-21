@@ -25,7 +25,7 @@
 (defparameter *path-order-id-file* "order-id.txt")
 (export '*path-order-id-file*)
 ;; sitemap
-(defparameter *path-sitemap* "sitemap.xml")
+(defparameter *path-sitemap* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
 (export '*path-sitemap*)
 
 ;; Список email для рассылки писем от ошибках выгрузки 1с

@@ -314,13 +314,8 @@
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-<<<<<<< HEAD
   (unserialize-from-file (pathname (format nil "~atest/products.bkp" (user-homedir-pathname))) (make-instance 'product))
   (unserialize-from-file (pathname (format nil "~atest/groups.bkp" (user-homedir-pathname))) (make-instance 'group))
-=======
-  (unserialize-from-file (pathname (format nil "~atest/products-new3.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/groups-new3.bkp" (user-homedir-pathname))) (make-instance 'group))
->>>>>>> tosha
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)

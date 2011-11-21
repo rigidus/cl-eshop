@@ -291,7 +291,7 @@
           (list "166545"
                 ;; "166578"
               "166579"
-              "166580"
+              ;; "166580"
               "166581"
               "167530"
               "167531"
@@ -437,3 +437,15 @@
 ;;                           (push v (groups item)))
 ;;                       (parents v)))
 ;;           (groups *global-storage*)))
+
+;; (let ((rs))
+;;   (maphash #'(lambda (k v)
+;;                (declare (ignore k))
+;;                (when (and (equal (type-of v) 'product)
+;;                         (active v)
+;;                         (< (siteprice v) 100))
+;;                  (push v rs)
+;;                  (wlog (key v))))
+;;            (storage *global-storage*))
+;;   (length rs))
+

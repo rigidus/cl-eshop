@@ -119,3 +119,4 @@
 ;;                (push nil l))))
 ;;   ;; (print (length l))
 ;;   (test-is-empty2 l)))
+
