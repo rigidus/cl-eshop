@@ -28,6 +28,9 @@
 ;;              (print (list k v)))
 ;;          (yml-groups))
 
+(defun yml.is-available (product)
+  t)
+
 (defun yml-page ()
   (setf (hunchentoot:content-type*) "application/xml; charset=utf-8")
   (yml:xml (list :datetime (time.get-date-time)
@@ -72,6 +75,7 @@
                                                      nil
                                                      t)))
                                     :collect (yml:offer (list :articul (articul product)
+                                                              :notAvailable (not (yml.is-available product))
                                                               :price (siteprice product)
                                                               :category (gethash
                                                                          (key (new-classes.parent product))

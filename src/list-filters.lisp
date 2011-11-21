@@ -46,10 +46,15 @@
   (nthcdr start items))
 
 (defun list-filters.limit-end (items end)
-  (subseq items 0 end))
+  (if (> end (length items))
+      items
+      (subseq items 0 end)))
 
 (defun list-filters.limit-region (items start length)
-  (subseq items start (+ start length)))
+  (let ((end (+ start length)))
+    (if (> end (length items))
+        (list-filters.limit-start items start)
+        (subseq items start end))))
 
 (defun list-filters.limit-page (items page-size page-number)
   ;; numbering from 1
