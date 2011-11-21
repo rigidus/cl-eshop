@@ -211,10 +211,13 @@
                  ))
       (root:main (list :keywords "" ;;keywords
                        :description "" ;;description
-                       :title  (name object)
+                       :title  (if (title object)
+                                   (title object)
+                                   (name object))
                        :headext (soy.articles:head-share-buttons (list :key (key object)))
-                       :header (root:header (list :logged (root:notlogged)
-                                                  :cart (root:cart)))
+                       :header (root:header (append (list :logged (root:notlogged)
+                                                          :cart (root:cart))
+                                                    (main-page-show-banner "line" (banner *main-page.storage*))))
                        :footer (root:footer)
                        :content (static:main
                                  (list :menu (new-classes.menu)
