@@ -14,17 +14,42 @@
 (restas:define-route admin-edit-key-route ("/administration-super-panel/edit" :method :post)
   (show-admin-page "edit"))
 
+(restas:define-route admin-content-table-route ("/administration-super-panel/content-table" :method :get)
+  (admin.content-table))
+
+(restas:define-route admin-content-table-post-route ("/administration-super-panel/content-table" :method :post)
+  (admin.content-table))
+
+(restas:define-route admin-get-json ("/administration-super-panel/getjson" :method :get)
+  (list-filters.get-json))
+
+(restas:define-route admin-test-get-post-request-route ("/administration-super-panel/test-get-post" :method :post)
+  (admin.test-get-post-parse))
+
+(restas:define-route admin-test-get-request-route ("/administration-super-panel/test-get-post" :method :get)
+  (admin.test-get-post-parse))
+
 (restas:define-route admin-testeditor-key-route ("/administration-super-panel/testeditor" :method :post)
   (show-admin-page "testeditor"))
 
 (restas:define-route admin-parenting-key-route ("/administration-super-panel/parenting" :method :post)
   (show-admin-page "parenting"))
 
-(restas:define-route admin-table-test-route ("/administration-super-panel/tabletest")
-  (admin.show-table-test))
+(restas:define-route admin-json-test-route ("/administration-super-panel/users.json")
+  (admin.show-json-test))
 
 (restas:define-route admin-key-route ("/administration-super-panel/:key")
   (show-admin-page key))
+
+(restas:define-route admin-resources-route ("/resources/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string *path-to-dropbox* "/htimgs/"
+                           (subseq full-uri (search "/resources/" full-uri))))))
+
+(restas:define-route admin-ux-route ("/ux/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string *path-to-dropbox* "/htimgs/resources/"
+                           (subseq full-uri (search "/ux/" full-uri) (search "?" full-uri))))))
 
 ;;шаблоны
 (defun admin-compile-templates ()
@@ -55,11 +80,36 @@
                "<li><a href=\"/administration-super-panel/actions\">actions</a></li>"
                ))))
 
+(defun admin.test-get-post-parse ()
+  (soy.admin:main
+   (list :content
+         (let* ((get-params (servo.alist-to-plist (hunchentoot:get-parameters hunchentoot:*request*)))
+                (post-params (servo.alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*))))
+           (format nil "raw GET params: ~a <br />list to unique keys: ~a <br />raw POST params: ~a<br />list to unique keys: ~a"
+                   (print get-params) (servo.plist-to-unique get-params)
+                   (print post-params) (servo.plist-to-unique post-params))))))
+
+(defun admin.test-post-parse ()
+  (soy.admin:main
+   (list :content
+         (let* ((params (servo.alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*))))
+           (format nil "raw POST params: ~a <br />list to unique keys: ~a" (print params) (servo.plist-to-unique params))))))
+
+
+(defun admin.content-table ()
+  (let* ((params (servo.alist-to-plist (hunchentoot:get-parameters hunchentoot:*request*)))
+         (type (getf params :type)))
+    (cond
+      ((equalp type "groups")
+       (soy.admin-table:test-html
+        (list
+         :title "Group table"
+         :script (soy.admin-table:group-table-js))))
+      (t "Ololo?"))))
 
 (defun show-admin-page (&optional (key nil))
-  (let* (
-         (post-data (hunchentoot:raw-post-data))
-         (new-post-data (alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*)))
+  (let* ((post-data (hunchentoot:raw-post-data))
+         (new-post-data (servo.alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*)))
          (post-data-plist))
     (when (not (null post-data))
       (setf post-data (sb-ext:octets-to-string post-data :external-format :utf8))
@@ -136,8 +186,8 @@
                                                                                :name "testeditor"
                                                                                :value "<p>This is some <strong>sample text</strong>.
                                                                                        You are using <a href=\"http://ckeditor.com/\">CKEditor</a>.</p>")))
-                                            ;; ((string= key "tabletest")
-                                            ;;  (admin.show-table-test))
+                                            ((string= key "tabletest")
+                                             (admin.show-table-test))
                                             ((string= key "parenting")
                                              ;; (log5:log-for debug-console "~a~%" (hunchentoot:post-parameters hunchentoot:*request*))
                                              (when new-post-data
@@ -172,10 +222,6 @@
                                                       :groups (object-fields.group-list-field-view nil "GROUPS" nil)))))
                                             (t (format nil "~a" key)))))))))
 
-(defun admin.show-table-test ()
-  (soy.admin-table:test-html (list
-                              :script (soy.admin-table:test-js (list :data
-                                                                     (admin.get-test-data))))))
 
 (defun admin.post-data-preprocessing (post-data)
   (let ((result post-data)
@@ -213,9 +259,3 @@
              (push (list :optgroup optgroup :optname optname :showname showname :units units) catalog-keyoptions))))
          (setf result (append result (list :catalog-keyoptions (nreverse catalog-keyoptions))))
     result))
-
-
-
-(sb-thread:make-thread (lambda () (format t "Hello, world")))
-
-

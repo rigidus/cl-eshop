@@ -121,13 +121,13 @@
     ;;преобразуем optgroups (1 уровень)
     (setf optgroups
           (mapcar #'(lambda (optgroup)
-                      (alist-to-plist optgroup))
+                      (servo.alist-to-plist optgroup))
                   (optgroups item)))
     ;;преобразуем значение :options в plist (2 уровень)
     (setf optgroups (mapcar #'(lambda (optgroup)
                           (let ((optgroup-plist
                                  (mapcar #'(lambda (option)
-                                             (alist-to-plist option))
+                                             (servo.alist-to-plist option))
                                          (getf optgroup :options))))
                             (list :name (getf optgroup :name) :options optgroup-plist)))
                       optgroups))

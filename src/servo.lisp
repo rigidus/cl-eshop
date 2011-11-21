@@ -760,14 +760,17 @@
           tmpl-name))
 
 
-(defun alist-to-plist (alist)
+(defun servo.anything-to-keyword (item)
+  (intern (string-upcase (format nil "~a" item)) :keyword))
+
+(defun servo.alist-to-plist (alist)
   (if (not (equal (type-of alist) 'cons))
       alist
       ;;else
       (loop
          :for (key . value)
          :in alist
-         :nconc (list (intern (format nil "~a" key) :keyword) value))))
+         :nconc (list (servo.anything-to-keyword key) value))))
 
 
 (defun servo.plist-to-unique (plist)
