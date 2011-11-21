@@ -291,7 +291,7 @@
           (list "166545"
                 ;; "166578"
               "166579"
-              "166580"
+              ;; "166580"
               "166581"
               "167530"
               "167531"
@@ -302,8 +302,10 @@
 
 (mapcar #'(lambda (v) (setf (active v) nil))
  (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
+(setf (active (gethash "vinchester" (storage *global-storage*))) nil)
 (mapcar #'(lambda (v) (setf (active v) nil))
  (storage.get-filtered-products (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))))
+(setf (active (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))) nil)
 
 
   ;; (maphash #'(lambda (k v)
@@ -314,7 +316,7 @@
   ;;                    (wlog (name v))
   ;;                    (setf (delivery-price v) 300))))
   ;;          (storage *global-storage*))
-  )
+)
 
 
 
@@ -348,6 +350,29 @@
 ;;             (setf (siteprice prod) siteprice))
 ;;       )))
 
+
+
+
+;; (let ((res)
+;;       (res1))
+;;   (print "test")
+;;   (maphash #'(lambda (k v)
+;;                (if (and (equal (type-of v) 'product)
+;;                         (new-classes.parent v)
+;;                         (not (equal (type-of (new-classes.parent v)) 'group)))
+;;                    (push v res)))
+;;            (storage *global-storage*))
+;;   (print (length res))
+;;   (car res
+;;   ;; (mapcar #'(lambda (v)
+;;   ;;             (let ((key (key v)))
+;;   ;;               (setf (key v) (format nil "~a" key))
+;;   ;;               (storage.edit-object v)
+;;   ;;               ;; (remhash key (storage *global-storage*)))
+;;   ;;             ))
+;;   ;;         res)
+;;   ;; (print (length res1))
+;;   )
 
 
 ;; (let ((res)
@@ -404,4 +429,23 @@
 ;; (create-report "seo/write-groups-active-product-num.csv" #'write-groups-active-product-num)
 
 
+;; (progn
+;;   (mapcar #'(lambda (v) (setf (groups v) nil))
+;;           (groups *global-storage*))
+;;   (mapcar #'(lambda (v)
+;;               (mapcar #'(lambda (item)
+;;                           (push v (groups item)))
+;;                       (parents v)))
+;;           (groups *global-storage*)))
+
+;; (let ((rs))
+;;   (maphash #'(lambda (k v)
+;;                (declare (ignore k))
+;;                (when (and (equal (type-of v) 'product)
+;;                         (active v)
+;;                         (< (siteprice v) 100))
+;;                  (push v rs)
+;;                  (wlog (key v))))
+;;            (storage *global-storage*))
+;;   (length rs))
 

@@ -78,6 +78,7 @@
          (list "<li><a href=\"/administration-super-panel\"><b>MAIN ADMIN</b></a></li>"
                "<li><a href=\"/administration-super-panel/history\">gateway</a></li>"
                "<li><a href=\"/administration-super-panel/actions\">actions</a></li>"
+               "<li><a href=\"/administration-super-panel/info\">info</a></li>"
                ))))
 
 (defun admin.test-get-post-parse ()
@@ -107,6 +108,10 @@
          :script (soy.admin-table:group-table-js))))
       (t "Ololo?"))))
 
+(defun admin-gateway.get-info ()
+  (list (format nil "~{~a<br>~}" (mapcar #'(lambda (v) (sb-thread:thread-name v)) (sb-thread:list-all-threads)))
+   (regex-replace-all "\\n" (with-output-to-string (*standard-output*) (room)) "<br>")))
+
 (defun show-admin-page (&optional (key nil))
   (let* ((post-data (hunchentoot:raw-post-data))
          (new-post-data (servo.alist-to-plist (hunchentoot:post-parameters hunchentoot:*request*)))
@@ -124,6 +129,10 @@
       (let ((action (getf post-data-plist :action)))
         (if (not (null action))
             (cond
+              ((string= "do-gc" action)
+               (progn
+                 (setf post-data (regex-replace-all "\\n" (with-output-to-string (*standard-output*) (room)) "<br>"))
+                 (sb-ext:gc :full t)))
               ((string= "report-products" action)
                (progn
                  (let ((name (format nil "reports/products-report-~a.csv" (time.encode.backup-filename))))
@@ -157,8 +166,11 @@
                                              (format nil "<p> Админка в разработке </p>"))
                                             ((string= key "history")
                                              (format nil "~{~a<br>~}" (show-gateway-history)))
+                                            ((string= key "info")
+                                             (soy.admin:info (list :info (admin-gateway.get-info))))
                                             ((string= key "actions")
-                                             (soy.admin:action-buttons (list :post new-post-data)))
+                                             (soy.admin:action-buttons (list :post new-post-data
+                                                                             :info post-data)))
                                             ((string= key "edit")
                                              (let* ((key (getf (request-get-plist) :key))
                                                     (item (gethash key (storage *global-storage*)))
