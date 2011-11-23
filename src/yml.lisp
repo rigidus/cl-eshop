@@ -31,6 +31,14 @@
 (defun yml.is-available (product)
   t)
 
+(defun yml.get-product-delivery-price (product)
+  (let ((parent (new-classes.parent product)))
+    (if (delivery-price product)
+        (delivery-price product)
+        (if (and parent (delivery-price parent))
+            (delivery-price parent)
+            300))))
+
 (defun yml-page ()
   (setf (hunchentoot:content-type*) "application/xml; charset=utf-8")
   (yml:xml (list :datetime (time.get-date-time)
@@ -76,6 +84,7 @@
                                                      t)))
                                     :collect (yml:offer (list :articul (articul product)
                                                               :notAvailable (not (yml.is-available product))
+                                                              :deliveryPrice (yml.get-product-delivery-price product)
                                                               :price (siteprice product)
                                                               :category (gethash
                                                                          (key (new-classes.parent product))

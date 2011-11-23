@@ -20,7 +20,10 @@
   ;;                            (format nil "#Newline")
   ;;                            (format nil "~a" char)))
   ;;              string)))
-  (regex-replace-all "\\n" string "#Newline"))
+  ;; replace newlines with keyword && delete @CR
+  (regex-replace-all (format nil "~a" #\Return)
+                     (regex-replace-all "\\n" string "#Newline")
+                     ""))
 
 
 (defun object-fields.string-delete-newlines (string)
@@ -37,6 +40,20 @@
 (defun object-fields.string-add-newlines (string)
   "Adding newline characters instead of #Newline"
   (replace-all string "#Newline" (string #\Newline)))
+
+(defun object-fields.serialize-optgroups (product-list filepath)
+  (with-open-file (file filepath
+                        :direction :output
+                        :if-exists :supersede
+                        :external-format :utf-8)
+    (mapcar #'(lambda (product)
+                (when (optgroups product)
+                  (format file "{\"key\":~a, \"optgroups\":~a}~%"
+                          (key product) (object-fields.optgroups-field-serialize
+                                         (optgroups product)))))
+            product-list)
+    (format nil "Done!")))
+
 
 (defmethod object-fields.product-groups-fix ((item product))
   ;;removing given product from all groups product lists
@@ -90,7 +107,8 @@
   (object-fields.string-field-view (format nil "~a" value) name disabled))
 
 (defun object-fields.int-field-get-data (string)
-  (parse-integer string))
+  (when (and string (string/= "" string) (string/= "NIL" string))
+    (parse-integer string)))
 
 (defun object-fields.int-field-serialize (int)
   (encode-json-to-string int))
@@ -234,11 +252,11 @@
                                                           (mapcar #'(lambda (option)
                                                                       (let ((name (getf option :name))
                                                                             (value (getf option :value)))
-                                                                        (when (and name value (string/= name "") (string/= value ""))
+                                                                        (when (and name value (string/= name "") (string/= value "") (string/= name "NIL"))
                                                                           (format nil "{\"name\":\"~a\",\"value\":\"~a\"}"
                                                                                   name (object-fields.string-replace-newlines (object-fields.string-escaping value))))))
                                                                   (getf optgroup :options)))))
-                                  (when (and name options (string/= name ""))
+                                  (when (and name options (string/= name "") (string/= name "NIL"))
                                     (format nil "{\"name\":\"~a\",\"options\":[~{~a~^,~}]}"
                                             name options))))
                             optgroups))))
