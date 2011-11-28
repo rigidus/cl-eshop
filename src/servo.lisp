@@ -837,14 +837,16 @@
   (when (new-classes.parent product)
     (let* ((vendor (servo.get-product-vendor product))
            (diff-list
-            (mapcar #'(lambda (a)
-                        (let ((diff
-                               (if (equal (servo.get-product-vendor a) vendor)
-                                   1
-                                   coef)))
+            (remove-if #'(lambda (v) (or (equal 0 (siteprice (cdr v)))
+                                         (not (active (cdr v)))))
+                       (mapcar #'(lambda (a)
+                                   (let ((diff
+                                          (if (equal (servo.get-product-vendor a) vendor)
+                                              1
+                                              coef)))
                           (cons (* diff (servo.diff-price product a))
                                 a)))
-                    (copy-list (products (new-classes.parent product))))))
+                    (copy-list (products (new-classes.parent product)))))))
       (mapcar #'cdr
               (sort diff-list
                     #'(lambda (a b)

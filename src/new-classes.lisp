@@ -350,6 +350,35 @@
   ;;необходимо освободить память от уже не нужных продуктов
   (sb-ext:gc :full t))
 
+(defun new-classes.DBG-unserialize-newproducts ()
+  "Одноразовый перенос олдовых характеристик поверх хранилища продуктов и проставление производителя"
+  (let ((original-storage (storage *global-storage*))
+        (*global-storage* (make-instance 'global-storage)))
+    (unserialize-from-file (pathname (format nil "~atest/tt1.bkp" (user-homedir-pathname))) (make-instance 'product))
+    ;; на данном этапе в *global-storage* только продукты
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (when (and (equal (type-of v) 'product))
+                   (let ((item (gethash (key v) original-storage)))
+                     (when  (and item
+                                 (null (parents item))
+                                 (parents v))
+                       (wlog (format nil "~a: ~a ~a" (key v) (name-seo v) (parents v)))
+                       (setf (parents item)
+                             (mapcar #'(lambda (parent-key)
+                                         (when (not (null parent-key))
+                                           (let ((parent (gethash parent-key original-storage)))
+                                             ;;Если родитель продукта — группа, связать группу с этим продуктом
+                                             (when (equal 'group (type-of parent))
+                                               (push item (products parent))
+                                               parent))))
+                                     (parents v)))
+                       ))))
+             (storage *global-storage*)))
+  ;;необходимо освободить память от уже не нужных продуктов
+  (sb-ext:gc :full t))
+
+
 (defun new-classes.DBG-unserialize-groups ()
   "Одноразовый перенос олдовых характеристик поверх хранилища продуктов и проставление производителя"
   (let ((original-storage (storage *global-storage*))
@@ -382,8 +411,15 @@
                             (catalog-keyoptions v))
                    (let ((item (gethash (key v) original-storage)))
                      (when item
-                       (setf (catalog-keyoptions item) (catalog-keyoptions v))
-                       (new-classes.post-unserialize item)))))
+                       (setf (catalog-keyoptions item) (mapcar #'(lambda (item)
+                                            (list :optgroup (cdr (assoc :optgroup item))
+                                                  :optname (cdr (assoc :optname item))
+                                                  :showname (cdr (assoc :showname item))
+                                                  :units (cdr (assoc :units item))))
+                                        (catalog-keyoptions v)))
+                       ;; (setf (catalog-keyoptions item) (catalog-keyoptions v))
+                       ;; (new-classes.post-unserialize item)
+                       ))))
              (storage *global-storage*)))
   ;;необходимо освободить память от уже не нужных продуктов
   (sb-ext:gc :full t))

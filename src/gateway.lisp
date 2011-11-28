@@ -12,7 +12,7 @@
 ;; (length (json:decode-json-from-string
 ;;          (sb-ext:octets-to-string (cadr *load-list*) :external-format :cp1251)))
 
-(defun gateway-page ()
+(defun gateway-page () "NIL")
   (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
   (let ((raw (hunchentoot:raw-post-data)))
     (if (null raw)
@@ -31,7 +31,7 @@
                               ;; (+ 1 1)
                               (setf data (append (json:decode-json-from-string
                                             (sb-ext:octets-to-string packet :external-format :cp1251)) data))))
-                     (gateway.process-products data)
+                     (gateway.process-products1 data)
                      (gateway.update-actives data))
                    ;;создаем новый yml файл
                    ;;(create-yml-file)
@@ -63,7 +63,7 @@
                      ;; сохраняем запрос
                      (gateway.store-singles (list (list (time.get-date-time) name raw)))
                      ;; обрабатываем данные пришедшие в одиночном запросе
-                     (gateway.process-products (json:decode-json-from-string
+                     (gateway.process-products1 (json:decode-json-from-string
                                                 (sb-ext:octets-to-string raw :external-format :cp1251)))
                      ;; возможно тут необходимо пересчитать списки активных товаров или еще что-то
                      "single")))
@@ -208,72 +208,70 @@
        )))
 
 
- ;; (defun gateway.process-product1 (articul raw-price raw-siteprice isnew isspec
- ;;                                  name realname count-total count-transit bonuscount)
- ;;   (let* ((old-product (gethash (format nil "~a" articul) (storage *global-storage*)))
- ;;          (product (aif old-product
- ;;                        it
- ;;                        (make-instance 'product :articul articul)))
- ;;          (price (ceiling (arnesi:parse-float raw-price)))
- ;;          (siteprice (ceiling (arnesi:parse-float raw-siteprice)))
- ;;          (count-total (ceiling (arnesi:parse-float raw-count-total)))
- ;;          (count-transit (ceiling (arnesi:parse-float raw-count-transit)))
- ;;          (bonuscount (ceiling (arnesi:parse-float raw-bonuscount))))
- ;;     (when (and (equal (type-of product) 'product))
- ;;                ;; (gateway.check-price product price siteprice))
- ;;       ;; (gateway-check-1c-name product name)
- ;;       ;; ключ строка
- ;;       (setf (key product) (format nil "~a" articul))
- ;;       ;; артикул число
- ;;       (setf (articul product) articul)
- ;;       ;; имена
- ;;       ;; имя из 1С
- ;;       (if (and (name-provider product)
- ;;                name)
- ;;           (setf (
-
- ;;             (name-provider product)            (if (and (not (null name))
- ;;                                                (not (equal "" name)))
- ;;                                           name
- ;;                                           (name-provider product))
- ;;             (name-seo product)        (if (or (null (name-seo product))
- ;;                                               (string= ""  (name-seo product)))
- ;;                                           (if (or (null realname)
- ;;                                                   (string= "" realname))
- ;;                                               name
- ;;                                               realname)
- ;;                                           (name-seo product))
- ;;             (delta-price product)     (if (= 0 siteprice)
- ;;                                           0
- ;;                                           (- price siteprice))
- ;;             (siteprice product)       (if (= 0 siteprice)
- ;;                                           price
- ;;                                           siteprice)
- ;;             (bonuscount product)      bonuscount
- ;;             ;; (ekkprice product)        ekkprice ;;TODO убрать из выгрузки
- ;;             (count-total product)     (if count-total
- ;;                                           (ceiling (arnesi:parse-float count-total))
- ;;                                           (if (and count-transit
- ;;                                                    (= (ceiling (arnesi:parse-float count-transit)) 0)
- ;;                                                    (equal (count-total product)
- ;;                                                           (count-transit product)))
- ;;                                               0
- ;;                                               (if (count-total product)
- ;;                                                   (count-total product)
- ;;                                                   0)))
- ;;             (active product)          (if (= (count-total product) 0) nil t)
- ;;             (newbie product)	        (if (string= "0" isnew) nil t)
- ;;             (sale product)            (if (string= "0" isspec) nil t)
- ;;             (count-transit  product)  (if count-transit
- ;;                                           (ceiling (arnesi:parse-float count-transit))
- ;;                                           (if (count-transit product)
- ;;                                               (count-transit product)
- ;;                                               0)))
- ;;     ;; (gateway-check-1c-name product name)
- ;;       (if (not old-product)
- ;;           (storage.edit-object product))
- ;;       ;; (setf (gethash (format nil "~a" articul) *storage*) product)
- ;;       )))
+ (defun gateway.process-product1 (articul raw-price raw-siteprice isnew isspec
+                                  name realname raw-count-total raw-count-transit
+                                  raw-bonuscount)
+   (declare (ignore isnew isspec))
+   (let* ((old-product (gethash (format nil "~a" articul) (storage *global-storage*)))
+          (product (aif old-product
+                        it
+                        (make-instance 'product :articul articul)))
+          (price (ceiling (arnesi:parse-float raw-price)))
+          (siteprice (ceiling (arnesi:parse-float raw-siteprice)))
+          (count-total (ceiling (arnesi:parse-float raw-count-total)))
+          (count-transit (ceiling (arnesi:parse-float raw-count-transit)))
+          (bonuscount (ceiling (arnesi:parse-float raw-bonuscount))))
+     (when (and (equal (type-of product) 'product))
+             ;; (gateway.check-price product price siteprice))
+       ;; (gateway-check-1c-name product name)
+       ;; ключ строка
+       (setf (key product) (format nil "~a" articul))
+       ;; артикул число
+       (setf (articul product) articul)
+       ;; имена
+       ;; имя из 1С
+       (when name
+         (if (equal "" (name-provider product))
+             (setf (name-provider product)  name)))
+       (if realname
+           (if (equal "" (name-seo product))
+               (setf (name-seo product) realname))
+           (if (equal "" (name-seo product))
+               (setf (name-seo product) name)))
+       ;; цены
+       (if raw-siteprice
+           (setf (siteprice product) siteprice))
+       (if raw-price
+           (setf (delta-price product) (- price (siteprice product))))
+       ;; бонусы (нужно пересчитывать когда приходит новая цена)
+       (if raw-bonuscount
+           (setf (bonuscount product) bonuscount))
+       ;; (ekkprice product)        ekkprice ;;TODO убрать из выгрузки
+       ;; количество
+       (if raw-count-total
+           (setf (count-total product) count-total)
+           (if (and raw-count-transit
+                    (equal 0 count-transit)
+                    (equal (count-total product)
+                           (count-transit product)))
+               0))
+       (if raw-count-transit
+           (setf (count-transit  product) count-transit))
+       ;; проставляем флаг active
+       (setf (active product) t);; (if (= (count-total product) 0) nil t))
+       ;; (if (= (count-total product) 0)
+       ;;     (wlog (format nil "~{~a ~^|~}" (list articul raw-price raw-siteprice isnew isspec
+       ;;                            name realname raw-count-total raw-count-transit
+       ;;                            raw-bonuscount))))
+             ;; (newbie product)	        (if (string= "0" isnew) nil t)
+             ;; (sale product)            (if (string= "0" isspec) nil t)
+     ;; (gateway-check-1c-name product name)
+       ;; (incf *test.num*)
+       ;; (gateway.check-price product price siteprice)
+       (when (not old-product)
+         (storage.edit-object product))
+       ;; (setf (gethash (format nil "~a" articul) *storage*) product)
+       )))
 
 
 (defun gateway.store-single-gateway (raws &optional (timestamp (get-universal-time)))
@@ -379,10 +377,31 @@
          :do (progn
                (when (and (string<= start (subseq line 0 19))
                         (string<= (subseq line 0 19) finish))
-                 ;; (wlog (subseq line 21))
+                 (wlog (subseq line 21))
                  (setf data (json:decode-json-from-string (subseq line 21)))
                  ;; (wlog data)
                  (gateway.process-products data))
+               )))))
+
+(defun gateway.restore-singles1 (gateway-timestamp &optional (current-timestamp (get-universal-time)))
+  "список одиночных выгрузок"
+  (let ((filename (format nil "~a/gateway/singles.txt" *path-to-logs*))
+        (start (time.encode.backup gateway-timestamp))
+        (finish (time.encode.backup current-timestamp))
+        (stop nil)
+        (data))
+    (with-open-file (file filename)
+      (loop
+         :for line = (read-line file nil 'EOF)
+         :until (or (eq line 'EOF)
+                    stop)
+         :do (progn
+               (when (and (string<= start (subseq line 0 19))
+                        (string<= (subseq line 0 19) finish))
+                 (wlog (subseq line 21))
+                 (setf data (json:decode-json-from-string (subseq line 21)))
+                 ;; (wlog data)
+                 (gateway.process-products1 data))
                )))))
 
 ;; (defparameter *articuls* (make-hash-table :test #'equal))
@@ -439,9 +458,11 @@
                      ;; (gateway.process-products data)
                      )))
           (wlog (length data))
-          (gateway.process-products data)
+          (gateway.process-products1 data)
           (gateway.update-actives data)
-          (gateway.restore-singles lastgateway-ts timestamp)
+          (wlog lastgateway-ts)
+          (wlog timestamp)
+          (gateway.restore-singles1 lastgateway-ts timestamp)
           (post-proccess-gateway)
           )))
   "test")

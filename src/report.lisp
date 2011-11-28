@@ -300,12 +300,12 @@
               "167534"
               "167535"))
 
-(mapcar #'(lambda (v) (setf (active v) nil))
- (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
-(setf (active (gethash "vinchester" (storage *global-storage*))) nil)
-(mapcar #'(lambda (v) (setf (active v) nil))
- (storage.get-filtered-products (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))))
-(setf (active (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))) nil)
+;; (mapcar #'(lambda (v) (setf (active v) nil))
+;;  (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
+;; (setf (active (gethash "vinchester" (storage *global-storage*))) nil)
+;; (mapcar #'(lambda (v) (setf (active v) nil))
+;;  (storage.get-filtered-products (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))))
+;; (setf (active (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))) nil)
 
 
   ;; (maphash #'(lambda (k v)
@@ -444,7 +444,7 @@
 ;;                (declare (ignore k))
 ;;                (when (and (equal (type-of v) 'product)
 ;;                         (active v)
-;;                         (< (siteprice v) 100))
+;;                         (= (siteprice v) 0))
 ;;                  (push v rs)
 ;;                  (wlog (key v))))
 ;;            (storage *global-storage*))
@@ -641,4 +641,62 @@
                 167899
                 146301
                 164859
-                147173)))
+                147173
+                149716
+                158417
+                153119
+                167238
+                157831
+                153471
+                145975
+                171005
+                149576
+                156779
+                171501
+                171541
+                163903
+                151930
+                150950
+                100123
+                127214
+                121082
+                109718
+                163465)))
+
+
+
+;; (mapcar #'(lambda (v)
+;;             (if (not (equal 0 (hash-table-count (vendors-seo v))))
+;;                 (maphash #'(lambda (k text)
+;;                              (remhash k (vendors-seo v))
+;;                              (setf (gethash (string-downcase (format nil "~a" k))
+;;                                             (vendors-seo v)) text))
+;;                          (vendors-seo v))))
+;;         (groups *global-storage*))
+
+
+;; (length (let ((rs))
+;;          (maphash #'(lambda (k v)
+;;                       (when (equal (type-of v) 'product)
+;;                         (if (and (not (gethash (articul v) *xls.product-table*))
+;;                                  (optgroups v))
+;;                             (push v rs))))
+;;                         (storage *global-storage*))
+;;          rs))
+
+
+(defun serials.all-prs ()
+  (let ((rs))
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (when (equal (type-of v) 'product)
+                       (push v rs)))
+             (storage *global-storage*))
+         rs))
+
+
+;; (mapcar #'(lambda (v)
+;;             (let ((delta-p (price v))
+;;                   (price (price v)))
+;;               ((<= 0.2 (float (/ (abs (- siteprice-old siteprice 1)) siteprice-old))))))
+;;         (serials.all-prs))

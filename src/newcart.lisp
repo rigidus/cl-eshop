@@ -162,7 +162,8 @@
   (let ((phone         (newcart-get-data-from-alist :phone user))  ;; обязательное поле телефон
         ;;два вида доставки курьером и самовывоз (express | pickup)
         (delivery-type (newcart-get-data-from-alist :delivery-type user))
-        (name          (newcart-get-data-from-alist :name user)) ;; имя фамилия
+        (name          (newcart-get-data-from-alist :name user)) ;; имя
+        (family        (newcart-get-data-from-alist :family user)) ;; фамилия
         (email         (newcart-get-data-from-alist :email user)) ;; email заказчика
         (city          (newcart-get-data-from-alist :city user))
         (addr          (newcart-get-data-from-alist :addr user)) ;; адрес без города
@@ -184,7 +185,7 @@
                        (t "Левашовский пр., д.12")))) ;; по умолчанию главный магазин
     (if discount-cart
         (setf ekk discount-cart-number))
-    (values-list (list phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount ekk))))
+    (values-list (list phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount ekk family))))
 
 ;; страница информации об отправленном заказе
 (defun thanks-page ()
@@ -221,7 +222,7 @@
               (mail-file) ;; информация для ТКС
               (tks-mail) ;; файл с информацией о заказе для ТКС
               (filename)) ;;
-          (multiple-value-bind (phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount ekk)
+          (multiple-value-bind (phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount ekk family)
               (newcart-user user)
             (declare (ignore city))
             ;; Временно доставка 300 на все
@@ -233,7 +234,7 @@
                   (sendmail:clientmail
                    (list :datetime (time.get-date-time)
                          :order_id order-id
-                         :name name
+                         :name (format nil "~a ~a" name family)
                          :family "" ;; Фамилия не передается отдельно
                          :paytype (cond ((string= payment "payment_method-1") "Наличными")
                                         ((string= payment "payment_method-2") "Кредитной картой")
@@ -257,10 +258,12 @@
                          :itogo (+ pricesum deliverysum))))
             (setf mail-file (list :order_id order-id
                                   :ekk ekk
-                                  :name name
+                                  :name (format nil "~a ~a" name family)
                                   :family ""
                                   :addr addr
-                                  :isdelivery "Доставка" ;; Самовывоз
+                                  :isdelivery (cond ((string= delivery-type "express") "Доставка")
+                                                    ((string= delivery-type "pickup") "Самовывоз")
+                                                    (t delivery-type)) ;;"Доставка" ;; Самовывоз
                                   :phone phone
                                   :email email
                                   :date (time.get-date)
