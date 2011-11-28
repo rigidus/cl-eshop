@@ -40,6 +40,6 @@
 ;; (eshop::restore-from-files)
 ;; (eshop::static-pages.restore)
 (let ((*package* (find-package :eshop)))
-  (eshop::new-classes.unserialize-all)
-  (eshop::new-classes.dbg-unserialize-products))
+  (eshop::new-classes.unserialize-all))
+  ;;(eshop::new-classes.dbg-unserialize-products))
 (eshop::static-pages.restore)

@@ -116,6 +116,23 @@
                        ;;       (setf curline str)
                        ;;       (setf needconc t))))))))))))
 
+(defun unserialize-optgroups (filepath)
+  (let ((num 0))
+    (with-open-file (file filepath)
+      (loop for line = (read-line file nil 'EOF)
+         until (eq line 'EOF)
+         do
+           (let* ((item (servo.alist-to-plist (decode-json-from-string line)))
+                  (key (format nil "~a" (getf item :key)))
+                  (optgroups (getf item :optgroups))
+                  (product (gethash key (storage *global-storage*))))
+             (incf num)
+             (setf (optgroups product) optgroups)
+             (setf (optgroups product) (new-classes.get-transform-optgroups product)))))
+    num))
+
+
+
 (defmethod new-classes.get-transform-optgroups ((item product))
   (let ((optgroups))
     ;;преобразуем optgroups (1 уровень)
@@ -303,18 +320,21 @@
         (format file "~a" (serialize-entity object))))))
 
 (defun new-classes.serialize-list-to-file (object-list filepath)
-  (with-open-file (file filepath
-                              :direction :output
-                              :if-exists :supersede
-                              :external-format :utf-8)
-    (mapcar #'(lambda (object)
-                (format file "~a~%" (serialize-entity object)))
-            object-list)))
+  (let ((total 0))
+    (with-open-file (file filepath
+                          :direction :output
+                          :if-exists :supersede
+                          :external-format :utf-8)
+      (mapcar #'(lambda (object)
+                  (format file "~a~%" (serialize-entity1 object))
+                  (incf total))
+              object-list))
+    (format nil "Total serialized: ~a" total)))
 
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-  (unserialize-from-file (pathname (format nil "~atest/products.bkp" (user-homedir-pathname))) (make-instance 'product))
+  (unserialize-from-file (pathname (format nil "~atest/tt1.bkp" (user-homedir-pathname))) (make-instance 'product))
   (unserialize-from-file (pathname (format nil "~atest/groups.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
@@ -519,7 +539,7 @@
    (:name siteprice         :initform 0                      :disabled nil   :type int         :serialize t)
    (:name delta-price       :initform 0                      :disabled nil   :type int         :serialize t)
    (:name bonuscount        :initform 0                      :disabled nil   :type int         :serialize t)
-   (:name delivery-price    :initform 0                      :disabled nil   :type int         :serialize t)
+   (:name delivery-price    :initform nil                    :disabled nil   :type int         :serialize t)
    (:name active            :initform t                      :disabled nil   :type bool        :serialize nil)
    (:name preorder          :initform nil                    :disabled nil   :type bool        :serialize t)
    (:name newbie            :initform t                      :disabled nil   :type bool        :serialize t)
@@ -530,7 +550,7 @@
    (:name seo-text          :initform ""                     :disabled nil   :type textedit    :serialize t)
    (:name count-transit     :initform 0                      :disabled t     :type int         :serialize t)
    (:name count-total       :initform 0                      :disabled t     :type int         :serialize t)
-   (:name optgroups         :initform nil                    :disabled t     :type optgroups   :serialize t)
+   (:name optgroups         :initform nil                    :disabled t     :type optgroups   :serialize nil)
    (:name vendor            :initform ""                     :disabled nil   :type string      :serialize t)))
 
 
@@ -550,7 +570,7 @@
    (:name ymlshow             :initform nil                             :disabled t     :type bool                      :serialize t)
    (:name pic                 :initform nil                             :disabled nil   :type string                    :serialize t)
    (:name icon                :initform nil                             :disabled nil   :type string                    :serialize t)
-   (:name delivery-price      :initform 0                               :disabled nil   :type int                       :serialize t)
+   (:name delivery-price      :initform nil                             :disabled nil   :type int                       :serialize t)
    (:name groups              :initform nil                             :disabled t     :type group-list                :serialize nil)
    (:name products            :initform nil                             :disabled t     :type product-list              :serialize nil)
    (:name filters             :initform nil                             :disabled t     :type string                    :serialize nil)
