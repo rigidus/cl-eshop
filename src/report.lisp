@@ -446,6 +446,7 @@
 ;;                         (active v)
 ;;                         (= (siteprice v) 0))
 ;;                  (push v rs)
+;;                  (setf (active v) nil)
 ;;                  (wlog (key v))))
 ;;            (storage *global-storage*))
 ;;   (length rs))
@@ -683,6 +684,9 @@
 ;;                             (push v rs))))
 ;;                         (storage *global-storage*))
 ;;          rs))
+
+;; (mapcar #'(lambda (v) (setf (ymlshow v) nil)) (groups (gethash "uslugi" (storage *global-storage*))))
+
 
 
 (defun serials.all-prs ()
