@@ -20,6 +20,18 @@
   (car (parents object)))
 ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+(defun storage.is-offspring (group item)
+  (when (and group item)
+    (not (every
+          #'null
+          (mapcar #'(lambda (parent)
+                      (if (equal group parent)
+                          t
+                          (if (not (null parent))
+                              (storage.is-offspring group parent)
+                              nil)))
+                  (parents item))))))
+
 (defun storage.get-all-child-groups (root &optional (sort-f #'catalog.alphabet-group-sort-f))
   (sort
    (let ((children (groups root))
