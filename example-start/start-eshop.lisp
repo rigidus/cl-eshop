@@ -35,7 +35,7 @@
 (setf hunchentoot:*catch-errors-p* nil)
 
 (eshop::restore-skls-from-files)
-(eshop::articles.restore)
+;; (eshop::articles.restore)
 (eshop::main-page.restore)
 ;; (eshop::restore-from-files)
 ;; (eshop::static-pages.restore)

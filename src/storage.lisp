@@ -20,6 +20,18 @@
   (car (parents object)))
 ;;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+(defun storage.is-offspring (group item)
+  (when (and group item)
+    (not (every
+          #'null
+          (mapcar #'(lambda (parent)
+                      (if (equal group parent)
+                          t
+                          (if (not (null parent))
+                              (storage.is-offspring group parent)
+                              nil)))
+                  (parents item))))))
+
 (defun storage.get-all-child-groups (root &optional (sort-f #'catalog.alphabet-group-sort-f))
   (sort
    (let ((children (groups root))
@@ -133,9 +145,9 @@
 
 (defun storage.edit-object (object &optional (key nil key-supplied-p))
   "Editing or adding object to storage and edit it in appropriate lists"
-  ;; (log5
   (when (not key-supplied-p)
     (setf key (key object)))
+  (log5::log-for test "add/edit ~a" key)
   (setf (gethash key (storage *global-storage*)) object)
   (when (equal (type-of object) 'product)
     (setf (products *global-storage*) (storage.edit-in-list (products *global-storage*) object key))
@@ -145,7 +157,7 @@
     (setf (groups *global-storage*) (storage.edit-in-list (groups *global-storage*) object key))
     (when (and (active object) (not (empty object)))
       (setf (actual-groups *global-storage*) (storage.edit-in-list (actual-groups *global-storage*) object key)))
-    (when (null (parent object))
+    (when (null (new-classes.parent object))
       (setf (root-groups *global-storage*) (storage.edit-in-list (root-groups *global-storage*) object key))))
   (when (equal (type-of object) 'filter)
     (setf (filters *global-storage*) (storage.edit-in-list (filters *global-storage*) object key))))
