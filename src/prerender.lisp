@@ -80,7 +80,7 @@
                  (siteprice (siteprice product))
                  ;; (delivery-price (delivery-price product))
                  (picname (car (get-pics articul))))
-             (format nil "<big class=\"price\"><b>~a</b><var> руб.</var></big>~a"
+             (format nil "<span class=\"add\" id=\"add-img\"><big class=\"price\"><b>~a</b><var> руб.</var></big>~a"
                      (get-format-price siteprice)
                      (soy.buttons:add-product-cart
                                (list :articul articul
