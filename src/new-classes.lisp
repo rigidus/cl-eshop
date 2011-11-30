@@ -590,3 +590,15 @@
    (:name func              :initform ""       :disabled t    :type string)
    (:name func-string       :initform ""       :disabled t    :type textedit)))
 
+(let ((product-instance (make-instance 'product))
+      (group-instance (make-instance 'group))
+      (filter-instance (make-instance 'filter)))
+  (defun new-classes.get-instance (type)
+    (let ((type-string (format nil "~a" type)))
+      (cond
+        ((equal "product" type-string)
+         product-instance)
+        ((equal "group" type-string)
+         group-instance)
+        ((equal "filter" type-string)
+         filter-instance)))))

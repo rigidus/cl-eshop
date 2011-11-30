@@ -246,18 +246,17 @@
                                                                                                     nil))))))))))
 
 
-(let ((object (gethash "kakdobratsja" (storage *global-storage*))))
-      (root:main (list :keywords "" ;;keywords
-                       :description "" ;;description
-                       :title (name object)
-                       :header (root:header (append (list :logged (root:notlogged)
-                                                          :cart (root:cart))
-                                                    (main-page-show-banner "line" (banner *main-page.storage*))))
-                       :footer (root:footer)
-                       :content  (static:main
-                                 (list :menu (new-classes.menu)
-                                       :breadcrumbs (bredcrumbs object)
-                                       :subcontent  (body object)
-                                       :rightblock  (rightblock object)))
-                 ))
-
+;; (let ((object (gethash "kakdobratsja" (storage *global-storage*))))
+;;       (root:main (list :keywords "" ;;keywords
+;;                        :description "" ;;description
+;;                        :title (name object)
+;;                        :header (root:header (append (list :logged (root:notlogged)
+;;                                                           :cart (root:cart))
+;;                                                     (main-page-show-banner "line" (banner *main-page.storage*))))
+;;                        :footer (root:footer)
+;;                        :content  (static:main
+;;                                  (list :menu (new-classes.menu)
+;;                                        :breadcrumbs (bredcrumbs object)
+;;                                        :subcontent  (body object)
+;;                                        :rightblock  (rightblock object)))
+;;                        ))

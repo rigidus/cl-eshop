@@ -35,14 +35,16 @@
                    (mapcar #'(lambda (node)
                                (format nil "~a"
                                        (soy.new-catalog:catalog-item
-                                        (let ((style
-                                               (multiple-value-bind (width height)
-                                                   (images-get-dimensions
-                                                    (format nil "~a/htimgs~a" *path-to-dropbox* (pic node)))
-                                                 (images-style-for-resize width height 70))))
+                                        (let* ((pic (when (not (equal "" (pic node)))
+                                                      (pic node)))
+                                               (style (when pic
+                                                       (multiple-value-bind (width height)
+                                                           (images-get-dimensions
+                                                            (format nil "~a/htimgs~a" *path-to-dropbox* (pic node)))
+                                                         (images-style-for-resize width height 70)))))
                                           (list
                                            :maingrouplink (format nil "<a href=\"/~a\">~a</a>~%" (key node) (name node))
-                                           :maingroupimg (pic node)
+                                           :maingroupimg pic
                                            :imgstyle style
                                            :groups (mapcar #'(lambda (g)
                                                                (format nil "<a href=\"/~a\">~a</a>~%" (key g) (name g)))
