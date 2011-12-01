@@ -2,8 +2,8 @@
 
 
 (defun write-products-report (stream)
-  (format stream "~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~%"
-          "артикул" "цена магазина" "цена сайта" "имя" "имя real" "имя yml" "seo текст"
+  (format stream "~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~a;~%"
+          "артикул" "цена магазина" "цена сайта" "имя" "имя real" "имя yml" "is-yml-show" "seo текст"
           "фотографии" "характеристики" "активный" "группа" "родительская группа"
           "secret" "DTD" "vendor")
   (maphash #'(lambda (k v)
@@ -40,9 +40,9 @@
                                  (setf secret (getf option :value)))
                    (if (string= (format nil "~a" id) "172466")
                        (wlog v))
-                   (format stream "~a;~a;~a;\"~a\";\"~a\";\"~a\";~a;~a;~a;~a;\"~a\";\"~a\";~a;~a;~a~%"
+                   (format stream "~a;~a;~a;\"~a\";\"~a\";\"~a\";~a;~a;~a;~a;~a;\"~a\";\"~a\";~a;~a;~a~%"
                            id (price v) (siteprice v) name name-real
-                           name-yml desc img options active group-name
+                           name-yml (yml.is-yml-show v) desc img options active group-name
                            parent-group-name secret
                            (gethash (articul v) *xls.product-table*)
                            (vendor v))
@@ -521,6 +521,7 @@
                 121082
                 109718
                 163465))
+(report.delet-from-groups)
 )
 
 
@@ -670,10 +671,12 @@
   (let ((groups (storage.get-groups-list)))
     (mapcar #'(lambda (group)
                 (setf (products group)
-                      (remove-if-not #'(lambda (v)
-                                         (gethash (key v) (storage *global-storage*)))
+                      (remove-if-not #'(lambda (v) (let ((pr (gethash (key v) (storage *global-storage*))))
+                                                     (and pr
+                                                          (equal group (new-classes.parent pr)))))
                                      (products group))))
-            groups)))
+            groups)
+    "done"))
 
 
 
@@ -681,7 +684,7 @@
 (defun report.delete-doubles (products)
   (mapcar #'(lambda (v)
               ;; (wlog v)
-              (format t "rewrite ^/~a/?$ /~a permanent;~&" v v)
+              ;; (format t "rewrite ^/~a/?$ /~a permanent;~&" v v)
               (let ((pr (gethash (format nil "~a" v) (storage *global-storage*))))
                 (when pr
                   (remhash (format nil "~a" v) (storage *global-storage*)))))

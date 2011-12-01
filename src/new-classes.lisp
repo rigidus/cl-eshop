@@ -116,7 +116,7 @@
                        ;;       (setf curline str)
                        ;;       (setf needconc t))))))))))))
 
-(defun unserialize-optgroups (filepath)
+(defun new-classes.unserialize-optgroups (filepath)
   (let ((num 0))
     (with-open-file (file filepath)
       (loop for line = (read-line file nil 'EOF)
@@ -127,10 +127,13 @@
                   (optgroups (getf item :optgroups))
                   (product (gethash key (storage *global-storage*))))
              (incf num)
-             (setf (optgroups product) optgroups)
-             (setf (optgroups product) (new-classes.get-transform-optgroups product)))))
+             (when product
+               (setf (optgroups product) optgroups)
+               (setf (optgroups product) (new-classes.get-transform-optgroups product)))
+             (if (not product)
+                 (wlog key))
+             )))
     num))
-
 
 
 (defmethod new-classes.get-transform-optgroups ((item product))
@@ -334,8 +337,8 @@
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-  (unserialize-from-file (pathname (format nil "~atest/tt1.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/groups.bkp" (user-homedir-pathname))) (make-instance 'group))
+  (unserialize-from-file (pathname (format nil "~atest/tt4.bkp" (user-homedir-pathname))) (make-instance 'product))
+  (unserialize-from-file (pathname (format nil "~atest/grs1.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)
@@ -343,7 +346,8 @@
   (maphash #'(lambda (key value)
                (declare (ignore key))
                (new-classes.post-unserialize value))
-           (storage *global-storage*)))
+           (storage *global-storage*))
+  )
 
 (defun new-classes.parent (item)
   "Returns main parent of item"

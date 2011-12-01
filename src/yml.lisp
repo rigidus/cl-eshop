@@ -31,6 +31,23 @@
 (defun yml.is-available (product)
   t)
 
+(defun yml.is-yml-show (product)
+  (and (equal 'product (type-of product))
+       (not (null (new-classes.parent product)))
+       (ymlshow (new-classes.parent product))
+       (active product)
+       (not (null (price product)))
+       (> (price product) 0)
+       ;;для селективного исключения товаров по значению специальной опции
+       (let ((yml-show))
+         (with-option1 product "Secret" "YML"
+                       (setf yml-show (getf option :value)))
+         (if (and (not (null yml-show))
+                  (string= "No"
+                           (stripper yml-show)))
+             nil
+             t))))
+
 (defun yml.get-product-delivery-price (product)
   (let ((parent (new-classes.parent product)))
     (if (delivery-price product)
