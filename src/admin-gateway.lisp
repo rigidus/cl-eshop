@@ -96,7 +96,7 @@
        (soy.admin-table:test-html
         (list
          :title "Group table"
-         :script (soy.admin-table:group-table-js))))
+         :script (soy.admin-table:group-table-js (list :fields '("checkbox" "name" "key" "numprod" "order" "active"))))))
       (t "Ololo?"))))
 
 (defun admin-gateway.get-info ()
