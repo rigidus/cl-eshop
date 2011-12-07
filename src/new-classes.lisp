@@ -575,7 +575,7 @@
    (:name products            :initform nil                             :disabled t     :type product-list              :serialize nil)
    (:name filters             :initform nil                             :disabled t     :type string                    :serialize nil)
    (:name fullfilter          :initform nil                             :disabled t     :type string                    :serialize nil)
-   (:name raw-fullfilter      :initform nil                             :disabled t     :type string                    :serialize t)
+   (:name raw-fullfilter      :initform nil                             :disabled t     :type textedit                  :serialize t)
    (:name vendors-seo         :initform (make-hash-table :test #'equal) :disabled t     :type textedit-hashtable        :serialize t)
    (:name seo-text            :initform nil                             :disabled nil   :type textedit                  :serialize t)
    (:name keyoptions          :initform nil                             :disabled nil   :type keyoptions                :serialize t)

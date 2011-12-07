@@ -259,7 +259,7 @@
        (if raw-count-transit
            (setf (count-transit  product) count-transit))
        ;; проставляем флаг active
-       (setf (active product) t);; (if (= (count-total product) 0) nil t))
+       (setf (active product) (if (= (count-total product) 0) nil t))
        ;; (if (= (count-total product) 0)
        ;;     (wlog (format nil "~{~a ~^|~}" (list articul raw-price raw-siteprice isnew isspec
        ;;                            name realname raw-count-total raw-count-transit
@@ -269,6 +269,7 @@
      ;; (gateway-check-1c-name product name)
        ;; (incf *test.num*)
        ;; (gateway.check-price product price siteprice)
+       ;; (wlog (siteprice (gethash "164197" (storage *global-storage*))))
        (when (not old-product)
          (storage.edit-object product))
        ;; (setf (gethash (format nil "~a" articul) *storage*) product)
@@ -422,6 +423,8 @@
                 (when (and (not (gethash (format nil "~a" (articul v)) articuls))
                           (active v))
                     (setf (active v) nil)
+                    (setf (count-total v) 0)
+                    (setf (count-transit v) 0)
                     (storage.edit-object v)))
             (products *global-storage*))
   ))

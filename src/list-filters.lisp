@@ -61,6 +61,16 @@
   (subseq items (* page-size (- page-number 1)) page-size))
 
 
+;; (defun list-filters.get-sort-func (elt sorter)
+;;   (cond
+;;     ((stringp elt)
+;;      (if (equal (getf sorter :direction) "desc")
+
+
+(defun list-filters.sort-list (list json-sorters)
+  (let ((sorters (mapcar #'servo.alist-to-plist (decode-json-from-string json-sorters))))
+    list))
+
 (defun list-filters.get-json ()
   (print (hunchentoot:request-uri hunchentoot:*request*))
   (print (hunchentoot:post-parameters hunchentoot:*request*))
@@ -68,7 +78,9 @@
          (type (getf params :type))
          (parent (getf params :parent))
          (start (getf params :start))
-         (limit (getf params :limit)))
+         (limit (getf params :limit))
+         (sorters (getf params :sort)))
+    (log5::log-for test "~a" params)
     (setf start
           (if start
               (parse-integer start)
@@ -80,9 +92,13 @@
     (cond
       ((equalp type "groups")
        (let ((group-list (groups *global-storage*)))
+         ;; debug
+         (setf group-list (list-filters.sort-list group-list sorters))
+         ;; /debug
          (soy.admin-table:json-data
           (list
            :number (length group-list)
+           :type "groups"
            :elts (mapcar #'(lambda (g)
                              (soy.admin-table:json-group-elt
                               (list
@@ -98,7 +114,19 @@
        (if (or (null parent)
                (null (gethash parent (storage *global-storage*))))
            "Incorrect parent"
-           ;;else
-           ;;TODO
-           "Correct parent"))
+           ;; else
+           (let ((product-list (products (gethash parent (storage *global-storage*)))))
+             (soy.admin-table:json-data
+              (list
+               :number (length product-list)
+               :type "products"
+               :elts (mapcar #'(lambda (g)
+                                 (soy.admin-table:json-product-elt
+                                  (list
+                                   :name (name-provider g)
+                                   :key (key g)
+                                   :active (if (active g)
+                                               "true"
+                                               "false"))))
+                             (list-filters.limit-region product-list start limit)))))))
       (t "Ololo! Dont know"))))

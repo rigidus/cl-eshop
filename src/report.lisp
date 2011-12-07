@@ -299,6 +299,17 @@
               "167533"
               "167534"
               "167535"))
+  (let ((rs))
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (when (and (equal (type-of v) 'product)
+                            (active v)
+                            (= (siteprice v) 0))
+                   (push v rs)
+                   (setf (active v) nil)
+                   (wlog (key v))))
+             (storage *global-storage*))
+    (length rs))
 
 ;; (mapcar #'(lambda (v) (setf (active v) nil))
 ;;  (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
@@ -316,160 +327,7 @@
   ;;                    (wlog (name v))
   ;;                    (setf (delivery-price v) 300))))
   ;;          (storage *global-storage*))
-(report.delete-doubles)
-)
-
-
-
-(defun product-delivery (p)
-  (let ((g (parent p))
-        (daily (gethash (articul p) (daily *main-page.storage*))))
-    (if daily
-        0
-        (aif (delivery-price p)
-             it
-             (if (and (not (null g))
-                      (delivery-price g))
-                 (delivery-price g)
-                 300))))
-  )
-
-
-;; (with-open-file (stream "/home/webadmin/Dropbox/htconf/test.csv")
-;;     (do ((line (read-line stream nil)
-;;                (read-line stream nil)))
-;;         ((null line))
-;;       ;; (print line)
-;;       (let* ((words (split-sequence:split-sequence #\, line))
-;;              (article (car words))
-;;              (price (parse-integer (cadr words)))
-;;              (siteprice (parse-integer (caddr words)))
-;;              (prod (gethash article (storage *global-storage*))))
-;;         (format t "~&~a: ~a ~a" article price siteprice)
-;;         (if prod
-;;             (setf (price prod) price)
-;;             (setf (siteprice prod) siteprice))
-;;       )))
-
-
-
-
-;; (let ((res)
-;;       (res1))
-;;   (print "test")
-;;   (maphash #'(lambda (k v)
-;;                (if (and (equal (type-of v) 'product)
-;;                         (new-classes.parent v)
-;;                         (not (equal (type-of (new-classes.parent v)) 'group)))
-;;                    (push v res)))
-;;            (storage *global-storage*))
-;;   (print (length res))
-;;   (car res
-;;   ;; (mapcar #'(lambda (v)
-;;   ;;             (let ((key (key v)))
-;;   ;;               (setf (key v) (format nil "~a" key))
-;;   ;;               (storage.edit-object v)
-;;   ;;               ;; (remhash key (storage *global-storage*)))
-;;   ;;             ))
-;;   ;;         res)
-;;   ;; (print (length res1))
-;;   )
-
-
-;; (let ((res)
-;;       (res1))
-;;   (print "test")
-;;   (maphash #'(lambda (k v)
-;;                (if (equal (type-of (key v))
-;;                           (type-of 132345))
-;;                    (push v res)))
-;;            (storage *global-storage*))
-;;   (print (length res))
-;;   ;; (mapcar #'(lambda (v)
-;;   ;;             (let ((key (key v)))
-;;   ;;               (setf (key v) (format nil "~a" key))
-;;   ;;               (storage.edit-object v)
-;;   ;;               ;; (remhash key (storage *global-storage*)))
-;;   ;;             ))
-;;   ;;         res)
-;;   ;; (print (length res1))
-;;   )
-
-
-;; (let ((res)
-;;       (res1))
-;;   (print "test")
-;;   (maphash #'(lambda (k v)
-;;                (when (and (equal (type-of v) 'group)
-;;                         (equal (fullfilter v) ""))
-;;                  (setf (fullfilter v) nil)
-;;                  (format t "~&~a:~a" k (fullfilter v))))
-;;            (storage *global-storage*))
-;;   (print (length res))
-;;   ;; (mapcar #'(lambda (v)
-;;   ;;             (let ((key (key v)))
-;;   ;;               (setf (key v) (format nil "~a" key))
-;;   ;;               (storage.edit-object v)
-;;   ;;               ;; (remhash key (storage *global-storage*)))
-;;   ;;             ))
-;;   ;;         res)
-;;   ;; (print (length res1))
-;;   )
-
-
-;; (mapcar #'(lambda (v) (setf (active v) nil))
-;;  (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
-;; (mapcar #'(lambda (v) (setf (active v) nil))
-;;  (storage.get-filtered-products (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))))
-
-;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
-;; (time (create-report "xls/products.csv" #'write-products-report))
-;; (create-report "seo/report-groups.csv" #'write-groups)
-;; (create-report "seo/report-products.csv" #'write-products)
-;; (create-report "seo/report-vendors.csv" #'write-vendors)
-;; (create-report "seo/write-groups-active-product-num.csv" #'write-groups-active-product-num)
-
-
-;; (progn
-;;   (mapcar #'(lambda (v) (setf (groups v) nil))
-;;           (groups *global-storage*))
-;;   (mapcar #'(lambda (v)
-;;               (mapcar #'(lambda (item)
-;;                           (push v (groups item)))
-;;                       (parents v)))
-;;           (groups *global-storage*)))
-
-;; (let ((rs))
-;;   (maphash #'(lambda (k v)
-;;                (declare (ignore k))
-;;                (when (and (equal (type-of v) 'product)
-;;                         (active v)
-;;                         (= (siteprice v) 0))
-;;                  (push v rs)
-;;                  (setf (active v) nil)
-;;                  (wlog (key v))))
-;;            (storage *global-storage*))
-;;   (length rs))
-
-
-;; (let ((rs))
-;;   (maphash #'(lambda (k v)
-;;                (declare (ignore k))
-;;                (when (and (equal (type-of v) 'article)
-;;                           (not (null (title v))))
-;;                  (push v rs)
-;;                  (wlog (key v))))
-;;            *storage-articles*)
-;;   (length rs))
-
-
-(defun report.delete-doubles ()
-  (mapcar #'(lambda (v)
-              ;; (wlog v)
-              (let ((pr (gethash (format nil "~a" v) (storage *global-storage*))))
-                (when pr
-                  (remhash (format nil "~a" v) (storage *global-storage*)))))
-          (list 150573
+(report.delete-doubles (list 150573
                 165780
                 147264
                 166163
@@ -662,7 +520,172 @@
                 127214
                 121082
                 109718
-                163465)))
+                163465))
+)
+
+
+
+(defun product-delivery (p)
+  (let ((g (parent p))
+        (daily (gethash (articul p) (daily *main-page.storage*))))
+    (if daily
+        0
+        (aif (delivery-price p)
+             it
+             (if (and (not (null g))
+                      (delivery-price g))
+                 (delivery-price g)
+                 300))))
+  )
+
+
+;; (with-open-file (stream "/home/webadmin/Dropbox/htconf/test.csv")
+;;     (do ((line (read-line stream nil)
+;;                (read-line stream nil)))
+;;         ((null line))
+;;       ;; (print line)
+;;       (let* ((words (split-sequence:split-sequence #\, line))
+;;              (article (car words))
+;;              (price (parse-integer (cadr words)))
+;;              (siteprice (parse-integer (caddr words)))
+;;              (prod (gethash article (storage *global-storage*))))
+;;         (format t "~&~a: ~a ~a" article price siteprice)
+;;         (if prod
+;;             (setf (price prod) price)
+;;             (setf (siteprice prod) siteprice))
+;;       )))
+
+
+
+
+;; (let ((res)
+;;       (res1))
+;;   (print "test")
+;;   (maphash #'(lambda (k v)
+;;                (if (and (equal (type-of v) 'product)
+;;                         (new-classes.parent v)
+;;                         (not (equal (type-of (new-classes.parent v)) 'group)))
+;;                    (push v res)))
+;;            (storage *global-storage*))
+;;   (print (length res))
+;;   (car res
+;;   ;; (mapcar #'(lambda (v)
+;;   ;;             (let ((key (key v)))
+;;   ;;               (setf (key v) (format nil "~a" key))
+;;   ;;               (storage.edit-object v)
+;;   ;;               ;; (remhash key (storage *global-storage*)))
+;;   ;;             ))
+;;   ;;         res)
+;;   ;; (print (length res1))
+;;   )
+
+
+;; (let ((res)
+;;       (res1))
+;;   (print "test")
+;;   (maphash #'(lambda (k v)
+;;                (if (equal (type-of (key v))
+;;                           (type-of 132345))
+;;                    (push v res)))
+;;            (storage *global-storage*))
+;;   (print (length res))
+;;   ;; (mapcar #'(lambda (v)
+;;   ;;             (let ((key (key v)))
+;;   ;;               (setf (key v) (format nil "~a" key))
+;;   ;;               (storage.edit-object v)
+;;   ;;               ;; (remhash key (storage *global-storage*)))
+;;   ;;             ))
+;;   ;;         res)
+;;   ;; (print (length res1))
+;;   )
+
+
+;; (let ((res)
+;;       (res1))
+;;   (print "test")
+;;   (maphash #'(lambda (k v)
+;;                (when (and (equal (type-of v) 'group)
+;;                         (equal (fullfilter v) ""))
+;;                  (setf (fullfilter v) nil)
+;;                  (format t "~&~a:~a" k (fullfilter v))))
+;;            (storage *global-storage*))
+;;   (print (length res))
+;;   ;; (mapcar #'(lambda (v)
+;;   ;;             (let ((key (key v)))
+;;   ;;               (setf (key v) (format nil "~a" key))
+;;   ;;               (storage.edit-object v)
+;;   ;;               ;; (remhash key (storage *global-storage*)))
+;;   ;;             ))
+;;   ;;         res)
+;;   ;; (print (length res1))
+;;   )
+
+
+;; (mapcar #'(lambda (v) (setf (active v) nil))
+;;  (storage.get-filtered-products (gethash "vinchester" (storage *global-storage*))))
+;; (mapcar #'(lambda (v) (setf (active v) nil))
+;;  (storage.get-filtered-products (gethash "vneshnie-zhostkie-diski" (storage *global-storage*))))
+
+;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
+;; (time (create-report "xls/products.csv" #'write-products-report))
+;; (create-report "seo/report-groups.csv" #'write-groups)
+;; (create-report "seo/report-products.csv" #'write-products)
+;; (create-report "seo/report-vendors.csv" #'write-vendors)
+;; (create-report "seo/write-groups-active-product-num.csv" #'write-groups-active-product-num)
+
+
+;; (progn
+;;   (mapcar #'(lambda (v) (setf (groups v) nil))
+;;           (groups *global-storage*))
+;;   (mapcar #'(lambda (v)
+;;               (mapcar #'(lambda (item)
+;;                           (push v (groups item)))
+;;                       (parents v)))
+;;           (groups *global-storage*)))
+
+;; (let ((rs))
+;;   (maphash #'(lambda (k v)
+;;                (declare (ignore k))
+;;                (when (and (equal (type-of v) 'product)
+;;                         (active v)
+;;                         (= (siteprice v) 0))
+;;                  (push v rs)
+;;                  (setf (active v) nil)
+;;                  (wlog (key v))))
+;;            (storage *global-storage*))
+;;   (length rs))
+
+
+;; (let ((rs))
+;;   (maphash #'(lambda (k v)
+;;                (declare (ignore k))
+;;                (when (and (equal (type-of v) 'article)
+;;                           (not (null (title v))))
+;;                  (push v rs)
+;;                  (wlog (key v))))
+;;            *storage-articles*)
+;;   (length rs))
+
+(defun report.delet-from-groups ()
+  (let ((groups (storage.get-groups-list)))
+    (mapcar #'(lambda (group)
+                (setf (products group)
+                      (remove-if-not #'(lambda (v)
+                                         (gethash (key v) (storage *global-storage*)))
+                                     (products group))))
+            groups)))
+
+
+
+
+(defun report.delete-doubles (products)
+  (mapcar #'(lambda (v)
+              ;; (wlog v)
+              (format t "rewrite ^/~a/?$ /~a permanent;~&" v v)
+              (let ((pr (gethash (format nil "~a" v) (storage *global-storage*))))
+                (when pr
+                  (remhash (format nil "~a" v) (storage *global-storage*)))))
+          products))
 
 
 
@@ -704,3 +727,6 @@
 ;;                   (price (price v)))
 ;;               ((<= 0.2 (float (/ (abs (- siteprice-old siteprice 1)) siteprice-old))))))
 ;;         (serials.all-prs))
+
+
+
