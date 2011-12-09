@@ -56,6 +56,62 @@
             (delivery-price parent)
             300))))
 
+(defun yml.is-daily-product (product)
+  (let ((result nil))
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (when (and (equal (key v) (key product))
+                            (< (date-start v) (get-universal-time) (date-finish v)))
+                   (setf result t)))
+             (daily *main-page.storage*))
+    result))
+
+
+(defun yml.get-delivery-price (cart)
+  (let ((result 300))
+    (mapcar #'(lambda (v)
+                (let* ((product (gethash (getf v :articul) (storage *global-storage*)))
+                       (d (yml.get-product-delivery-price1 product)))
+                  (if (= d 500)
+                      (setf result 500))
+                  (if (and (= d 0)
+                           (= result 300))
+                      (setf result 0))))
+            cart)
+    result))
+
+(defun yml.get-product-delivery-price1 (product)
+
+  (let ((parent (if product (new-classes.parent product)))
+        (key)
+        (result 300))
+    (when parent
+      (setf key (key parent))
+      (if (or (equal key "krupnaya-bitivaya-tehnika")
+              (equal key "vstraivaemye-rabochie-poverhnosti")
+              (equal key "vstraivaemye-rabochie-komplekti")
+              (equal key "vityajki")
+              (equal key "stiralnie-mashiny")
+              (equal key "posudomoechnie-mashiny")
+              (equal key "plity")
+              (equal key "holodilniki-i-morozilniki")
+              (equal key "duhovki")
+              (let ((diagonal))
+                 (with-option1 product "Экран" "Диагональ экрана, дюйм"
+                               (setf diagonal (getf option :value)))
+                 (if (equal diagonal "")
+                     (setf diagonal nil))
+                 (setf diagonal (ceiling (arnesi:parse-float diagonal)))
+                 (> diagonal 32)))
+          (setf result 500)
+          (if (or (equal key "planshetnie-komputery")
+                  (equal key "cifrovye-fotoapparaty")
+                  (yml.is-daily-product product))
+              (setf result 0))))
+    result))
+
+
+
 (defun yml-page ()
   (setf (hunchentoot:content-type*) "application/xml; charset=utf-8")
   (yml:xml (list :datetime (time.get-date-time)
@@ -101,7 +157,7 @@
                                                      t)))
                                     :collect (yml:offer (list :articul (articul product)
                                                               :notAvailable (not (yml.is-available product))
-                                                              :deliveryPrice (yml.get-product-delivery-price product)
+                                                              :deliveryprice (yml.get-product-delivery-price1 product)
                                                               :price (siteprice product)
                                                               :category (gethash
                                                                          (key (new-classes.parent product))
@@ -260,6 +316,7 @@
                       t)))
      :collect
      (yml:offer (list :articul (articul product)
+                      :deliveryprice (yml.get-product-delivery-price1 product)
                       :price (siteprice product)
                       :category (gethash
                                  (key (new-classes.parent product))
@@ -301,3 +358,12 @@
 
 
 
+;; (yml.get-delivery-price
+;;  (newcart-cart-products (list
+;;                          (list (cons :id "145982")
+;;                                (cons :count 1))
+;;                          (list (cons :id "173057")
+;;                                (cons :count 1))
+;;                          ;; (list (cons :id "165822")
+;;                                ;; (cons :count 1))
+;;                          )))

@@ -306,3 +306,14 @@ var i,y,x=\"3c7461626c6520636c6173733d226261636b5f746f5f7363686f6f6c223e0d0a3c74
 
 (restas:define-route back-to-school/-route ("/back_to_school/")
   (root:main (bts-view-page)))
+
+(restas:define-route elka-2011-route ("/elka2012")
+  (soy.elka2012:base (list :days 24
+                           :orders (ceiling (- *order-id* 66070) 5)
+                           :sharebuttons (soy.articles:share-buttons))))
+
+
+(restas:define-route elka-2011/-route ("/elka2012/")
+    (soy.elka2012:base (list :days 24
+                           :orders (ceiling (- *order-id* 66070) 5)
+                           :sharebuttons (soy.articles:share-buttons))))

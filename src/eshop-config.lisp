@@ -79,6 +79,7 @@
             "new-catalog.soy"
             "class_forms.soy"
             "admin.soy"
+            "elka2012.soy"
             )))
 
 (print "Compiling all templates")

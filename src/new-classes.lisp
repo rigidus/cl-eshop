@@ -415,10 +415,12 @@
                             (fullfilter v))
                    (let ((item (gethash (key v) original-storage)))
                      (when item
-                       (let ((filter (fullfilter v)))
+                       (let ((raw-filter (fullfilter v))
+                             (filter (fullfilter v)))
                          (setf filter (object-fields.string-add-newlines filter))
                          (setf filter (new-classes.decode filter (make-instance 'group-filter)))
-                         (setf (fullfilter item) filter))))))
+                         (setf (fullfilter item) filter)
+                         (setf (raw-fullfilter item) raw-filter))))))
              (storage *global-storage*)))
   ;;необходимо освободить память от уже не нужных продуктов
   (sb-ext:gc :full t))
