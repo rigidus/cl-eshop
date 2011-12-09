@@ -324,6 +324,8 @@
              (realname  (cdr (assoc :realname elt)))
              (count-total    (cdr (assoc :count--total elt)))
              (count-transit  (cdr (assoc :count--transit elt))))
+         ;; (when (equal (format nil "~a" articul) "172999")
+         ;;   (wlog elt))
          (gateway.process-product1 articul price siteprice isnew isspec name realname count-total count-transit bonuscount)
          ))))
 
@@ -432,6 +434,30 @@
 ;; (maphash #'(lambda (k v)
 ;;              (declare (ignore
 ;;  (storage *global-storage*))
+
+(defun gateway.get-raw-history (&optional (timestamp (get-universal-time)))
+  (let* ((filename (time.encode.backup timestamp))
+         (current-name (format nil "~a/gateway/~a.bkp" *path-to-logs* filename))
+         (*serialize-check-flag* nil)
+         (last-gateway)
+         (data))
+    (wlog current-name)
+    (setf last-gateway (car
+                        (remove-if #'(lambda (v) (string< current-name (format nil "~a" v)))
+                                   (reverse (directory
+                                             (format nil "~a/gateway/*.bkp" *path-to-logs*))))))
+    (wlog last-gateway)
+    (if last-gateway
+        (let ((data)
+              (lastgateway-ts (time.decode.backup
+                               (subseq
+                                (car (last (split-sequence:split-sequence
+                                            #\/
+                                            (format nil "~a" last-gateway)))) 0 19))))
+          (with-open-file (file last-gateway)
+            (loop
+               :for line = (read-line file nil 'EOF)
+
 
 (defun gateway.restore-history (&optional (timestamp (get-universal-time)))
   (let* ((filename (time.encode.backup timestamp))
