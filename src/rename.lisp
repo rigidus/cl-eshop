@@ -252,5 +252,5 @@
 ;;             (let ((p (gethash (format nil "~a" v) (storage *global-storage*))))
 ;;               (wlog p)
 ;;               (rename-remove-product-pics p)
-;;             ))
-;;         '(158387))
+;;               ))
+;;         '(170733))
