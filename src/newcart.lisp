@@ -228,7 +228,7 @@
             ;; Временно доставка 300 на все
             ;; существует два вида доставки: курьером и самовывоз (express | pickup)
             (if  (string= delivery-type "express")
-                 (setf deliverysum 300))
+                 (setf deliverysum (yml.get-delivery-price (newcart-cart-products cart))))
             (format t "EKK: ~a" ekk)
             (setf client-mail
                   (sendmail:clientmail
@@ -294,6 +294,7 @@
                    :footer (root:newcart-footer)
                    :leftcells (soy.newcart:thanks
                                (list :sum pricesum
+                                     :deliverysum deliverysum
                                      :comment  (let ((comment (format nil "~a"
                                                                       (cond  ((string= delivery-type "express") courier_comment)
                                                                              ((string= delivery-type "pickup") pickup_comment)
@@ -322,7 +323,8 @@
                                               (soy.newcart:map-levashovskii-img))
                                      :order_id order-id))
                    :rightcells (soy.newcart:rightcells
-                                (list :deliverysum pricesum
+                                (list :pricesum pricesum
+                                      :deliverysum deliverysum
                                       :productscount count
                                       :tovar (newcart-tovar count)
                                       :products (mapcar #'soy.newcart:product-item  products)))))

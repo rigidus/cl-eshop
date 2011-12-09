@@ -199,10 +199,14 @@
                                   (delta-price object)))
             :bestprice (> (delta-price object) 0)
             :firstpic (car pics)
-            :promotiontext (let ((value))
-                             (with-option1 object "Secret" "Продающий текст"
-                                           (setf value (getf option :value)))
-                             value)
+            :promotiontext (concatenate 'string
+                                        (let ((value))
+                                          (with-option1 object "Secret" "Продающий текст"
+                                                        (setf value (getf option :value)))
+                                          value)
+                                        " "
+                                        (if (= 0 (yml.get-product-delivery-price1 object))
+                                            "(бесплатная доставка)"))
             :keyopts (render.get-catalog-keyoptions object)
             :oneclickbutton  (if (not (preorder object))
                                  (soy.buttons:add-one-click (list :articul (articul object))))
@@ -353,10 +357,15 @@
                              :accessories (soy.product:accessories)
                              :reviews (soy.product:reviews)
                              :simular (soy.product:simulars)
-                             :slogan (let ((value))
-                                       (with-option1 object "Secret" "Продающий текст"
-                                                     (setf value (getf option :value)))
-                                       value)
+                             :slogan (concatenate 'string
+                                                  (let ((value))
+                                                    (with-option1 object "Secret" "Продающий текст"
+                                                                  (setf value (getf option :value)))
+                                                    value)
+                                                  " "
+                                                   (if (= 0 (yml.get-product-delivery-price1 object))
+                                            "(бесплатная доставка)"))
+
                              :others (soy.product:others
                                       (list :others (mapcar #'(lambda (x)
                                                                 (if (equal 'product (type-of x))
