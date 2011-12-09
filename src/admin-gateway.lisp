@@ -88,15 +88,94 @@
                    (print get-params) (servo.plist-to-unique get-params)
                    (print post-params) (servo.plist-to-unique post-params))))))
 
+(defun admin.group-content-column (dataindex)
+  (soy.admin-table:table-column
+   (cond
+     ((equal dataindex "checkbox")
+      (list :text "Selected"
+            :width 30
+            :hideable "false"
+            :dataIndex dataindex))
+     ((equal dataindex "name")
+      (list :text "Name"
+            :width 100
+            :hideable "false"
+            :dataIndex dataindex))
+     ((equal dataindex "key")
+      (list :text "Key"
+            :width 150
+            :dataIndex dataindex))
+     ((equal dataindex "numprod")
+      (list :text "Number of products"
+            :flex 1
+            :dataIndex dataindex))
+     ((equal dataindex "order")
+      (list :text "Order"
+            :width 150
+            :dataIndex "order"))
+     ((equal dataindex "active")
+      (list :text "Active"
+            :width 150
+            :sortable "false"
+            :dataIndex "active"))
+     (t nil))))
+
+(defun admin.product-content-column (dataindex)
+  (soy.admin-table:table-column
+   (cond
+     ((equal dataindex "checkbox")
+      (list :text "Selected"
+            :width 30
+            :hideable "false"
+            :dataIndex dataindex))
+     ((equal dataindex "name")
+      (list :text "Name"
+            :width 100
+            :hideable "false"
+            :dataIndex dataindex))
+     ((equal dataindex "key")
+      (list :text "Key"
+            :width 150
+            :dataIndex dataindex))
+     ((equal dataindex "active")
+      (list :text "Active"
+            :width 150
+            :sortable "false"
+            :dataIndex "active"))
+     (t nil))))
+
 (defun admin.content-table ()
   (let* ((params (servo.alist-to-plist (hunchentoot:get-parameters hunchentoot:*request*)))
          (type (getf params :type)))
     (cond
-      ((equalp type "groups")
-       (soy.admin-table:test-html
-        (list
-         :title "Group table"
-         :script (soy.admin-table:group-table-js))))
+      ((equal type "groups")
+       (let ((fields (list "checkbox" "name" "key" "numprod" "order" "active")))
+         (soy.admin-table:test-html
+          (list
+           :title "Group table"
+           :script (soy.admin-table:table-js
+                    (list
+                     :name "Groups"
+                     :type "groups"
+                     :pagesize 50
+                     :remotesort "true"
+                     :fields fields
+                     :columns (mapcar #'admin.group-content-column fields)))))))
+      ((equal type "products")
+       (let ((fields (list "checkbox" "name" "key" "active")))
+         (soy.admin-table:test-html
+          (list
+           :title "Product table"
+           :backlink (getf params :parent)
+           :script (soy.admin-table:table-js
+                    (list
+                     :name "Products"
+                     :type "products"
+                     :parent (getf params :parent)
+                     :pagesize 50
+                     :remotesort "false"
+                     :fields fields
+                     :columns (mapcar #'admin.product-content-column fields)))))))
       (t "Ololo?"))))
 
 (defun admin-gateway.get-info ()
@@ -112,6 +191,9 @@
     (when (and item post-data)
       (setf post-data (admin.post-data-preprocessing (servo.plist-to-unique post-data)))
       (new-classes.edit-fields item post-data)
+      ;; need to fix
+      (if (and (equal (type-of item) 'group) (not (null (getf post-data :fullfilter))))
+          (setf (fullfilter item) (getf post-data :fullfilter)))
       (object-fields.product-groups-fix item)
       (setf item-fields (new-classes.make-fields item)))
     (if item
@@ -258,7 +340,8 @@
   "keyoptions & aliases (catalog-keyoptions) preprocessing"
   (let ((result post-data)
         (keyoptions)
-        (catalog-keyoptions))
+        (catalog-keyoptions)
+        (raw-fullfilter (getf post-data :raw-fullfilter)))
     ;;keyoptions
     (loop
        for cnt from 0
@@ -290,4 +373,11 @@
            (when (and (string/= "" optgroup) (string/= "" optname) (string/= "" showname))
              (push (list :optgroup optgroup :optname optname :showname showname :units units) catalog-keyoptions))))
     (setf result (append result (list :catalog-keyoptions (nreverse catalog-keyoptions))))
+    ;; fullfilter decode
+    (if raw-fullfilter
+        (let ((new-raw (getf result :raw-fullfilter))
+              (new-full))
+          (setf new-full (new-classes.decode new-raw (make-instance 'group-filter)))
+          (setf (getf result :fullfilter) new-full)
+          (setf (getf result :raw-fullfilter) new-raw)))
     result))

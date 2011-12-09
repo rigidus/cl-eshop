@@ -268,6 +268,7 @@
     (setf (fullfilter item) nil))
   (when (and (raw-fullfilter item)
              (null (fullfilter item)))
+    (setf (raw-fullfilter item) (object-fields.string-add-newlines (raw-fullfilter item)))
     (setf (fullfilter item) (object-fields.string-add-newlines (raw-fullfilter item)))
     (setf (fullfilter item) (new-classes.decode (fullfilter item) (make-instance 'group-filter)))))
 
@@ -337,8 +338,8 @@
 
 (defun new-classes.unserialize-all ()
   (sb-ext:gc :full t)
-  (unserialize-from-file (pathname (format nil "~atest/tt4.bkp" (user-homedir-pathname))) (make-instance 'product))
-  (unserialize-from-file (pathname (format nil "~atest/grs1.bkp" (user-homedir-pathname))) (make-instance 'group))
+  (unserialize-from-file (pathname (format nil "~atest/tt10.bkp" (user-homedir-pathname))) (make-instance 'product))
+  (unserialize-from-file (pathname (format nil "~atest/grs10.bkp" (user-homedir-pathname))) (make-instance 'group))
   (unserialize-from-file (pathname (format nil "~atest/filters" (user-homedir-pathname))) (make-instance 'filter))
   (wlog "Making lists")
   (storage.make-lists)
@@ -581,7 +582,7 @@
    (:name products            :initform nil                             :disabled t     :type product-list              :serialize nil)
    (:name filters             :initform nil                             :disabled t     :type string                    :serialize nil)
    (:name fullfilter          :initform nil                             :disabled t     :type string                    :serialize nil)
-   (:name raw-fullfilter      :initform nil                             :disabled t     :type string                    :serialize t)
+   (:name raw-fullfilter      :initform nil                             :disabled nil   :type textedit                  :serialize t)
    (:name vendors-seo         :initform (make-hash-table :test #'equal) :disabled t     :type textedit-hashtable        :serialize t)
    (:name seo-text            :initform nil                             :disabled nil   :type textedit                  :serialize t)
    (:name keyoptions          :initform nil                             :disabled nil   :type keyoptions                :serialize t)
