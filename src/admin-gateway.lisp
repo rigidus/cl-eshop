@@ -191,6 +191,9 @@
     (when (and item post-data)
       (setf post-data (admin.post-data-preprocessing (servo.plist-to-unique post-data)))
       (new-classes.edit-fields item post-data)
+      ;; need to fix
+      (if (and (equal (type-of item) 'group) (not (null (getf post-data :fullfilter))))
+          (setf (fullfilter item) (getf post-data :fullfilter)))
       (object-fields.product-groups-fix item)
       (setf item-fields (new-classes.make-fields item)))
     (if item
@@ -370,6 +373,11 @@
            (when (and (string/= "" optgroup) (string/= "" optname) (string/= "" showname))
              (push (list :optgroup optgroup :optname optname :showname showname :units units) catalog-keyoptions))))
     (setf result (append result (list :catalog-keyoptions (nreverse catalog-keyoptions))))
+    ;; fullfilter decode
     (if raw-fullfilter
-        (setf (getf result :fullfilter) (new-classes.decode raw-fullfilter (make-instance 'group-filter))))
+        (let ((new-raw (getf result :raw-fullfilter))
+              (new-full))
+          (setf new-full (new-classes.decode new-raw (make-instance 'group-filter)))
+          (setf (getf result :fullfilter) new-full)
+          (setf (getf result :raw-fullfilter) new-raw)))
     result))
