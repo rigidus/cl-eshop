@@ -97,10 +97,9 @@
                                         (list :name (car elt)
                                               :elts (mapcar #'(lambda (inelt)
                                                                 (filter-element inelt (request-get-plist)))
-                                                            (cadr elt))
-                                              )))
-                                   (advanced object))))))
-
+                                                            (cadr elt)))))
+                                   (advanced object)))
+         :isshowadvanced (is-need-to-show-advanced object (request-get-plist)))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object product))

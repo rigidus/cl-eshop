@@ -89,7 +89,7 @@
                           "warranty"         "moneyback"         "article"         "news1"
                           "news2"            "news3"             "news4"           "news5"
                           "news6"            "dillers"           "corporate"       "vacancy"
-                          "bonus"))))
+                          "bonus"            "burunduk"          "listservice"))))
 
 (static)
 
@@ -123,8 +123,8 @@
 ;; (restas:define-route gateway-route ("/gateway")
 ;;   (gateway-page))
 
-;; (restas:define-route gateway/post-route ("/gateway" :method :post)
-;;   (gateway-page))
+(restas:define-route gateway/post-route ("/gateway" :method :post)
+  (gateway-page))
 
 ;; (restas:define-route gateway/-route ("/gateway/")
 ;;   (gateway-page))
