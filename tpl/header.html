@@ -1,3 +1,5 @@
+// -*- mode: closure-template-html; fill-column: 130 -*-
+
 {namespace root}
 
 {template short-linked-header}
@@ -6,6 +8,7 @@
   <div class="phone"><img src="img/phone.png" alt="320-8080"/></div>
 </div>
 {/template}
+
 
 {template shortheader}
 <div class="header header-short">
@@ -48,8 +51,8 @@
 	  <form action="/search" method="get">{\n}
 		<p>{\n}
 		  <input name="q" class="text" type="text" value="Acer Aspire" onfocus="if(this.value == 'Acer Aspire')
-		  {this.value='';};"  onblur="if(this.value == '')
-		  {this.value='Acer Aspire';};"/>{\n}
+		  {lb}this.value='';{rb};"  onblur="if(this.value == '')
+		  {lb}this.value='Acer Aspire';{rb};"/>{\n}
 		  <input class="submit" type="submit" value="Найти"/>{\n}
 		</p>{\n}
 	  </form>{\n}

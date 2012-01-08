@@ -163,3 +163,19 @@
     :encoding :utf-8)
    :return-code hunchentoot:+http-not-found+
    :content-type "text/html"))
+
+
+
+;; submodules
+
+(restas:mount-submodule -css- (#:restas.directory-publisher)
+  (restas.directory-publisher:*baseurl* '("css"))
+  (restas.directory-publisher:*directory* (path "css/")))
+
+(restas:mount-submodule -img- (#:restas.directory-publisher)
+  (restas.directory-publisher:*baseurl* '("img"))
+  (restas.directory-publisher:*directory* (path "img/")))
+
+(restas:mount-submodule -js- (#:restas.directory-publisher)
+  (restas.directory-publisher:*baseurl* '("js"))
+  (restas.directory-publisher:*directory* (path "js/")))

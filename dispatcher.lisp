@@ -16,6 +16,8 @@
 (asdf:operate 'asdf:load-op '#:cl-fad)
 (asdf:operate 'asdf:load-op '#:drakma)
 (asdf:operate 'asdf:load-op '#:restas)
+(asdf:operate 'asdf:load-op '#:restas-directory-publisher)
+
 
 
 (defpackage #:wolfor-stuff
@@ -46,8 +48,24 @@
 
 (in-package #:eshop)
 
+;; (let ((path '(:RELATIVE "repo/cl-eshop")))
+;;   (setf asdf:*central-registry*
+;;         (remove-duplicates (append asdf:*central-registry*
+;;                                    (list (merge-pathnames
+;;                                           (make-pathname :directory path)
+;;                                           (user-homedir-pathname))))
+;;                            :test #'equal)))
+
+(defparameter *basedir*
+  ;; (asdf:component-pathname (asdf:find-system '#:rigidus)))
+  #p"/home/rigidus/repo/cl-eshop/")
+
+(defun path (relative)
+  (merge-pathnames relative *basedir*))
+
+
 ;; PATH
-(defparameter *path-to-tpls* (format nil "~aDropbox/httpls" (user-homedir-pathname)))
+(defparameter *path-to-tpls* (format nil "~a/repo/cl-eshop/tpl" (user-homedir-pathname)))
 (export '*path-to-tpls*)
 (defparameter *path-to-bkps* (format nil "~aDropbox/htbkps" (user-homedir-pathname)))
 (export '*path-to-bkps*)
@@ -62,19 +80,19 @@
   (mapcar #'(lambda (fname)
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
                 (closure-template:compile-template :common-lisp-backend pathname)))
-          '("index.html"            "product.html"            "product-accessories.html"
+          '("index.html"            #| "product.html"            "product-accessories.html"
             "product-reviews.html"  "product-simulars.html"   "product-others.html"
             "catalog.html"          "catalog-in.html"         "catalog-staff.html"
             "login.html"            "notebook_b.html"         "notebook_d.html"
-            "register.html"         "dayly.html"              "best.html"
-            "hit.html"              "new.html"                "post.html"
-            "plus.html"             "footer.html"             "subscribe.html"
-            "menu.html"             "banner.html"             "olist.html"
-            "lastreview.html"       "notlogged.html"          "logged.html"
-            "cart-widget.html"      "cart.html"               "checkout.html"
+            "register.html"       |#"dayly.html"#|          |#"best.html"#|
+          |#"hit.html"              "new.html"                "post.html"
+            "plus.html"             "footer.html"#|           "subscribe.html"
+          |#"menu.html"             "banner.html"#|         |#"olist.html"#|
+          |#"lastreview.html"#|   |#"notlogged.html"#|        "logged.html"
+          |#"cart-widget.html"#|    "cart.html"               "checkout.html"
             "admin.html"            "article.html"            "search.html"
             "agent.html"            "update.html"             "outload.html"
-            "header.html"           "static.html"
+     |#     "header.html"     #|    "static.html"
             "delivery.html"         "about.html"
             "faq.html"              "kakdobratsja.html"       "kaksvjazatsja.html"
             "levashovsky.html"      "partners.html"           "payment.html"
@@ -84,9 +102,10 @@
             "news1.html"            "news2.html"              "vacancy.html"
             "news3.html"            "news4.html"              "bonus.html"
             "news5.html"            "news6.html"              "corporate.html"
-            "dillers.html"          "sendmail.html"           "404.html"
+            "dillers.html"          "sendmail.html"           "404.html" |#
             )))
 
+;; (subseq (read-file-into-string "tpl/header.html") 520 540)
 (compile-templates)
 
 ;; (mapcar #'(lambda (fname)
@@ -98,22 +117,35 @@
 (load "errors.lisp")
 (load "classes.lisp")
 (load "serializers.lisp")
-(load "servo.lisp")
+
+
+;; (defpackage #:catalog
+;;   (:use #:cl)
+;;   (:export :rightblock1
+;;            :rightblock2
+;;            :seotext
+;;            :tradehits
+;;            ))
+;; (defun catalog:rightblock1 (&optional x) x)
+;; (defun catalog:rightblock2 (&optional x) x)
+;; (defun catalog:seotext (&optional x) x)
+;; (defun catalog:tradehits (&optional x) x)
+;; (load "servo.lisp")
 (load "spike.lisp")
 (load "generics.lisp")
 
 (load "trans.lisp")
 
-(load "cart.lisp")
+;; (load "cart.lisp")
 (load "gateway.lisp")
 (load "xls.lisp")
-(load "search.lisp")
-(load "yml.lisp")
+;; (load "search.lisp")
+;; (load "yml.lisp")
 
-(load "wolfor-stuff.lisp")
+;; (load "wolfor-stuff.lisp")
 
-(load "routes.lisp")
-(load "render.lisp")
+;; (load "routes.lisp")
+;; (load "render.lisp")
 
 
 (setf hunchentoot:*hunchentoot-default-external-format* (flexi-streams:make-external-format :utf-8 :eol-style :lf))
