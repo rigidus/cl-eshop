@@ -133,11 +133,13 @@
                          :name (realname object)
                          :siteprice (siteprice object)
                          :storeprice (price object)
+                         :formatsiteprice (get-format-price (siteprice object))
+                         :formatstoreprice (get-format-price (price object))
                          :equalprice (= (siteprice object) (price object))
                          :diffprice diffprice
                          :procent procent
                          :subst (format nil "/~a" (articul object))
-                         :pics pics
+                         :pics (cdr pics)
                          :firstpic (if (null pics) nil (car pics))
                          :optlist (if (null (optgroups object))
                                       ""
@@ -166,7 +168,15 @@
                          :active (active object)
                          :descr (descr object)
                          :shortdescr (shortdescr object)
-                         ))
+                         :predzakaz (predzakaz object)
+                         :addproductcart (if (predzakaz object)
+                                             (soy.buttons:add-predzakaz (list :articul (articul object)))
+                                             (soy.buttons:add-product-cart (list :articul (articul object)
+                                                                                 :name (realname object)
+                                                                                 :pic (if (null pics) nil (car pics))
+                                                                                 :price (siteprice object))))
+                         :addoneclick (if (not (predzakaz object))
+                                          (soy.buttons:add-one-click (list :articul (articul object))))))
           :keywords (format nil "~a"
                             (realname object))
           :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
@@ -213,7 +223,9 @@
                                                         (active product))
                                                     (get-recursive-products
                                                      (parent object)))))
-        (request-get-plist (request-get-plist)))
+        (request-get-plist (request-get-plist))
+        (fltr-name  (name object))
+        (grname (name (parent object))))
     (if (null (getf request-get-plist :sort))
         (setf (getf request-get-plist :sort) "pt"))
     (if (getf (request-get-plist) :vendor)
@@ -241,22 +253,33 @@
                                             :for product
                                             :in  paginated
                                             :collect (view product))))))
-          :keywords (format nil "~a" (name object))
-          :description (format nil "~a" (name object))
-          :title (let ((vendor (getf (request-get-plist) :vendor)))
+          :keywords (format nil "~a ~a" grname fltr-name)
+          :description (format nil "~a ~a" grname fltr-name)
+          :title (let ((vendor (getf (request-get-plist) :vendor))
+                       (name-1 (sklonenie fltr-name 1))
+                       (name-2 (sklonenie fltr-name 2))
+                       (name-3 (sklonenie fltr-name 3))
+                       (grname-1 (sklonenie grname 1))
+                       (grname-2 (sklonenie grname 2))
+                       (grname-3 (sklonenie grname 3)))
                    (string-convertion-for-title
                     (if vendor
-                        (format nil "~a ~a - купить ~a ~a по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
-                                (sklonenie (name object) 1)
+                        (format nil "~a ~a ~a - купить ~a ~a ~a по низкой цене, продажа ~a ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
+                                grname-1
+                                name-1
+                                grname-2
+                                name-2
                                 vendor
-                                (sklonenie (name object) 2)
-                                vendor
-                                (sklonenie (name object) 3)
+                                grname-3
+                                name-3
                                 vendor)
-                        (format nil "~a - купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
-                                (sklonenie (name object) 1)
-                                (sklonenie (name object) 2)
-                                (sklonenie (name object) 3)))))))))
+                        (format nil "~a ~a - купить ~a ~a  по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
+                                grname-1
+                                name-1
+                                grname-2
+                                name-2
+                                grname-3
+                                name-3))))))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object optgroup))

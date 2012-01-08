@@ -451,12 +451,13 @@
 
 
 
-(defun default-page (&optional (content nil) &key keywords description title)
+(defun default-page (&optional (content nil) &key keywords description title no-need-cart)
   (root:main (list :keywords keywords
                    :description description
                    :title title
                    :header (root:header (list :logged (root:notlogged)
-                                              :cart (root:cart)))
+                                              :cart (if (not no-need-cart)
+                                                        (root:cart))));; (root:cart)))
                    :footer (root:footer)
                    :content (if content
                                 content
@@ -682,6 +683,17 @@ is replaced with replacement."
             (keyoptions parent))))
 
 
+
+(defun get-format-price (p)
+  (let ((rs (format nil "~a" p))
+        (str (reverse (format nil "~a" p))))
+    (when (< 3 (length str))
+      (let ((st1 (reverse (subseq str 0 3)))
+            (st2 (reverse (subseq str 3))))
+        (setf rs (format nil "~a ~a" st2 st1))))
+    rs))
+
+
 (defmethod view ((object product))
   (let ((pics (get-pics (articul object))))
     (let ((group (parent object)))
@@ -695,7 +707,16 @@ is replaced with replacement."
                            ""
                            (key  group))
             :price (siteprice object)
+            :formatprice (get-format-price (siteprice object))
             :firstpic (car pics)
+            :oneclickbutton  (if (not (predzakaz object))
+                                 (soy.buttons:add-one-click (list :articul (articul object))))
+            :addbutton (if (predzakaz object)
+                           (soy.buttons:add-predzakaz (list :articul (articul object)))
+                           (soy.buttons:add-product-cart (list :articul (articul object)
+                                                               :name (realname object)
+                                                               :pic (if (null pics) nil (car pics))
+                                                               :price (siteprice object))))
             ))))
 
 

@@ -83,6 +83,7 @@
                (price     (ceiling (arnesi:parse-float (cdr (assoc :price elt)))))
                (siteprice (ceiling (arnesi:parse-float (cdr (assoc :price--site elt)))))
                (ekkprice  (ceiling (arnesi:parse-float (cdr (assoc :price--ekk elt)))))
+               (bonuscount  (ceiling (arnesi:parse-float (cdr (assoc :bonuscount elt)))))
                (isnew     (cdr (assoc :isnew  elt)))
                (isspec    (cdr (assoc :isspec elt)))
                (name      (cdr (assoc :name elt)))
@@ -92,10 +93,10 @@
            ;; Нам не нужны продукты с нулевой ценой (вероятно это группы продуктов)
            (when (equal 0 price)
              (return-from iteration))
-           (process-product articul price siteprice ekkprice isnew isspec name realname count-total count-transit))))))
+           (process-product articul price siteprice ekkprice isnew isspec name realname count-total count-transit bonuscount))))))
 
 
-(defun process-product (articul price siteprice ekkprice isnew isspec name realname count-total count-transit)
+(defun process-product (articul price siteprice ekkprice isnew isspec name realname count-total count-transit bonuscount)
   (let ((product (aif (gethash (format nil "~a" articul) *storage*)
                       it
                       (make-instance 'product :articul articul))))
@@ -112,6 +113,7 @@
 
             (price product)           price
             (siteprice product)       siteprice
+            (bonuscount product)      bonuscount
             (ekkprice product)        ekkprice
             (active product)          (if (= count-total 0) nil t)
             (newbie product)	        (if (string= "0" isnew) nil t)

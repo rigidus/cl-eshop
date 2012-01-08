@@ -19,6 +19,7 @@
 
 
 (defmethod unserialize (filepath (dummy group))
+  (format t "~&unserialize:~a" filepath)
   (let* ((file-content (alexandria:read-file-into-string filepath))
          (raw (decode-json-from-string file-content))
          (key (pathname-name filepath))
@@ -48,6 +49,7 @@
 
 
 (defmethod serialize ((object group))
+  (format t "~&unserialize:~a" filepath)
   (let* ((raw-breadcrumbs (breadcrumbs object))
          (path-list (mapcar #'(lambda (elt)
                                 (getf elt :key))
@@ -184,6 +186,8 @@
                                :price (cdr (assoc :price raw))
                                :siteprice (cdr (assoc :siteprice raw))
                                :ekkprice (cdr (assoc :ekkprice raw))
+                               :bonuscount (cdr (assoc :bonuscount raw))
+                               :predzakaz (cdr (assoc :predzakaz raw))
                                :active (let ((active (cdr (assoc :active raw))))
                                          ;; Если количество товара равно нулю то флаг active сбрасывается
                                          (if (or (null count-total)
@@ -222,13 +226,15 @@
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)
     ;; Сохраняем файл продукта
-    (let* ((json-string (format nil "{~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"ekkprice\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"optgroups\": ~a~%}"
+    (let* ((json-string (format nil "{~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"ekkprice\": ~a,~%  \"bonuscount\": ~a,~% \"predzakaz\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"optgroups\": ~a~%}"
                                 (encode-json-to-string (articul object))
                                 (format nil "\"~a\"" (stripper (name object)))
                                 (format nil "\"~a\"" (stripper (realname object)))
                                 (encode-json-to-string (price object))
                                 (encode-json-to-string (siteprice object))
                                 (encode-json-to-string (ekkprice object))
+                                (encode-json-to-string (bonuscount object))
+                                (encode-json-to-string (predzakaz object))
                                 (encode-json-to-string (active object))
                                 (encode-json-to-string (newbie object))
                                 (encode-json-to-string (sale object))

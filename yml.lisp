@@ -188,7 +188,7 @@
                                                (> (price product) 0)
                                                ;;для селективного исключения товаров по значению специальной опции
                                                (let ((yml-show))
-                                                 (with-option product "Secret" "UML"
+                                                 (with-option product "Secret" "YML"
                                                               (setf yml-show (value option)))
                                                  (if (and (not (null yml-show))
                                                           (string= "No"
@@ -262,7 +262,7 @@
                                                (> (price product) 0)
                                                ;;для селективного исключения товаров по значению специальной опции
                                                (let ((yml-show))
-                                                 (with-option product "Secret" "UML"
+                                                 (with-option product "Secret" "YML"
                                                               (setf yml-show (value option)))
                                                  (if (and (not (null yml-show))
                                                           (string= "No"
@@ -279,16 +279,22 @@
                                                                           (if (null pics)
                                                                               nil
                                                                               (encode-uri (car pics))))
-                                                              :name   (let ((yml-name))
+                                                              :name   (let ((yml-name)
+                                                                            (parser-name))
                                                                         (with-option product "Secret" "Yandex"
                                                                                      (setf yml-name (value option)))
-                                                                        (if (or (null yml-name)
-                                                                                (string= ""
-                                                                                         (stripper yml-name))
-                                                                                (string= "No"
-                                                                                         (stripper yml-name)))
-                                                                            (name product)
-                                                                            yml-name))
+                                                                        (with-option product "Secret" "Parser"
+                                                                                     (setf parser-name (value option)))
+                                                                        (if (or (null parser-name)
+                                                                                (string= "" parser-name))
+                                                                            (if (or (null yml-name)
+                                                                                    (string= ""
+                                                                                             (stripper yml-name))
+                                                                                    (string= "No"
+                                                                                             (stripper yml-name)))
+                                                                                (name product)
+                                                                                yml-name)
+                                                                            parser-name))
                                                               :description (if (string= "NIL"
                                                                                         (descr product))
                                                                                nil

@@ -133,17 +133,18 @@
         (setf cart (json:decode-json-from-string cart-cookie))
         (multiple-value-bind (lst cnt sm) (newcart-cart-products cart)
           (setf products (remove-if #'null lst))
-          (print products)
+          ;; (print products)
           (setf count cnt)
           (setf pricesum sm)))
     (if (not (null products))
         (default-page
             (soy.newcart:cart-content (list :accessories (product:accessories)
-                                :products (format nil "~{~a~}"
+                                            :products (format nil "~{~a~}"
                                                   (mapcar #'(lambda (x)
                                                               (print (cart:product x))
                                                               (soy.newcart:cart-product x))
-                                                          products)))))
+                                                          products))))
+            :no-need-cart t)
         ;; страница для пустой корзины с автоматическим редиректом на главную
         (soy.newcart:fullpage (list :head (soy.newcart:head-redirect (list :timeout 5
                                                                            :url "/"))
@@ -279,7 +280,7 @@
             (send-mail (list "stetoscop@gmail.com") client-mail filename  tks-mail order-id)
             (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
             (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
-            (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
+            ;; (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
             ;; (print email)
             ;; артикул 099999 и доставка 107209
             ;; сделать валидацию пользовательского email

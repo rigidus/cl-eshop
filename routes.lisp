@@ -73,7 +73,7 @@
 
 ;; MAIN
 (defun test-get-parameters ()
-  (null (request-get-plist)))
+  t) ;; (null (request-get-plist)))
 
 (restas:define-route main-route ("/" :requirement #'test-get-parameters)
   (main-page-show (request-str)))
@@ -161,6 +161,9 @@
 (restas:define-route yml/-route ("/yml/")
   (yml-page))
 
+(restas:define-route parseryml-route ("/parseryml")
+  (yml-page-for-parser))
+
 
 ;; ARTICLES
 
@@ -183,14 +186,27 @@
 
 ;; 404
 
+(restas:define-route not-found-route-404 ("/404.html")
+    (restas:abort-route-handler
+        (babel:string-to-octets
+             (default-page
+                         (static:main (list :menu (menu "") :subcontent (error-404:content))))
+                 :encoding :utf-8)
+           :return-code hunchentoot:+http-not-found+
+              :content-type "text/html"))
+
+;;необходимо отдавать 404 ошибку для несуществеющих страниц
 (restas:define-route not-found-route ("*any")
-  (restas:abort-route-handler
-   (babel:string-to-octets
-    (default-page
-        (static:main (list :menu (menu "") :subcontent (error-404:content))))
-    :encoding :utf-8)
-   :return-code hunchentoot:+http-not-found+
-   :content-type "text/html"))
+    (restas:abort-route-handler
+        (babel:string-to-octets
+             (default-page
+                         (static:main (list :menu (menu "") :subcontent (error-404:content))))
+                 :encoding :utf-8)
+           :return-code hunchentoot:+http-not-found+
+              :content-type "text/html"))
+
+(restas:define-route request-route ("/request")
+  (oneclickcart-page (request-get-plist)))
 
 
 ;; submodules
