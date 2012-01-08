@@ -1,0 +1,112 @@
+{
+   "articul": 126164,
+   "name": "WVC54GC-EU Камера IP Linksys Compact Wireless G",
+   "realname": "WVC54GC-EU Камера IP Linksys Compact Wireless G",
+   "price": 2990,
+   "siteprice": 0,
+   "ekkprice": 2841,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Формат",
+               "value": "MPEG-4, MJPEG",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Минимальная освещенность",
+               "value": "5,1 lux",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "1 х 10/100 Auto Crossover (MDI/MDI-X)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "90 x 102 x 37 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Прочее",
+               "value": "IEEE 802.11b IEEE 802.11g IEEE 802.3 IEEE 802.3u TCP/IP HTTP DHCP NTP SMTP UPnP (Discovery only)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480, 320 x 240, 160 x 128",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "фиксированный фокус",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Параметры съемки",
+         "options": [
+            {
+               "name": "Угол обзора",
+               "value": "61,48&#186;",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

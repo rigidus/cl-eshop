@@ -1,0 +1,133 @@
+{
+   "articul": 86470,
+   "name": "Акустика Microlab A-6601  5.1 серебристые",
+   "realname": "Microlab  A-6601",
+   "price": 1790,
+   "siteprice": 0,
+   "ekkprice": 1665,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "69 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "50-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса фронтальных колонок/саттелитов",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса сабвуфера",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "60 дБ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвет",
+               "value": "черный,серебристый",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "1486,1487",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок",
+               "value": "63.5 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера",
+               "value": "133.4 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "78х109х102 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "222х228х244 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры усилителя",
+               "value": "90х242х270 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

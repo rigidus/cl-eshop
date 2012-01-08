@@ -1,0 +1,148 @@
+{
+   "articul": 95277,
+   "name": "Веб камера LOGITECH Mini Webcam Plus (395) box",
+   "realname": "Веб камера LOGITECH Mini Webcam Plus (395) box",
+   "price": 1348,
+   "siteprice": 0,
+   "ekkprice": 1325,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Logitech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Mini Webcam Plus",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.logitech.com/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Описание",
+               "value": "Web камера в комплекте с гарнитурой.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Длина кабеля",
+               "value": "0.8 м",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Прочее",
+               "value": "Крепление к ноутбуку складывается и служит крышкой объектива",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "SpotLife Web Cam; Microsoft NetMeeting; Logitech Smart Internet Update,Web Album Creator,ПО для выполнения типичных действий с фотографиями и отправки видео по e-mail одним щелчком; Yahoo! Messenger; SpotLife Personal Video Broadcasting",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows 98,Windows Me,Windows XP,Windows 2000",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "AMD Athlon; RAM 64 Мб; свободные 75 Мб на жестком диске,Pentium II 400,Celeron",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол поворота",
+               "value": "360°",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "фото: 640 x 480,Видео: до 640 x 480 при использовании интерполяции",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "Ручная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Захват",
+               "value": "сохраняется в формате AVI; фото: сохраняется в формате JPEG,Видео: до 30 кадров/сек",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS CIF 352 x 288",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

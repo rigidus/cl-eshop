@@ -1,0 +1,263 @@
+{
+   "articul": 97422,
+   "name": "Акустика Dialog JAZZ  J-101BM  5.1",
+   "realname": "Dialog AM-13S",
+   "price": 2650,
+   "siteprice": 0,
+   "ekkprice": 2465,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Диалог",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Jazz J-101-BM",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Описание",
+               "value": "Активная акустическая система 5.1 для домашнего кинотеатра.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительные возможности:",
+         "options": [
+            {
+               "name": "Блок питания",
+               "value": "встроенный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "75 дБ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон сабвуфера",
+               "value": "20 Гц - 0.25 кГц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Срок гарантии",
+               "value": "12 месяцев",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Длина кабеля",
+               "value": "2 метра - фронтальные сателлиты и центральная колонка,тыловые сателлиты - 6 метров",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал",
+               "value": "Корпуса: дерево (сабвуфер - MDF,8 мм; сателлиты - MDF,4 мм)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры сабвуфера",
+               "value": "160 x 315 x 380 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Питание",
+         "options": [
+            {
+               "name": "Потребление энергии",
+               "value": "100 Вт",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Усилитель",
+               "value": "Встроенный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъемы для подключения сателлитов",
+               "value": "Пружинные зажимы",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "137 Ватт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон сателлитов",
+               "value": "200 Гц - 20 кГц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Сопротивление",
+               "value": "Сабвуфер - 6 Ом,сателлиты - 4 Ома",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал диффузора (ов)",
+               "value": "Сабвуфер: бумага; сателлиты: ВЧ динамики - фольга,НЧ динамики - бумага",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сателлитов",
+               "value": "95 x 280 x 110 мм - фронтальные сателлиты; 95 x 200 x 110 мм - тыловые сателлиты",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Крепление к стене",
+               "value": "Возможно крепление к стене тыловых сателлитов",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Конструкция",
+         "options": [
+            {
+               "name": "Динамики",
+               "value": "Сабвуфер: 5.25; центральные и тыловые сателлиты: 3 + 1; центральная колонка - 2x3 + 1",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Память и интерфейсы",
+         "options": [
+            {
+               "name": "Разъемы",
+               "value": "Вход 5.1,аудиовход 2 x RCA",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Технические характеристики",
+         "options": [
+            {
+               "name": "Выходная мощность",
+               "value": "Сабвуфер - 50 ватт,фронтальные сателлиты - по 15 ватт (ВЧ динамик - 3 ватта,НЧ динамик - 12 ватт),центральная колонка - 27 ватт (ВЧ динамик - 3 ватта,2 НЧ динамика - по 12 ватт)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функции",
+         "options": [
+            {
+               "name": "Пульт ДУ",
+               "value": "Беспроводной,ИК",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разделение каналов",
+               "value": "45 дБ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Фазоинвертор",
+               "value": "Сабвуфер: труба диаметром 65 мм и длиной 100 мм; фронтальные сателлиты и центральная колонка: труба диаметром 22 мм и длиной 40 мм; тыловые сателлиты: труба диаметром 15 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Выход фазоинвертора",
+               "value": "Сабвуфер и тыловые сателлиты: на передней панели; фронтальные сателлиты и центральная колонка: на задней панели",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры центральной колонки",
+               "value": "280 x 95 x 110 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "Кабель 6 RCA - 3 стереоджека,кабель 6 RCA - 6 RCA,пульт ДУ и батарейка для него",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

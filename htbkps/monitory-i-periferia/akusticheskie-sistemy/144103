@@ -1,0 +1,186 @@
+{
+   "articul": 144103,
+   "name": "Speaker Creative Inspire 2.0 A80 51MF1645AA000",
+   "realname": "Speaker Creative Inspire 2.0 A80 51MF1645AA000",
+   "price": 950,
+   "siteprice": 950,
+   "ekkprice": 950,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 1,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Creative",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "A80 51MF1645AA000",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество полос",
+               "value": "2,0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип акустической системы",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "черный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Выходная мощность, Вт",
+               "value": "10",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон сателлитов",
+               "value": "90—20000",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон сабвуфера, Гц",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум, дБ",
+               "value": "75",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы и разъемы",
+         "options": [
+            {
+               "name": "Порты на передней панели",
+               "value": "Разъем 3.5 мм для подключения наушников",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейсы",
+               "value": "Линейный вход",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Комплектация",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Наличие пульта ДУ",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Внешние декодеры",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+            {
+               "name": "Размеры сабвуфера, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры фронтальных колонок, мм",
+               "value": "100x215x90",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры центрального канала, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры тыловых колонок, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры усилителя, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

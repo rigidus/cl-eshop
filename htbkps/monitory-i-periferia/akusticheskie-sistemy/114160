@@ -1,0 +1,144 @@
+{
+   "articul": 114160,
+   "name": "Акустика Microlab FC-360  2.1  Red",
+   "realname": "Microlab  FC 360",
+   "price": 2160,
+   "siteprice": 0,
+   "ekkprice": 2096,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "2.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "47 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "50-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса фронтальных колонок/саттелитов",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса сабвуфера",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвет",
+               "value": "Красный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "Вес 7 кг.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок",
+               "value": "1х63.5 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера",
+               "value": "1х133.3 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование сабвуфера",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "90х120х96 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "222х228х248 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры усилителя",
+               "value": "72х212х201 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

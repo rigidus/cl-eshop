@@ -1,0 +1,150 @@
+{
+   "articul": 92308,
+   "name": "Акустика Logitech X-230  2.1 (123)",
+   "realname": "LOGITECH X-230",
+   "price": 1799,
+   "siteprice": 0,
+   "ekkprice": 1773,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "6 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "20 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок",
+               "value": "2х51 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера",
+               "value": "1х133 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "2.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "32 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "40-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса фронтальных колонок/саттелитов",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса сабвуфера",
+               "value": "MDF",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "96 дБ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвет",
+               "value": "черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Разъем для наушников",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "есть,разъем mini jack",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "127 х 203 х 76 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "152 х 228 х 234 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

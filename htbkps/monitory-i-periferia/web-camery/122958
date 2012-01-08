@@ -1,0 +1,101 @@
+{
+   "articul": 122958,
+   "name": "Веб камера Genius Messenger 310",
+   "realname": "Веб камера Genius Messenger 310",
+   "price": 790,
+   "siteprice": 0,
+   "ekkprice": 767,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB1.1/1.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мультимедийные возможности",
+         "options": [
+            {
+               "name": "Поддерживаемые форматы",
+               "value": "JPEG/WMV",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Встроенный микрофон",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "Фото: 1280 x 960, 640 x 480, 352 x 288, 320 x 240, 176 x 144, 160 x 120 pix; видео: 640 x 480 pix",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "ручная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "до 30fps",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение CCD",
+               "value": "0,3 Мп",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

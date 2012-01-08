@@ -1,0 +1,128 @@
+{
+   "articul": 144280,
+   "name": "Webcam Creative Live Socialize HD 73VF061000001",
+   "realname": "Creative Live Socialize HD",
+   "price": 3000,
+   "siteprice": 3000,
+   "ekkprice": 3000,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 1,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Creative",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Live Socialize HD",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Количество мегапикселей матрицы, Мп",
+               "value": "0.72",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение видео",
+               "value": "1280х720",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол обзора",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип фокусировки",
+               "value": "Фиксированная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Длина кабеля, м",
+               "value": "1.7",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип конструкции",
+               "value": "Крепление на монитор, кнопка быстрой фотосъемки",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Комплектация",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "1 год",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

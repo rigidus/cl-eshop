@@ -1,0 +1,180 @@
+{
+   "articul": 138737,
+   "name": "Акустика Creative Inspire T6160  5.1  (MF4105)",
+   "realname": "Акустика Creative Inspire T6160  5.1  (MF4105)",
+   "price": 2990,
+   "siteprice": 2390,
+   "ekkprice": 2931,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 5,
+   "countTotal": 5,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Creative",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Inspire T6160",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Выходная мощность, Вт",
+               "value": "50",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот,",
+               "value": "40-20000",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум, дБ",
+               "value": "75",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы и разъемы",
+         "options": [
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъем для наушников",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъем USB",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность фронтальных колонок, Вт",
+               "value": "6",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера, Вт",
+               "value": "20",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Регулировка тембра",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок, мм",
+               "value": "75x150x90",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера, мм",
+               "value": "160x260x190",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

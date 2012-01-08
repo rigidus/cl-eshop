@@ -1,0 +1,103 @@
+{
+   "articul": 96031,
+   "name": "Акустика Creative I-TRIGUE 3600  2.1  (MF0275)",
+   "realname": "Creative I-Trigue 3600",
+   "price": 3099,
+   "siteprice": 0,
+   "ekkprice": 3099,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "8.5 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "24 Вт",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "2.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "41 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса фронтальных колонок/саттелитов",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса сабвуфера",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвет",
+               "value": "черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Разъем для наушников",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Пульт дистанционного управления",
+               "value": "проводной",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

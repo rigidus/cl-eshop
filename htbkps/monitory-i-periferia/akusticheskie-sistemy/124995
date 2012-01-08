@@ -1,0 +1,87 @@
+{
+   "articul": 124995,
+   "name": "Акустика GENIUS SW-HF2.1 3000",
+   "realname": "Акустика GENIUS SW-HF2.1 3000",
+   "price": 3390,
+   "siteprice": 0,
+   "ekkprice": 3153,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "2 х 20 Вт RMS",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "40 Вт RMS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Суммарная мощность",
+               "value": "80 Вт (RMS)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса сабвуфера",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "70 дБ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон фронтальных колонок/саттелитов",
+               "value": "120 - 20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон сабвуфера",
+               "value": "22 - 140 Гц ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "149 х 230 х 178 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "200 х 335 х 364 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

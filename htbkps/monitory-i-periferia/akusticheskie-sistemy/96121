@@ -1,0 +1,127 @@
+{
+   "articul": 96121,
+   "name": "Акустика Microlab X2  5.1 белые",
+   "realname": "Microlab  5.1 X2",
+   "price": 1890,
+   "siteprice": 0,
+   "ekkprice": 1876,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "210 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "50-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса фронтальных колонок/саттелитов",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса сабвуфера",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "60 дБ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвет",
+               "value": "черный,белый",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "1498,50 Гц. Чувствительность: сакбвуфер 480 мВ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок",
+               "value": "63.5 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера",
+               "value": "133.4 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "78х109х102 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "165х247х323 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

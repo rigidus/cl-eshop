@@ -1,0 +1,150 @@
+{
+   "articul": 116228,
+   "name": "Веб камера Microsoft LifeCam NX-3000 (WTB-00006)",
+   "realname": "Веб камера Microsoft LifeCam NX-3000 (WTB-00006)",
+   "price": 1550,
+   "siteprice": 1390,
+   "ekkprice": 1504,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 3,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 2.0 ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Microsoft ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.microsoft.com ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "Windows Live Messenger ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "77.8 x 25.5 x 33.1 мм ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кнопки",
+               "value": "Windows Live Call ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть; с функцией шумоподавления ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "16.6 х 8.9 х 20.8 см ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "0.228 кг ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Серебристый, черный ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплект поставки",
+               "value": "Футляр, CD-ROM ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "9a2
+Windows Vista, Windows XP SP2 ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "Pentium III 550 МГц, RAM 256 Мб, свободные 300 - 700 Мб на жестком диске, широкополосный доступ в интернет, привод CD-ROM, видеокарта с поддержкой 16-битного цвета, видеопамять 2 Мб, Windows-совместимые колонки или наушники ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Крепление",
+               "value": "К LCD-дисплею ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "1280 x 1024 ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Требования к системе (рекомендуемые)",
+               "value": "Pentium 4 1.4 ГГц ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

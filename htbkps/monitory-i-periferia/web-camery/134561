@@ -1,0 +1,120 @@
+{
+   "articul": 134561,
+   "name": "Веб камера A4Tech  PK-800MJ",
+   "realname": "A4Tech PK-800MJ",
+   "price": 1390,
+   "siteprice": 0,
+   "ekkprice": 1349,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "кнопка быстрой фотосъемки",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Фокусировка",
+               "value": "автоматическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Подключение",
+               "value": "USB 2.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Матрица",
+         "options": [
+            {
+               "name": "Матрица",
+               "value": "1.3 млн пикс., CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Изображение",
+         "options": [
+            {
+               "name": "Поддержка режимов",
+               "value": "640x480 @ 15 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение (видео)",
+               "value": "1280x1024",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Максимальная частота кадров",
+               "value": "30 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение (фото)",
+               "value": "1280x1024, 2560x1920 (интерполированное)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерполированное разрешение в мегапикселах (фото)",
+               "value": "5 млн пикс.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Угол обзора объектива",
+               "value": "60 град.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные параметры",
+         "options": [
+            {
+               "name": "Микрофон",
+               "value": "встроенный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимые операционные системы",
+               "value": "Windows 2000/XP/Vista/Mac OS 10.4",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

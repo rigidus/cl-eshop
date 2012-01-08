@@ -1,0 +1,138 @@
+{
+   "articul": 105234,
+   "name": "Акустика Microlab M-890  2.1",
+   "realname": "Акустика Microlab M-890  2.1",
+   "price": 1590,
+   "siteprice": 1590,
+   "ekkprice": 1543,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "12 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "16 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок",
+               "value": "1x76.2 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера",
+               "value": "1x133.3 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "2.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "40 Вт RMS/350 Вт PMPO",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "30-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса фронтальных колонок/саттелитов",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса сабвуфера",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "60 дБ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвет",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "есть,разъем mini jack",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "122x196x167 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "290x170x240 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Регулировка  тембра",
+               "value": "НЧ/ВЧ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

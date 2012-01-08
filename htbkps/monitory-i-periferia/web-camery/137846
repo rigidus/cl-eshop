@@ -1,0 +1,128 @@
+{
+   "articul": 137846,
+   "name": "Веб камера Microsoft LifeCam VX-800 (JSD-00004)",
+   "realname": "Веб камера Microsoft LifeCam VX-800 (JSD-00004)",
+   "price": 850,
+   "siteprice": 590,
+   "ekkprice": 825,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 49,
+   "countTotal": 50,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Microsoft",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "LifeCam VX-800",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Количество мегапикселей матрицы, Мп",
+               "value": "0.3",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение видео",
+               "value": "640x480",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол обзора",
+               "value": "55",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип фокусировки",
+               "value": "Ручная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Длина кабеля, м",
+               "value": "1.8",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип конструкции",
+               "value": "Крепление на монитор",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Комплектация",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "1 год",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

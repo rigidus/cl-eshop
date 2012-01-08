@@ -1,0 +1,1566 @@
+{
+   "articul": 146170,
+   "name": "PS OCZ ATX 500W  500MXSP-EU",
+   "realname": "OCZ 500MXSP-EU",
+   "price": 2490,
+   "siteprice": 2490,
+   "ekkprice": 2416,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "OCZ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "500MXSP-EU",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Мощность, Вт",
+               "value": "500",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Максимальная нагрузка, В",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Входное напряжение,",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип коррекции коэффициента мощности (PFC)",
+               "value": "Активный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Охлаждение",
+         "options": [
+            {
+               "name": "Способ охлаждения блока питания",
+               "value": "1 вентилятор",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип регулировки оборотов",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Коннекторы",
+         "options": [
+            {
+               "name": "Питание материнской платы",
+               "value": "20+4 pin",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Питание видеокарты",
+               "value": "1 x 6 pin, 1 x 8pin",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Питание HDD/FDD/SATA",
+               "value": "2 floppy, 6 SATA",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+            {
+               "name": "Ширина, мм",
+               "value": "150",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Высота, мм",
+               "value": "86",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Глубина, мм",
+               "value": "160",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес, кг",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "Ток по линии +3.3 В 25 A, Ток по линии +5 В 25 A, Ток по линии +12 В 1 18 A, Ток по линии +12 В 2 18 A, Ток по линии -12 В 0.3 A, Ток по линии +5 В Standby 2.5 A",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "1 год",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               

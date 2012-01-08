@@ -1,0 +1,122 @@
+{
+   "articul": 99910,
+   "name": "Акустика Creative SBS580  5.1 (MF4060)",
+   "realname": "Creative SBS 580",
+   "price": 1680,
+   "siteprice": 0,
+   "ekkprice": 1674,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "5 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "15 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность центрального канала",
+               "value": "5 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность тыловых колонок",
+               "value": "5 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера",
+               "value": "133 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "40 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "45-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса фронтальных колонок/саттелитов",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса сабвуфера",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвет",
+               "value": "черно-серый",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "1476",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

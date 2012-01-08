@@ -1,0 +1,204 @@
+{
+   "articul": 139313,
+   "name": "Акустика Microlab X-23 5.1 черные",
+   "realname": "Microlab 5.1 X23 Black",
+   "price": 5490,
+   "siteprice": 0,
+   "ekkprice": 5381,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "99 Вт RMS/380 Вт PMPO",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "30-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон фронтальных колонок/саттелитов",
+               "value": "140-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон сабвуфера",
+               "value": "30-140 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "70 дБ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвет",
+               "value": "черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "есть, разъем RCA/mini jack",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Линейный вход многоканальный",
+               "value": "есть, разъем RCA/mini jack",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "105x88x164 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры тыловых колонок",
+               "value": "105x88x164 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры центрального канала",
+               "value": "130x210x118 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "325x175x260 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры усилителя",
+               "value": "296x90x250 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование сабвуфера",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Регулировка  тембра",
+               "value": "НЧ/ВЧ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Пульт дистанционного управления",
+               "value": "беспроводной",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "14 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "29 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность центрального канала",
+               "value": "14 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность тыловых колонок",
+               "value": "14 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок",
+               "value": "1x63.5 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера",
+               "value": "1x133.3 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков центрального канала",
+               "value": "1x63.5 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков тыловых колонок",
+               "value": "1x63.5 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

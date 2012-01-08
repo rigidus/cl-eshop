@@ -1,0 +1,139 @@
+{
+   "articul": 125441,
+   "name": "Акустика Sony SRS D211 2.1",
+   "realname": "Sony SRS-D211",
+   "price": 2750,
+   "siteprice": 0,
+   "ekkprice": 2558,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "10 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "25 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок",
+               "value": "1x57 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера",
+               "value": "1x120 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "2.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "35 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "30-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Разъем для наушников",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "есть, разъем mini jack",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование сабвуфера",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Регулировка  тембра",
+               "value": "НЧ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "98x84x98 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "163x267x300 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры усилителя",
+               "value": "50x140x99 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,182 @@
+{
+   "articul": 128012,
+   "name": "Акустика Dialog  AT-02B   2.0",
+   "realname": "Акустика Dialog  AT-02B   2.0",
+   "price": 240,
+   "siteprice": 240,
+   "ekkprice": 233,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "﻿Акустическая система Dialog AT-02B, состоящая из двух колонок в пластиковых корпусах, выполнена в стильном дизайне и сможет украсить любой интерьер. Система может подключаться к любым настольным ПК, ноутбуками и портативным аудиоустройствам и характеризуется качественным чистым звучанием. 
+Общая выходная мощность Dialog AT-02B 6 Вт гарантирует чистый отчётливый звук при любом уровне громкости. Для удобства все органы управления, состоящие из ручки регулирования громкости и кнопки включения питания, вынесены на переднюю панель одной из колонок. Наушники подключаются через разъём, расположенный рядом. Во-избежании наводок на установленные рядом телевизоры или мониторы, динамические головки имеют магнитное экранирование. 
+",
+   "countTransit": 0,
+   "countTotal": 7,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Dialog",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "AT-02B",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса",
+               "value": "Пластик",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Выходная мощность, Вт",
+               "value": "6",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот,",
+               "value": "50-15000",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум, дБ",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы и разъемы",
+         "options": [
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "Есть, разъем mini jack",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъем для наушников",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъем USB",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность фронтальных колонок, Вт",
+               "value": "3",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера, Вт",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок, мм",
+               "value": "1x(38x76)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Регулировка тембра",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок, мм",
+               "value": "65x172x80",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "1 год",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

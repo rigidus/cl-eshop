@@ -1,0 +1,164 @@
+{
+   "articul": 105090,
+   "name": "Акустика GENIUS SP-P110 2.0 бежевые (495100525100)",
+   "realname": "Genius SP-P110 бежевые",
+   "price": 240,
+   "siteprice": 0,
+   "ekkprice": 224,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "630 грамм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "SP-P110",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.genius.ru/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительные возможности:",
+         "options": [
+            {
+               "name": "Блок питания",
+               "value": "Внешний; входит в комплект поставки",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Разъем для наушников",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "67 дБ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон",
+               "value": "200 Гц - 20 кГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Где производится ремонт",
+               "value": "http://www.genius.ru/support.aspx?pageID=25",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры внешние",
+               "value": "68.5 x 153.5 x 95 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Белый",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Телефон горячей линии производителя",
+               "value": "По любым вопросам,связанным с сервисным обслуживанием,с техническими проблемами или проблемами при подключении можно обращаться в службу технической поддержки Genius по телефону в Москве: (495) 777-74-88 (телефон многоканальный).",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Конструкция",
+         "options": [
+            {
+               "name": "Динамики",
+               "value": "50 x 90 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "1 ватт RMS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Прочее",
+         "options": [
+            {
+               "name": "Настройки",
+               "value": "Громкость",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

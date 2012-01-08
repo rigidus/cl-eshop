@@ -1,0 +1,143 @@
+{
+   "articul": 127902,
+   "name": "Веб камера Genius i-Look 300",
+   "realname": "Веб камера Genius i-Look 300",
+   "price": 590,
+   "siteprice": 490,
+   "ekkprice": 573,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 9,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "90 г",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры (ШxВxГ)",
+               "value": "60x66x49 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "крепление на мониторе",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Фокусировка",
+               "value": "ручная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Подключение",
+               "value": "USB 1.1",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Угол поворота",
+               "value": "360 град.",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол наклона",
+               "value": "25 град.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Матрица",
+         "options": [
+            {
+               "name": "Матрица",
+               "value": "0.3 млн пикс., CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Изображение",
+         "options": [
+            {
+               "name": "Поддержка режимов",
+               "value": "352x288 @ 30 Гц640x480 @ 30 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение (видео)",
+               "value": "640x480, 1280x1024 (интерполированное)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Максимальная частота кадров",
+               "value": "30 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение (фото)",
+               "value": "640x480, 3360x2520 (интерполированное)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерполированное разрешение в мегапикселах (фото)",
+               "value": "8 млн пикс.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные параметры",
+         "options": [
+            {
+               "name": "Микрофон",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимые операционные системы",
+               "value": "Windows Vista/XP/2000",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

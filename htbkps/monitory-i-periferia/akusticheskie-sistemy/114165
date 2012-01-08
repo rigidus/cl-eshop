@@ -1,0 +1,222 @@
+{
+   "articul": 114165,
+   "name": "Акустика Microlab H-500D 5.1",
+   "realname": "Microlab  H-500D",
+   "price": 10990,
+   "siteprice": 0,
+   "ekkprice": 10771,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "45 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "95 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность центрального канала",
+               "value": "45 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность тыловых колонок",
+               "value": "45 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок",
+               "value": "1x88.9,1x25.4 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера",
+               "value": "1x203.2 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков центрального канала",
+               "value": "1x88.9,1x25.4 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков тыловых колонок",
+               "value": "1x88.9,1x25.4 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "320 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "25-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса фронтальных колонок/саттелитов",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса сабвуфера",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "85 дБ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвет",
+               "value": "дерево",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Пульт дистанционного управления",
+               "value": "беспроводной",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование сабвуфера",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Регулировка  тембра",
+               "value": "НЧ/ВЧ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "есть, разъем RCA/mini jack",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Линейный вход многоканальный",
+               "value": "есть, разъем RCA/mini jack",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цифровой оптический вход",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цифровой коаксиальный вход",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "130х185х225 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры тыловых колонок",
+               "value": "130х185х225 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры центрального канала",
+               "value": "130х185х225 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "267х310х340 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры усилителя",
+               "value": "200х210х75 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,164 @@
+{
+   "articul": 96688,
+   "name": "Веб камера LOGITECH QuickCam communicate STX Plus (410-5)",
+   "realname": "Веб камера LOGITECH QuickCam communicate STX Plus (410-5)",
+   "price": 1797,
+   "siteprice": 0,
+   "ekkprice": 1767,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Формат",
+               "value": "JPEG,Видео: AVI; фото: BMP",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Logitech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "QuickCam Communicate STX Plus",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.logitech.com/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "Yahoo! Messenger,AOL Instant Messenger,MSN Messenger,AIM,Windows Messenger (в Windows XP)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Длина кабеля",
+               "value": "1.86 м",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Программное обеспечение",
+               "value": "Пробная версия Logitech VideoCall,Logitech QuickCam software,Web camming software",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "Круглая подставка для настольной установки; крепеж к монитору CRT,LCD или дисплею ноутбука; установочный CD; наушники с микрофоном",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows Me,Windows XP,Windows 2000,Windows 98SE",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "видеокарта с поддержкой 16-битного цвета,привод CD-ROM,Pentium II 500,Celeron или Athlon; RAM 64 Мб; свободные 200 Мб на жестком диске; звуковая карта и колонки",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Параметры съемки",
+         "options": [
+            {
+               "name": "Угол обзора",
+               "value": "42° по горизонтали",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "30 fps @ 640 x 480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Фокус",
+               "value": "Фиксированный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

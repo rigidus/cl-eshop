@@ -1,0 +1,10 @@
+{
+   "name" : "Игровые клавиатуры",
+   "func" : "(lambda (p)
+              (let ((value))
+                (with-option p \"Основные характеристики\" \"Конструкция клавиатуры\"
+                              (setf value (value option)))
+                (if (null value)
+                    nil
+                    (string= (string-downcase (format nil \"~a\" value)) \"игровая\"))))"
+}

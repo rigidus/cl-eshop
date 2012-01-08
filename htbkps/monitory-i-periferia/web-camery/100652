@@ -1,0 +1,192 @@
+{
+   "articul": 100652,
+   "name": "Веб камера Genius Trek 310  (43101)",
+   "realname": "Веб камера Genius Trek 310  (43101)",
+   "price": 829,
+   "siteprice": 0,
+   "ekkprice": 816,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Формат",
+               "value": "JPEG,AVI",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Крепление",
+               "value": "Подставка позволяет крепить камеру к LCD монитору либо к ноутбуку.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "90 грамм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Баланс белого",
+               "value": "автоматический",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Trek 310",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.genius.ru/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Срок гарантии",
+               "value": "36 месяцев",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Где производится ремонт",
+               "value": "http://www.genius.ru/support.aspx?pageID=25",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Требования к системе",
+               "value": "RAM 64 Мб,160 Мб свободного места на жестком диске,привод CD-ROM,Pentium III 800 МГц,DirectX 8.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "80 x 60 x 120 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "ПО в комплекте",
+               "value": "Genius Application,DDPlayCam Software",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "Ручная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "30 fps",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Требования к системе (рекомендуемые)",
+               "value": "RAM 128 Мб,привод CD-ROM,Pentium III 800 МГц,160 Мб свободного места на жестком диске,DirectX 8.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS; 320K пикселов",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

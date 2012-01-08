@@ -1,0 +1,153 @@
+{
+   "articul": 106465,
+   "name": "Веб камера A4Tech  PK-935  ViewCamGlobe",
+   "realname": "Веб камера A4Tech  PK-935  ViewCamGlobe",
+   "price": 563,
+   "siteprice": 0,
+   "ekkprice": 554,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "136 грамм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Баланс белого",
+               "value": "автоматический",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "A4-Tech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "PK-935",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.a4tech.com/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "Net Meeting",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "66 x 107 x 76 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кнопки",
+               "value": "Snapshot",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "свободные 165 Мб на жестком диске,Pentium 166 МГц,привод CD-ROM,звуковая карта,RAM 32 Мб",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Расстояние до объекта",
+               "value": "От 10 см",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Параметры съемки",
+         "options": [
+            {
+               "name": "Угол обзора",
+               "value": "54°",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

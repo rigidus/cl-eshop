@@ -1,0 +1,186 @@
+{
+   "articul": 92789,
+   "name": "Акустика Microlab PRO III  2.0",
+   "realname": "Акустика Microlab PRO III  2.0",
+   "price": 6990,
+   "siteprice": 6990,
+   "ekkprice": 6781,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "﻿Акустическая система Microlab Pro 3 отличается оригинальным дизайном с использованием жёлтого диффузора и съёмной пластиковой панели. Резиновые ножки придают элементам системы надёжную устойчивость. 
+
+Динамики Microlab Pro 3 выполнены из композитного материала и за счёт этого обеспечивается одинаково чистое звучание низких и высоких частот. Повышает уровень качества звука деревянный корпус и наличие внутри него войлочного поглотителя, а также внешний усилитель. Динамики защищены магнитным экраном, благодаря этому колонки можно устанавливать рядом с телевизором или монитором, не вызывая помех. 
+
+Управляется система очень просто при помощи пульта ДУ, а также ручек регулирования громкости на лицевой панели усилителя. Параметры настроек отображаются на дисплее-индикаторе. 
+
+",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Microlab",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Pro 3",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса",
+               "value": "Дерево",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Выходная мощность, Вт",
+               "value": "90",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот,",
+               "value": "35-20000",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Отношение сигнал/шум, дБ",
+               "value": "75",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы и разъемы",
+         "options": [
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъем для наушников",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъем USB",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность фронтальных колонок, Вт",
+               "value": "45",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера, Вт",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков фронтальных колонок, мм",
+               "value": "1x25, 1x203",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамиков сабвуфера, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Магнитное экранирование фронтальных колонок/саттелитов",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Регулировка тембра",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок, мм",
+               "value": "285x385x265",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера, мм",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "1 год",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

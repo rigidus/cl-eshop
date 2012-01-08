@@ -1,0 +1,51 @@
+{
+   "articul": 122966,
+   "name": "Коврик для мышки гелевый с валиком X-storm GL008RTL (2592)",
+   "realname": "Коврик для мышки гелевый с валиком X-storm GL008RTL (2592)",
+   "price": 180,
+   "siteprice": 180,
+   "ekkprice": 171,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 15,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "X-Storm",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "GL008RTL",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "гелевый с валиком",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

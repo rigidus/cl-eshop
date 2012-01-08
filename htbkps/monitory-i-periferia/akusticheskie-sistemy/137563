@@ -1,0 +1,63 @@
+{
+   "articul": 137563,
+   "name": "Акустика Ritmix SP-700",
+   "realname": "Ritmix SP-700",
+   "price": 890,
+   "siteprice": 0,
+   "ekkprice": 864,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "1.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "30 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "70-30000 Гц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "есть, разъем mini jack",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Особенности",
+               "value": "мини-акустика, использующая любую твёрдую поверхность в качестве резонатора",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

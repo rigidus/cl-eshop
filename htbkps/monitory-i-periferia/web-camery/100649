@@ -1,0 +1,186 @@
+{
+   "articul": 100649,
+   "name": "Веб камера Genius Eye 311Q (63101)",
+   "realname": "Веб камера Genius Eye 311Q (63101)",
+   "price": 960,
+   "siteprice": 0,
+   "ekkprice": 939,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "47 грамм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Баланс белого",
+               "value": "авто",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 1.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Eye 311Q",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.genius.ru/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "TWAIN",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "54 x 54 x 29 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "CD-ROM,Проводная гарнитура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "Genius Application,DDPlayCam",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows Me,Windows XP,Windows 2000,Windows 98SE",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мультимедийные возможности",
+         "options": [
+            {
+               "name": "Поддерживаемые форматы",
+               "value": "AVI,JPEG",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "RAM 128 Мб,привод CD-ROM,Pentium II 700 МГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Крепление",
+               "value": "Возможно крепление камеры к ЖК-дисплею,КПК или ноутбуку.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "Ручная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "30 fps",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS; 300K пикселов",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

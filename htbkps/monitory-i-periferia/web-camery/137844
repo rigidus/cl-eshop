@@ -1,0 +1,128 @@
+{
+   "articul": 137844,
+   "name": "Веб камера Microsoft LifeCam Cinema (H5D-00004)",
+   "realname": "Microsoft LifeCam Cinema",
+   "price": 2450,
+   "siteprice": 2390,
+   "ekkprice": 2377,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 2,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Microsoft",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "LifeCam Cinema",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Количество мегапикселей матрицы, Мп",
+               "value": "0.7",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение видео",
+               "value": "1280x720",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол обзора",
+               "value": "74",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип фокусировки",
+               "value": "Автоматическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Длина кабеля, м",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип конструкции",
+               "value": "Крепление на монитор",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Комплектация",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "Функция слежения за лицом, 4x цифровой Zoom",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

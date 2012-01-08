@@ -1,0 +1,108 @@
+{
+   "articul": 122660,
+   "name": "Веб камера LevelOne FCS-1060",
+   "realname": "PT Сетевая IP камера (3GPPISMA RTSP) LevelOne FCS-1060",
+   "price": 7085,
+   "siteprice": 0,
+   "ekkprice": 6873,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Мультимедийные возможности",
+         "options": [
+            {
+               "name": "Поддерживаемые форматы",
+               "value": "MPEG-4/JPEG",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Встроенный микрофон",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "видео: 640 х 480, 320 х 240, 176 х 144, 160 х 120;
+фото: 640 х 480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "фиксированный фокус 4 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "до 30 fps",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение CCD",
+               "value": "0,3 Мп",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Угол поворота",
+               "value": "350 градусов",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол наклона",
+               "value": "125 градусов",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

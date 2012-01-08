@@ -1,0 +1,146 @@
+{
+   "articul": 142971,
+   "name": "Клавиатура A4-TECH  KL-23MUU",
+   "realname": "Клавиатура A4-TECH  KL-23MUU",
+   "price": 410,
+   "siteprice": 410,
+   "ekkprice": 398,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 4,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "A4Tech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "KLS-23MU",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплектация",
+               "value": "Клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип клавиатуры",
+               "value": "Проводная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Серебристый/Черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB, PS/2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Конструкция клавиатуры",
+               "value": "Классическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "110",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кол-во мультимедийных клавиш",
+               "value": "6",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный USB-hub",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Возможность шифрования данных",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Источник питания клавиатуры",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Беспроводная связь",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество программируемых клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "Удлинитель для подключения наушников и микрофона",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "1 год",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

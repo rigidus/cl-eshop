@@ -1,0 +1,113 @@
+{
+   "articul": 130241,
+   "name": "Веб камера Creative Live Cam Notebook (VF0470)",
+   "realname": "Creative Live Cam Notebook",
+   "price": 990,
+   "siteprice": 0,
+   "ekkprice": 961,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "крепление на мониторе",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Длина кабеля",
+               "value": "0.7 м",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Подключение",
+               "value": "USB 2.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Матрица",
+         "options": [
+            {
+               "name": "Матрица",
+               "value": "0.3 млн пикс., CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Изображение",
+         "options": [
+            {
+               "name": "Разрешение (видео)",
+               "value": "640x480, 800x600 (интерполированное)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение (фото)",
+               "value": "640x480",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерполированное разрешение в мегапикселах (фото)",
+               "value": "1.3 млн пикс.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Угол обзора объектива",
+               "value": "42 град.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные параметры",
+         "options": [
+            {
+               "name": "Микрофон",
+               "value": "встроенный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимые операционные системы",
+               "value": "Windows XP SP2/XP 64 бит/Vista",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

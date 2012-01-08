@@ -1,0 +1,146 @@
+{
+   "articul": 119970,
+   "name": "Клавиатура GENIUS KB-06XE (X2) черная PS/2 (006101/656115)",
+   "realname": "Клавиатура GENIUS KB-06XE (X2) черная PS/2 (006101/656115)",
+   "price": 260,
+   "siteprice": 260,
+   "ekkprice": 253,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 10,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "KB-06XE",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплектация",
+               "value": "Клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип клавиатуры",
+               "value": "Проводная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Интерфейс подключения",
+               "value": "PS/2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Конструкция клавиатуры",
+               "value": "Классическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "107",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кол-во мультимедийных клавиш",
+               "value": "3",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный USB-hub",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Возможность шифрования данных",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Источник питания клавиатуры",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Беспроводная связь",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество программируемых клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "3 года",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

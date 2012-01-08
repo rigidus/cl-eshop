@@ -1,0 +1,51 @@
+{
+   "articul": 121140,
+   "name": "Коврик для мышки Techmedia  пластик пейзажи MP-Pro-LS",
+   "realname": "Коврик для мышки Techmedia  пластик пейзажи MP-Pro-LS",
+   "price": 120,
+   "siteprice": 120,
+   "ekkprice": 114,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Techmedia",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "MP-Pro-LS",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал покрытия",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,170 @@
+{
+   "articul": 134466,
+   "name": "Веб камера Philips SPC 1030NC00",
+   "realname": "Philips SPC1030NC00",
+   "price": 1990,
+   "siteprice": 0,
+   "ekkprice": 1931,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "105 г",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Дополнительная информация",
+               "value": "интерполированное разрешение видео - 2 Mp",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры (ШxВxГ)",
+               "value": "40x56x12 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "крепление на мониторе, кнопка быстрой фотосъемки",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Глубина цвета",
+               "value": "24 бит",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Длина кабеля",
+               "value": "1.5 м",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Подключение",
+               "value": "USB 2.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Матрица",
+         "options": [
+            {
+               "name": "Матрица",
+               "value": "1.3 млн пикс., CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цифровой Zoom",
+               "value": "5x",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Изображение",
+         "options": [
+            {
+               "name": "Разрешение (видео)",
+               "value": "1280x1024",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Максимальная частота кадров",
+               "value": "60 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение (фото)",
+               "value": "1280x1024",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерполированное разрешение в мегапикселах (фото)",
+               "value": "8 млн пикс.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Угол обзора объектива",
+               "value": "80 град.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные параметры",
+         "options": [
+            {
+               "name": "Микрофон",
+               "value": "встроенный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Функция слежения за лицом",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимые операционные системы",
+               "value": "Windows XP SP2/Vista",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

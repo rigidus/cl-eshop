@@ -1,0 +1,146 @@
+{
+   "articul": 149447,
+   "name": "Клавиатура ASUS U3000 White",
+   "realname": "Клавиатура ASUS U3000 White",
+   "price": 640,
+   "siteprice": 640,
+   "ekkprice": 621,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "ASUS",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "U3000",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплектация",
+               "value": "Клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип клавиатуры",
+               "value": "Проводная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Белый",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Конструкция клавиатуры",
+               "value": "Классическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "107",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кол-во мультимедийных клавиш",
+               "value": "3",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный USB-hub",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Возможность шифрования данных",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Источник питания клавиатуры",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Беспроводная связь",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество программируемых клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "1 год",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

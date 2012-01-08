@@ -1,0 +1,120 @@
+{
+   "articul": 139657,
+   "name": "Набор клав.+мышь б/п MICROSOFT Comfort Desktop 5000 USB BlueTrack (CSD-00017)",
+   "realname": "Набор клав.+мышь б/п MICROSOFT Comfort Desktop 5000 USB BlueTrack (CSD-00017)",
+   "price": 2700,
+   "siteprice": 2390,
+   "ekkprice": 2619,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 10,
+   "countTotal": 11,
+   "optgroups":  [    
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплектация",
+               "value": "клавиатура + мышь",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Назначение",
+               "value": "настольный компьютер",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип беспроводной связи",
+               "value": "радиоканал",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Радиус действия беспроводной связи",
+               "value": "9 м",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Беспроводная связь",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "классическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "мембранная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Клавиатура",
+         "options": [
+            {
+               "name": "Ультратонкий дизайн",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество дополнительных клавиш",
+               "value": "20",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Количество клавиш",
+               "value": "125",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

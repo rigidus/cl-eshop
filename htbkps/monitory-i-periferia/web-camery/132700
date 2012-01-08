@@ -1,0 +1,180 @@
+{
+   "articul": 132700,
+   "name": "PS OCZ ModXStream-Pro 600w 600MXSP-EU",
+   "realname": "OCZ OCZ600MXSP 600W",
+   "price": 3290,
+   "siteprice": 2790,
+   "ekkprice": 3192,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "OCZ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "OCZ600MXSP",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Мощность, Вт",
+               "value": "600",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Максимальная нагрузка, В",
+               "value": "+3.3V - 25A, +5V - 25A, +12V1 - 25A, +12V2 - 25A, +5VSB - 2.5A, -12V - 0.3A; Комбинированная нагрузка: +3.3V&+5V - 150 Вт, +12V1&+12V2 - 504 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Входное напряжение,",
+               "value": "100  240",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип коррекции коэффициента мощности (PFC)",
+               "value": "Активный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Охлаждение",
+         "options": [
+            {
+               "name": "Способ охлаждения блока питания",
+               "value": "1 вентилятор: 135 x 135 мм (на нижней стенке)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип регулировки оборотов",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Коннекторы",
+         "options": [
+            {
+               "name": "Питание материнской платы",
+               "value": "24+8+4 pin, 24+8 pin, 24+4 pin, 20+4 pin",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Питание видеокарты",
+               "value": "1х 6-pin и 1х 6/8-pin разъем",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Питание HDD/FDD/SATA",
+               "value": "02-05-10",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+            {
+               "name": "Ширина, мм",
+               "value": "150",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Высота, мм",
+               "value": "86",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Глубина, мм",
+               "value": "160",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес, кг",
+               "value": "2,79",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "Защита от короткого замыкания, перенагрузки,перенагружения",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": ", отстегивающиеся кабели",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

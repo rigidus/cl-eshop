@@ -1,0 +1,63 @@
+{
+   "articul": 140506,
+   "name": "Коврик для мышки EXTREME SERIES 240*190*1mm DA01-05-DA01-10",
+   "realname": "Коврик для мышки EXTREME SERIES 240*190*1mm DA01-05-DA01-10",
+   "price": 90,
+   "siteprice": 90,
+   "ekkprice": 86,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 18,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "DA01-05-DA01-10 EXTREME SERIES",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+            {
+               "name": "Ширина, мм",
+               "value": "240",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Высота, мм",
+               "value": "190",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Глубина, мм",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "для оптической мыши",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

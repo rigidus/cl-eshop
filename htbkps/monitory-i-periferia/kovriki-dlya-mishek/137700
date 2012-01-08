@@ -1,0 +1,45 @@
+{
+   "articul": 137700,
+   "name": "Коврик для мышки Turbo NT01-NT04",
+   "realname": "Коврик для мышки Turbo NT01-NT04",
+   "price": 60,
+   "siteprice": 60,
+   "ekkprice": 57,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "NT01-NT04",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "для оптической мыши",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

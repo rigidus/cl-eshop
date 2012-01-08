@@ -1,0 +1,101 @@
+{
+   "articul": 122957,
+   "name": "Веб камера Genius  Look 315 FS",
+   "realname": "Веб камера Genius  Look 315 FS",
+   "price": 795,
+   "siteprice": 0,
+   "ekkprice": 795,
+   "active": null,
+   "newbie": null,
+   "sale": true,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 1.1 (совместимый с USB 2.0)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мультимедийные возможности",
+         "options": [
+            {
+               "name": "Поддерживаемые форматы",
+               "value": "JPEG/AVI",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "Фото: 1280 x 960 пикселей (максимум); видео: 640 x 480 пикселей (максимум)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "ручная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Параметры съемки",
+         "options": [
+            {
+               "name": "Угол обзора",
+               "value": "60 градусов",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "до 30 кадр/сек.",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение CCD",
+               "value": "VGA (640 x 480) ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

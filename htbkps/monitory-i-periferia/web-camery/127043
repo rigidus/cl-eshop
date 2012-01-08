@@ -1,0 +1,128 @@
+{
+   "articul": 127043,
+   "name": "Веб камера Creative 73VF057000003 Silver",
+   "realname": "Веб камера Creative 73VF057000003 Silver",
+   "price": 2290,
+   "siteprice": 2290,
+   "ekkprice": 2245,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Creative",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "73VF0570",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Серебристый",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Количество мегапикселей матрицы, Мп",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение видео",
+               "value": "1600x1200",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол обзора",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип фокусировки",
+               "value": "Автоматическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Длина кабеля, м",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип конструкции",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Комплектация",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "6 месяцев",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

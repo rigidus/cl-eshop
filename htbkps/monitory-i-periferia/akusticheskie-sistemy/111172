@@ -1,0 +1,168 @@
+{
+   "articul": 111172,
+   "name": "Акустика Logitech X-540  5.1 (223) черный",
+   "realname": "Logitech X-540",
+   "price": 4290,
+   "siteprice": 3990,
+   "ekkprice": 4205,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Дополнительные возможности:",
+         "options": [
+            {
+               "name": "Блок питания",
+               "value": "Встроенный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "7.4 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "25 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность центрального канала",
+               "value": "15.4 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность тыловых колонок",
+               "value": "7.4 Вт",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная мощность",
+               "value": "70 Вт RMS/140 Вт PMPO",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диапазон воспроизводимых частот",
+               "value": "40-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Пульт дистанционного управления",
+               "value": "проводной",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Крепление на стену",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "81x213x127 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры тыловых колонок",
+               "value": "81x213x127 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры центрального канала",
+               "value": "949x120х197 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "165х285x247 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Особенности",
+               "value": "Зажим для крепления колонки центрального канала к ЖК-монитору. Стойки колонок 
+могут вращаться для облегчения крепления к стене и изменения положения. В комплекте кабели (с цветным кодированием), адаптер для приставки",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Прочее",
+               "value": "Технология двойного диффузора (FDD2) обеспечивает равномерность звукового поля",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Logitech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "X-540",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.logitech.com",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

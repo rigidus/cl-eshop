@@ -1,0 +1,97 @@
+{
+   "articul": 85765,
+   "name": "Клавиатура GENIUS KB-16E Scroll MULTIMEDIA PS2 (18103)",
+   "realname": "Genius KB-16e Scroll PS2",
+   "price": 438,
+   "siteprice": 0,
+   "ekkprice": 408,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "классическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплектация",
+               "value": "клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "черный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "Клавиши быстрого доступа: Интернет и электронная почта - 4, мультимедиа - 7, клавиша перехода в спящий режим, клавиши для дополнительных функций - 2, клавиши вызова офисных приложений - 2 (Word, Exel). Эргономичная подставка для кистей рук и запястий.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "мембранная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Беспроводная связь",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Назначение",
+               "value": "настольный компьютер",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "PS/2",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Колесо прокрутки",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

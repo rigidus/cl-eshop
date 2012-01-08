@@ -1,0 +1,128 @@
+{
+   "articul": 139192,
+   "name": "Веб камера LOGITECH QuickCam Vision Pro  (960-000301)",
+   "realname": "Веб камера LOGITECH QuickCam Vision Pro  (960-000301)",
+   "price": 2890,
+   "siteprice": 2890,
+   "ekkprice": 2804,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Logitech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "QuickCam Vision Pro",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Серебристый",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Количество мегапикселей матрицы, Мп",
+               "value": "2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение видео",
+               "value": "640x480",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол обзора",
+               "value": "60",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип фокусировки",
+               "value": "Автоматическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Длина кабеля, м",
+               "value": "1.8",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип конструкции",
+               "value": "Крепление на монитор",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Комплектация",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "Оптика Carl Zeiss",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "2 года",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

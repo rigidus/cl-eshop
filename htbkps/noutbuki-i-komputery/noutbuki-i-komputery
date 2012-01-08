@@ -1,0 +1,87 @@
+{"name": "Ноутбуки и компьютеры",
+ "active": true,
+ "empty": null,
+ "order": 1,
+ "ymlshow": null,
+ "pic": null,
+ "descr": "this is descr",
+ "fullfilter":
+  "(:name \"Подобрать нетбук\"
+    :base
+    ((:price \"Цена\"
+      :range \"руб.\"
+      (lambda (p q) (wolfor-stuff::price-filter p q)))
+     (:screen-size \"Экран\"
+      :range \"дюйм\"
+      (lambda (p q)
+         (wolfor-stuff::range-filter p
+                                     q
+                                     \"screen-size\"
+                                     \"Экран\"
+                                     \"Диагональ экрана, дюйм\")))
+     (:work-on-battery \"Работа от батареи\"
+      :range \"часов\"
+      (lambda (p q)
+         (wolfor-stuff::range-filter p
+                                     q
+                                     \"work-on-battery\"
+                                     \"Аккумулятор\"
+                                     \"Время автономной работы, ч\")))
+     (:weight \"Вес\"
+      :range \"кг\"
+      (lambda (p q)
+         (wolfor-stuff::range-filter p
+                                     q
+                                     \"weight\"
+                                     \"Габариты\"
+                                     \"Вес, кг\"))))
+    :advanced
+    ((\"Дополнительные параметры\"
+        ((:harddrive \"Жесткий диск\"
+          :range \"Гб\"
+          (lambda (p q)
+             (wolfor-stuff::range-filter p
+                                         q
+                                         \"harddrive\"
+                                         \"Жесткий диск\"
+                                         \"Объем жесткого диска, Гб\")))
+         (:screen-resolution \"Память\"
+          :range \"Мб\"
+          (lambda (p q)
+             (wolfor-stuff::range-filter p
+                                         q
+                                         \"screen-resolution\"
+                                         \"Оперативная память\"
+                                         \"Объем оперативной памяти, Мб\")))
+         (:ram \"Объем видеопамяти\"
+          :range \"Мб\"
+          (lambda (p q)
+             (wolfor-stuff::range-filter p
+                                         q
+                                         \"ram\"
+                                         \"Видеоадаптер\"
+                                         \"Объем видеопамяти, Мб\")))))))",
+ "keyoptions":
+  [{"optgroup":"Экран",
+    "optname":"Диагональ экрана, дюйм"},
+   {"optgroup":"Процессор",
+    "optname":"Частота процессора, Мгц"},
+   {"optgroup":"Процессор",
+     "optname":"Тип"},
+   {"optgroup":"Процессор",
+    "optname":"Модель процессора"},
+   {"optgroup":"Оперативная память",
+    "optname":"Объем оперативной памяти, Мб"},
+   {"optgroup":"Жесткий диск",
+    "optname":"Объем жесткого диска, Гб"},
+   {"optgroup":"Видеоадаптер",
+    "optname":"Объем видеопамяти,Мб"},
+   {"optgroup":"Видеоадаптер",
+    "optname":"Чипсет"},
+   {"optgroup":"Аккумулятор",
+    "optname":"Время автономной работы, ч"},
+   {"optgroup":"Габариты",
+    "optname":"Вес, кг"},
+   {"optgroup":"Операционная система",
+    "optname":"Установленная операционная система"}]
+}

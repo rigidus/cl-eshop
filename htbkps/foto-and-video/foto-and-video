@@ -1,0 +1,10 @@
+{
+  "name": "Фото и видеокамеры",
+  "active": true,
+  "empty": null,
+  "order": 3,
+  "ymlshow": null,
+  "pic": null,
+  "keyoptions": null,
+  "icon":"/img/cat-icon/foto.gif"
+}

@@ -1,0 +1,199 @@
+{
+   "articul": 106462,
+   "name": "Веб камера A4Tech  PK-5  FlexiCam",
+   "realname": "Веб камера A4Tech  PK-5  FlexiCam",
+   "price": 518,
+   "siteprice": 0,
+   "ekkprice": 503,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Баланс белого",
+               "value": "автоматический",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "A4-Tech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "PK-5",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.a4tech.com/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Прочее",
+               "value": "изменяется в пределах 20 - 40 см; камера может наклоняться вперед и назад и влево и вправо. Сдвижная крышка объектива.,на которой располежена камера,Высота",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "FlexiCam",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows 98,Windows 2003,Windows 2000,Windows XP,Windows Me",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Кнопки",
+               "value": "Snapshot",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусное расстояние объектива",
+               "value": "4.9 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Светосила объектива",
+               "value": "1/2.4",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Фокусировка",
+               "value": "Автоматическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Расстояние до объекта",
+               "value": "От 30 см",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "свободные 165 Мб на жестком диске,Pentium 166 МГц,привод CD-ROM,звуковая карта,RAM 32 Мб",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол поворота",
+               "value": "360°",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Экспозиция",
+         "options": [
+            {
+               "name": "Экспозиция",
+               "value": "Автоматическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Параметры съемки",
+         "options": [
+            {
+               "name": "Угол обзора",
+               "value": "54°",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "@ 160x120,@ 320x240,@ 600x800,30 fps @ 640x480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "1/4&quot; CMOS; 350K пикселов",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

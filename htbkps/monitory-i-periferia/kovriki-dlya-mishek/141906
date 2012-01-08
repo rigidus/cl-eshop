@@ -1,0 +1,45 @@
+{
+   "articul": 141906,
+   "name": "Коврик для мышки шелковый Спящая кошка SK01",
+   "realname": "Коврик для мышки шелковый Спящая кошка SK01",
+   "price": 89,
+   "siteprice": 89,
+   "ekkprice": 85,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "SK01 Спящая кошка",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал покрытия",
+               "value": "шелк",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+         ]
+      }
+   ]
+
+}

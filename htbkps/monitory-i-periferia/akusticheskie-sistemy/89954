@@ -1,0 +1,102 @@
+{
+   "articul": 89954,
+   "name": "Акустика Dialog  W-1000-5   5.1",
+   "realname": "Dialog W-1000",
+   "price": 1649,
+   "siteprice": 0,
+   "ekkprice": 1599,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Диалог",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Срок гарантии",
+               "value": "12 месяцев",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал",
+               "value": "Корпуса сабвуфера и сателлитов: дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон",
+               "value": "20 Гц - 20 кГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Комментарий по ремонту",
+               "value": "Гарантийное обслуживание производится по гарантийному талону производителя",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Конструкция",
+         "options": [
+            {
+               "name": "Динамики",
+               "value": "сателлиты: 3,Сабвуфер: 5,25,центральная колонка: 3",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "55 ватт",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Прочее",
+         "options": [
+            {
+               "name": "Настройки",
+               "value": "Громкость общая/задних сателлитов/центрального канала/сабвуфера",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

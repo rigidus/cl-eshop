@@ -1,0 +1,45 @@
+{
+   "articul": 134365,
+   "name": "Коврик для мышки OP01-OPO3",
+   "realname": "Коврик для мышки OP01-OPO3",
+   "price": 35,
+   "siteprice": 35,
+   "ekkprice": 34,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 13,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "OP01-OPO3",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "для оптической мыши",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

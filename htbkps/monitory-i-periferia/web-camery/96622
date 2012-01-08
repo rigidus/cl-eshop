@@ -1,0 +1,176 @@
+{
+   "articul": 96622,
+   "name": "Веб камера Genius VideoCAM Look  (9101)",
+   "realname": "Веб камера Genius VideoCAM Look  (9101)",
+   "price": 599,
+   "siteprice": 0,
+   "ekkprice": 599,
+   "active": null,
+   "newbie": null,
+   "sale": true,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Формат",
+               "value": "Фото: JPEG,видео: AVI",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Питание",
+               "value": "От USB порта",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "VideoCAM Look",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.geniusnet.com.tw/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Описание",
+               "value": "Web-камера.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Срок гарантии",
+               "value": "36 месяцев",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Где производится ремонт",
+               "value": "http://www.genius.ru/support.aspx?pageID=25",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "84.8 x 76 x 92.7 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "ПО в комплекте",
+               "value": "Многоязыковой драйвер,программа для настройки видеокамеры,Microsoft NetMeeting для видеоконференций.",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows 98,Windows Me,Windows XP,Windows 2000",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Запись видео и звука",
+         "options": [
+            {
+               "name": "Звук",
+               "value": "Встроенный микрофон",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "До 640 x 480 или 1024 х 768 с использованием интерполяции.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "Ручная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "30 fps",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение CCD",
+               "value": "300K",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вращение головки",
+               "value": "Есть возможность вращения камеры вокруг основания на 360°",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

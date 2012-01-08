@@ -1,0 +1,158 @@
+{
+   "articul": 105089,
+   "name": "Акустика GENIUS SP-F350  2.0 серебристые (510101)",
+   "realname": "Genius SP-F350",
+   "price": 930,
+   "siteprice": 0,
+   "ekkprice": 903,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "1480 грамм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "SP-F350",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.genius.ru/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Разъем для наушников",
+               "value": "Есть на боковой панели",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "70 дБ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон",
+               "value": "20 Гц - 20 кГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "100 x 240 x 100 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "серый,Черный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Телефон горячей линии производителя",
+               "value": "По любым вопросам,связанным с сервисным обслуживанием,с техническими проблемами или проблемами при подключении можно обращаться в службу технической поддержки Genius по телефону в Москве: (495) 777-74-88 (телефон многоканальный).",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Конструкция",
+         "options": [
+            {
+               "name": "Динамики",
+               "value": "3 и 1",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Память и интерфейсы",
+         "options": [
+            {
+               "name": "Разъемы",
+               "value": "Линейный вход,разъемы для подключения наушников и микрофона на боковой панели",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "10 ватт RMS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Прочее",
+         "options": [
+            {
+               "name": "Настройки",
+               "value": "Громкость,3D,Tone",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

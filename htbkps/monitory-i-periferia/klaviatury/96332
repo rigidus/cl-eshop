@@ -1,0 +1,108 @@
+{
+   "articul": 96332,
+   "name": "Клавиатура GENIUS SlimStar 100 PS/2 (667100)",
+   "realname": "Genius SlimStar 100 PS2",
+   "price": 390,
+   "siteprice": 390,
+   "ekkprice": 379,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "классическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплектация",
+               "value": "клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "несколько цветов",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "Клавиша быстрого доступа Sleep дает возможность моментально перевести компьютер в спящий режим.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "мембранная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Беспроводная связь",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Назначение",
+               "value": "настольный компьютер",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "PS/2",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Колесо прокрутки",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Клавиатура",
+         "options": [
+            {
+               "name": "Встроенный USB-хаб",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

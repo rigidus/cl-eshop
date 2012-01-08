@@ -1,0 +1,114 @@
+{
+   "articul": 99737,
+   "name": "Клавиатура A4-TECH KBS-26 Office AntiRSI PS/2",
+   "realname": "Клавиатура A4-TECH KBS-26 Office AntiRSI PS/2",
+   "price": 540,
+   "siteprice": 540,
+   "ekkprice": 524,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 4,
+   "optgroups":  [    
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "ромбическая (Anti RSI)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплектация",
+               "value": "клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "серебристый",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "мембранная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Беспроводная связь",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Назначение",
+               "value": "настольный компьютер",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "PS/2",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Количество клавиш",
+               "value": "137",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Колесо прокрутки",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Клавиатура",
+         "options": [
+            {
+               "name": "Количество дополнительных клавиш",
+               "value": "33",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный USB-хаб",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,125 @@
+{
+   "articul": 137888,
+   "name": "Клавиатура GENIUS SlimStar 220  USB черная 308104",
+   "realname": "Клавиатура GENIUS SlimStar 220  USB черная 308104",
+   "price": 750,
+   "siteprice": 750,
+   "ekkprice": 728,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 2,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "700 г",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры (ШxВxГ)",
+               "value": "454x28x192 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "классическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплектация",
+               "value": "клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "черный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "дополнительные клавиши: Screen Lock, Home, E-Mail, Messenger, Play/Pause, Stop, Mute, Word, Excel, Power Point, YouTube, Application Switch",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "мембранная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Назначение",
+               "value": "настольный компьютер",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Количество клавиш",
+               "value": "116",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Клавиатура",
+         "options": [
+            {
+               "name": "Количество дополнительных клавиш",
+               "value": "12",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный USB-хаб",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

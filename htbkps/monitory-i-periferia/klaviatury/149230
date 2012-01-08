@@ -1,0 +1,146 @@
+{
+   "articul": 149230,
+   "name": "Набор клав.+мышь б/п LOGITECH MK250 OEM (920-002633)",
+   "realname": "Набор клав.+мышь б/п LOGITECH MK250 OEM (920-002633)",
+   "price": 1190,
+   "siteprice": 990,
+   "ekkprice": 1155,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 2,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Logitech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Wireless Desktop MK250",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплектация",
+               "value": "Клавиатура + мышь",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип клавиатуры",
+               "value": "Проводная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Конструкция клавиатуры",
+               "value": "Классическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "104",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кол-во мультимедийных клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный USB-hub",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Возможность шифрования данных",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Источник питания клавиатуры",
+               "value": "2xAAA",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "Оптическая светодиодная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Беспроводная связь",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "3",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество программируемых клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "1 год",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

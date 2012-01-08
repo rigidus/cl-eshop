@@ -1,0 +1,109 @@
+{
+   "articul": 114994,
+   "name": "Клавиатура Dialog  KP-105SU",
+   "realname": "Dialog KP-105SU USB",
+   "price": 500,
+   "siteprice": 0,
+   "ekkprice": 500,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Размеры",
+               "value": "375x20x150 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Беспроводная связь",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Назначение",
+               "value": "настольный компьютер",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "классическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплектация",
+               "value": "клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "серебристый",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Количество клавиш",
+               "value": "125",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Колесо прокрутки",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Клавиатура",
+         "options": [
+            {
+               "name": "Количество дополнительных клавиш",
+               "value": "19",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный USB-хаб",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

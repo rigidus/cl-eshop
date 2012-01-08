@@ -1,0 +1,97 @@
+{
+   "articul": 95424,
+   "name": "Клавиатура GENIUS Comfy KB-09 PS2 (27100)",
+   "realname": "Genius Comfy KB-09 PS2",
+   "price": 199,
+   "siteprice": 0,
+   "ekkprice": 199,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "классическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплектация",
+               "value": "клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "белый",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "Клавиатура предназначена для Windows 98/2000/Me и имеет одну дополнительную клавишу ACPI управления питанием: режим ожидания/выход из режима ожидания. Конструкция эргономичной опоры обеспечивает очень удобное положение рук.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "мембранная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Беспроводная связь",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Назначение",
+               "value": "настольный компьютер",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "PS/2",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Колесо прокрутки",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

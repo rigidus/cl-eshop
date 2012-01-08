@@ -1,0 +1,126 @@
+{
+   "articul": 125189,
+   "name": "Веб камера LOGITECH QuickCam S5500 (960-000246)",
+   "realname": "Веб камера LOGITECH QuickCam S5500 (960-000246)",
+   "price": 2649,
+   "siteprice": 0,
+   "ekkprice": 2570,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 2.0 ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Logitech ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.logitech.com ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "22.7 x 17.5 x 8.5 см ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "0.444 кг ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Черный, серебристый ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows XP, Windows Vista ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Длина кабеля",
+               "value": "1.8 м ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть; с технологией RightSound устранения фоновых шумов ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Крепление",
+               "value": "ae3
+К LCD-дисплею, Установка на столе ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "1280 x 960 ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Захват",
+               "value": "30 fps ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

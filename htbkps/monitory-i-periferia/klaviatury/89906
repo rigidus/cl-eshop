@@ -1,0 +1,103 @@
+{
+   "articul": 89906,
+   "name": "Клавиатура LOGITECH Media PS2 (415)",
+   "realname": "Клавиатура LOGITECH Media PS2 (415)",
+   "price": 799,
+   "siteprice": 0,
+   "ekkprice": 779,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "классическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплектация",
+               "value": "клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "черный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Особенности",
+               "value": "Влагозащищенная клавиатура. Расширенные функциональные клавиши. Управление мультимедиа. Zero Degree Tilt.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Беспроводная связь",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Назначение",
+               "value": "настольный компьютер",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерфейс подключения",
+               "value": "PS/2",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Количество клавиш",
+               "value": "103",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Колесо прокрутки",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Клавиатура",
+         "options": [
+            {
+               "name": "Количество дополнительных клавиш",
+               "value": "18",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

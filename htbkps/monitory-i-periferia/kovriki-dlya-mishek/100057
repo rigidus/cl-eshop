@@ -1,0 +1,45 @@
+{
+   "articul": 100057,
+   "name": "Коврик для мышки прозрачный (TM01-TM03)",
+   "realname": "Коврик для мышки прозрачный (TM01-TM03)",
+   "price": 89,
+   "siteprice": 89,
+   "ekkprice": 85,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 7,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "TM01-TM03",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "для оптической мыши, прозрачный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

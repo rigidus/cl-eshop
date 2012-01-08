@@ -1,0 +1,120 @@
+{
+   "articul": 135989,
+   "name": "Веб камера A4Tech  PK-336E Portable Clip-on",
+   "realname": "A4Tech PK-336E Portable Clip-on",
+   "price": 590,
+   "siteprice": 0,
+   "ekkprice": 573,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "крепление на мониторе, кнопка быстрой фотосъемки",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Фокусировка",
+               "value": "автоматическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Подключение",
+               "value": "USB 2.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Угол поворота",
+               "value": "360 град.",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Угол обзора объектива",
+               "value": "54 град.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Матрица",
+         "options": [
+            {
+               "name": "Матрица",
+               "value": "0.3 млн пикс., CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Изображение",
+         "options": [
+            {
+               "name": "Поддержка режимов",
+               "value": "640x480 @ 30 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение (видео)",
+               "value": "640x480, 2560x2048 (интерполированное)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Максимальная частота кадров",
+               "value": "30 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение (фото)",
+               "value": "2560x2048 (интерполированное)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные параметры",
+         "options": [
+            {
+               "name": "Микрофон",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимые операционные системы",
+               "value": "Windows XP/Vista/Mac OS 10.4.8",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

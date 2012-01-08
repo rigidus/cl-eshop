@@ -1,0 +1,124 @@
+{
+   "articul": 75997,
+   "name": "Акустика GENIUS SP-K16  2.0 (C07271100)",
+   "realname": "Genius SP-K16",
+   "price": 519,
+   "siteprice": 0,
+   "ekkprice": 519,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.geniusnet.com.tw/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "119 x 238 x 134 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Телефон горячей линии производителя",
+               "value": "По любым вопросам,связанным с сервисным обслуживанием,с техническими проблемами или проблемами при подключении можно обращаться в службу технической поддержки Genius по телефону в Москве: (495) 777-74-88 (телефон многоканальный).",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Конструкция",
+         "options": [
+            {
+               "name": "Динамики",
+               "value": "76 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "16 ватт",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Прочее",
+         "options": [
+            {
+               "name": "Настройки",
+               "value": "Громкость,3D,Tone",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Частотный диапазон",
+               "value": "80 Гц - 20 кГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Размеры упаковочной тары",
+               "value": "44 х 39 х 57 см",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество в упаковочной таре",
+               "value": "10 шт.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

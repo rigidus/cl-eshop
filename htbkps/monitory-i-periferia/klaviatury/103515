@@ -1,0 +1,146 @@
+{
+   "articul": 103515,
+   "name": "Клавиатура MICROSOFT Natural Ergo 4000 USB (FA5-00002/B2M-00020)",
+   "realname": "Клавиатура MICROSOFT Natural Ergo 4000 USB (FA5-00002/B2M-00020)",
+   "price": 1990,
+   "siteprice": 1790,
+   "ekkprice": 1931,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 10,
+   "countTotal": 12,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Microsoft",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Natural Ergonomic Keyboard 4000",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплектация",
+               "value": "Клавиатура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип клавиатуры",
+               "value": "Проводная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Интерфейс подключения",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Конструкция клавиатуры",
+               "value": "Эргономическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "119",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кол-во мультимедийных клавиш",
+               "value": "14",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный USB-hub",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Возможность шифрования данных",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Источник питания клавиатуры",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Беспроводная связь",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество программируемых клавиш",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "Zoom-регулятор",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "3 года",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

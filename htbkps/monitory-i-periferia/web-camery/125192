@@ -1,0 +1,79 @@
+{
+   "articul": 125192,
+   "name": "Веб камера Microsoft LifeCam VX-5000 Green (RKA-00012)",
+   "realname": "Веб камера Microsoft LifeCam VX-5000 Green (RKA-00012)",
+   "price": 1617,
+   "siteprice": 0,
+   "ekkprice": 1569,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Встроенный микрофон",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Крепление",
+               "value": "универсальное",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640х480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "до 30 кадров/ сек",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение CCD",
+               "value": "1.3M",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

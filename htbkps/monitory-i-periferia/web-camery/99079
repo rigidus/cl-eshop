@@ -1,0 +1,181 @@
+{
+   "articul": 99079,
+   "name": "Веб камера CREATIVE Vista Plus  (VF0090)",
+   "realname": "Веб камера CREATIVE Vista Plus  (VF0090)",
+   "price": 622,
+   "siteprice": 0,
+   "ekkprice": 612,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Баланс белого",
+               "value": "автоматический",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Глубина цвета",
+               "value": "24 бита (16.7 млн. цветов)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение",
+               "value": "352 х 288",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 1.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Creative",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Webcam Vista Plus",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "ru.europe.creative.com/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Длина кабеля",
+               "value": "1.8 м",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Прочее",
+               "value": "Универсальный штатив для установки на ровную поверхность или крепления к ЖК-монитору.",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплект поставки",
+               "value": "CD-ROM,Петличный микрофон",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "Creative WebCam Center,Ulead Photo Express 4.0 MCE,ArcSoft Multimedia Email 3.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows Me,Windows XP,Windows 2000,Windows 98SE",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Питание",
+               "value": "От USB порта",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мультимедийные возможности",
+         "options": [
+            {
+               "name": "Поддерживаемые форматы",
+               "value": "RGB24,I420",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "RAM 64 Мб,видеокарта с поддержкой 16-битного цвета,привод CD-ROM,Pentium II или AMD Athlon 266 МГц,свободные 100 Мб на жестком диске",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Экспозиция",
+         "options": [
+            {
+               "name": "Экспозиция",
+               "value": "Автоматическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "25 fps",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS,цветной",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

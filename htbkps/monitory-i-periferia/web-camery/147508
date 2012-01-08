@@ -1,0 +1,150 @@
+{
+   "articul": 147508,
+   "name": "PS OCZ ATX 700W  700MXSP-EU",
+   "realname": "OCZ OCZ700MXSP 700W",
+   "price": 3490,
+   "siteprice": 3290,
+   "ekkprice": 3386,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "OCZ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "OCZ700MXSP 700W",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Мощность, Вт",
+               "value": "700 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Максимальная нагрузка, В",
+               "value": "+3.3 В 25 A +12 В 1 25 A 220-240",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Входное напряжение,",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип коррекции коэффициента мощности (PFC)",
+               "value": "активный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Охлаждение",
+         "options": [
+            {
+               "name": "Способ охлаждения блока питания",
+               "value": "1 вентилятор (140 мм)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип регулировки оборотов",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Коннекторы",
+         "options": [
+            {
+               "name": "Питание материнской платы",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Питание видеокарты",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Питание HDD/FDD/SATA",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+            {
+               "name": "Ширина, мм",
+               "value": "150",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Высота, мм",
+               "value": "86",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Глубина, мм",
+               "value": "160",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес, кг",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

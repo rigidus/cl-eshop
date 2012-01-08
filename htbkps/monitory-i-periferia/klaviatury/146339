@@ -1,0 +1,114 @@
+{
+   "articul": 146339,
+   "name": "Клавиатура A4-TECH NumPad TK-5 Silver-Black Retractable USB",
+   "realname": "Клавиатура A4-TECH NumPad TK-5 Silver-Black Retractable USB",
+   "price": 190,
+   "siteprice": 190,
+   "ekkprice": 185,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 2,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "A4-Tech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "TK-5",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип",
+               "value": "Проводная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "черный/серебро",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш, шт",
+               "value": "18",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мультимедийные клавиши",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Программируемые клавиши",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Конструкция",
+               "value": "цифровой блок",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Подсветка клавиш",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительные возможности",
+         "options": [
+         ]
+      },
+      {
+         "name": "Питание",
+         "options": [
+         ]
+      },
+      {
+         "name": "Комплектация",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Гарантия",
+               "value": "6 месяцев",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

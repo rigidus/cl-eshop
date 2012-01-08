@@ -1,0 +1,45 @@
+{
+   "articul": 130328,
+   "name": "Коврик для мышки Super SUP01-03",
+   "realname": "mp для опт мыши Super SUP01-03",
+   "price": 120,
+   "siteprice": 120,
+   "ekkprice": 114,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 22,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "SUP01-03",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "для оптической мыши",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

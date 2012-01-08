@@ -1,0 +1,127 @@
+{
+   "articul": 122866,
+   "name": "Веб камера LOGITECH QC Deluxe for Notebooks (960-000086)",
+   "realname": "Веб камера LOGITECH QC Deluxe for Notebooks (960-000086)",
+   "price": 2004,
+   "siteprice": 0,
+   "ekkprice": 2004,
+   "active": null,
+   "newbie": null,
+   "sale": true,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 2.0 ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Logitech ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.logitech.com ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "14.7 x 13.3 x 5 см ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "78b
+0.253 кг ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Серебристый, черный ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплект поставки",
+               "value": "Футляр, гарнитура, CD-ROM ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows Vista, Windows 2000, Windows XP ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Кнопки",
+               "value": "Snapshot ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть. Технология RightSound исключает эхо и снижает фоновый шум. ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Крепление",
+               "value": "Установка на столе, к LCD-дисплею (зажим 20 мм) ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480 пикселов ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Объектив",
+               "value": "Стеклянный ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

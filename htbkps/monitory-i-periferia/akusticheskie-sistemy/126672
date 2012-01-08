@@ -1,0 +1,184 @@
+{
+   "articul": 126672,
+   "name": "Акустика Microlab SOLO-7c  2.0 дерево",
+   "realname": "Акустика Microlab SOLO-7c  2.0 дерево",
+   "price": 7990,
+   "siteprice": 7090,
+   "ekkprice": 7751,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "22.4 кг ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "116d
+2.0 ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Microlab ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.microlab.com ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "85 дБ ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон",
+               "value": "50 Гц - 31 кГц ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "55.3 x 38.7 x 64.9 см ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "26.05 кг ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Дерево, черный ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса",
+               "value": "Дерево (МДФ) ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Питание",
+               "value": "От электросети ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Усилитель",
+               "value": "Встроенный ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "110 Ватт ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал диффузора (ов)",
+               "value": "НЧ и СЧ/НЧ динамики: пропилен; ВЧ динамик: шелк ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование",
+               "value": "Есть ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "THD",
+               "value": "0.3% при 1 Вт на 1 кГц ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Расположение регуляторов",
+               "value": "На передней панели ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Конструкция",
+         "options": [
+            {
+               "name": "Динамики",
+               "value": "НЧ, СЧ/НЧ: 6.5; ВЧ: 1 ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Память и интерфейсы",
+         "options": [
+            {
+               "name": "Разъемы",
+               "value": " ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функции",
+         "options": [
+            {
+               "name": "Пульт ДУ",
+               "value": "Беспроводной ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

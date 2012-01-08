@@ -1,0 +1,182 @@
+{
+   "articul": 109526,
+   "name": "Веб камера Genius Look 1320",
+   "realname": "Веб камера Genius Look 1320",
+   "price": 1030,
+   "siteprice": 0,
+   "ekkprice": 1026,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Баланс белого",
+               "value": "авто",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Look 1320",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.genius.ru/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Описание",
+               "value": "Web камера в комплекте с аналоговой гарнитурой",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "TWAIN",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "76 x 87 x 76 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кнопки",
+               "value": "Snapshot",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть (используется идущая в комплекте гарнитура)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Прочее",
+               "value": "Включение/выключение видеозаписи при наличии/отсутствии движения,автоматическая запись видеоизображения до заполнения HDD.",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "DDPlayCam,Perky Photo Frames",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows Me,Windows 2000,Windows 98SE,Windows XP; Mac OS X",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мультимедийные возможности",
+         "options": [
+            {
+               "name": "Поддерживаемые форматы",
+               "value": "AVI,JPEG",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "свободные 10 Мб на жестком диске,RAM 256 Мб,привод CD-ROM,Pentium IV 1 ГГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "1024 x 768 (видео при подключении к USB 2.0),640 x 480 (видео при подключении к USB 1.1)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "Ручная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "30 fps",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS,1280 x 960 пикселов",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

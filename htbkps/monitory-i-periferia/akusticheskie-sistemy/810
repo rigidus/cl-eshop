@@ -1,0 +1,124 @@
+{
+   "articul": 810,
+   "name": "Акустика GENIUS SP-205B  2.0 (C02938100)",
+   "realname": "Акустика GENIUS SP-205B  2.0 (C02938100)",
+   "price": 129,
+   "siteprice": 0,
+   "ekkprice": 129,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.geniusnet.com.tw/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Разъем для наушников",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Телефон горячей линии производителя",
+               "value": "По любым вопросам,связанным с сервисным обслуживанием,с техническими проблемами или проблемами при подключении можно обращаться в службу технической поддержки Genius по телефону в Москве: (495) 777-74-88 (телефон многоканальный).",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Технические характеристики",
+         "options": [
+            {
+               "name": "Выходная мощность",
+               "value": "2 х 1 ватт",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "2 ватта",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование",
+               "value": "Да",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Прочее",
+         "options": [
+            {
+               "name": "Настройки",
+               "value": "Громкость",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Частотный диапазон",
+               "value": "80 Гц - 16 кГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Размеры внешние",
+               "value": "6.7 x 16.5 x 9.7 см",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

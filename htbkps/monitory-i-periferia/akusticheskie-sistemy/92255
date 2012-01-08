@@ -1,0 +1,199 @@
+{
+   "articul": 92255,
+   "name": "Акустика Dialog  W-3500-5  5.1",
+   "realname": "Dialog W-3500",
+   "price": 6990,
+   "siteprice": 0,
+   "ekkprice": 6990,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "5.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Диалог",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "W-3500-5",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.dialoginvest.com/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "90 дБ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал",
+               "value": "Дерево (MDF)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон",
+               "value": "20 Гц - 20 кГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры сабвуфера",
+               "value": "330 х 370 х 395 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Черный,Дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплект поставки",
+               "value": "Кабели подключения фронтальных сателлитов - 2.5м; Кабели подключения тыловых сателлитов - 10м; Кабели подключения центрального сателлита - 2м; Кабели подключения к источнику звука - 1.5м (3шт); Инструкция; Пульт ДУ,2 батарейки AA",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Конструкция",
+         "options": [
+            {
+               "name": "Динамики",
+               "value": "Фронтальные центральная колонки: 1 + 4 + 4,тыловые колонки: 1 + 3.5,сабвуфер: 8",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Разъемы для подключения сателлитов",
+               "value": "Пружинные зажимы",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "295 Ватт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сателлитов",
+               "value": "260 х 560 х 170 мм - фронтальная колонка,150 х 161 х 240 мм - тыловая колонка",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Крепление к стене",
+               "value": "Возможно крепление к стене тыловых колонок",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Память и интерфейсы",
+         "options": [
+            {
+               "name": "Разъемы",
+               "value": "Вход 5.1,4 входа 2xRCA",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Технические характеристики",
+         "options": [
+            {
+               "name": "Выходная мощность",
+               "value": "Сабвуфер: 100 Вт RMS; фронтальные и центральная колонки: по 80 Вт; тыловые колонки: по 80 Вт.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функции",
+         "options": [
+            {
+               "name": "Пульт ДУ",
+               "value": "Беспроводной; входит в комплект поставки",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разделение каналов",
+               "value": "40дБ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Выход фазоинвертора",
+               "value": "На передней панели",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры центральной колонки",
+               "value": "260 х 560 х 170 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,148 @@
+{
+   "articul": 99077,
+   "name": "Веб камера CREATIVE Live Motion (VF0150)",
+   "realname": "Веб камера CREATIVE Live Motion (VF0150)",
+   "price": 2990,
+   "siteprice": 0,
+   "ekkprice": 2990,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Creative",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Webcam Live! Motion",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "ru.europe.creative.com/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "Skype Certified",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Прочее",
+               "value": "Функция слежения за лицом объекта smart face tracking",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплект поставки",
+               "value": "CD-ROM,Гарнитура",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "Creative WebCam Center,Creative Photo Manager,ArcSoft VideoImpression,Yahoo! Messenger,PixAround (позволяет делать панорамные фотоснимки одним нажатием кнопки),SightSpeed (организация видеоконференций с использованием широкополосного соединения)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows XP,Windows 2000",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "RAM 128 Мб,видеокарта с поддержкой 16-битного цвета,Pentium III 700 МГц,привод CD-ROM,свободные 100 Мб на жестком диске",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Параметры съемки",
+         "options": [
+            {
+               "name": "Угол обзора",
+               "value": "76°. Технология MaxView обеспечивает ведущий в отрасли угол обзора (200° по горизонтали и 105° по вертикали).",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Захват",
+               "value": "30 fps",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Требования к системе (рекомендуемые)",
+               "value": "RAM 256 Мб,привод CD-ROM,Pentium 4 2.8 ГГц,свободные 100 Мб на жестком диске,видеокарта с поддержкой 16-битного цвета",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Матрица",
+         "options": [
+            {
+               "name": "Матрица",
+               "value": "CCD",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

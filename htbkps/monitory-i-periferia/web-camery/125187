@@ -1,0 +1,74 @@
+{
+   "articul": 125187,
+   "name": "Веб камера Genius Slim 1322AF",
+   "realname": "Веб камера Genius Slim 1322AF",
+   "price": 1290,
+   "siteprice": 0,
+   "ekkprice": 1290,
+   "active": null,
+   "newbie": null,
+   "sale": true,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Формат",
+               "value": "JPEG/WMV",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB2.0 High Speed",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "Фото: 1280 x 1024,1280 x 960, 640 x 480 , 352 x 288, 320 x 240, 176 x 144, 160 x 120
+Видео: 1280 x 1024 pixels / до 12fps, 640 x 480 pixels / до 30fps",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "автоматическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "True 1.3 Mega pixel CMOS Image Sensor",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

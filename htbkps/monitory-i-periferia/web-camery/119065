@@ -1,0 +1,167 @@
+{
+   "articul": 119065,
+   "name": "Веб камера Genius Slim 310NB",
+   "realname": "Genius Slim 310NB",
+   "price": 950,
+   "siteprice": 0,
+   "ekkprice": 935,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 1.1 ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.genius.ru ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "MSN, Yahoo, Skype и др. службы обмена сообщениями ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "17.9 х 9.2 х 18.4 см ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "0.316 кг ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Серебристый, черный ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплект поставки",
+               "value": "Гарнитура, футляр, кабель USB, CD-ROM ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "DDPlayCam ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "91f
+Windows 98SE, Windows ME, Windows 2000, Windows XP; Mac OS X и выше ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мультимедийные возможности",
+         "options": [
+            {
+               "name": "Поддерживаемые форматы",
+               "value": "JPG, AVI ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "Intel Pentium 4 1 ГГц, RAM 256 Мб, свободные 10 Мб на жеском диске ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Крепление",
+               "value": "К LCD-дисплею ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480 ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Захват",
+               "value": "30 fps ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Фокус",
+               "value": "Фиксированный ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вытягивающийся кабель",
+               "value": "Да ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

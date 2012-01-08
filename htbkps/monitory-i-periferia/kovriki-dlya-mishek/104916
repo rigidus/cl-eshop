@@ -1,0 +1,51 @@
+{
+   "articul": 104916,
+   "name": "Коврик для мышки микрофибра HC01-01(/02) для ноутбуков",
+   "realname": "Коврик для мышки микрофибра HC01-01(/02) для ноутбуков",
+   "price": 100,
+   "siteprice": 100,
+   "ekkprice": 95,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 2,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "HC01-01(/02)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал покрытия",
+               "value": "микрофибра",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "для ноутбуков",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

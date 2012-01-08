@@ -1,0 +1,204 @@
+{
+   "articul": 105564,
+   "name": "Веб камера Microsoft LifeCam VX6000",
+   "realname": "Веб камера Microsoft LifeCam VX-6000 (1075 68C-00002(8))",
+   "price": 2790,
+   "siteprice": 2490,
+   "ekkprice": 2707,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "95.3 грамма",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Microsoft",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "LifeCam VX-6000",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.microsoft.com/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "Microsoft Windows Live Messenger,Yahoo! Messenger,AOL Instant Messenger",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "55 x 74.1 x 53.3 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кнопки",
+               "value": "Windows Live Call",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть; с функцией шумоподавления",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Длина кабеля",
+               "value": "1.8 м",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Рабочая температура",
+               "value": "0  40°C",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "ПО с функцией автослежения за перемещениями лица пользователя",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows XP Pro/Home/Media Center Edition/Tablet PC Edition",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "RAM 128 Мб,звуковая карта,свободные 300 Мб на жестком диске,привод CD-ROM 4x,колонки или наушники,видеокарта с поддержкой разрешения 800 x 600 и 16-битной глубины цвета,видеопамять 2 Мб,подключение к Internet,Pentium III 700 МГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Крепление",
+               "value": "Возможно крепление камеры к монитору любого типа.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "1280 x 1024",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "Ручная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Параметры съемки",
+         "options": [
+            {
+               "name": "Угол обзора",
+               "value": "72° по диагонали",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "30 fps",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Требования к системе (рекомендуемые)",
+               "value": "свободные 300 Мб на жестком диске,привод CD-ROM 4x,звуковая карта,колонки или наушники,видеокарта с поддержкой разрешения 800 x 600 и 16-битной глубины цвета,видеопамять 2 Мб,подключение к Internet,Pentium 4 2.4 ГГц,RAM 256 Мб",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

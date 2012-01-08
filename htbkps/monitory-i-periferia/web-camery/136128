@@ -1,0 +1,90 @@
+{
+   "articul": 136128,
+   "name": "Веб камера G-Cube GWT-835C",
+   "realname": "G-Cube GWT-835C",
+   "price": 890,
+   "siteprice": 0,
+   "ekkprice": 864,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "крепление на мониторе",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "цифровой зум, диапазон фокусировки от 10см до бесконечности",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Угол поворота",
+               "value": "180 град.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Матрица",
+         "options": [
+            {
+               "name": "Матрица",
+               "value": "0.3 млн пикс.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Изображение",
+         "options": [
+            {
+               "name": "Разрешение (видео)",
+               "value": "640x480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные параметры",
+         "options": [
+            {
+               "name": "Микрофон",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимые операционные системы",
+               "value": "Windows 98/ME/XP",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,160 @@
+{
+   "articul": 106700,
+   "name": "Акустика Creative Inspire 265  2.0 (MF1570)",
+   "realname": "Creative Inspire 265",
+   "price": 990,
+   "siteprice": 0,
+   "ekkprice": 961,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Creative",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Inspire 265",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://ru.europe.creative.com/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительные возможности:",
+         "options": [
+            {
+               "name": "Блок питания",
+               "value": "Внешний; входит в комплект поставки",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "9.4 х 27.6 х 19.8 см",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "1.368 кг",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Прочее",
+               "value": "Колонки имеют фазоинверторы для более качественного воспроизведения низких частот.",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Индикаторы",
+               "value": "Индикатор питания",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Питание",
+               "value": "От электросети",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Память и интерфейсы",
+         "options": [
+            {
+               "name": "Разъемы",
+               "value": "Миниджек 3.5 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "5 ватт RMS",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Расположение регуляторов",
+               "value": "На боковой панели",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъемы на боковой панели",
+               "value": "Разъем 3.5 мм для подключения наушников",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Частотный диапазон",
+               "value": "90 Гц - 20 кГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

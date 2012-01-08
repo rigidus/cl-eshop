@@ -1,0 +1,165 @@
+{
+   "articul": 96372,
+   "name": "Веб камера LOGITECH QuickCam Fusion (403)",
+   "realname": "LOGITECH QuickCam Fusion (403)",
+   "price": 2350,
+   "siteprice": 0,
+   "ekkprice": 2347,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Минимальная освещенность",
+               "value": "Для съемки при низкой освещенности используется технология Logitech RightLight",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Крепление",
+               "value": "К LCD-монитору",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 2.0; кабель USB входит в комплект поставки",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Logitech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "QuickCam Fusion",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.logitech.com/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "AOL Instant Messenger (AIM),Yahoo! Messenger,MSN Messenger,Windows Messenger.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Длина кабеля",
+               "value": "1.8 м",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "кабель USB длиной 1.8 метра,QuickCam Software CD",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "Logitech Video Effects (наложение выражений лица или аксессуаров,таких как очки или шляпы); Intelligent Face Tracking (наведение камеры таким образом,чтобы лицо оставалось в центре кадра); QuickCapture; One click video e-mail; Web camming",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows XP,Windows 2000",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "RAM 128 Мб,свободные 200 Мб на жестком диске,привод CD-ROM,Процессор Pentium 4 1.4 ГГц или Athlon 1 ГГц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте 2",
+               "value": "Logitech VideoCall",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть; используется технология Logitech RightSound (подавление эха)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Захват",
+               "value": "Видео: 640 x 480,до 30 fps; фото: 1280 x 960",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Требования к системе (рекомендуемые)",
+               "value": "RAM 256 Мб,привод CD-ROM,Процессор Pentium 4 2.4 ГГц,свободные 200 Мб на жестком диске",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,131 @@
+{
+   "articul": 138679,
+   "name": "Веб камера LOGITECH WebCam Pro 9000 (960-000483)",
+   "realname": "Веб камера LOGITECH WebCam Pro 9000 (960-000483)",
+   "price": 4290,
+   "siteprice": 2999,
+   "ekkprice": 4162,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Матрица",
+         "options": [
+            {
+               "name": "Матрица",
+               "value": "2 млн пикс.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Изображение",
+         "options": [
+            {
+               "name": "Разрешение (видео)",
+               "value": "1600x1200",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Максимальная частота кадров",
+               "value": "30 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разрешение (фото)",
+               "value": "1600x1200",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Интерполированное разрешение в мегапикселах (фото)",
+               "value": "8 млн пикс.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Глубина цвета",
+               "value": "24 бит",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Конструкция",
+               "value": "крепление на мониторе",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Фокусировка",
+               "value": "автоматическая",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Длина кабеля",
+               "value": "1.8 м",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "оптика Carl Zeiss; технология RightLight2",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные параметры",
+         "options": [
+            {
+               "name": "Микрофон",
+               "value": "встроенный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Функция слежения за лицом",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимые операционные системы",
+               "value": "Windows Vista/XP",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

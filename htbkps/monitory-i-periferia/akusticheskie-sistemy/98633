@@ -1,0 +1,137 @@
+{
+   "articul": 98633,
+   "name": "Акустика Microlab A(FC)-330",
+   "realname": "Microlab A-330",
+   "price": 2290,
+   "siteprice": 0,
+   "ekkprice": 2130,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "2.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Microlab",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "A-330",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.microlab-speaker.ru/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "65 дБ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал",
+               "value": "Корпуса: дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон",
+               "value": "35 Гц - 20 кГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры сабвуфера",
+               "value": "225 х 231 х 276 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Конструкция",
+         "options": [
+            {
+               "name": "Динамики",
+               "value": "Сабвуфер: 5.25; сателлиты: 2.5",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "46 ватт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сателлитов",
+               "value": "120 х 120 х 122 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Разделение частот",
+               "value": "50 дБ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Чувствительность",
+               "value": "380 мВ - сателлиты,150 мВ - сабвуфер",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

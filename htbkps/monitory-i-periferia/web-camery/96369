@@ -1,0 +1,131 @@
+{
+   "articul": 96369,
+   "name": "Веб камера LOGITECH QuickCam Messenger (420469960-000129)",
+   "realname": "LOGITECH QuickCam Messenger",
+   "price": 968,
+   "siteprice": 0,
+   "ekkprice": 961,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Logitech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "QuickCam Messenger",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.logitech.com/",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "AOL Instant Messenger (AIM),Windows Messenger,Yahoo! Messenger,MSN Messenger",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "ПО в комплекте",
+               "value": "ПО для передачи видео,ПО для отправки видео по e-mail одним щелчком,ПО для создания веб-альбома,ПО для веб-камеры",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows 98,Windows Me,Windows XP,Windows 2000",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "Процессор Pentium II 400 МГц,AMD Athlon,RAM 64 Мб,Celeron,свободные 200 Мб на жестком диске,видеокарта с поддержкой 16-битного цвета,привод CD-ROM",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Встроенный микрофон",
+               "value": "Есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Крепление",
+               "value": "К ЖК-дисплею",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480 (видео и фото)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "30 fps",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Требования к системе (рекомендуемые)",
+               "value": "MS Outlook Express или Netscape Mail 4.x и выше),модем 28.8K и подключение к интернету,звуковая карта и колонки,Pentium II 500 МГц,MS Internet Explorer 4.0 и выше/Netscape Navigator 4.0 и выше,приложение для работы с E-mail с поддержкой вложений (AOL 7.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,1566 @@
+{
+   "articul": 146171,
+   "name": "PS OCZ ATX 500W  500SXS2-EU",
+   "realname": "OCZ 500SXS2-EU",
+   "price": 2190,
+   "siteprice": 2190,
+   "ekkprice": 2125,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "OCZ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "500SXS2-EU",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Мощность, Вт",
+               "value": "500",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Максимальная нагрузка, В",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Входное напряжение,",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип коррекции коэффициента мощности (PFC)",
+               "value": "Активный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Охлаждение",
+         "options": [
+            {
+               "name": "Способ охлаждения блока питания",
+               "value": "1 вентилятор",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип регулировки оборотов",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Коннекторы",
+         "options": [
+            {
+               "name": "Питание материнской платы",
+               "value": "20+4 pin",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Питание видеокарты",
+               "value": "1 x 6+2 pin",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Питание HDD/FDD/SATA",
+               "value": "4 IDE, 4 floppy, 3 SATA",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+            {
+               "name": "Ширина, мм",
+               "value": "150",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Высота, мм",
+               "value": "86",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Глубина, мм",
+               "value": "140",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес, кг",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Гарантия",
+               "value": "1 год",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

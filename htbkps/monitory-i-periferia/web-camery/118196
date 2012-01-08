@@ -1,0 +1,256 @@
+{
+   "articul": 118196,
+   "name": "(@)Веб камера Genius Look 313 Media",
+   "realname": "Genius Look 313 Media",
+   "price": 1490,
+   "siteprice": 0,
+   "ekkprice": 1490,
+   "active": null,
+   "newbie": null,
+   "sale": true,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Баланс белого",
+               "value": "Авто ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "98 дБ ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон",
+               "value": "20 Гц - 20 кГц ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 2.0 ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.genius.ru ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Описание",
+               "value": "Web камера со встроенным USB HUBом, звуковой картой и колонками. ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Совместимость",
+               "value": "TWAIN ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры (ширина х высота х глубина)",
+               "value": "135 x 49 x 58 мм ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Кнопки",
+               "value": "Snapshot ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "9.4 х 21.4 х 18.4 см ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "0.569 кг ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Прочее",
+               "value": "Включение/выключение видеозаписи при наличии/отсутствии движения, автоматическая запись видеоизображения до заполнения HDD. ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "DDPlayCam, Perky Photo Frames ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows 98SE, Windows ME, Windows 2000, Windows XP; Mac OS X ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Питание",
+               "value": "От USB порта ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Крепление",
+               "value": "Установка на столе ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Память и интерфейсы",
+         "options": [
+            {
+               "name": "Разъемы",
+               "value": "f75
+Микрофонный вход, выход на наушники, 2х порта USB 2.0. ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Технические характеристики",
+         "options": [
+            {
+               "name": "Выходная мощность",
+               "value": "2 Вт ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мультимедийные возможности",
+         "options": [
+            {
+               "name": "Поддерживаемые форматы",
+               "value": "JPEG, AVI ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Требования к системе",
+               "value": "Pentium III 800 МГц, RAM 128 Мб, свободные 10 Мб на жестком диске, привод CD-ROM ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр динамика",
+               "value": "36 мм ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "THD",
+               "value": "10 % ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480 (видео), 1280 x 960 (фото) ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "Ручная ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Скорость захвата",
+               "value": "30 fps (320 x 240), 15 fps (640 x 480) ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "CMOS, 315K пикселов ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

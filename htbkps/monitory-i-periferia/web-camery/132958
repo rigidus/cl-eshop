@@ -1,0 +1,40 @@
+{
+   "articul": 132958,
+   "name": "Веб камера Genius  eFace 2050AF",
+   "realname": "Веб камера Genius  eFace 2050AF",
+   "price": 2390,
+   "siteprice": 1990,
+   "ekkprice": 2319,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Встроенный микрофон",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "1600 x 1200",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

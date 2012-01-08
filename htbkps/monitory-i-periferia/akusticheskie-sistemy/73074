@@ -1,0 +1,91 @@
+{
+   "articul": 73074,
+   "name": "Акустика GENIUS SP-K10  2.0 (C06665100)",
+   "realname": "Акустика GENIUS SP-K10  2.0 (C06665100)",
+   "price": 299,
+   "siteprice": 0,
+   "ekkprice": 299,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Genius",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Белый,серый",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Телефон горячей линии производителя",
+               "value": "По любым вопросам,связанным с сервисным обслуживанием,с техническими проблемами или проблемами при подключении можно обращаться в службу технической поддержки Genius по телефону в Москве: (495) 777-74-88 (телефон многоканальный).",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "10 ватт",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Прочее",
+         "options": [
+            {
+               "name": "Настройки",
+               "value": "Громкость,расширение стереобазы",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Размеры упаковочной тары",
+               "value": "54 х 33 х 50 см",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество в упаковочной таре",
+               "value": "10 шт.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

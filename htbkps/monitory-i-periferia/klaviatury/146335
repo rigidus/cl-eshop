@@ -1,0 +1,114 @@
+{
+   "articul": 146335,
+   "name": "Набор клав.+мышь б/п A4-TECH GL(S)-5630 USB",
+   "realname": "Набор клав.+мышь б/п A4-TECH GL(S)-5630 USB",
+   "price": 890,
+   "siteprice": 790,
+   "ekkprice": 864,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 2,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "A4-Tech",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "GL-5630",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип",
+               "value": "Проводная",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "черный/серебро",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество клавиш, шт",
+               "value": "93",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мультимедийные клавиши",
+               "value": "7",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Конструкция",
+               "value": "классическая",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Подсветка клавиш",
+               "value": "нет",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительные возможности",
+         "options": [
+         ]
+      },
+      {
+         "name": "Питание",
+         "options": [
+         ]
+      },
+      {
+         "name": "Комплектация",
+         "options": [
+            {
+               "name": "Комплект поставки",
+               "value": "клавиатура + мышь",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Гарантия",
+               "value": "6 месяцев",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

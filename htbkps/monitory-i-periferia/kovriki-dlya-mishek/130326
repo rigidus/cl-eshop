@@ -1,0 +1,45 @@
+{
+   "articul": 130326,
+   "name": "Коврик для мышки прозрачный (TM23)",
+   "realname": "Коврик для мышки прозрачный (TM23)",
+   "price": 89,
+   "siteprice": 89,
+   "ekkprice": 85,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 6,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "TM23",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "для оптической мыши, прозрачный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

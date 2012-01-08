@@ -1,0 +1,10 @@
+{
+  "name": "Бытовая техника",
+  "active": true,
+  "empty": null,
+  "order": 10,
+  "ymlshow": null,
+  "pic": null,
+  "keyoptions": null,
+  "icon":"img/cat-icon/bytovuha.gif"
+}

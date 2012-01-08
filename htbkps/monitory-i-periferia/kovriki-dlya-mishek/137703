@@ -1,0 +1,45 @@
+{
+   "articul": 137703,
+   "name": "Коврик для мышки матерчатый на резине RCC01",
+   "realname": "Коврик для мышки матерчатый на резине RCC01",
+   "price": 29,
+   "siteprice": 29,
+   "ekkprice": 28,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "RCC01",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал покрытия",
+               "value": "ткань",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+         ]
+      }
+   ]
+
+}

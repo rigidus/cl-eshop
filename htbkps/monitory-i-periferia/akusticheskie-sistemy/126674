@@ -1,0 +1,207 @@
+{
+   "articul": 126674,
+   "name": "Акустика Microlab SOLO-6c  2.0 дерево",
+   "realname": "Акустика Microlab SOLO-6c  2.0 дерево",
+   "price": 4990,
+   "siteprice": 4990,
+   "ekkprice": 4841,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "﻿Компактная акустическая система Microlab SOLO-6c 2.0 Wood воспроизводит чистое детализированное звучание в среднем и высоком диапазоне. Динамики системы разработаны известным датским специалистом Питером Ларсеном, а мембрана высокочастотного динамика создана конструкторским бюро Dr. Kurt Mueller. В результате, активные колонки системы получились сбалансированными с великолепным для своего класса звучанием. Магнитное экранирование динамиков позволяет размещать колонки рядом с телевизором и монитором, не вызывая никаких искажений. 
+
+Управляется система пультом ДУ, который регулирует громкость и тембр звучания, а также временно отключает громкость при помощи кнопки mute.  Вся информация о текущих настройках системы отображается на цифровом индикаторе, расположенном на передней панели правой колонки. 
+
+
+
+",
+   "countTransit": 0,
+   "countTotal": 2,
+   "optgroups":  [    
+      {
+         "name": "Возможности",
+         "options": [
+            {
+               "name": "Вес",
+               "value": "13.7 кг ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "2.0 ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Microlab ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.microlab.com ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительные возможности:",
+         "options": [
+            {
+               "name": "Блок питания",
+               "value": "b92
+Встроенный ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "88 дБ ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон",
+               "value": "55 Гц - 31 кГц ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "52.6 x 31 x 41.6 см ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "14.85 кг ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Дерево",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплект поставки",
+               "value": "Аудиокабель миниджек - 2xRCA ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал корпуса",
+               "value": "Дерево (МДФ) ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Питание",
+               "value": "От электросети ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Конструкция",
+         "options": [
+            {
+               "name": "Динамики",
+               "value": "СЧ/НЧ: 6.5; ВЧ: 1 ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Разъемы для подключения сателлитов",
+               "value": "Под винт ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "100 Ватт ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал диффузора (ов)",
+               "value": "СЧ/НЧ: пропилен; ВЧ: шелк ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование",
+               "value": "Есть ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "THD",
+               "value": "0.3% при 1 Вт на 1 кГц ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Расположение регуляторов",
+               "value": "На задней панели ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Память и интерфейсы",
+         "options": [
+            {
+               "name": "Разъемы",
+               "value": "2 аудиовхода 2xRCA ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функции",
+         "options": [
+            {
+               "name": "Пульт ДУ",
+               "value": "Беспроводной ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,45 @@
+{
+   "articul": 133188,
+   "name": "Коврик для мышки гелевый (MP-G-BT-1)",
+   "realname": "Коврик для мышки гелевый (MP-G-BT-1)",
+   "price": 290,
+   "siteprice": 290,
+   "ekkprice": 276,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 27,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "MP-G-BT-1",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "гелевый",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

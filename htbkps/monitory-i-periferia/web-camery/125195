@@ -1,0 +1,74 @@
+{
+   "articul": 125195,
+   "name": "Веб камера Genius i-Look 110",
+   "realname": "Веб камера Genius i-Look 110",
+   "price": 450,
+   "siteprice": 0,
+   "ekkprice": 437,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Формат",
+               "value": "JPEG / WMV",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 1.1/1.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "Фото: 640 x 480 (с интерполяцией), 352 x 288, 320 x 240, 176 x 144, 160 x 120
+Видео: 640 x 480 до 15 кадр/сек, 352 x 288 до 30 кадр/сек",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Объектив",
+         "options": [
+            {
+               "name": "Фокусировка",
+               "value": "Ручной фокус",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Мышь",
+         "options": [
+            {
+               "name": "Сенсор",
+               "value": "0.1 Мп (CMOS сенсор)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

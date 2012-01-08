@@ -1,0 +1,76 @@
+{
+   "articul": 151202,
+   "name": "Удлинитель клав-ры 6m/6m PS/2 3м  CAB022(21)-10",
+   "realname": "Удлинитель клав-ры 6m/6m PS/2 3м  CAB022(21)-10",
+   "price": 40,
+   "siteprice": 40,
+   "ekkprice": 38,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип устройства",
+               "value": "Удлинитель клав-ры",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Длина, м",
+               "value": "3",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Стандарт",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъем",
+               "value": "PS/2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Защита",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвет",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,161 @@
+{
+   "articul": 122956,
+   "name": "Веб камера LOGITECH QuickCam for Notebooks  (960-000011)",
+   "realname": "Веб камера LOGITECH QuickCam for Notebooks  (960-000011)",
+   "price": 1890,
+   "siteprice": 0,
+   "ekkprice": 1834,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Интерфейс",
+               "value": "USB 1.1 ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Logitech ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://www.logitech.com ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "22.5 х 17.5 х 9.2 см ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "0.257 кг ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Серебристый, черный, красный ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комплект поставки",
+               "value": "CD-ROM ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "ПО в комплекте",
+               "value": "QuickCam ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Поддержка ОС",
+               "value": "Windows 2000, Windows XP ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Индикаторы",
+               "value": "Индикатор активности ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Требования к системе",
+               "value": "Pentium 4 1.4 ГГц (для Windows Vista - Pentium 4 2.4 ГГц) или AMD Athlon 1 ГГц, RAM 128 Мб (для Windows Vista - 512 Мб) ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Кнопки",
+               "value": "Snapshot ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Встроенный микрофон",
+               "value": "ef6
+Есть ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Запись видео и звука",
+         "options": [
+            {
+               "name": "Звук",
+               "value": "Технология RightSound (снижение уровня шумов, эхоподавление) ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Крепление",
+               "value": "К LCD-дисплею ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Разрешение",
+               "value": "640 x 480 ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Требования к системе (рекомендуемые)",
+               "value": "Процессор 2.4 ГГц (для Windows Vista - Pentium 4 2.8 ГГц), RAM 256 Мб (для Windows Vista - 1 Гб) ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

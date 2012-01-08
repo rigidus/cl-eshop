@@ -1,0 +1,200 @@
+{
+   "articul": 108796,
+   "name": "Акустика Creative Inspire T3100  2.1  (MF0335)",
+   "realname": "Creative Inspire T3100",
+   "price": 1750,
+   "siteprice": 0,
+   "ekkprice": 1748,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Тип",
+               "value": "2.1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Производитель",
+               "value": "Creative",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "Inspire 2.1 T3100",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ссылка на сайт производителя",
+               "value": "http://ru.europe.creative.com/",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительные возможности:",
+         "options": [
+            {
+               "name": "Блок питания",
+               "value": "Внешний; входит в комплект поставки",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Отношение сигнал/шум",
+               "value": "80 дБ",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал",
+               "value": "Дерево (корпус сабвуфера)",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон",
+               "value": "40 Гц - 20 кГц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Размеры упаковки",
+               "value": "28 x 32 x 30.5 см",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Вес брутто",
+               "value": "4.2 кг",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Цвета использованные в оформлении",
+               "value": "Черный",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Питание",
+               "value": "От электросети",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные",
+         "options": [
+            {
+               "name": "Разъемы для подключения сателлитов",
+               "value": "RCA, Mini DIN",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Суммарная выходная мощность",
+               "value": "29 ватт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Крепление к стене",
+               "value": "Возможно крепление сателлитов к стене",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитное экранирование",
+               "value": "Есть у сателлитов",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Расположение регуляторов",
+               "value": "На боковой панели, на задней панели",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Разъемы на боковой панели",
+               "value": "Разъем 3.5 мм для подключения наушников",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Память и интерфейсы",
+         "options": [
+            {
+               "name": "Разъемы",
+               "value": "Миниджек 3.5 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Технические характеристики",
+         "options": [
+            {
+               "name": "Выходная мощность",
+               "value": "Сателлиты: по 6 ватт RMS на канал; сабвуфер: 17 ватт RMS",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Прочее",
+         "options": [
+            {
+               "name": "Настройки",
+               "value": "Громкость, низкие частоты",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "NIL",
+         "options": [
+            {
+               "name": "Выход фазоинвертора",
+               "value": "На передней панели",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

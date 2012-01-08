@@ -1,0 +1,51 @@
+{
+   "articul": 121139,
+   "name": "Коврик для мышки Techmedia  пластик животные MP-Pro",
+   "realname": "Коврик для мышки Techmedia  пластик животные MP-Pro",
+   "price": 120,
+   "siteprice": 120,
+   "ekkprice": 114,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 11,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Techmedia",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Модель",
+               "value": "MP-Pro",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал покрытия",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+         ]
+      }
+   ]
+
+}

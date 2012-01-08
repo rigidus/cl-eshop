@@ -1,0 +1,176 @@
+{
+   "articul": 132701,
+   "name": "PS OCZ 700w 700SXS-UN StelalthXStream",
+   "realname": "OCZ OCZ700SXS 700W",
+   "price": 2990,
+   "siteprice": 2990,
+   "ekkprice": 2901,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Мощность",
+               "value": "700 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Стандарт",
+               "value": "ATX12V 2.2 / EPS12V",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "PFC",
+               "value": "активный",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Система охлаждения",
+               "value": "1 вентилятор (120 мм)",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Защита от короткого замыкания",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Защита от перегрузки",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Защита от перенапряжения",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры (ВxШxГ)",
+               "value": "86x150x140 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Сила тока",
+         "options": [
+            {
+               "name": "Ток по линии +3.3 В",
+               "value": "36 A",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ток по линии +5 В",
+               "value": "30 A",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ток по линии +12 В 1",
+               "value": "18 A",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ток по линии +12 В 2",
+               "value": "18 A",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ток по линии +12 В 3",
+               "value": "18 A",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ток по линии +12 В 4",
+               "value": "18 A",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ток по линии -12 В",
+               "value": "0.8 A",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Ток по линии +5 В Standby",
+               "value": "3 A",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Разъемы",
+         "options": [
+            {
+               "name": "Тип разъема для материнской платы",
+               "value": "20+4 pin",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество разъемов 6-pin PCI-E",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество разъемов 8-pin PCI-E",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество разъемов 15-pin SATA",
+               "value": "6",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество разъемов 4-pin IDE",
+               "value": "6",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество разъемов 4-pin Floppy",
+               "value": "2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество разъемов 4+4 pin CPU",
+               "value": "1",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,45 @@
+{
+   "articul": 104950,
+   "name": "Коврик для мышки Techmedia  пластик автосерия",
+   "realname": "Коврик для мышки Techmedia  пластик автосерия",
+   "price": 120,
+   "siteprice": 120,
+   "ekkprice": 114,
+   "active": true,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 17,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Производитель",
+               "value": "Techmedia",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Материал покрытия",
+               "value": "пластик",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+         ]
+      }
+   ]
+
+}

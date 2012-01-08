@@ -1,0 +1,45 @@
+{
+   "articul": 137701,
+   "name": "Коврик для мышки CF01-01-CF01-04",
+   "realname": "Коврик для мышки CF01-01-CF01-04",
+   "price": 50,
+   "siteprice": 50,
+   "ekkprice": 48,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 1,
+   "optgroups":  [    
+      {
+         "name": "Общие характеристики",
+         "options": [
+            {
+               "name": "Модель",
+               "value": "CF01-01-CF01-04",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Габариты",
+         "options": [
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Дополнительная информация",
+               "value": "для лазерной мыши",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

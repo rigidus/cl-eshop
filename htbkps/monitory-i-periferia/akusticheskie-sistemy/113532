@@ -1,0 +1,85 @@
+{
+   "articul": 113532,
+   "name": "Акустика Logitech Z-10 2.0  (243)",
+   "realname": "LOGITECH Z-10",
+   "price": 4990,
+   "siteprice": 0,
+   "ekkprice": 4841,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Число каналов",
+               "value": "2.0",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Интерфейсы",
+         "options": [
+            {
+               "name": "Разъем для наушников",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Линейный вход (стерео)",
+               "value": "есть, разъем mini jack",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "USB",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Другие функции и особенности",
+         "options": [
+            {
+               "name": "Особенности",
+               "value": "Сенсорное управление. Графический ЖК-индикатор отображает сведения о повспроизводимой композиции. Настройки интернет-радио. Цифровой эквалайзер с кроссовером и цифровой коррекцией. В комплекте: компакт-диск с программой Logitec LCD Manager, замша для чистки, 2 м кабель колонки, 2 м кабель USB, 2 м кабель питания переменного тока, 2 м 3,5мм дополнительный стереофонический кабель.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "246х114х119 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Функциональные возможности",
+         "options": [
+            {
+               "name": "Регулировка  тембра",
+               "value": "НЧ/ВЧ",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}

@@ -1,0 +1,243 @@
+{
+   "articul": 88999,
+   "name": "Акустика Dialog JAZZ  J-104-BT  5.1  oem",
+   "realname": "Dialog J-104BT",
+   "price": 3799,
+   "siteprice": 0,
+   "ekkprice": 3767,
+   "active": null,
+   "newbie": null,
+   "sale": null,
+   "descr": "",
+   "shortdescr": "",
+   "countTransit": 0,
+   "countTotal": 0,
+   "optgroups":  [    
+      {
+         "name": "Акустика",
+         "options": [
+            {
+               "name": "Мощность фронтальных колонок",
+               "value": "23 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность сабвуфера",
+               "value": "60 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность центрального канала",
+               "value": "43 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Мощность тыловых колонок",
+               "value": "15 Вт",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество полос фронтальных колонок",
+               "value": "2",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительная информация",
+         "options": [
+            {
+               "name": "Размеры фронтальных колонок",
+               "value": "95х475х110 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры тыловых колонок",
+               "value": "95х200х110 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры центрального канала",
+               "value": "280х95х110 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Размеры сабвуфера",
+               "value": "150х450х400 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Комментарий",
+               "value": "Входы: 6*RCA 5.1, DIN G9 5.1, 2*RCA stereo. Управление: включение/выключение, громкость общая, центрального канала, сабвуфера, тыловых сателлитов, баланс, выбор источника сигнала, выбор режима воспроизведения, регулировка тембра, режим 3D. Цвет серебристый.",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Основные характеристики",
+         "options": [
+            {
+               "name": "Частотный диапазон сабвуфера",
+               "value": "20-250 Гц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Общее",
+         "options": [
+            {
+               "name": "Состав комплекта",
+               "value": "6 громкоговорителей",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип фронтальных колонок",
+               "value": "фазоинверторного типа",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип тыловых колонок",
+               "value": "фазоинверторного типа",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип сабвуфера",
+               "value": "фазоинверторного типа",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип центрального канала",
+               "value": "фазоинверторного типа",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Тип акустической системы",
+               "value": "активная",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Количество полос",
+         "options": [
+            {
+               "name": "Количество полос тыловых колонок",
+               "value": "2",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Количество полос центрального канала",
+               "value": "2",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Характеристики",
+         "options": [
+            {
+               "name": "Импеданс",
+               "value": "8 Ом",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Частотный диапазон",
+         "options": [
+            {
+               "name": "Частотный диапазон фронтальных колонок",
+               "value": "250-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Частотный диапазон центрального канала",
+               "value": "250-20000 Гц",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Дополнительно",
+         "options": [
+            {
+               "name": "Отделка",
+               "value": "MDF",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Крепления для монтажа",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Магнитная защита",
+               "value": "есть",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Общий вес",
+               "value": "16.5 кг",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      },
+      {
+         "name": "Размеры",
+         "options": [
+            {
+               "name": "Диаметр излучателей фронтальных колонок",
+               "value": "НЧ 76 мм, ВЧ 38 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр излучателей тыловых колонок",
+               "value": "НЧ 76 мм, ВЧ 38 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр излучаетля сабвуфера",
+               "value": "165 мм",
+               "optype": null,
+               "boolflag": null
+            },
+            {
+               "name": "Диаметр излучателей центрального канала",
+               "value": "НЧ 2х76 мм, ВЧ 25 мм",
+               "optype": null,
+               "boolflag": null
+            }
+         ]
+      }
+   ]
+
+}
