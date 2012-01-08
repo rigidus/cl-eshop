@@ -24,7 +24,6 @@
             (directory (format nil "~a/*.vendor" path))
             )))
 
-
 (defun recursive-explore (path)
   (multiple-value-bind (dirs files filters vendors)
       (explore-dir path)
@@ -43,11 +42,8 @@
         (read-file-into-string file))))
 
 
-;; (maphash
-
 (defun process-filter (file)
   (unserialize (format nil "~a" file) (make-instance 'filter)))
-
 
 (defun process-file (file)
   (let* ((name (pathname-name file))
@@ -55,7 +51,6 @@
     (if (string= (format nil "~a" candidat) name)
         (unserialize (format nil "~a" file) (make-instance 'product))
         nil)))
-
 
 (defun process-dir (file)
   (let* ((string-filename (format nil "~a" file))
@@ -96,6 +91,11 @@
 
 (restore-from-files)
 
+;; (maphash #'(lambda (k v)
+;;              (print (list k v)))
+;;          *storage*)
+
+;; (print (advanced (fullfilter (gethash "noutbuki-i-komputery" *storage*))))
 
 (defun store-to-files ()
   (when nil

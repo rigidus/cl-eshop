@@ -65,9 +65,9 @@
 
 
 ;; PATH
-(defparameter *path-to-tpls* (format nil "~a/repo/cl-eshop/tpl" (user-homedir-pathname)))
+(defparameter *path-to-tpls* (format nil "~arepo/cl-eshop/tpl" (user-homedir-pathname)))
 (export '*path-to-tpls*)
-(defparameter *path-to-bkps* (format nil "~aDropbox/htbkps" (user-homedir-pathname)))
+(defparameter *path-to-bkps* (format nil "~arepo/cl-eshop/htbkps" (user-homedir-pathname)))
 (export '*path-to-bkps*)
 (defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
 (export '*path-to-conf*)
@@ -126,7 +126,7 @@
 (load "xls.lisp")
 (load "search.lisp")
 (load "yml.lisp")
-;; (load "wolfor-stuff.lisp")
+(load "wolfor-stuff.lisp")
 (load "routes.lisp")
 (load "render.lisp")
 
