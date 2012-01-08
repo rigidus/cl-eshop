@@ -38,37 +38,47 @@
                                         (loop :for child :in (sort (copy-list (childs object)) #'menu-sort) :collect
                                            (list :name (name child)
                                                  :key (key child)
-                                                 :cnt (let ((products (products child)))
+                                                 :cnt (let ((products (get-recursive-products child)))
                                                         (if (null products)
                                                             "-"
                                                             (length (remove-if-not #'(lambda (product)
                                                                                        (active product))
-                                                                                   (products child)))))
+                                                                                   products))))
                                                  :pic (pic child)
                                                  :filters (loop :for filter :in (filters child) :collect
                                                              (list :name (name filter)
                                                                    :groupkey (key child)
                                                                    :key (key filter))))))))
                              ;; else
-                             (with-sorted-paginator
-                                 (remove-if-not #'(lambda (product)
-                                                    (active product))
-                                                (cond
-                                                  ((getf (request-get-plist) :fullfilter)
-                                                   (filter-controller object (request-get-plist)))
-                                                  ((getf (request-get-plist) :vendor)
-                                                   (vendor-controller object (request-get-plist)))
-                                                  (t (copy-list (products object)))))
-                               (catalog:centerproduct
-                                (list
-                                 :sorts (sorts)
-                                 :producers (restas:render-object designer (make-producers object))
-                                 :accessories (catalog:accessories)
-                                 :pager pager
-                                 :products
-                                 (loop
-                                    :for product :in  paginated :collect (view product))))))))
-      :keywords (format nil "~a" (name object))
+                             (let ((products-list
+                                    (cond
+                                      ((getf (request-get-plist) :showall)
+                                       (cond
+                                         ((getf (request-get-plist) :fullfilter)
+                                          (filter-controller object (request-get-plist)))
+                                         ((getf (request-get-plist) :vendor)
+                                          (vendor-controller object (request-get-plist)))
+                                         (t (copy-list (products object)))))
+                                      (t (remove-if-not #'(lambda (product)
+                                                            (active product))
+                                                        (cond
+                                                          ((getf (request-get-plist) :fullfilter)
+                                                           (filter-controller object (request-get-plist)))
+                                                          ((getf (request-get-plist) :vendor)
+                                                           (vendor-controller object (request-get-plist)))
+                                                          (t (copy-list (products object)))))))))
+                               (with-sorted-paginator
+                                   products-list
+                                 (catalog:centerproduct
+                                  (list
+                                   :sorts (sorts)
+                                   :producers (restas:render-object designer (make-producers object))
+                                   :accessories (catalog:accessories)
+                                   :pager pager
+                                   :products
+                                   (loop
+                                      :for product :in  paginated :collect (view product)))))
+                               ))))
       :description (format nil "~a" (name object))
       :title (format nil "~a - купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
                      (name object)
@@ -164,7 +174,10 @@
                           (list :vendor (car x)
                                 :cnt (cadr x)
                                 :link (format nil "?vendor=~a" (car x))))
-                      (producers object)))
+                      (cond
+                        ((getf (request-get-plist) :showall)
+                         (producersall object))
+                        (t (producers object)))))
     (catalog:producers (list :vendorblocks (make-producters-lists base)
                              :vendorhiddenblocks (make-producters-lists hidden)))))
 

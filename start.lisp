@@ -59,7 +59,14 @@
 
 (restas:start '#:eshop :port 4243)
 (restas:debug-mode-on)
-;; (setf hunchentoot:*catch-errors-p* nil)
+
+
+(restas:start '#:eshop :port 4244)
+;; (restas:debug-mode-on)
+;; (restas:debug-mode-off)
+;; (setf hunchentoot:*catch-errors-p* t)
+;; (setf hunchentoot:*log-lisp-errors-p* nil)
+
 
 ;; (mapcar #'(lambda (fname)
 ;;             (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))

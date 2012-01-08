@@ -73,7 +73,8 @@
 
 
 (defclass producers ()
-  ((producers         :initarg :producers         :initform nil       :accessor producers)))
+  ((producers         :initarg :producers         :initform nil       :accessor producers)
+   (producersall      :initarg :producersall      :initform nil       :accessor producersall)))
 
 
 (defmacro make-integer-writer (field)
@@ -193,6 +194,7 @@
 (defmethod make-producers ((object group))
   (make-instance 'producers
                  :producers (get-list-of-producers object)
+                 :producersall (get-list-of-producers object  #'(lambda (product) t))
                  ))
 
 
