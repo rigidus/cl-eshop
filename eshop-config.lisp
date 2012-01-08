@@ -19,6 +19,9 @@
 
 
 ;; PATH
+;; commit to sync https://github.com/wolfor/cl-restas-eshop/commit/e6c611291d4fce5f6f6ebd41c7426b8bf1d87566
+;; удаление шаблонов из репозитория
+;; +(defparameter *path-to-tpls* (format nil "~aDropbox/httpls/tosha" (user-homedir-pathname)))
 (defparameter *path-to-tpls* (format nil "~arepo/cl-eshop/tpl" (user-homedir-pathname)))
 (defparameter *path-to-bkps* (format nil "~arepo/cl-eshop/htbkps" (user-homedir-pathname)))
 (defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))

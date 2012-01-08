@@ -121,7 +121,8 @@
                (if (and (equal (type-of v)
                                'product)
                         (active v)
-                        (= 0 (siteprice v)))
+                        (or (= 0 (siteprice v))
+                            (> (siteprice v) (price v))))
                    (progn
                      (format t "~&~a: ~a"
                              (articul v)
@@ -134,13 +135,15 @@
 (defun safely-restore()
   (restore-from-files)
   (use-revert-history)
-  (copy-price-to-siteprice))
+  (copy-price-to-siteprice)
+  (dtd))
 
 ;; w
 (defun safely-store()
   (restore-from-files)
   (use-revert-history)
   (copy-price-to-siteprice)
+  (dtd)
   (store-products))
 
 

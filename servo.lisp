@@ -19,9 +19,9 @@
 
 
 
-(defmacro with-sorted-paginator (get-products body)
+(defmacro with-sorted-paginator (get-products request-get-plist body)
   `(let* ((products ,get-products)
-          (sorting  (getf (request-get-plist) :sort))
+          (sorting  (getf ,request-get-plist :sort))
           (sorted-products   (cond ((string= sorting "pt")
                                     (product-sort products #'< #'siteprice))
                                    ((string= sorting "pb")
@@ -29,20 +29,20 @@
                                    ((string= sorting "pt1") products)
                                    (t products))))
      (multiple-value-bind (paginated pager)
-         (paginator (request-get-plist) sorted-products)
+         (paginator ,request-get-plist sorted-products)
        ,body)))
 
 
-(defmacro sorts ()
+(defmacro sorts (request-get-plist)
   `(let ((variants '(:pt "увеличению цены" :pb "уменьшению цены"))
-         (url-parameters (request-get-plist)))
+         (url-parameters request-get-plist))
      (remf url-parameters :page)
      (remf url-parameters :sort)
      (loop :for sort-field :in variants :by #'cddr :collect
         (let ((key (string-downcase (format nil "~a" sort-field))))
           (setf (getf url-parameters :sort) key)
           (if (string= (string-downcase (format nil "~a" sort-field))
-                       (getf (request-get-plist) :sort))
+                       (getf request-get-plist :sort))
               (list :key key
                     :name (getf variants sort-field)
                     :url (make-get-str url-parameters)
@@ -160,6 +160,8 @@
 ;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&fullfilter=1#producer")
 ;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
 ;; ( make-get-str "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
+;; (filter-test (gethash "noutbuki" *storage*) "http://www.320-8080.ru/noutbuki?&warranty-1=1&fullfilter=1")
+
 
 ;;фильтрация по значениям опции
 (defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)
@@ -186,6 +188,11 @@
                     (if (string= value-x option-value)
                         (setf result-flag t)))))
             filter-options)
+    ;; DBG
+    ;; (if (string= (format nil "~a" key-name) "WARRANTY")
+    ;;     (progn
+    ;;       (print filter-options) ;;158712
+    ;;       (format t "~a-- ~a : ~a" (articul product)  result-flag request-flag)))
     (or result-flag
         request-flag)))
 
@@ -679,37 +686,71 @@ is replaced with replacement."
             ))))
 
 
-(defmethod relink ((object product))
-  (let ((rs (list nil nil nil nil)))
-    (when (or (not (active object))
-              (not (equal 'group (type-of (parent object)))))
-      (return-from relink rs))
-    (let* ((base-vendor) (tmp))
-      (with-option object "Общие характеристики" "Производитель"
-                   (setf base-vendor (value option)))
-      (setf tmp (remove-if-not
-                 #'(lambda (x)
-                     (and (active x)
-                          (let ((vendor))
-                            (with-option x "Общие характеристики" "Производитель"
-                                         (setf vendor (value option)))
-                            (equal vendor base-vendor))))
-                 (products (parent object))))
-      (setf tmp (append tmp tmp))
-      (let ((pos (position object tmp)))
-        (setf (nth 0 rs) (nth pos tmp))
-        (setf (nth 1 rs) (nth (+ 1 pos) tmp))))
-    (let ((all) (len) (two))
-      (maphash #'(lambda (k v)
-                   (when (and (equal 'product (type-of v))
-                              (active v))
-                     (push k all)))
-               *storage*)
-      (setf len (length all))
-      (setf (nth 2 rs) (gethash (nth (random len) all) *storage*))
-      (setf (nth 3 rs) (gethash (nth (random len) all) *storage*)))
-    rs))
+;; выбор нескольких случайных элементов из списка
+;; если количество не указано то возвращается список из одного элемента
+;; если количество больше длинны входного списка, то возвращается перемешанный входной список
+(defun get-randoms-from-list (input-list &optional (count 1))
+  (let ((result)
+        (current-list input-list))
+    ;;уменьшаем count до длинны списка если надо
+    (if (< (length input-list)
+           count)
+        (setf count (length input-list)))
+    (setf result (loop
+                    :for n
+                    :from 1 to count
+                    :collect (let* ((pos (random (length current-list)))
+                                    (element (nth pos current-list)))
+                               (setf current-list (remove-if #'(lambda (v)
+                                                                 (equal v element))
+                                                             current-list))
+                               element)))
+    result))
 
+(defmethod relink ((object product))
+  (let ((rs (list nil nil nil nil))
+        (temp-rs1)
+        (temp-rs2))
+    (when (not (equal 'group (type-of (parent object))))
+      (print object)
+      (return-from relink2 rs))
+    ;;2 случайных товара из списка
+    (setf temp-rs1 (get-randoms-from-list
+                    ;; список активных товаров той же группы и того же производителя
+                    ;; кроме его самого
+                    (let* ((base-vendor))
+                      (with-option object "Общие характеристики" "Производитель"
+                                   (setf base-vendor (value option)))
+                      (remove-if-not
+                       #'(lambda (x)
+                           (and (not (equal x object))
+                                (active x)
+                                (let ((vendor))
+                                  (with-option x "Общие характеристики" "Производитель"
+                                               (setf vendor (value option)))
+                                  (equal vendor base-vendor))))
+                       (products (parent object))))
+                    2))
+    ;;4 случайных товара из списка
+    (setf temp-rs2 (get-randoms-from-list
+                    ;;список всех активных товаров кроме object
+                    (let ((all))
+                      (maphash #'(lambda (k v)
+                                   (when (and (equal 'product (type-of v))
+                                              (active v)
+                                              (not (equal v object)))
+                                     ;; (print v)
+                                     (push v all)))
+                               *storage*)
+                      all)
+                    4))
+    ;; (print temp-rs1)
+    ;; (print temp-rs2)
+    (loop
+       :for item in (append temp-rs1 temp-rs2)
+       :for n
+       :from 1 to 4
+       :collect item)))
 
 
 (defparameter *trade-hits-1*
@@ -838,22 +879,6 @@ is replaced with replacement."
                                              (cadr split)))))
                               result)))
     request-get-plist))
-
-
-
-(defmethod filter-test ((object group) url)
-  (let* ((request-full-str url)
-         (request-parted-list (split-sequence:split-sequence #\? request-full-str))
-         (request-get-plist (let ((result))
-                              (loop :for param :in (split-sequence:split-sequence #\& (cadr request-parted-list)) :do
-                                 (let ((split (split-sequence:split-sequence #\= param)))
-                                   (setf (getf result (intern (string-upcase (car split)) :keyword))
-                                         (if (null (cadr split))
-                                             ""
-                                             (cadr split)))))
-                              result)))
-    (filter-controller object request-get-plist)))
-
 
 
 (defun if-need-to-show-hidden-block (elt request-get-plist)
@@ -998,3 +1023,18 @@ is replaced with replacement."
             (string-trim '(#\Space #\Tab #\Newline)
                          (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ")))))
 
+
+
+;;; Функция, добавляющая в хлебные крошки вендора, если он присутствует в get запросе.
+(defun breadcrumbs-add-vendor (breadcrumbs)
+  (let ((belts (getf breadcrumbs :breadcrumbelts))
+        (tail (getf breadcrumbs :breadcrumbtail))
+        (vendor (getf (request-get-plist) :vendor))
+        (result breadcrumbs))
+    (when (not (null vendor))
+      (setf result (list :breadcrumbelts (append belts (list tail))
+                         :breadcrumbtail (list :key vendor
+                                               :val (format nil "~a ~a"
+                                                            (getf tail :val)
+                                                            vendor)))))
+    result))

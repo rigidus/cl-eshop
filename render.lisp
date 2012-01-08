@@ -12,12 +12,14 @@
 
 (setf *default-render-method* (make-instance 'eshop-render))
 
+(defun add-vendor(bdkr)
+  bdkr)
 
 (defmethod restas:render-object ((designer eshop-render) (object group))
   (default-page
       (catalog:content
        (list :name (name object)
-             :breadcrumbs (catalog:breadcrumbs (breadcrumbs object))
+             :breadcrumbs (catalog:breadcrumbs (breadcrumbs-add-vendor (breadcrumbs object)))
              :menu (menu object)
              :rightblocks (let ((ret (rightblocks)))
                             (if (not (null (fullfilter object)))
@@ -32,30 +34,36 @@
                               (list
                                :producers (restas:render-object designer (make-producers object))
                                :accessories (catalog:accessories)
-                               :groups (remove-if ;; удаляем пустые группы
+                               :groups (remove-if ;; удаляем пустые и неактивные группы
                                         #'(lambda (x)
-                                            (equal 0 (getf x :cnt)))
+                                            (or (equal 0 (getf x :cnt))
+                                                (null (getf x :is-active))))
                                         (loop :for child :in (sort (copy-list (childs object)) #'menu-sort) :collect
-                                           (list :name (name child)
-                                                 :key (key child)
-                                                 :cnt (let ((products (get-recursive-products child)))
-                                                        (if (null products)
-                                                            "-"
-                                                            (length (remove-if-not #'(lambda (product)
-                                                                                       (active product))
-                                                                                   products))))
-                                                 :pic (pic child)
-                                                 :filters (loop :for filter :in (filters child) :collect
-                                                             (list :name (name filter)
-                                                                   :groupkey (key child)
-                                                                   :key (key filter))))))))
+                                           (list
+                                            :is-active (active child)
+                                            :name (name child)
+                                            :key (key child)
+                                            :cnt (let ((products (get-recursive-products child)))
+                                                   (if (null products)
+                                                       "-"
+                                                       (length (remove-if-not #'(lambda (product)
+                                                                                  (active product))
+                                                                              products))))
+                                            :pic (pic child)
+                                            :filters (loop :for filter :in (filters child) :collect
+                                                        (list :name (name filter)
+                                                              :groupkey (key child)
+                                                              :key (key filter))))))))
                              ;; else
                              (let ((products-list
                                     (if (getf (request-get-plist) :showall)
                                         (copy-list (products object))
                                         (remove-if-not #'(lambda (product)
                                                            (active product))
-                                                       (get-recursive-products object)))))
+                                                       (get-recursive-products object))))
+                                   (request-get-plist (request-get-plist)))
+                               (if (null (getf request-get-plist :sort))
+                                   (setf (getf request-get-plist :sort) "pt"))
                                (if (getf (request-get-plist) :vendor)
                                    (setf products-list
                                          (remove-if-not #'(lambda (p)
@@ -65,15 +73,16 @@
                                    (setf products-list (fullfilter-controller products-list  object (request-get-plist))))
                                (with-sorted-paginator
                                    products-list
-                                   (catalog:centerproduct
-                                    (list
-                                     :sorts (sorts)
-                                     :producers (restas:render-object designer (make-producers object))
-                                     :accessories (catalog:accessories)
-                                     :pager pager
-                                     :products
-                                     (loop
-                                        :for product :in  paginated :collect (view product)))))
+                                 request-get-plist
+                                 (catalog:centerproduct
+                                  (list
+                                   :sorts (sorts request-get-plist)
+                                   :producers (restas:render-object designer (make-producers object))
+                                   :accessories (catalog:accessories)
+                                   :pager pager
+                                   :products
+                                   (loop
+                                      :for product :in  paginated :collect (view product)))))
                                ))))
       :keywords (format nil "~a" (name object))
       :description (format nil "~a" (name object))
@@ -102,6 +111,7 @@
          :isshowadvanced (is-need-to-show-advanced object (request-get-plist)))))
 
 
+
 (defmethod restas:render-object ((designer eshop-render) (object product))
   (multiple-value-bind (diffprice procent)
       (get-procent (price object) (siteprice object))
@@ -113,6 +123,7 @@
                          :name (realname object)
                          :siteprice (siteprice object)
                          :storeprice (price object)
+                         :equalprice (= (siteprice object) (price object))
                          :diffprice diffprice
                          :procent procent
                          :subst (format nil "/~a" (articul object))
@@ -187,7 +198,10 @@
                                      (remove-if-not #'(lambda (product)
                                                         (active product))
                                                     (get-recursive-products
-                                                     (parent object))))))
+                                                     (parent object)))))
+        (request-get-plist (request-get-plist)))
+    (if (null (getf request-get-plist :sort))
+        (setf (getf request-get-plist :sort) "pt"))
     (if (getf (request-get-plist) :vendor)
         (setf products-list
               (remove-if-not #'(lambda (p)
@@ -195,6 +209,7 @@
                              products-list)))
     (with-sorted-paginator
         products-list
+      request-get-plist
       (default-page
           (catalog:content
            (list :name (name object)
@@ -204,7 +219,7 @@
                  :tradehits (tradehits)
                  :subcontent (catalog:centerproduct
                               (list
-                               :sorts (sorts)
+                               :sorts (sorts request-get-plist)
                                :producers (restas:render-object designer (make-producers (parent object)))
                                :accessories (catalog:accessories)
                                :pager pager
@@ -220,10 +235,17 @@
                          (name object))))))
 
 
+
 (defmethod restas:render-object ((designer eshop-render) (object optgroup))
   (product:optgroup (list :name (name object)
                           :options (mapcar #'(lambda (option)
-                                               (restas:render-object designer option))
+                                               (if ( not (or (null (value option))
+                                                             ;; Не отображать опции в пустыми значениями
+                                                             (string=  (string-trim
+                                                                        '(#\Space #\Tab #\Newline)
+                                                                        (value option))
+                                                                       "")))
+                                                   (restas:render-object designer option)))
                                            (options object)))))
 
 
