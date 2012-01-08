@@ -1,0 +1,218 @@
+{namespace catalog}
+
+{template selector}
+<div class="block choose-laptop">
+  <form action="catalog.html" method="post">
+	<p class="h2">Подобрать ноутбук</p>
+	<p>
+	  <label class="title">Цена</label>
+	  <label>от</label><input class="text text-wide" type="text"/><label>до</label><input class="text text-wide" type="text"/><label>руб.</label>
+	</p>
+	<p>
+	  <label class="title">Экран</label>
+	  <label>от</label><input class="text" type="text"/><label>до</label><input class="text" type="text"/><label>дюйм.</label>
+	</p>
+	<p>
+	  <label class="title">Работа от батареи</label>
+	  <label>от</label><input class="text" type="text"/><label>до</label><input class="text" type="text"/><label>часов</label>
+	</p>
+	<p>
+	  <label class="title">Вес</label>
+	  <label>от</label><input class="text" type="text"/><label>до</label><input class="text" type="text"/><label>кг</label>
+	</p>
+	<p>
+	  <label class="title">Тип</label>
+	  <label class="cb"><input class="radio" type="radio" name="choose-laptop-type" checked="checked"/>Ноутбук</label>
+	  <label class="cb"><input class="radio" type="radio" name="choose-laptop-type"/>Нетбук</label>
+	  <label class="cb"><input class="radio" type="radio" name="choose-laptop-type"/>Не важно</label>
+	</p>
+	<p class="submit">
+	  <input type="submit" class="submit" value="Подобрать"/>
+	  <span class="more"><a href="#">Расширенный<br/>поиск</a></span>
+	</p>
+  </form>
+</div>
+{/template}
+
+{template review}
+<li class="item">
+  <div class="pic block"><a href="item.html"rel="nofollow"><img src="{$pic}" alt="Фото"/></a></div>
+  <div class="area">
+	<p class="rating rating4"><i></i></p>
+  </div>
+  <div class="info">
+	<p class="h2"><a href="item.html">{$name}</a></p>
+	<big class="price">{$price} <var>руб.</var></big>
+	<span class="add"><a href="#add" onclick="return rAddCart('954854', '574', 'Asus K50ID', 24990.00, 1,'item.html','img/temp/s1.jpg');"><img src="img/cart-add.png" alt="В корзину"/></a></span>
+  </div>
+  <div class="review block">
+	<p class="ico"><img src="{$ico}" alt=""/></p>
+	<p><strong>{$user}</strong></p>
+	<p>{$text}</p>
+	<p class="more"><a href="item.html#reviews">{$more} &rarr;</a></p>
+	<dfn></dfn>
+  </div>
+</li>
+{/template}
+
+
+{template tradehits}
+
+<!--
+
+<div class="full hit-items hit-items2">
+  <ul class="tabs">
+	<li class="h2 active"><a href="#hits">Хиты&nbsp;продаж</a></li>
+	<li class="h2"><a href="#new">Новинки</a></li>
+	<li class="h2"><a href="#last">Вы&nbsp;смотрели</a></li>
+  </ul>
+  <div class="tab tab-hits">
+	<ul class="catalog">
+      {foreach $review in $reviews}
+      {call review data="$review" /}
+      {/foreach}
+	</ul>
+  </div>
+  <div class="tab tab-new tab-hidden">
+	<ul class="catalog">
+      {foreach $review in $reviews}
+      {call review data="$review" /}
+      {/foreach}
+	</ul>
+  </div>
+  <div class="tab tab-last tab-hidden">
+	<ul class="catalog">
+      {foreach $review in $reviews}
+      {call review data="$review" /}
+      {/foreach}
+	</ul>
+  </div>
+</div>
+
+-->
+
+{/template}
+
+
+
+{template seotext}
+  <div class="block models-notebook">
+    {$text |noAutoescape}
+  </div>
+{/template}
+
+
+{template rightblock2}
+
+<!--
+
+<div class="block how-select">
+  <p class="h2">Вам может быть интересно</p>
+  <p class="item"><a href="article.html">Как выбрать комплектующие?</a></p>
+  <p>Советы по выбору оптимальной модели - на что важно обратить внимание?</p>
+  <p class="item"><a href="article.html">Цифровое обозрение</a></p>
+  <p>Анонсы новых моделей, которые скорко поступят в продажу.</p>
+</div>
+
+-->
+
+{/template}
+
+
+{template rightblock1}
+<div class="block">
+  <p class="h2">Надежно и комфортно</p>
+  <div class="olist">
+	<ol>
+	  <li class="pct">
+		<a href="/warranty">Гарантия на все товары</a>
+		Только 100% белые и сертифицированные
+	  </li>
+	  <li>
+	  Новинки первыми у нас!<br/>{\n}
+	  Самые новые и эксклюзивные товары.{\n}		
+	  </li>
+	  <li>
+		<a href="/moneyback">Манибэк</a>
+		Вы можете вернуть товар в течение 3 дней без объяснения причин.
+	  </li>
+	</ol>
+	<p class="more"><a href="/about">Подробнее о компании &rarr;</a></p>
+  </div>
+</div>
+{/template}
+
+
+
+{template accessories}
+
+<!--
+
+<p class="h2 h2-catalog-in">Аксессуары и дополнительное оборудование</p>
+<ul class="catalog">
+  <li class="item block">
+	<p class="place"><a href="catalog-in.html">Кабели</a>&nbsp;(28)</p>
+	<div class="area">
+	  <p class="rating rating5"><i></i></p>
+	</div>
+	<div class="pic"><a href="item.html"><img src="img/temp/i27.jpg" alt="Фото"/></a></div>
+	<div class="info">
+	  <p class="h2"><a href="item.html">Кабель EIDE133 круглый со спираль.неон.лампой 45см (NEN-3-IDERD)</a></p>
+	  <big class="price">690 <var>руб.</var></big>
+	  <span class="add"><a href="#add" onclick="return rAddCart('954854', '574', 'Asus K50ID', 24990.00, 1,'item.html','img/temp/s1.jpg');"><img src="img/cart-add.png" alt="В корзину"/></a></span>
+	</div>
+	<hr/>
+	<ul class="filters-list">
+	  <li><a href="catalog-in.html">Кабели IDE,SATA</a>&nbsp;(9)</li>
+	  <li><a href="catalog-in.html">Кабели VGA, DVI</a>&nbsp;(15)</li>
+	  <li><a href="catalog-in.html">Кабели USB, FireWire</a>&nbsp;(4)</li>
+	  <li><a href="catalog-in.html">Кабели аудио, видео</a>&nbsp;(2)</li>
+	  <li><a href="catalog-in.html">Кабели питания</a>&nbsp;(12)</li>
+	</ul>
+  </li>
+</ul>
+
+-->
+
+{/template}
+
+
+
+
+{template vendorelt}
+<li><a href="{$link}">{$vendor}</a>&nbsp;({$cnt})</li>
+{/template}
+
+{template producers}
+<div class="producer-block">
+  <p class="h2">Производители
+    {if $vendorhiddenblocks}
+    <span class="switch switch-full">
+      <a rel="switch" href="#full">Полный список</a>
+</span>
+    {/if}
+  </p>
+  <ul class="producer-list">
+     {foreach $vendorblock in $vendorblocks}
+     <li class="item">
+       <ul class="catalog-in-list">
+         {foreach $vendorelt in $vendorblock}
+         {call vendorelt data="$vendorelt" /}
+         {/foreach}
+       </ul>
+     </li>
+     {/foreach}
+  </ul>
+  <ul class="producer-list producer-list-collapsed">
+    {foreach $vendorblock in $vendorhiddenblocks}
+    <li class="item">
+      <ul class="catalog-in-list">
+        {foreach $vendorelt in $vendorblock}
+        {call vendorelt data="$vendorelt" /}
+        {/foreach}
+      </ul>
+    </li>
+    {/foreach}
+  </ul>
+</div>
+{/template}

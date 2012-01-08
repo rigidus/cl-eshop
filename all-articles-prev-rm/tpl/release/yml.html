@@ -1,0 +1,47 @@
+{namespace yml}
+
+{template xml}
+<?xml version="1.0" encoding="utf-8"?>{\n}
+<!DOCTYPE yml_catalog SYSTEM "shops.dtd">{\n}
+<yml_catalog date="{$datetime}">{\n}
+  <shop>{\n}
+	<name>{$marketname}</name>{\n}
+	<company>{$marketcompany}</company>{\n}
+	<url>{$marketurl}</url>{\n}
+	<currencies>{\n}
+      <currency id="RUR" rate="1"/>{\n}
+    </currencies>{\n}
+
+    <categories>{\n}
+	  {foreach $category in $categoryes}
+	  {call category data="$category" /}
+	  {/foreach}
+    </categories>{\n}
+
+	<offers>{\n}
+	  {$offers |noAutoescape}
+	</offers>{\n}
+
+  </shop>{\n}
+</yml_catalog>{\n}
+{/template}
+
+{template category}
+<category id="{$id}"{if $parent != 0} parentId="{$parent}"{/if}>{$name |noAutoescape}</category>{\n}
+{/template}
+
+{template offer}
+<offer id="{$articul}" available="true">{\n}
+  <url>http://www.320-8080.ru/{$articul}</url>{\n}
+  <price>{$price}</price>{\n}
+  <currencyId>RUR</currencyId>{\n}
+  <categoryId>{$category}</categoryId>{\n}
+  {if $picture}
+  <picture>http://www.320-8080.ru/pic/small/{$articul}/{$picture}</picture>{\n}
+  {/if}
+  <delivery>true</delivery>{\n}
+  <name>{$name}</name>{\n}
+  <description>{if $description}{$description}{/if}</description>{\n}
+  <sales_notes>24 часа, 7 дней в неделю! 2 магазина в городе!</sales_notes>{\n}
+</offer>{\n}
+{/template}

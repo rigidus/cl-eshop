@@ -1,0 +1,89 @@
+{namespace articles}
+
+{template article-big}
+	<p class="h1">{$name | noAutoescape}</p>
+	<i>{$date}</i>
+	{$body | noAutoescape}
+<div class="articles">
+{$tags | noAutoescape}
+</div>
+{/template}
+
+{template article-short}
+<div class="articles">
+<a href="/articles/{$key}">
+<p class="h1">{$name | noAutoescape}</p></a>
+<var class="date"><i>{$date}: </i></var>
+<a href="/articles/{$key}">
+{$descr | noAutoescape}
+</a>
+{$tags | noAutoescape}
+</div>
+{/template}
+
+{template articles-menu}
+<p class="articles-menu">
+{if $tag=='Новости'}<b>{else}<a href="/articles/news">{/if}
+Новости
+{if $tag=='Новости'}</b>{else}</a>{/if}
+ |&nbsp;
+{if $tag=='Статьи'}<b>{else}<a href="/articles/papers">{/if}
+Статьи
+{if $tag=='Статьи'}</b>{else}</a>{/if}
+ |&nbsp;
+{if $tag=='Обзоры'}<b>{else}<a href="/articles/reviews">{/if}
+Обзоры
+{if $tag=='Обзоры'}</b>{else}</a>{/if}
+{/template}
+
+{template articles-list}
+{if $articles}
+<div class="pager">{\n}
+ <p>{$pager |noAutoescape}</p>
+</div>
+	{foreach $article in $articles}
+           {call article-short data="$article" /}
+     {/foreach}
+<div class="pager">{\n}
+ <p>{$pager |noAutoescape}</p>
+</div>
+{/if}
+{/template}
+
+{template articles-main}
+<div class="articles">
+{$menu | noAutoescape}
+{$articles | noAutoescape}
+</div>
+{/template}
+
+
+{template articles-tags}
+<ul class="tags">
+	{foreach $tag in $tags}
+    <li>
+      <a href=/articles?tags={$tag}>{$tag}</a>
+    </li>
+    {/foreach}
+</ul>
+{/template}
+
+
+{template rightblock}
+<div class="block block-also">
+  <p class="h2">Также смотрите:</p>
+  <ul class="list">
+    <li><a href="payment">Оплата</a></li>
+    <li><a href="about">О компании</a></li>
+    <li><a href="kakdobratsja">Адреса магазинов</a></li>
+    <li><a href="faq">Помощь покупателю</a></li>
+    <li><a href="kaksvjazatsja">Контакты</a></li>
+    <li><a href="Partners">Партнеры</a></li>
+  </ul>
+</div>
+{/template}
+
+
+{template breadcrumbs}
+<p class="breadcrumbs"><a href="article">Статьи</a>/ Как выбрать цифровой фотоаппарат?</p>
+{/template}

@@ -1,0 +1,126 @@
+{namespace sendmail}
+
+{template product}
+<tr>{\n}
+  <td>{$articul}</td>{\n}
+  <td>{$name}</td>{\n}
+  <td>{if $siteprice == 0}
+          {$price}
+      {else}
+          {$siteprice}
+      {/if}</td>{\n}
+  <td>{$cnt}</td>{\n}
+  <td>{$sum}</td>{\n}
+</tr>{\n}
+{/template}
+
+{template clientmail}
+Благодарим Вас за заказ, сделанный в нашем магазине.{\n}
+<br />{\n}
+В рабочее время, в течение 30 минут, с Вами свяжется менеджер.{\n}
+<br /><br />{\n}
+<div style="font-family:Arial, Helvetica; font-size:12px">{\n}
+  Дата и время заказа: {$datetime}{\n}
+</div>{\n}
+<br />{\n}
+<table style="font-family:Arial, Helvetica; font-size:12px" border="0"
+	   cellpadding="2">{\n}
+  <tbody>{\n}
+	<tr>{\n}
+	  <td>Номер заказа:</td>{\n}
+	  <td>{$order_id}</td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>ФИО:</td>{\n}
+	  <td>{$name} {$family}</td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>Форма оплаты:</td>{\n}
+	  <td>{$paytype}</td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>Вид доставки:</td>{\n}
+	  <td>{$deliverytype}</td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>Адрес доставки:</td>{\n}
+	  <td>{$addr}</td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>Стоимость доставки:</td>{\n}
+	  <td>{$deliverysum}</td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>Реквизиты:</td>{\n}
+	  <td>{$bankaccount}</td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>Контактный телефон:</td>{\n}
+	  <td>{$phone}</td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>Контактный email:</td>{\n}
+	  <td>{$email}</td>{\n}
+	</tr>{\n}
+	<tr>{\n}
+	  <td>Комментарий:</td>{\n}
+	  <td>{$comment}</td>{\n}
+	</tr>{\n}
+  </tbody>{\n}
+</table>{\n}
+{\n}
+<br /><br />{\n}
+{\n}
+<table style="font-family:Arial,Helvetica;font-size:12px;border:1px
+			  solid black" border="1" cellspacing="0" cellpadding="5"
+	   width="100%">{\n}
+  <tbody>{\n}
+	<tr style="font-weight:bold">{\n}
+	  <td>Артикул</td>{\n}
+	  <td>Название</td>{\n}
+	  <td>Цена , руб</td>{\n}
+	  <td>Кол-во</td>{\n}
+	  <td align="right">Сумма, руб</td>{\n}
+	</tr>{\n}
+	{foreach $product in $products}
+	{call product data="$product" /}
+	{/foreach}
+	<tr style="font-weight:bold">{\n}
+	  <td colspan="4">Доставка:</td>{\n}
+	  <td align="right">{$deliverysum}</td>{\n}
+	</tr>{\n}
+	<tr style="font-weight:bold">{\n}
+	  <td colspan="4">Итого:</td>{\n}
+	  <td align="right">&nbsp;{$itogo}</td>{\n}
+	</tr>{\n}
+  </tbody>{\n}
+</table>{\n}
+{\n}
+<br />
+Оценить работу Интернет магазина www.320-8080.ru можно <a  href="http://market.yandex.ru/shop-opinions.xml?shop_id=19790&cmid=157122792">здесь</a>. Будем благодарны за любые оценки.
+<br/>
+Если у вас остались вопросы по доставке, то вам <a href="http://www.320-8080.ru/delivery">сюда</a>
+<br/>
+Если у вас остались вопросы по оплате, то вам <a href="http://www.320-8080.ru/payment">сюда </a>
+<br/>
+Если вы не знаете, как к нам пройти, то посмотреть карту проезда можно <a href="http://www.320-8080.ru/kakdobratsja">здесь
+
+{/template}
+
+{template mailfile}
+Файл_интернет_заказа{\n}
+{$order_id}{\n}
+00014{\n}
+{$ekk}{\n}
+{$name} {$family}{\n}
+{$addr}{\n}
+{$phone}, {$email}{\n}
+{$comment}
+{foreach $product in $products}
+{call fileproduct data="$product" /}
+{/foreach}
+{/template}
+
+{template fileproduct}
+{\n}{$articul}{\t}{$cnt}
+{/template}
