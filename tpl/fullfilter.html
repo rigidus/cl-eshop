@@ -1,3 +1,5 @@
+// -*- mode: closure-template-html; fill-column: 130 -*-
+
 {namespace fullfilter}
 
 {template container}
@@ -34,13 +36,12 @@
 {/template}
 
 {template group}
-<p class="h2">{$name}</p>
-{foreach $elt in $elts}
-{$elt |noAutoescape}
-{/foreach}
+  <p class="h2">{$name}</p>
+  {foreach $elt in $elts}
+    {$elt |noAutoescape}
+  {/foreach}
 {/template}
 
-{call groupelt data="$elt" /}
 
 
 {template range}

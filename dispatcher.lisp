@@ -80,32 +80,32 @@
   (mapcar #'(lambda (fname)
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
                 (closure-template:compile-template :common-lisp-backend pathname)))
-          '("index.html"            #| "product.html"            "product-accessories.html"
+          '("index.html"            "product.html"            "product-accessories.html"
             "product-reviews.html"  "product-simulars.html"   "product-others.html"
             "catalog.html"          "catalog-in.html"         "catalog-staff.html"
-            "login.html"            "notebook_b.html"         "notebook_d.html"
-            "register.html"       |#"dayly.html"#|          |#"best.html"#|
-          |#"hit.html"              "new.html"                "post.html"
+          #|"login.html"            "notebook_b.html"         "notebook_d.html"
+            "register.html"       |#"dayly.html"              "best.html"
+            "hit.html"              "new.html"                "post.html"
             "plus.html"             "footer.html"#|           "subscribe.html"
-          |#"menu.html"             "banner.html"#|         |#"olist.html"#|
-          |#"lastreview.html"#|   |#"notlogged.html"#|        "logged.html"
-          |#"cart-widget.html"#|    "cart.html"               "checkout.html"
-            "admin.html"            "article.html"            "search.html"
+          |#"menu.html"             "banner.html"             "olist.html"
+            "lastreview.html"       "notlogged.html"        #|"logged.html"|#
+            "cart-widget.html"      "cart.html"               "checkout.html"
+          #|"admin.html"            "article.html"            "search.html"
             "agent.html"            "update.html"             "outload.html"
-     |#     "header.html"     #|    "static.html"
+          |#"header.html"           "static.html"#|
             "delivery.html"         "about.html"
             "faq.html"              "kakdobratsja.html"       "kaksvjazatsja.html"
             "levashovsky.html"      "partners.html"           "payment.html"
             "servicecenter.html"    "otzyvy.html"
             "pricesc.html"          "warrantyservice.html"    "warranty.html"
-            "moneyback.html"        "yml.html"                "fullfilter.html"
+            "moneyback.html"      |#"yml.html"                "fullfilter.html"#|
             "news1.html"            "news2.html"              "vacancy.html"
             "news3.html"            "news4.html"              "bonus.html"
             "news5.html"            "news6.html"              "corporate.html"
-            "dillers.html"          "sendmail.html"           "404.html" |#
+            "dillers.html"        |#"sendmail.html"           "404.html"
             )))
 
-;; (subseq (read-file-into-string "tpl/header.html") 520 540)
+
 (compile-templates)
 
 ;; (mapcar #'(lambda (fname)
@@ -117,45 +117,28 @@
 (load "errors.lisp")
 (load "classes.lisp")
 (load "serializers.lisp")
-
-
-;; (defpackage #:catalog
-;;   (:use #:cl)
-;;   (:export :rightblock1
-;;            :rightblock2
-;;            :seotext
-;;            :tradehits
-;;            ))
-;; (defun catalog:rightblock1 (&optional x) x)
-;; (defun catalog:rightblock2 (&optional x) x)
-;; (defun catalog:seotext (&optional x) x)
-;; (defun catalog:tradehits (&optional x) x)
-;; (load "servo.lisp")
+(load "servo.lisp")
 (load "spike.lisp")
 (load "generics.lisp")
-
 (load "trans.lisp")
-
-;; (load "cart.lisp")
+(load "cart.lisp")
 (load "gateway.lisp")
 (load "xls.lisp")
-;; (load "search.lisp")
-;; (load "yml.lisp")
-
+(load "search.lisp")
+(load "yml.lisp")
 ;; (load "wolfor-stuff.lisp")
+(load "routes.lisp")
+(load "render.lisp")
 
-;; (load "routes.lisp")
-;; (load "render.lisp")
 
-
-(setf hunchentoot:*hunchentoot-default-external-format* (flexi-streams:make-external-format :utf-8 :eol-style :lf))
-(setf hunchentoot:*handle-http-errors-p* nil)
+;; (setf hunchentoot:*hunchentoot-default-external-format* (flexi-streams:make-external-format :utf-8 :eol-style :lf))
+;; (setf hunchentoot:*handle-http-errors-p* nil)
 
 
 
 (restas:start '#:eshop :port 4243)
 (restas:debug-mode-on)
-(setf hunchentoot:*catch-errors-p* nil)
+;; (setf hunchentoot:*catch-errors-p* nil)
 
 ;; (setq swank:*log-events* t)
 ;; (setq swank:*log-output* (open (format nil "~adropbox.lisp" (user-homedir-pathname))
