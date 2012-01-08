@@ -55,7 +55,7 @@
                 :itemlink item-link
                 :firstpic (if (null pics) "" (car pics))
                 :articul (articul object)
-                :name (name object)
+                :name (realname object)
                 :siteprice (siteprice object)
                 :price (price object)
                 )))))

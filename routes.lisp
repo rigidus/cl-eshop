@@ -76,20 +76,7 @@
   (null (request-get-plist)))
 
 (restas:define-route main-route ("/" :requirement #'test-get-parameters)
-  (default-page (root:content (list :menu (menu (request-str))
-                                            :dayly (root:dayly)
-                                            :banner (root:banner)
-                                            :olist (root:olist)
-                                            :lastreview (root:lastreview)
-                                            :best (root:best)
-                                            :hit (root:hit)
-                                            :new (root:new)
-                                            :post (root:post)
-                                            :plus (root:plus)))
-      :KEYWORDS "компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
-      :DESCRIPTION "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
-      :TITLE "Интернет-магазин: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
-
+  (main-page-show (request-str)))
 
 
 
@@ -122,20 +109,24 @@
 (restas:define-route cart-route ("/cart")
   (cart-page))
 
-(restas:define-route cart/-route ("/cart")
-  (cart-page))
+(restas:define-route checkout-route ("/checkout")
+  (newcart-show))
 
 (restas:define-route checkout0-route ("/checkout0")
-  (checkout-page-0))
+  (newcart-show))
+  ;; (checkout-page-0))
 
 (restas:define-route checkout1-route ("/checkout1")
-  (checkout-page-1))
+  (newcart-show))
+  ;; (checkout-page-1))
 
 (restas:define-route checkout2-route ("/checkout2")
-  (checkout-page-2))
+  (newcart-show))
+  ;; (checkout-page-2))
 
 (restas:define-route checkout3-route ("/checkout3")
-  (checkout-page-3))
+  (newcart-show))
+  ;; (checkout-page-3))
 
 (restas:define-route thanks-route ("/thanks")
   (thanks-page))

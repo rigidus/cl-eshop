@@ -21,4 +21,7 @@
          "~/cl-eshop/search.lisp"
          "~/cl-eshop/xls.lisp"
          "~/cl-eshop/yml.lisp"
+         "~/cl-eshop/newcart.lisp"
+         "~/cl-eshop/main-page.lisp"
+         "~/cl-eshop/sitemap.lisp"
          ))

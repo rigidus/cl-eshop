@@ -937,12 +937,14 @@ is replaced with replacement."
   (let* ((key (string-downcase (format nil "~a" (nth 0 elt))))
          (name (nth 1 elt))
          (showflag nil)
+         (ishidden (search '(:hidden) elt))
          (contents
           (cond ((equal :range (nth 2 elt))
                  (fullfilter:range
                   (list :unit (nth 3 elt)
                         :key key
                         :name name
+                        :ishidden ishidden
                         :from (getf request-get-plist
                                     (intern (string-upcase (format nil "~a-f" key)) :keyword))
                         :to (getf request-get-plist
@@ -951,6 +953,7 @@ is replaced with replacement."
                  (fullfilter:box
                   (list :key key
                         :name name
+                        :ishidden ishidden
                         :elts (let ((elts (nth 3 elt)))
                                 (loop :for nameelt :in elts
                                    :for i from 0 :collect
@@ -967,6 +970,7 @@ is replaced with replacement."
                  (fullfilter:box
                   (list :key key
                         :name name
+                        :ishidden ishidden
                         :elts (let ((values (nth 3 elt)))
                                 (loop :for value :in values
                                    :for i from 0 :collect
@@ -980,7 +984,7 @@ is replaced with replacement."
                                                                                          :keyword)))
                                           )))))))
                 (t ""))))
-    (if (search '(:hidden) elt)
+    (if ishidden
         (fullfilter:hiddencontainer (list :key key
                                           :name name
                                           :contents contents

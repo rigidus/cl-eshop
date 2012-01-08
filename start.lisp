@@ -23,6 +23,7 @@
                 "closure-template"
                 "hunchentoot"
                 "restas"
+                "log5"
                 "restas-directory-publisher"
                ))
 

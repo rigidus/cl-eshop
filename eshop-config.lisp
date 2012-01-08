@@ -61,7 +61,7 @@
             "news3.html"            "news4.html"              "bonus.html"
             "news5.html"            "news6.html"              "corporate.html"
             "dillers.html"        |#"sendmail.html"           "404.html"
-            "articles.html"         "sitemat.html"
+            "articles.soy"          "sitemap.html"            "newcart.soy"
             )))
 
 
