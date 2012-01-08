@@ -3,25 +3,26 @@
 {namespace fullfilter}
 
 {template container}
-<!-- <div class="block choose-laptop"> -->
-<!--   <form method="get"> -->
-<!-- 	<p class="h2">{$name}</p> -->
-<!--     {$base |noAutoescape} -->
-<!-- 	<div id="param-advanced" class="switch-block switch-block-hidden"> -->
-<!-- 	  <hr/> -->
-<!--       {$advanced |noAutoescape} -->
-<!-- 	</div> -->
-<!-- 	<p class="submit"> -->
-<!--       <input type="hidden" name="fullfilter" value="1" /> -->
-<!-- 	  <input type="submit" class="submit" value="Подобрать"/> -->
-<!-- 	  <span class="more switch switch-full"> -->
-<!--         <a class="js" rel="switch" href="#param-advanced"> -->
-<!--           Расширенный<br/>поиск -->
-<!--         </a> -->
-<!--       </span> -->
-<!-- 	</p> -->
-<!--   </form> -->
-<!-- </div> -->
+<div class="block choose-laptop">
+  <form method="get">
+    {if $sort}<input type="hidden" name="sort" value="{$sort}">{/if}
+ 	<p class="h2">{$name}</p>
+    {$base |noAutoescape}
+ 	<div id="param-advanced" class="switch-block switch-block-hidden">
+ 	  <hr/>
+      {$advanced |noAutoescape}
+ 	</div>
+ 	<p class="submit">
+      <input type="hidden" name="fullfilter" value="1" />
+ 	  <input type="submit" class="submit" value="Подобрать"/>
+ 	  <span class="more switch switch-full">
+        <a class="js" rel="switch" href="#param-advanced">
+          Расширенный<br/>поиск
+        </a>
+      </span>
+ 	</p>
+  </form>
+  </div>
 {/template}
 
 {template groupelt}
