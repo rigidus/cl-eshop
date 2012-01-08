@@ -29,6 +29,7 @@
                  (progn
                    ;; Делаем все продукты неактивными
                    (maphash #'(lambda (k v)
+                                (declare (ignore k))
                                 (when (equal (type-of v) 'product)
                                   (setf (active v) nil)))
                             *storage*)

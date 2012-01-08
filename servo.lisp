@@ -84,6 +84,24 @@
                              options))))
            (optgroups ,product)))
 
+
+(defmacro f-price ()
+  `(lambda (product)
+     (let ((value-f (getf (request-get-plist) :price-f))
+           (value-t (getf (request-get-plist) :price-t))
+           (value-x (siteprice product)))
+       (when (null value-f)
+         (setf value-f "0"))
+       (when (or (null value-t)
+                 (string= value-t ""))
+         (setf value-t "99999999"))
+       (setf value-f (arnesi:parse-float (format nil "~as" value-f)))
+       (setf value-t (arnesi:parse-float (format nil "~as" value-t)))
+       (and (<= value-f value-x)
+            (>= value-t value-x)))))
+
+
+
 (defmacro with-range (key optgroup-name option-name)
   `(lambda (product)
      (let ((value-f (getf (request-get-plist) (intern (string-upcase (format nil "~a-f" (symbol-name ,key))) :keyword)))
@@ -104,6 +122,20 @@
        (setf value-x (arnesi:parse-float (format nil "~as" value-x)))
        (and (<= value-f value-x)
             (>= value-t value-x)))))
+
+
+(defmacro with-check (key optgroup-name option-name)
+  `(lambda (product) t))
+
+(defmacro with-radio (key optgroup-name option-name)
+  `(lambda (product) t))
+
+(defmacro with-range (key optgroup-name option-name)
+  `(lambda (product) t))
+
+(defmacro f-price ()
+  `(lambda (product) t))
+
 
 (defun get-date-time ()
   (multiple-value-bind (second minute hour date month year) (get-decoded-time)
@@ -258,7 +290,9 @@
                                                    (list :key  (key child) :name (name child)))
                                           ))
                                    ;; else - this is ordinal
-                                   (leftmenu:ordinal (list :key  (key val) :name (name val)))
+                                   (leftmenu:ordinal (list :key  (key val)
+                                                           :name (name val)
+                                                           :icon (icon val)))
                                    ))
                            (sort root-groups #'menu-sort)
                            ;; root-groups
@@ -536,7 +570,7 @@ is replaced with replacement."
             :groupkey  (if (null group)
                            ""
                            (key  group))
-            :price (price object)
+            :price (siteprice object)
             :firstpic (car pics)
             ))))
 
@@ -620,6 +654,7 @@ is replaced with replacement."
                               (nconc functions (list (eval (car (last advanced-filter))))))
                           advanced-filters)))
             (advanced (fullfilter object)))
+    (print functions)
     ;; processing
     (let ((result-products))
       (mapcar #'(lambda (product)
