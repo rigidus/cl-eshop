@@ -22,7 +22,13 @@
 ;; commit to sync https://github.com/wolfor/cl-restas-eshop/commit/e6c611291d4fce5f6f6ebd41c7426b8bf1d87566
 ;; удаление шаблонов из репозитория
 ;; +(defparameter *path-to-tpls* (format nil "~aDropbox/httpls/tosha" (user-homedir-pathname)))
-(defparameter *path-to-tpls* (format nil "~arepo/cl-eshop/tpl" (user-homedir-pathname)))
+
+;; (defparameter *path-to-dropbox* (format nil "~aDropbox" (user-homedir-pathname)))
+;; (export '*path-to-dropbox*)
+;; (defparameter *path-to-articles* (format nil "~aDropbox/httpls/release/articles" (user-homedir-pathname)))
+;; (export '*path-to-articles*)
+
+
 (defparameter *path-to-bkps* (format nil "~arepo/cl-eshop/htbkps" (user-homedir-pathname)))
 (defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
 (defparameter *path-to-pics* (format nil "~ahtpics" (user-homedir-pathname)))
@@ -45,7 +51,7 @@
             #|"admin.html"            "article.html"            "search.html"
             "agent.html"            "update.html"             "outload.html"
             |#"header.html"           "static.html"           "burunduk.html"#|
-            "delivery.html"         "about.html"
+            "delivery.html"         "about.html"              "suslik.html"
             "faq.html"              "kakdobratsja.html"       "kaksvjazatsja.html"
             "levashovsky.html"      "partners.html"           "payment.html"
             "servicecenter.html"    "otzyvy.html"|#           "listservice.html" #|
@@ -55,6 +61,7 @@
             "news3.html"            "news4.html"              "bonus.html"
             "news5.html"            "news6.html"              "corporate.html"
             "dillers.html"        |#"sendmail.html"           "404.html"
+            "articles.html"         "sitemat.html"
             )))
 
 

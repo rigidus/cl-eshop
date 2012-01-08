@@ -22,9 +22,14 @@
 (defun test-route-filter ()
   (let* ((request-list (request-list))
          (key (cadr request-list))
-         (filter (caddr request-list)))
-    (and (not (null (gethash key *storage*)))
-         (not (null (gethash filter *storage*))))))
+         (filter (caddr request-list))
+         (grp (gethash key *storage*))
+         (fltr (gethash filter *storage*)))
+    (and (not (null grp))
+         (not (null fltr))
+         (equal (type-of grp) 'group)
+         (equal (type-of fltr) 'filter)
+         (equal (key (parent fltr)) key))))
 
 (defun route-filter (filter)
   (gethash filter *storage*))
@@ -95,18 +100,19 @@
 
 
 ;; STATIC
+(defparameter *static-pages* (list "delivery"         "about"             "faq"             "kakdobratsja"
+                                   "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
+                                   "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
+                                   "warranty"         "moneyback"         "article"         "news1"
+                                   "news2"            "news3"             "news4"           "news5"
+                                   "news6"            "dilers"            "corporate"       "vacancy"
+                                   "bonus"            "burunduk"          "listservice"     "suslik"))
 
 (defmacro static ()
   `(progn ,@(mapcar #'(lambda (x)
                         `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
                            (static-page)))
-                    (list "delivery"         "about"             "faq"             "kakdobratsja"
-                          "kaksvjazatsja"    "levashovsky"       "partners"        "payment"
-                          "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
-                          "warranty"         "moneyback"         "article"         "news1"
-                          "news2"            "news3"             "news4"           "news5"
-                          "news6"            "dillers"           "corporate"       "vacancy"
-                          "bonus"            "burunduk"          "listservice"))))
+                    *static-pages*)))
 
 (static)
 
@@ -163,6 +169,26 @@
 
 (restas:define-route yml/-route ("/yml/")
   (yml-page))
+
+
+;; ARTICLES
+
+;;TODO возможно проверять входные тэги
+(defun test-article-get-parameters ()
+  t)
+
+;;проверяем есть ли такая статья
+(defun test-route-article-object ()
+  (not (null (gethash (caddr (request-list)) *storage-articles*))))
+
+;;список статей
+(restas:define-route article-route ("/articles" :requirement #'test-article-get-parameters)
+  (articles-page))
+
+;;конкретная статья
+(restas:define-route article/-key-route ("/articles/:key" :requirement #'test-route-article-object)
+  (gethash (caddr (request-list)) *storage-articles*))
+
 
 ;; 404
 

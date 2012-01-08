@@ -12,8 +12,6 @@
 
 (setf *default-render-method* (make-instance 'eshop-render))
 
-(defun add-vendor(bdkr)
-  bdkr)
 
 (defmethod restas:render-object ((designer eshop-render) (object group))
   (default-page
@@ -32,7 +30,7 @@
                              ;; Отображаем группы
                              (catalog:centergroup
                               (list
-                               :producers (restas:render-object designer (make-producers object))
+                               :producers nil ;; (restas:render-object designer (make-producers object))
                                :accessories (catalog:accessories)
                                :groups (remove-if ;; удаляем пустые и неактивные группы
                                         #'(lambda (x)
@@ -86,15 +84,27 @@
                                ))))
       :keywords (format nil "~a" (name object))
       :description (format nil "~a" (name object))
-      :title (format nil "~a - купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
-                     (name object)
-                     (name object)
-                     (name object))))
+      :title (let ((vendor (getf (request-get-plist) :vendor)))
+               (string-convertion-for-title
+                (if vendor
+                    (format nil "~a ~a - купить ~a ~a по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
+                            (sklonenie (name object) 1)
+                            vendor
+                            (sklonenie (name object) 2)
+                            vendor
+                            (sklonenie (name object) 3)
+                            vendor)
+                    (format nil "~a - купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
+                            (sklonenie (name object) 1)
+                            (sklonenie (name object) 2)
+                            (sklonenie (name object) 3)))))))
+
 
 
 (defmethod restas:render-object ((designer eshop-render) (object group-filter))
   (fullfilter:container
    (list :name (name object)
+         :vendor (getf (request-get-plist) :vendor)
          :sort (getf (request-get-plist) :sort)
          :base (format nil "~{~a~}"
                        (mapcar #'(lambda (elt)
@@ -161,9 +171,10 @@
                             (realname object))
           :description (format nil "купить ~a в ЦиFры 320-8080 по лучшей цене с доставкой по Санкт-Петербургу"
                                (realname object))
-          :title (format nil "~a купить в ЦиFры - цена, фотография и описание, продажа ~a с гарантией и доставкой в ЦиFры 320-8080"
-                         (realname object)
-                         (realname object))))))
+          :title (string-convertion-for-title
+                  (format nil "~a купить в ЦиFры - цена, фотография и описание, продажа ~a с гарантией и доставкой в ЦиFры 320-8080"
+                          (realname object)
+                          (realname object)))))))
 
 
 (defun make-producters-lists(list &optional (column-number 4))
@@ -184,7 +195,7 @@
     (remf url-parameters :page)
     (multiple-value-bind (base hidden)
         (cut 12 (mapcar #'(lambda (x)
-                            (setf (getf url-parameters :vendor) (car x))
+                            (setf (getf url-parameters :vendor) (hunchentoot:url-encode (car x)))
                             (list :vendor (car x)
                                   :cnt (cadr x)
                                   :link (format nil "?~a" (make-get-str url-parameters))))
@@ -232,24 +243,36 @@
                                             :collect (view product))))))
           :keywords (format nil "~a" (name object))
           :description (format nil "~a" (name object))
-          :title (format nil "~a - купить ~a по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
-                         (name object)
-                         (name object)
-                         (name object))))))
-
+          :title (let ((vendor (getf (request-get-plist) :vendor)))
+                   (string-convertion-for-title
+                    (if vendor
+                        (format nil "~a ~a - купить ~a ~a по низкой цене, продажа ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
+                                (sklonenie (name object) 1)
+                                vendor
+                                (sklonenie (name object) 2)
+                                vendor
+                                (sklonenie (name object) 3)
+                                vendor)
+                        (format nil "~a - купить ~a  по низкой цене, продажа ~a с доставкой и гарантией в ЦиFры 320-8080"
+                                (sklonenie (name object) 1)
+                                (sklonenie (name object) 2)
+                                (sklonenie (name object) 3)))))))))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object optgroup))
-  (product:optgroup (list :name (name object)
-                          :options (mapcar #'(lambda (option)
-                                               (if ( not (or (null (value option))
-                                                             ;; Не отображать опции в пустыми значениями
-                                                             (string=  (string-trim
-                                                                        '(#\Space #\Tab #\Newline)
-                                                                        (value option))
-                                                                       "")))
-                                                   (restas:render-object designer option)))
-                                           (options object)))))
+  (let ((options (mapcar #'(lambda (option)
+                             (if ( not (or (null (value option))
+                                           ;; Не отображать опции в пустыми значениями
+                                           (string=  (string-trim
+                                                      '(#\Space #\Tab #\Newline)
+                                                      (value option))
+                                                     "")))
+                                 (restas:render-object designer option)))
+                         (options object))))
+    (if (not (null (remove-if  #'(lambda (v) (null v)) options)))
+        (product:optgroup (list :name (name object)
+                                :options options))
+        "")))
 
 
 (defmethod restas:render-object ((designer eshop-render) (object option))

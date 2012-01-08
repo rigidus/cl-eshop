@@ -141,7 +141,9 @@
                   (if (not (string= "" (string-trim '(#\Space #\Tab #\Newline)
                                                     (format nil "~@[~a~]" realname))))
                       (setf (realname product) realname)))))))
-    (format t "~%...} successfully processed ~a files" cnt)))
+    (format t "~%...} successfully processed ~a files" cnt)
+    ;;создаем новый yml файл
+    (create-yml-file)))
 
 
 (defun dtd ()

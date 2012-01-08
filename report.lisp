@@ -134,9 +134,9 @@
 
 
 (create-report "xls/products.csv" #'write-products-report)
-;; (create-report "report-groups.csv" #'write-groups)
-;; (create-report "report-products.csv" #'write-products)
-;; (create-report "report-vendors.csv" #'write-vendors)
+;; (create-report "seo/report-groups.csv" #'write-groups)
+;; (create-report "seo/report-products.csv" #'write-products)
+;; (create-report "seo/report-vendors.csv" #'write-vendors)
 
 
 (defun check-valid-siteprice ()
@@ -173,4 +173,4 @@
     (loop :for packet :in (reverse (caddr (car *history*))) :do
        (format stream "~a" (sb-ext:octets-to-string packet :external-format :cp1251)))))
 
-;; (create-report "last-gateway-string.txt" #'show-last-history)
+;; (create-report "seo/last-gateway-string.txt" #'show-last-history)

@@ -128,6 +128,10 @@
             (>= value-t value-x)))))
 
 
+(defun sklonenie (name skl)
+  (setf name (string-downcase name)))
+
+
 ;;Фильтруем по наличию опции
 (defun filter-with-check-options (key-name option-group-name product request-plist filter-options)
   (let ((number 0)
@@ -368,7 +372,7 @@
 (defun menu (&optional current-object)
   (let ((root-groups)
         (current-key (let* ((breadcrumbs (breadcrumbs current-object))
-                            (first       (getf (car (getf breadcrumbs :breadcrumbelts)) :key)) )
+                            (first (getf (car (getf breadcrumbs :breadcrumbelts)) :key)) )
                        (if (not (null first))
                            first
                            (getf (getf breadcrumbs :breadcrumbtail) :key)
@@ -378,7 +382,10 @@
                         (equal 'group (type-of val))
                         (null (parent val))
                         (active val)
-                        (not (empty val)))
+                        (not (empty val))
+                        ;;проверка на реальное наличие активных товаров
+                        (not (= 0
+                                (length (remove-if-not #'active (get-recursive-products val))))))
                    (push val root-groups)))
              *storage*)
     (let ((src-lst (mapcar #'(lambda (val)
@@ -394,13 +401,19 @@
                                                         (remove-if #'(lambda (g)
                                                                        (or
                                                                         (empty g)
-                                                                        (not (active g)) ))
+                                                                        (not (active g))
+                                                                        ;;проверка на реальное наличие активных товаров
+                                                                        (= 0
+                                                                           (length
+                                                                            (remove-if-not #'active
+                                                                                           (get-recursive-products g))))
+                                                                        ))
                                                                    (childs val)) #'menu-sort)
                                                    :collect
-                                                   (list :key  (key child) :name (name child)))
+                                                   (list :key (key child) :name (name child)))
                                           ))
                                    ;; else - this is ordinal
-                                   (leftmenu:ordinal (list :key  (key val)
+                                   (leftmenu:ordinal (list :key (key val)
                                                            :name (name val)
                                                            :icon (icon val)))
                                    ))
@@ -478,7 +491,7 @@
 
 
 (defun request-str ()
-  (let* ((request-full-str (hunchentoot:request-uri hunchentoot:*request*))
+  (let* ((request-full-str (hunchentoot:url-decode (hunchentoot:request-uri hunchentoot:*request*))) ;;  (url-to-request-get-plist "http://www.320-8080.ru/komputery?vendor=%D0%A6%D0%B8F%D1%80%D1%8B")
          (request-parted-list (split-sequence:split-sequence #\? request-full-str))
          (request-str (string-right-trim "\/" (car request-parted-list)))
          (request-list (split-sequence:split-sequence #\/ request-str))
@@ -713,7 +726,7 @@ is replaced with replacement."
         (temp-rs2))
     (when (not (equal 'group (type-of (parent object))))
       (print object)
-      (return-from relink2 rs))
+      (return-from relink rs))
     ;;2 случайных товара из списка
     (setf temp-rs1 (get-randoms-from-list
                     ;; список активных товаров той же группы и того же производителя
@@ -1038,3 +1051,11 @@ is replaced with replacement."
                                                             (getf tail :val)
                                                             vendor)))))
     result))
+
+
+;; Сделать строку начинающейся с заглавной буквы.
+(defun string-convertion-for-title (title)
+  (if (not (null title))
+      (format nil "~a~a"
+              (string-upcase (subseq title 0 1))
+              (subseq title 1))))
