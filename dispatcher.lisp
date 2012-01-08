@@ -19,7 +19,6 @@
 (asdf:operate 'asdf:load-op '#:restas-directory-publisher)
 
 
-
 (defpackage #:wolfor-stuff
   (:use #:cl)
   (:export :range-filter

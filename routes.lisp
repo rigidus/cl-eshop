@@ -17,9 +17,6 @@
 ;; (restas:define-route storage-object-route  ("/:key")
 ;;   "Позвони мне")
 
-;; (restas:define-route main  ("/")
-;;   "Позвони мне")
-
 ;; (setf swank::*connections* nil)
 
 
@@ -94,8 +91,8 @@
                           "servicecenter"    "otzyvy"            "pricesc"         "warrantyservice"
                           "warranty"         "moneyback"         "article"         "news1"
                           "news2"            "news3"             "news4"           "news5"
-                          "news6"            "dillers"           "corporate"       "vacancy"
-                          "bonus"))))
+                          "news6"            "dilers"           "corporate"       "vacancy"
+                          "bonus"            "burunduk"          "listservice"))))
 
 (static)
 
@@ -126,17 +123,17 @@
 
 ;; GATEWAY
 
-(restas:define-route gateway-route ("/gateway")
-  (gateway-page))
+;; (restas:define-route gateway-route ("/gateway")
+;;   (gateway-page))
 
 (restas:define-route gateway/post-route ("/gateway" :method :post)
   (gateway-page))
 
-(restas:define-route gateway/-route ("/gateway/")
-  (gateway-page))
+;; (restas:define-route gateway/-route ("/gateway/")
+;;   (gateway-page))
 
-(restas:define-route gateway/post/-route ("/gateway/" :method :post)
-  (gateway-page))
+;; (restas:define-route gateway/post/-route ("/gateway/" :method :post)
+;;   (gateway-page))
 
 
 ;; SEARCH

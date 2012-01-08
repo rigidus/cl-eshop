@@ -37,11 +37,11 @@
   <currencyId>RUR</currencyId>{\n}
   <categoryId>{$category}</categoryId>{\n}
   {if $picture}
-  <picture>http://www.320-8080.ru{$picture}</picture>{\n}
+  <picture>http://www.320-8080.ru/pic/small/{$articul}/{$picture}</picture>{\n}
   {/if}
   <delivery>true</delivery>{\n}
   <name>{$name}</name>{\n}
-  <description>{$description}</description>{\n}
-  <sales_notes>24 часа, 7 дней в неделю! 4 магазина в городе!</sales_notes>{\n}
+  <description>{if $description}{$description}{/if}</description>{\n}
+  <sales_notes>24 часа, 7 дней в неделю! 2 магазина в городе!</sales_notes>{\n}
 </offer>{\n}
 {/template}

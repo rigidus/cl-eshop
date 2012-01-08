@@ -5,11 +5,19 @@
 	<div class="area">
 	  <p class="rating rating4"><i></i></p>
 	</div>
-	<div class="pic"><a href="{$articul}"><img src="/pic/middle/{$articul}/{$firstpic}" alt="Фото"/></a></div>
+	<div class="pic">
+      <a class="iframe-1" href="{$articul}">
+        {if $firstpic}
+        <img src="/pic/middle/{$articul}/{$firstpic}" alt="Фото"/>
+        {else}
+        <img src="/img/temp/empty-foto.jpg" width="225" alt="Фото"/>
+        {/if}
+    </a></div>
 	<div class="info">
 	  <p class="h2"><a href="{$articul}">{$name}</a></p>
 	  <big class="price">{$price}<var>руб.</var></big>
-	  <span class="add"><a href="#add" onclick="return rAddCart('{$articul}', '{$group_id}', '{$name}', {$price}, 1,'/{$articul}','{$pic}');"><img src="/img/cart-add.png" alt="В корзину"/></a></span>
+	  <span class="add"><a class="iframe" href="#add" onclick="return rAddCart('{$articul}','{$group_id}', '{$name}', {$price},1,'/{$articul}','/pic/small/{$articul}/{$firstpic}');">
+<img src="/img/cart-add.png" alt="В корзину"/></a></span>
       </a>
       </span>
 	</div>

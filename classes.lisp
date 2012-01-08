@@ -18,6 +18,7 @@
    (keyoptions        :initarg :keyoptions      :initform nil       :accessor keyoptions)
    (ymlshow           :initarg :ymlshow         :initform nil       :accessor ymlshow)
    (pic               :initarg :pic             :initform nil       :accessor pic)
+   (icon              :initarg :icon            :initform nil       :accessor icon)
    (childs            :initarg :childs          :initform nil       :accessor childs)
    (filters           :initarg :filters         :initform nil       :accessor filters)
    (fullfilter        :initarg :fullfilter      :initform nil       :accessor fullfilter)
@@ -72,7 +73,8 @@
 
 
 (defclass producers ()
-  ((producers         :initarg :producers         :initform nil       :accessor producers)))
+  ((producers         :initarg :producers         :initform nil       :accessor producers)
+   (producersall      :initarg :producersall      :initform nil       :accessor producersall)))
 
 
 (defmacro make-integer-writer (field)
@@ -192,6 +194,7 @@
 (defmethod make-producers ((object group))
   (make-instance 'producers
                  :producers (get-list-of-producers object)
+                 :producersall (get-list-of-producers object  #'(lambda (product) t))
                  ))
 
 

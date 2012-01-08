@@ -76,6 +76,11 @@ function bestSliderItemLoadCallback(carousel) {
 	current = $(carousel.container);
 	$(current).parents('.best-items').find('.slider-pager').find('li').removeClass('active').end().find('li').eq(carousel.first - 1).addClass('active');
 };
+
+function closeFancy() {
+  $.fancybox.close();
+};
+
 /* показ попапа */
 function showPopup(current,where) {
 	$(".popup").hide();
@@ -205,8 +210,8 @@ function refreshWidth() {
 
 
 
-
-
+/* Тут ядерная бомба. Дата, когда время жизни куки истекает, проставлена руками
+   TODO: генерировать expires data*/
 function rSetCookie (name, value) {
 	document.cookie= name+"="+encodeURIComponent(value)+"; path=/; expires=Mon, 15-Oct-2011 00:00:00 GMT";
 }
@@ -262,6 +267,9 @@ function rCalc() {
 			$(current).find('.sum').html(sum);
 
             // ->> жеский костыль для случая, когда rUser не определен в куках или определен странных образом
+            // if(sum > 10000) {
+              // $(this).find('.delivery-price').html('Доставка — <big>бесплатно</big>');
+            // }
             if(rUser){
                 if('delivery' in rUser){
                     // ->>
@@ -271,8 +279,8 @@ function rCalc() {
 	  //   	        } else {
       //                   $(this).find('.delivery-price big').text('Доставка — <big>бесплатно</big>');
       //               }
-			        if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
-				        $(this).find('.delivery-price').html('Стоимость курьерской доставки — <big>200</big> руб. в пределах КАД, от 10 000 руб. доставляем бесплатно! <br> Самовывоз — бесплатно!');
+			        if (rUser.delivery.deliverytype == 'courier' /* && sum < 10000*/) {
+				        $(this).find('.delivery-price').html('Стоимость курьерской доставки — <big>300</big> руб. в пределах КАД<br> Самовывоз — бесплатно!');
 			        } else {
                         $(this).find('.delivery-price').html('Доставка — <big>бесплатно</big>');
                     }
@@ -438,14 +446,16 @@ function initRCartReDraw2 () {
 			$(tmp).find('.delete a').unbind('click').click(function(){
 				$(this).parents('.item').addClass('item-deleted');
 				$(this).parents('.item').find('.pic').animate({opacity: 0.5}, 0);
-				rDelCart(cur.id);
+				rDelCart(cur[0].id);
 				rCartReDraw2();
+                rCartReDraw();
 				return false;
 			});
 			$(tmp).find('.return a').unbind('click').click(function(){
 				$(tmp).find('.pic').animate({opacity: 1}, 0);
 				$(tmp).removeClass('item-deleted');
 				rCartReDraw2();
+                rCartReDraw();
 				return false;
 			});
 		})(cur);
@@ -576,17 +586,17 @@ function checkoutFinish(current) {
 	where.append('<p>' + temp + '</p>');
 	temp = '';
 	if (rUser.delivery.deliverytype == 'courier') {
-		if (sum < 10000) {
-			where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping">Стоимость <strong>200 руб.,</strong> завтра в течение дня</p>');
-		} else {
-			where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping"><strong>бесплатно,</strong> завтра в течение дня</p>');
-		}
+		// if (sum < 10000) {
+			where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping">Стоимость <strong>300 руб.,</strong> завтра в течение дня</p>');
+		// } else {
+			// where.append('<p class="h2">Доставка курьером</p><p class="discount-shipping"><strong>бесплатно,</strong> завтра в течение дня</p>');
+		// }
 		// temp += rUser.delivery.city + '<br/>';
 		temp += rUser.delivery.addr;
 		if (rUser.delivery.comment) {
 			temp += '<br/>' + rUser.delivery.comment;
 		}
-		temp += '<br/><a href="checkout2.html">Изменить способ доставки</a>'
+		temp += '<br/><a href="checkout2">Изменить способ доставки</a>'
 	}
 	else
 		if (rUser.delivery.deliverytype == 'auto') {
@@ -599,7 +609,7 @@ function checkoutFinish(current) {
 
 	temp = '';
 	if (rUser.pay.paytype == 'cash') {
-		where.append('<p class="h2">Оплата наличными</p><p>Курьеру при получении товара. Вы получите товарный чек</p>');
+		where.append('<p class="h2">Оплата наличными</p><p>Самостоятельно в магазине, или курьеру при получении товара. Вы получите товарный чек.</p>');
 	}
 	else
 		if (rUser.pay.paytype == 'card') {
@@ -614,8 +624,8 @@ function checkoutFinish(current) {
 					where.append('<p class="h2">Оплата по безналичному расчету</p>');
 					where.append('<p>Реквизиты:<br/>' + rUser.pay.bankaccount + '</p>');
 				}
-	if (sum < 10000 && rUser.delivery.deliverytype == 'courier') {
-		where.append('<br/><p class="price"><big>' + (sum + 200) + '</big> руб.</p>');
+	if (/*sum < 10000 &&*/ rUser.delivery.deliverytype == 'courier') {
+		where.append('<br/><p class="price"><big>' + (sum + 300) + '</big> руб.</p>');
 	} else {
 		where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
 	}
@@ -646,11 +656,11 @@ function checkoutThanks(current) {
 	where.append(temp);
 	temp = '';
 	if (rUser.delivery.deliverytype == 'courier') {
-		if (sum < 10000) {
-			where.append('<p class="h2">Стоимость доставки - 200 руб., <strong class="gray">завтра в течение дня</strong></p>');
-		} else {
-			where.append('<p class="h2">Бесплатная доставка курьером <strong class="gray">завтра в течение дня</strong></p>');
-		}
+		// if (sum < 10000) {
+			where.append('<p class="h2">Стоимость доставки - 300 руб., <strong class="gray">завтра в течение дня</strong></p>');
+		// } else {
+			// where.append('<p class="h2">Бесплатная доставка курьером <strong class="gray">завтра в течение дня</strong></p>');
+		// }
 
 		// temp += rUser.delivery.city + '<br/>';
 		temp += rUser.delivery.addr;
@@ -681,8 +691,8 @@ function checkoutThanks(current) {
 					where.append('<p class="h2">Оплата по безналичному расчету</p>');
 					where.append('<p>Реквизиты:<br/>' + rUser.pay.bankaccount + '</p>');
 				}
-	if (rUser.delivery.deliverytype == 'courier' && sum < 10000) {
-		where.append('<br/><p class="price"><big>' + (sum + 200) + '</big> руб.</p>');
+    if (rUser.delivery.deliverytype == 'courier' /*&& sum < 10000*/) {
+		where.append('<br/><p class="price"><big>' + (sum + 300) + '</big> руб.</p>');
 	} else {
 		where.append('<br/><p class="price"><big>'+sum+'</big> руб.</p>');
 	}
@@ -1089,4 +1099,21 @@ $(document).ready(function() {
 		'titleShow'		: true,
 		'titlePosition'	: 'over'
 	});
+    $(".iframe,.add a").fancybox(
+      {
+        'content' : '<div class="product-add-complete">Товар добавлен в корзину!</div>',
+        'transitionIn'	:	'fade',
+		'transitionOut'	:	'fade',
+		'overlayShow'	:	true,
+		'hideOnOverlayClick':	true,
+		'speedIn'		:	200,
+		'speedOut'		:	200,
+        'width'    : 240,
+        'height'   : 'auto',
+        'autoDimensions' : false,
+        'centerOnScroll' : true,
+        'padding'  : 20,
+        'scrolling' : 'no',
+        'onComplete'   :  function (){setTimeout("closeFancy()",2000);}
+      });
 });

@@ -143,9 +143,10 @@
              (setf delivery (cdr (assoc :delivery user)))
              (setf pay      (cdr (assoc :pay user)))
              (setf order-id (get-order-id)) ;;генерация идентификатора заказа происходит только если заказ валиден
+             ;;Временно доставка 300 на все
              (if (string= (cdr (assoc :deliverytype delivery))
                           "courier")
-                 (setf deliverysum 200))
+                 (setf deliverysum 300))
              (setf client-mail
                 (sendmail:clientmail
                  (list :datetime (get-date-time)
@@ -182,6 +183,7 @@
                                 :phone (cdr (assoc :phone auth))
                                 :email (cdr (assoc :email auth))
                                 :date (get-date-time)
+                                :comment (cdr (assoc :comment delivery))
                                 :products products))
           (setf filename (multiple-value-bind (second minute hour date month year) (get-decoded-time)
                            (declare (ignore second))
@@ -192,7 +194,9 @@
                                    date
                                    order-id
                                    )))
+          ;;
           (send-mail (list "avenger-f@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
+          (send-mail (list "internetorder@alpha-pc.com") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "stetoscop@gmail.com") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "shop@320-8080.ru") client-mail filename (sendmail:mailfile mail-file) order-id)
           (send-mail (list "zakaz320@yandex.ru") client-mail filename (sendmail:mailfile mail-file) order-id)

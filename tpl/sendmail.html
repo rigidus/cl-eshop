@@ -112,10 +112,10 @@
 {$order_id}{\n}
 00014{\n}
 {$ekk}{\n}
-{$name}{$family}{\n}
+{$name} {$family}{\n}
 {$addr}{\n}
 {$phone}, {$email}{\n}
-Заказ от {$date}; Дата доставки: 31 февраля 2009,  Время доставки: 24:22, Комментарий: {$comment}
+{$comment}
 {foreach $product in $products}
 {call fileproduct data="$product" /}
 {/foreach}

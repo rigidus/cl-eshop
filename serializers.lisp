@@ -37,6 +37,7 @@
                              :fullfilter (unserialize (cdr (assoc :fullfilter raw)) (make-instance 'group-filter))
                              :keyoptions keyoptions
                              :pic (cdr (assoc :pic raw))
+                             :icon (cdr (assoc :icon raw))
                              :ymlshow (cdr (assoc :ymlshow raw))
                              :descr (cdr (assoc :descr raw)))))
     (when (equal 'group (type-of parent))
@@ -80,6 +81,7 @@
                     (format nil "[~%~a~%  ]" (subseq  json-string 0 (- (length json-string) 2))))))
     ;; Сохраняем только те поля, которые нам известны, неизвестные сохраняем без изменений
     (re-assoc dumb :pic (pic object))
+    (re-assoc dumb :icon (icon object))
     (re-assoc dumb :ymlshow (ymlshow object))
     (re-assoc dumb :order (order object))
     (re-assoc dumb :empty (empty object))
@@ -126,12 +128,21 @@
 
 
 ;; GROUP-FILTER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; (defun eliminate-malform (malformed-filter)
+;;   (mapcar #'(lambda (malform) (append (butlast malform)
+;;                                       (list :func (car (last malform)))))
+;;           malformed-filter))
+
+;; (defun eliminate-malform-advanced (malformed-filter-list)
+;;   (append (butlast malformed-filter)
+;;           (list :func (last malformed-filter))))
 
 
 (defmethod unserialize (in-string (dummy group-filter))
   (if (null in-string)
       nil
-      (let ((tmp (read-from-string in-string)))
+      (let* ((tmp (read-from-string in-string)))
         (make-instance 'group-filter
                        :name (getf tmp :name)
                        :base (getf tmp :base)

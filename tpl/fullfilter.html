@@ -3,25 +3,26 @@
 {namespace fullfilter}
 
 {template container}
-<!-- <div class="block choose-laptop"> -->
-<!--   <form method="get"> -->
-<!-- 	<p class="h2">{$name}</p> -->
-<!--     {$base |noAutoescape} -->
-<!-- 	<div id="param-advanced" class="switch-block switch-block-hidden"> -->
-<!-- 	  <hr/> -->
-<!--       {$advanced |noAutoescape} -->
-<!-- 	</div> -->
-<!-- 	<p class="submit"> -->
-<!--       <input type="hidden" name="fullfilter" value="1" /> -->
-<!-- 	  <input type="submit" class="submit" value="Подобрать"/> -->
-<!-- 	  <span class="more switch switch-full"> -->
-<!--         <a class="js" rel="switch" href="#param-advanced"> -->
-<!--           Расширенный<br/>поиск -->
-<!--         </a> -->
-<!--       </span> -->
-<!-- 	</p> -->
-<!--   </form> -->
-<!-- </div> -->
+<div class="block choose-laptop">
+  <form method="get">
+    {if $sort}<input type="hidden" name="sort" value="{$sort}">{/if}
+	<p class="h2">{$name}</p>
+    {$base |noAutoescape}
+	<div id="param-advanced" class="switch-block  {if not $isshowadvanced}switch-block-hidden{/if}">
+	  <hr/>
+      {$advanced |noAutoescape}
+	</div>
+	<p class="submit">
+      <input type="hidden" name="fullfilter" value="1" />
+	  <input type="submit" class="submit" value="Подобрать"/>
+	  <span class="more switch {if $isshowadvanced}switch-collapsed{else}switch-full{/if}">
+        <a class="js" rel="switch" href="#param-advanced">
+          Расширенный<br/>поиск
+        </a>
+      </span>
+	</p>
+  </form>
+</div>
 {/template}
 
 {template groupelt}
@@ -48,9 +49,9 @@
 <p>
   <label class="title">{$name}</label>
   <label>от</label>
-  <input name="{$key}-f" class="text text-wide" type="text" value="{$from}"/>
+  <input name="{$key}-f" class="text text-wide" type="text" {if not $from==''}value="{$from}"{/if}/>
   <label>до</label>
-  <input name="{$key}-t" class="text text-wide" type="text" value="{$to}"/>
+  <input name="{$key}-t" class="text text-wide" type="text" {if not $to==''}value="{$to}"{/if}/>
   <label>{$unit}</label>
 </p>
 {/template}
@@ -58,11 +59,11 @@
 
 {template hiddencontainer}
 <p class="h2">
-  <span class="switch switch-full">
+  <span class="switch {if $isshow}switch-collapsed{else}switch-full{/if}">
     <a rel="switch" href="#{$key}">{$name}</a>
   </span>
 </p>
-<div id="{$key}" class="switch-block switch-block-hidden">
+<div id="{$key}" class="switch-block {if not $isshow}switch-block-hidden{/if}">
   {$contents |noAutoescape}
 </div>
 {/template}

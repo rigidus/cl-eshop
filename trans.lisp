@@ -107,6 +107,51 @@
     (print "done"))
   "deprecated")
 
+
+(defun store-products ()
+  (let ((cnt 0))
+    (maphash #'(lambda (k v)
+                 (declare (ignore k))
+                 (if (and
+                      (equal (type-of v) 'eshop::product)
+                      ;; (eshop::active v)
+                      (null nil))
+                     (progn
+                       (incf cnt)
+                       (eshop::serialize v))))
+             eshop:*storage*)
+    (format t "~& Num of products was serializes: ~a" cnt)))
+
+(defun copy-price-to-siteprice()
+  (maphash #'(lambda(k v)
+               (declare (ignore k))
+               (if (and (equal (type-of v)
+                               'product)
+                        (active v)
+                        (= 0 (siteprice v)))
+                   (progn
+                     (format t "~&~a: ~a"
+                             (articul v)
+                             (name v))
+                     (setf (siteprice v) (price v))
+                     (serialize v))))
+           *storage*))
+
+(defun safely-restore()
+  (restore-from-files)
+  (use-revert-history)
+  (copy-price-to-siteprice))
+
+(defun safely-store()
+  (restore-from-files)
+  (use-revert-history)
+  (copy-price-to-siteprice)
+  (store-products))
+
+(print "Restoring data from files")
+(restore-from-files)
+
+
 ;; (store-to-files)
 
 
