@@ -17,7 +17,36 @@
 ;; (setf swank::*connections* nil)
 
 
-;; FILTER
+(restas:define-route request-static-route-img ("/img/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string *path-to-dropbox* "/htimgs/" (subseq full-uri (search "/img/" full-uri))))))
+
+(restas:define-route request-static-route-pic ("/pic/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string  *path-to-pics* "/" (subseq full-uri (+ 5 (search "/pic/" full-uri)))))))
+
+(restas:define-route request-static-route-css ("/css/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string *path-to-dropbox* "/htimgs/" (subseq full-uri (search "/css/" full-uri))))))
+
+(restas:define-route request-static-route-js ("/js/*")
+  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
+    (pathname (concatenate 'string *path-to-dropbox* "/htimgs/" (subseq full-uri (search "/js/" full-uri))))))
+
+(restas:define-route request-route-static-favicon ("/favicon.ico")
+  (pathname (concatenate 'string  *path-to-dropbox* "/htimgs/img/favicon.ico")))
+
+(restas:define-route request-route-static-robots ("/robots.txt")
+  (pathname (concatenate 'string *path-to-conf* "/robots.txt")))
+
+(restas:define-route request-route-static-yml ("/yml.xml")
+  (pathname (concatenate 'string *path-to-conf* "/yml.xml")))
+
+(restas:define-route request-route-static-sitemap ("/sitemap.xml")
+  (pathname (concatenate 'string *path-to-conf* "/sitemap.xml")))
+
+
+
 
 (defun test-route-filter ()
   (let* ((request-list (request-list))
@@ -82,8 +111,18 @@
 
 ;; CATALOG
 
-(restas:define-route catalog-route ("/catalog")
-  (default-page (catalog:main (list :menu (menu "")))))
+(restas:define-route catalog-page-route ("/catalog")
+  (default-page (catalog-entity)
+      :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
+      :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
+      :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
+
+
+(restas:define-route sitemap-page-route ("/sitemap")
+  (default-page (sitemap-page)
+      :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
+      :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
+      :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
 
 
 ;; STATIC
@@ -199,9 +238,11 @@
 (restas:define-route not-found-route ("*any")
     (restas:abort-route-handler
         (babel:string-to-octets
-             (default-page
-                         (static:main (list :menu (menu "") :subcontent (error-404:content))))
-                 :encoding :utf-8)
+         (default-page (sitemap-page t)
+             :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
+             :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
+             :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге")
+         :encoding :utf-8)
            :return-code hunchentoot:+http-not-found+
               :content-type "text/html"))
 

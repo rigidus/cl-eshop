@@ -170,8 +170,9 @@
         (pickup_comment  (newcart-get-data-from-alist :pickup--comment user)) ;; комментарий к заказу
         (payment         (newcart-get-data-from-alist :payment user)) ;; payment_method-1
         (bankaccount     (newcart-get-data-from-alist :bankaccount user)) ;; реквизиты банковского перевода
-        (discount-cart   (newcart-get-data-from-alist :discount--cart user)) ;; карта ЕКК (true | false)
-        (discount-cart-number   (newcart-get-data-from-alist :discount-cart-number user))) ;; номер карты
+        (discount-cart   (newcart-get-data-from-alist :discount-card user)) ;; карта ЕКК (true | false)
+        (discount-cart-number   (newcart-get-data-from-alist :DISCOUNT-CARD-NUMBER user)) ;; номер карты
+        (ekk nil))
     ;; проставление значений по умолчанию
     (if (string= delivery-type "") (setf delivery-type "pickup"))
     (if (string= payment "") (setf payment "payment_method-1"))
@@ -180,7 +181,9 @@
       (setf addr (cond ((string= pickup "pickup-1") "Левашовский пр., д.12")
                        ((string= pickup "pickup-2") "Петергоф, ул. Ботаническая, д.18, к.3")
                        (t "Левашовский пр., д.12")))) ;; по умолчанию главный магазин
-    (values-list (list phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount discount-cart discount-cart-number))))
+    (if discount-cart
+        (setf ekk discount-cart-number))
+    (values-list (list phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount ekk))))
 
 ;; страница информации об отправленном заказе
 (defun thanks-page ()
@@ -217,11 +220,12 @@
               (mail-file) ;; информация для ТКС
               (tks-mail) ;; файл с информацией о заказе для ТКС
               (filename)) ;;
-          (multiple-value-bind (phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount discount-cart discount-cart-number) (newcart-user user)
+          (multiple-value-bind (phone delivery-type name email city addr courier_comment pickup pickup_comment payment bankaccount ekk) (newcart-user user)
             ;; Временно доставка 300 на все
             ;; существует два вида доставки: курьером и самовывоз (express | pickup)
             (if  (string= delivery-type "express")
                  (setf deliverysum 300))
+            (format t "EKK: ~a" ekk)
             (setf client-mail
                   (sendmail:clientmail
                  (list :datetime (get-date-time)
@@ -240,6 +244,7 @@
                        :bankaccount (if (string= payment "payment_method-4")
                                         bankaccount)
                        :phone phone
+                       :ekk ekk
                        :email email
                        :comment (cond  ((string= delivery-type "express") courier_comment)
                                                            ((string= delivery-type "pickup") pickup_comment)
@@ -248,7 +253,7 @@
                        :deliverysum deliverysum
                        :itogo (+ pricesum deliverysum))))
             (setf mail-file (list :order_id order-id
-                                :ekk ""
+                                :ekk ekk
                                 :name name
                                 :family ""
                                 :addr addr
@@ -280,7 +285,7 @@
             (send-mail (list "stetoscop@gmail.com") client-mail filename  tks-mail order-id)
             (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
             (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
-            ;; (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
+            (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
             ;; (print email)
             ;; артикул 099999 и доставка 107209
             ;; сделать валидацию пользовательского email
@@ -292,11 +297,10 @@
                    :footer (root:newcart-footer)
                    :leftcells (soy.newcart:thanks
                                (list :sum pricesum
-                                     :comment  (let ((comment (format nil "~a ~a"
+                                     :comment  (let ((comment (format nil "~a"
                                                                       (cond  ((string= delivery-type "express") courier_comment)
                                                                              ((string= delivery-type "pickup") pickup_comment)
-                                                                             (t ""))
-                                                                      discount-cart)))
+                                                                             (t "")))))
                                                  (if (equal comment "") nil comment))
                                      :email (if (equal email "") nil email)
                                      :name (if (equal name "") nil name)
@@ -314,6 +318,7 @@
                                      :addr (if (string= delivery-type "pickup")
                                                addr
                                                "Левашовский пр., д.12")
+                                     :ekk ekk
                                      :map (if (and (equal delivery-type "pickup")
                                                    (equal pickup "pickup-2"))
                                               (soy.newcart:map-botanicheskaya-img)

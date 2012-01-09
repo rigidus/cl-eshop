@@ -19,11 +19,21 @@
        (list :name (name object)
              :breadcrumbs (catalog:breadcrumbs (breadcrumbs-add-vendor (breadcrumbs object)))
              :menu (menu object)
-             :rightblocks (let ((ret (rightblocks)))
-                            (if (not (null (fullfilter object)))
-                                (push (restas:render-object designer (fullfilter object)) ret))
-                            ret)
-             :tradehits (tradehits)
+             :rightblocks (append
+                           (if (= 0 (num-nonempty-filters object))
+                               nil
+                               (list (fullfilter:rightfilter
+                                      (list :filters (loop :for filter
+                                                        :in (remove-if
+                                                             #'(lambda (fil)
+                                                                 (is-empty-filtered-list object fil))
+                                                             (filters object))
+                                                        :collect (make-string-filter object filter))))))
+                           ;;fullfilter
+                           (let ((ret (rightblocks)))
+                             (if (not (null (fullfilter object)))
+                                 (push (restas:render-object designer (fullfilter object)) ret))
+                             ret))
              :subcontent (if (and (null (products object))
                                   (null (getf (request-get-plist) :fullfilter))
                                   (null (getf (request-get-plist) :vendor)))
@@ -48,10 +58,15 @@
                                                                                   (active product))
                                                                               products))))
                                             :pic (pic child)
-                                            :filters (loop :for filter :in (filters child) :collect
-                                                        (list :name (name filter)
-                                                              :groupkey (key child)
-                                                              :key (key filter))))))))
+                                            :filters (loop :for filter
+                                                        :in (remove-if #'(lambda (filter)
+                                                                           (is-empty-filtered-list child filter))
+                                                                       (filters child))
+                                                        :collect (list :name (name filter)
+                                                                       :groupkey (key child)
+                                                                       :key (key filter)
+                                                                       :num (format nil "(~a)"
+                                                                                    (get-filtered-product-list-len child filter)))))))))
                              ;; else
                              (let ((products-list
                                     (if (getf (request-get-plist) :showall)
@@ -174,7 +189,8 @@
                                              (soy.buttons:add-product-cart (list :articul (articul object)
                                                                                  :name (realname object)
                                                                                  :pic (if (null pics) nil (car pics))
-                                                                                 :price (siteprice object))))
+                                                                                 :siteprice (siteprice object)
+                                                                                 :price (price object))))
                          :addoneclick (if (not (predzakaz object))
                                           (soy.buttons:add-one-click (list :articul (articul object))))))
           :keywords (format nil "~a"
@@ -219,10 +235,8 @@
 
 (defmethod restas:render-object ((designer eshop-render) (object filter))
   (let ((products-list (remove-if-not (func object)
-                                     (remove-if-not #'(lambda (product)
-                                                        (active product))
-                                                    (get-recursive-products
-                                                     (parent object)))))
+                                      (remove-if-not #'active
+                                                     (get-recursive-products (parent object)))))
         (request-get-plist (request-get-plist))
         (fltr-name  (name object))
         (grname (name (parent object))))
@@ -241,7 +255,19 @@
            (list :name (name object)
                  :breadcrumbs (catalog:breadcrumbs (breadcrumbs object))
                  :menu (menu object)
-                 :rightblocks (rightblocks)
+                 :rightblocks (append
+                               (if (= 0 (num-nonempty-filters (parent object)))
+                                   nil
+                                   (list (fullfilter:rightfilter
+                                          (list :filters (loop
+                                                            :for filter
+                                                            :in (remove-if #'(lambda (fil)
+                                                                               (is-empty-filtered-list (parent object) fil))
+                                                                           (filters (parent object)))
+                                                            :collect (make-string-filter (parent object)
+                                                                                         filter
+                                                                                         (equal object filter)))))))
+                               (rightblocks))
                  :tradehits (tradehits)
                  :subcontent (catalog:centerproduct
                               (list

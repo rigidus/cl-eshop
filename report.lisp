@@ -33,8 +33,8 @@
                    (setf name-real (stripper (realname v)))
                    (with-option v "Secret" "Yandex"
                                 (setf name-yml (stripper (value option))))
-                   (setf desc (if (and (not (null (descr v)))
-                                       (not (string= "" (stripper (descr v)))))
+                   (setf desc (if (and (not (null (shortdescr v)))
+                                       (not (string= "" (stripper (shortdescr v)))))
                                   "есть"
                                   "нет"))
                    (setf img (length (get-pics (articul v))))
@@ -196,13 +196,6 @@
     (loop :for packet :in (reverse (caddr (car *history*))) :do
        (format stream "~a" (sb-ext:octets-to-string packet :external-format :cp1251)))))
 
-;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
-;; (create-report "xls/products.csv" #'write-products-report)
-;; (create-report "seo/report-groups.csv" #'write-groups)
-;; (create-report "seo/report-products.csv" #'write-products)
-;; (create-report "seo/report-vendors.csv" #'write-vendors)
-
-
 (mapcar #'(lambda (v)
             (let ((p (gethash v *storage*)))
               (when (not (null p))
@@ -213,8 +206,6 @@
               "166579"
               "166580"
               "166581"
-              "167310"
-              "167475"
               "167530"
               "167531"
               "167532"
@@ -222,54 +213,28 @@
               "167534"
               "167535"))
 
-
 (mapcar #'(lambda (v)
             (let ((p (gethash v *storage*)))
               (when (not (null p))
-                (serialize p))))
-        (list
-         "150096"
-         "162029"
-         "144952"
-         "148956"
-         "163737"
-         "161139"
-         "162907"
-         "160141"
-         "150061"
-         "165392"
-         "160411"
-         "161133"
-         "163736"
-         "150523"
-         "163524"
-         "158276"
-         "150525"
-         "162032"
-         "150060"
-         "163835"
-         "159535"
-         "158278"
-         "162031"
-         "149482"
-         "148494"
-         "149531"))
+                  (setf (predzakaz p) nil)
+                  (serialize p))))
+        (list "167310"
+              "167475"))
 
+;; (setf (active (gethash "160420" *storage*)) nil)
+;; (serialize (gethash "160420" *storage*))
+;; (setf (active (gethash "165359" *storage*)) nil)
+;; (serialize (gethash "165359" *storage*))
+;; (setf (active (gethash "165360" *storage*)) nil)
+;; (serialize (gethash "165360" *storage*))
+;; (setf (active (gethash "157499" *storage*)) nil)
+;; (serialize (gethash "157499" *storage*))
+;; (setf (active (gethash "153599" *storage*)) nil)
+;; (serialize (gethash "153599" *storage*))
 
-(setf (active (gethash "160420" *storage*)) nil)
-(setf (active (gethash "165359" *storage*)) nil)
-(setf (active (gethash "165360" *storage*)) nil)
+;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
+;; (create-report "xls/products.csv" #'write-products-report)
+;; (create-report "seo/report-groups.csv" #'write-groups)
+;; (create-report "seo/report-products.csv" #'write-products)
+;; (create-report "seo/report-vendors.csv" #'write-vendors)
 
-
-
-
-(defun test-view-g (g)
-  (let ((ch (childs g))
-        (rs))
-    (if (null ch)
-        (list g)
-        (progn
-          (mapcar #'(lambda (g)
-                      (setf rs (append rs (test-view-g g))))
-                  ch)
-          rs))))

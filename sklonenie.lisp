@@ -68,4 +68,3 @@
         key
         (nth (- skl 1) words))))
 
-(restore-skls-from-files)
