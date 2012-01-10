@@ -148,6 +148,7 @@
                          :name (realname object)
                          :siteprice (siteprice object)
                          :storeprice (price object)
+                         :bestprice (> (price object) (siteprice object))
                          :formatsiteprice (get-format-price (siteprice object))
                          :formatstoreprice (get-format-price (price object))
                          :equalprice (= (siteprice object) (price object))
