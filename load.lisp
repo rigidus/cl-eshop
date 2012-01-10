@@ -1,14 +1,10 @@
 (require 'asdf)
-(print "LOAD LIBS:")
 
-(defun cl-eshop-path (&rest filenames)
-  (pathname (format nil "~{~a~^/~}" (append (list (user-homedir-pathname) "cl-restas-eshop") filenames))))
+(defun cl-eshop-path (name &rest filenames)
+  (pathname (format nil "~{~a~^/~}" (append (list (user-homedir-pathname) name) filenames))))
 
-(defun cl-eshop-push-asdf (name)
-  (push (truename (cl-eshop-path "libs" name)) asdf:*central-registry*))
-
-(defun cl-eshop-load-asdf (name)
-  (asdf:oos 'asdf:load-op (intern (string-upcase (format nil "~a" name)))))
+(defun cl-eshop-push-asdf (home filename)
+  (push (truename (cl-eshop-path home "libs" filename)) asdf:*central-registry*))
 
 (defparameter cl-eshop-libs
   (list
@@ -50,92 +46,14 @@
    "esrap" ;; closure-template | packrat parser http://nikodemus.github.com/esrap/
    "log5" ;; логирование | logging framework http://common-lisp.net/project/log5/
    ;; "cl-store" ;; сохранение данных | Serialization Package http://common-lisp.net/project/cl-store/
+   "drakma-1.2.4" ;;http клиент для тестов
    ))
 
-(defparameter cl-eshop-modules
-  (list
-   "restas"
-   "cl-json"
-   "arnesi"
-   "closure-template"
-   "log5"
-   ;; "cl-store"
-   ))
 
-;; регистрация дерикторий библиотек
-(mapcar #'cl-eshop-push-asdf cl-eshop-libs)
-;; загрузка SWANK
-(asdf:oos 'asdf:load-op :swank)
-;; загрузка модулей
-(mapcar #'cl-eshop-load-asdf cl-eshop-modules)
-
-
-(print "restas:define-module CL-ESHOP")
-(restas:define-module #:eshop
-    (:use :cl
-          :closure-template
-          :anaphora
-          :split-sequence
-          :cl-ppcre
-          :json
-          :cl-fad)
-  (:import-from :arnesi :parse-float)
-  (:import-from :alexandria :read-file-into-string)
-  (:export :compile-templates
-		   :*storage*
-           :name
-           :unserialize
-           :plist-representation
-           :*path-to-bkps*
-           :*path-to-pics*
-           :*path-to-conf*
-           :*path-to-tpls*))
-
-(defparameter cl-eshop-lisp-files
-  (list
-   "time.lisp"
-   "eshop-config.lisp"
-   "errors.lisp"
-   "log.lisp"
-   "new-classes.lisp"
-   "classes.lisp"
-   "spike.lisp"
-   "serializers.lisp"
-   "servo.lisp"
-   "trans.lisp"
-   "routes.lisp"
-   "render.lisp"
-   "cart.lisp"
-   "generics.lisp"
-   "gateway.lisp"
-   "search.lisp"
-   "xls.lisp" ;;необходима xls2csv | sudo apt-get install catdoc
-   "yml.lisp"
-   "articles.lisp"
-   "wolfor-stuff.lisp"
-   "report.lisp"
-   "sklonenie.lisp"
-   "newcart.lisp"
-   "main-page.lisp"
-   "sitemap.lisp"
-   "report.lisp"
-   "rename.lisp"
-   "catalog.lisp"
-   "prerender.lisp"
-   "filters.lisp"
-   "oneclickcart.lisp"
-   "images.lisp"))
-
-
-;; закрузка файлов
-(mapcar #'(lambda (filename)
-            (print (format nil "load ~a" filename))
-            (load (cl-eshop-path filename)))
-        cl-eshop-lisp-files)
-
-(print "Restoring data from files")
-(eshop::restore-skls-from-files)
-(eshop::restore-articles-from-files)
-(eshop::main-page-restore)
-;; (eshop::restore-from-files)
+;; "cl-restas-eshop"
+(defun load.register-libs (name)
+  (push (truename (pathname (format nil "~a~a" (user-homedir-pathname) name))) asdf:*central-registry*)
+  ;; регистрация дерикторий библиотек
+  (mapcar #'(lambda (v) (cl-eshop-push-asdf name v))
+                    cl-eshop-libs))
 
