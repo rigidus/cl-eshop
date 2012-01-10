@@ -1,3 +1,5 @@
+// -*- mode: closure-template-html; fill-column: 140 -*-
+
 {namespace root}
 
 {template short-linked-header}
@@ -47,9 +49,11 @@
 	<div class="search">{\n}
 	  <form action="/search" method="get">{\n}
 		<p>{\n}
+          {literal}
 		  <input name="q" class="text" type="text" value="Acer Aspire" onfocus="if(this.value == 'Acer Aspire')
 		  {this.value='';};"  onblur="if(this.value == '')
 		  {this.value='Acer Aspire';};"/>{\n}
+          {/literal}
 		  <input class="submit" type="submit" value="Найти"/>{\n}
 		</p>{\n}
 	  </form>{\n}

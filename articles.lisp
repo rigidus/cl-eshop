@@ -1,3 +1,10 @@
+;;;; articles.lisp
+;;;;
+;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
+;;;; See file COPYING for details.
+;;;;
+;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
+
 
 (in-package #:eshop)
 
@@ -66,15 +73,15 @@
                     (push x files)))
             (directory (format nil "~a/*" path)))
     (mapcar #'(lambda (file)
-                (wlog ctype)
+                (wlog file)
                 (unserialize (format nil "~a" file) (make-instance 'article :ctype ctype)))
             files)))
 
 
 ;;
-(defun restore-articles-from-files ()
+(defun articles.restore ()
   (let ((t-storage))
-      (wlog "start load articles....{")
+      (wlog "start loadc articles....{")
       (sb-ext:gc :full t)
       (let ((*storage-articles* (make-hash-table :test #'equal)))
         (process-articles-dir *path-to-articles* "article")
@@ -114,6 +121,7 @@
      *storage-articles*)
     articles))
 
+
 (defun get-articles-by-tags (articles-list &optional tags)
   (let ((articles))
     (if (or (null tags)
@@ -143,48 +151,48 @@
           articles))
 
 ;; отображение списка статей
-(defun articles-page (request-get-plist)
-  (let* ((tags (getf request-get-plist :tags))
-         (breadcrumbs)
-         (menu  (soy.articles:articles-menu (list :tag tags))))
-    (if (not (null tags))
-        (setf breadcrumbs
-              (format nil "       <a href=\"/\">Главная</a> /
-                                  <a href=\"/articles\">Материалы</a> /
-                                  ~a" tags))
-        (setf breadcrumbs "       <a href=\"/\">Главная</a> /
-                                  Материалы"))
-    (multiple-value-bind (paginated pager)
-        (paginator request-get-plist
-                   (articles.sort
-                    (get-articles-by-tags
-                     (get-articles-list request-get-plist) tags))
-                   10)
-      (default-page
-          (static:main
-           (list :menu (menu)
-                 :breadcrumbs breadcrumbs
-                 :subcontent  (soy.articles:articles-main
-                               (list :menu menu
-                                     :articles (soy.articles:articles-list
-                                                (list :pager pager
-                                                      :articles
-                                                      (mapcar #'(lambda (v)
-                                                                  (list :name (name v)
-                                                                        :date (time.article-encode-date v)
-                                                                        :descr (descr v)
-                                                                        :key (key v)
-                                                                        :tags
-                                                                        (if (< 0 (hash-table-count (tags v)))
-                                                                            (soy.articles:articles-tags
-                                                                             (list :tags
-                                                                                   (loop
-                                                                                      :for key being the hash-keys
-                                                                                      :of (tags v)
-                                                                                      :collect key)))
-                                                                            "")))
-                                                            paginated)))))
-               :rightblock  ""))))))
+;; (defun articles-page (request-get-plist)
+;;   (let* ((tags (getf request-get-plist :tags))
+;;          (breadcrumbs)
+;;          (menu  (soy.articles:articles-menu (list :tag tags))))
+;;     (if (not (null tags))
+;;         (setf breadcrumbs
+;;               (format nil "       <a href=\"/\">Главная</a> /
+;;                                   <a href=\"/articles\">Материалы</a> /
+;;                                   ~a" tags))
+;;         (setf breadcrumbs "       <a href=\"/\">Главная</a> /
+;;                                   Материалы"))
+;;     (multiple-value-bind (paginated pager)
+;;         (paginator request-get-plist
+;;                    (articles.sort
+;;                     (get-articles-by-tags
+;;                      (get-articles-list request-get-plist) tags))
+;;                    10)
+;;       (default-page
+;;           (static:main
+;;            (list :menu (new-classes.menu)
+;;                  :breadcrumbs breadcrumbs
+;;                  :subcontent  (soy.articles:articles-main
+;;                                (list :menu menu
+;;                                      :articles (soy.articles:articles-list
+;;                                                 (list :pager pager
+;;                                                       :articles
+;;                                                       (mapcar #'(lambda (v)
+;;                                                                   (list :name (name v)
+;;                                                                         :date (time.article-encode-date v)
+;;                                                                         :descr (descr v)
+;;                                                                         :key (key v)
+;;                                                                         :tags
+;;                                                                         (if (< 0 (hash-table-count (tags v)))
+;;                                                                             (soy.articles:articles-tags
+;;                                                                              (list :tags
+;;                                                                                    (loop
+;;                                                                                       :for key being the hash-keys
+;;                                                                                       :of (tags v)
+;;                                                                                       :collect key)))
+;;                                                                             "")))
+;;                                                             paginated)))))
+;;                :rightblock  ""))))))
 
 (defun get-article-breadcrumbs(article)
     (format nil "
@@ -193,44 +201,70 @@
                   ~a " (name article)))
 
 ;; отображение страницы статьи
-(defmethod restas:render-object ((designer eshop-render) (object article))
-  (if (equal (ctype object) "static")
-      (root:main (list :keywords "" ;;keywords
-                       :description "" ;;description
-                       :title "test" ;(title object)
-                       :header (root:header (append (list :logged (root:notlogged)
-                                                          :cart (root:cart))
-                                                    (main-page-show-banner "line" (banner *main-page.storage*))))
-                       :footer (root:footer)
-                       :content  (static:main
-                                 (list :menu (menu)
-                                       :breadcrumbs (bredcrumbs object)
-                                       :subcontent  (body object)
-                                       :rightblock  (rightblock object)))
-                 ))
-      (root:main (list :keywords "" ;;keywords
-                       :description "" ;;description
-                       :title  (name object)
-                       :headext (soy.articles:head-share-buttons (list :key (key object)))
-                       :header (root:header (list :logged (root:notlogged)
-                                                  :cart (root:cart)))
-                       :footer (root:footer)
-                       :content (static:main
-                                 (list :menu (menu)
-                                       :breadcrumbs (get-article-breadcrumbs object)
-                                       :subcontent  (soy.articles:article-big (list :sharebuttons (soy.articles:share-buttons
-                                                                                                   (list :key (key object)))
-                                                                                    :name (name object)
-                                                                                    :date (time.article-encode-date object)
-                                                                                    :body (prerender-string-replace (body object))
-                                                                                    :tags
-                                                                                    (if (< 0 (hash-table-count (tags object)))
-                                                                                        (soy.articles:articles-tags
-                                                                                         (list :tags
-                                                                                           (loop
-                                                                                              :for key being the hash-keys
-                                                                                              :of (tags object)
-                                                                                              :collect key)))
-                                                                                        "")
-                                                                                    ))
-                                       :rightblock  ""))))))
+;; (defmethod restas:render-object ((designer eshop-render) (object article))
+;;   (if (equal (ctype object) "static")
+;;       (root:main (list :keywords "" ;;keywords
+;;                        :description "" ;;description
+;;                        :title (name object)
+;;                        :header (root:header (append (list :logged (root:notlogged)
+;;                                                           :cart (root:cart))
+;;                                                     (main-page-show-banner "line" (banner *main-page.storage*))))
+;;                        :footer (root:footer)
+;;                        :content  (static:main
+;;                                  (list :menu (new-classes.menu)
+;;                                        :breadcrumbs (bredcrumbs object)
+;;                                        :subcontent  (body object)
+;;                                        :rightblock  (rightblock object)))
+;;                  ))
+;;       (root:main (list :keywords "" ;;keywords
+;;                        :description "" ;;description
+;;                        :title  (if (title object)
+;;                                    (title object)
+;;                                    (name object))
+;;                        :headext (soy.articles:head-share-buttons (list :key (key object)))
+;;                        :header (root:header (append (list :logged (root:notlogged)
+;;                                                           :cart (root:cart))
+;;                                                     (main-page-show-banner "line" (banner *main-page.storage*))))
+;;                        :footer (root:footer)
+;;                        :content (static:main
+;;                                  (list :menu (new-classes.menu)
+;;                                        :breadcrumbs (get-article-breadcrumbs object)
+;;                                        :subcontent  (soy.articles:article-big (list :sharebuttons (soy.articles:share-buttons
+;;                                                                                                    (list :key (key object)))
+;;                                                                                     :name (name object)
+;;                                                                                     :date (time.article-encode-date object)
+;;                                                                                     :body (prerender-string-replace (body object))
+;;                                                                                     :articles (let ((articles (articles.sort (remove-if #'(lambda(v)(equal v object)) (get-articles-list)))))
+;;                                                                                                 (if articles
+;;                                                                                                     (articles-view-articles (subseq articles 0 7))
+;;                                                                                                     nil))
+;;                                                                                     :tags
+;;                                                                                     (if (< 0 (hash-table-count (tags object)))
+;;                                                                                         (soy.articles:articles-tags
+;;                                                                                          (list :tags
+;;                                                                                            (loop
+;;                                                                                               :for key being the hash-keys
+;;                                                                                               :of (tags object)
+;;                                                                                               :collect key)))
+;;                                                                                         "")
+;;                                                                                     ))
+;;                                        :rightblock (soy.articles:r_b_articles (list :articles (let ((articles (articles.sort (remove-if #'(lambda(v)(equal v object)) (get-articles-list)))))
+;;                                                                                                 (if articles
+;;                                                                                                     (articles-view-articles (subseq articles 0 10))
+;;                                                                                                     nil))))))))))
+
+
+;; (let ((object (gethash "kakdobratsja" (storage *global-storage*))))
+;;       (root:main (list :keywords "" ;;keywords
+;;                        :description "" ;;description
+;;                        :title (name object)
+;;                        :header (root:header (append (list :logged (root:notlogged)
+;;                                                           :cart (root:cart))
+;;                                                     (main-page-show-banner "line" (banner *main-page.storage*))))
+;;                        :footer (root:footer)
+;;                        :content  (static:main
+;;                                  (list :menu (new-classes.menu)
+;;                                        :breadcrumbs (bredcrumbs object)
+;;                                        :subcontent  (body object)
+;;                                        :rightblock  (rightblock object)))
+;;                        ))

@@ -1,4 +1,9 @@
 ;;;; serializers.lisp
+;;;;
+;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
+;;;; See file COPYING for details.
+;;;;
+;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
 
 (in-package #:eshop)
 
@@ -30,6 +35,7 @@
                              :active (cdr (assoc :active raw))
                              :empty (cdr (assoc :empty raw))
                              :order (cdr (assoc :order raw))
+                             :raw-fullfilter (cdr (assoc :fullfilter raw))
                              :fullfilter (unserialize (cdr (assoc :fullfilter raw)) (make-instance 'group-filter))
                              :keyoptions keyoptions
                              :delivery-price (cdr (assoc :delivery-price raw))
@@ -274,6 +280,7 @@
                              :parent parent
                              :name (cdr (assoc :name raw))
                              :func (eval (read-from-string (cdr (assoc :func raw))))
+                             :func-string (cdr (assoc :func raw))
                              )))
     (when (equal 'group (type-of parent))
       (setf (filters parent)
@@ -299,7 +306,7 @@
 
 
 (defmethod serialize ((object optgroup))
-  (format nil "~%      {~%         \"name\": \"~a\",~%         \"options\": [~{~a~^,~}~%         ]~%      }"
+  (format nil "{\"name\":\"~a\",\"options\":[~{~a~^,~}]}"
           (stripper (name object))
           (mapcar #'(lambda (option)
                       (serialize option))
@@ -319,7 +326,7 @@
 
 
 (defmethod serialize ((object option))
-  (format nil "~%            {~%               \"name\": \"~a\",~%               \"value\": \"~a\",~%               \"optype\": ~a,~%               \"boolflag\": ~a~%            }"
+  (format nil "{\"name\":\"~a\",\"value\": \"~a\",\"optype\":~a,\"boolflag\":~a}"
           (stripper (name object))
           (stripper (value object))
           (encode-json-to-string (optype object))

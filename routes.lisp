@@ -1,21 +1,27 @@
 ;;;; routes.lisp
+;;;;
+;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
+;;;; See file COPYING for details.
+;;;;
+;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
 
 
 (in-package #:eshop)
 
-(defun clear ()
-  (loop :for var :being :the :symbols :in :eshop.impl.routes :do (unintern var))
-  (restas:reconnect-all-routes))
+;; (defun clear ()
+;;   (loop :for var :being :the :symbols :in :eshop.impl.routes :do (unintern var))
+;;   (restas:reconnect-all-routes))
 
-(clear)
+;; (clear)
 
 (restas:define-route request-static-route-img ("/img/*")
   (let ((full-uri (format nil "~a" (restas:request-full-uri))))
     (pathname (concatenate 'string *path-to-dropbox* "/htimgs/" (subseq full-uri (search "/img/" full-uri))))))
 
 (restas:define-route request-static-route-pic ("/pic/*")
-  (let ((full-uri (format nil "~a" (restas:request-full-uri))))
-    (pathname (concatenate 'string  *path-to-pics* "/" (subseq full-uri (+ 5 (search "/pic/" full-uri)))))))
+  (let* ((full-uri (format nil "~a" (restas:request-full-uri)))
+         (path-to-img (ppcre:regex-replace ".*/pic/(\\w{1,})/(\\d{1,3})(\\d{0,})/(.*)$" full-uri "\\1/\\2/\\2\\3/\\4")))
+    (pathname (format nil "~a/~a" *path-to-product-pics* path-to-img))))
 
 (restas:define-route request-static-route-css ("/css/*")
   (let ((full-uri (format nil "~a" (restas:request-full-uri))))
@@ -37,8 +43,14 @@
 (restas:define-route request-route-static-sitemap ("/sitemap.xml")
     (pathname (concatenate 'string *path-to-conf* "/sitemap.xml")))
 
+(restas:define-route request-route-static-sitemap-index ("/sitemap-index.xml")
+    (pathname (concatenate 'string *path-to-conf* "/sitemap-index.xml")))
+
 (restas:define-route request-route-static-sitemap1 ("/sitemap1.xml")
     (pathname (concatenate 'string *path-to-conf* "/sitemap1.xml")))
+
+(restas:define-route request-route-static-sitemap2 ("/sitemap2.xml")
+    (pathname (concatenate 'string *path-to-conf* "/sitemap2.xml")))
 
 
 
@@ -49,16 +61,16 @@
   (let* ((request-list (request-list))
          (key (cadr request-list))
          (filter (caddr request-list))
-         (grp (gethash key *storage*))
-         (fltr (gethash filter *storage*)))
+         (grp (gethash key (storage *global-storage*)))
+         (fltr (gethash filter (storage *global-storage*))))
     (and (not (null grp))
          (not (null fltr))
          (equal (type-of grp) 'group)
          (equal (type-of fltr) 'filter)
-         (equal (key (parent fltr)) key))))
+         (equal (key (new-classes.parent fltr)) key))))
 
 (defun route-filter (filter)
-  (gethash filter *storage*))
+  (gethash filter (storage *global-storage*)))
 
 (restas:define-route filter/-route ("/:key/:filter/" :requirement #'test-route-filter)
   (route-filter filter))
@@ -70,7 +82,7 @@
 ;; STORAGE OBJECT
 
 (defun test-route-storage-object ()
-  (let ((obj (gethash (cadr (request-list)) *storage*)))
+  (let ((obj (gethash (cadr (request-list)) (storage *global-storage*))))
     (if (not (null obj))
         (if (and (equal (type-of obj)
                         'group)
@@ -89,7 +101,7 @@
 
 
 (defun route-storage-object (key)
-  (gethash key *storage*))
+  (gethash key (storage *global-storage*)))
 
 (restas:define-route storage-object-route  ("/:key" :requirement #'test-route-storage-object)
   (route-storage-object key))
@@ -110,48 +122,48 @@
 ;; CATALOG
 
 (restas:define-route catalog-page-route ("/catalog")
-  (default-page (catalog-entity)
+  (default-page (catalog.catalog-entity)
       :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
       :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
 
 (restas:define-route sitemap-page-route ("/sitemap")
-  (default-page (sitemap-page)
+  (default-page (catalog.sitemap-page)
       :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
       :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге"))
 
 ;; STATIC
-(defparameter *static-pages* (list ;;"delivery"
-                                   ;;"about"
-                                   ;;"faq"
-                                   ;; "kakdobratsja"
-                                   ;; "kaksvjazatsja"
-                                   ;; "levashovsky"
-                                   ;; "partners"
-                                   ;; "payment"
-                                   ;; "servicecenter"
-                                   ;; "otzyvy"
-                                   ;; "pricesc"
-                                   ;; "warrantyservice"
-                                   ;; "warranty"
-                                   ;; "moneyback"
-                                   ;; "dilers"
-                                   ;; "corporate"
-                                   ;; "vacancy"
-                                   ;; "bonus"
-                                   ;; "burunduk"
-                                   ;; "listservice"
-                                   ;; "suslik"
-                                   ;; "god_kills_a_kitten"
-                                   ))
+;; (defparameter *static-pages* (list ;;"delivery"
+;;                                    ;;"about"
+;;                                    ;;"faq"
+;;                                    ;; "kakdobratsja"
+;;                                    ;; "kaksvjazatsja"
+;;                                    ;; "levashovsky"
+;;                                    ;; "partners"
+;;                                    ;; "payment"
+;;                                    ;; "servicecenter"
+;;                                    ;; "otzyvy"
+;;                                    ;; "pricesc"
+;;                                    ;; "warrantyservice"
+;;                                    ;; "warranty"
+;;                                    ;; "moneyback"
+;;                                    ;; "dilers"
+;;                                    ;; "corporate"
+;;                                    ;; "vacancy"
+;;                                    ;; "bonus"
+;;                                    ;; "burunduk"
+;;                                    ;; "listservice"
+;;                                    ;; "suslik"
+;;                                    ;; "god_kills_a_kitten"
+;;                                    ))
 
 
-(defmacro static ()
-  `(progn ,@(mapcar #'(lambda (x)
-                        `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
-                           (static-page)))
-                    *static-pages*)))
+;; (defmacro static ()
+;;   `(progn ,@(mapcar #'(lambda (x)
+;;                         `(restas:define-route ,(intern (string-upcase x) *package*) (,x)
+;;                            (static-page)))
+;;                     *static-pages*)))
 
 ;; (static)
 
@@ -269,9 +281,10 @@
 
 ;;необходимо отдавать 404 ошибку для несуществеющих страниц
 (restas:define-route not-found-route ("*any")
+  (log5:log-for test "error 404: ~a" any)
   (restas:abort-route-handler
    (babel:string-to-octets
-     (default-page (sitemap-page t)
+     (default-page (catalog.sitemap-page t)
       :keywords "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
       :description "каталог, компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :title "Каталог интернет-магазина: купить компьютер, цифровую технику, комплектующие в Санкт-Петербурге")
@@ -279,8 +292,12 @@
    :return-code hunchentoot:+http-not-found+
    :content-type "text/html"))
 
-(restas:define-route request-route ("/request")
-  (oneclickcart-page (request-get-plist)))
+;; (restas:define-route request-route ("/request")
+;;   (oneclickcart-page (request-get-plist)))
+
+(restas:define-route request-route ("/request1")
+  (oneclickcart.page (request-get-plist)))
+
 
 
 (defun bts-view-page ()
@@ -294,3 +311,14 @@ var i,y,x=\"3c7461626c6520636c6173733d226261636b5f746f5f7363686f6f6c223e0d0a3c74
 
 (restas:define-route back-to-school/-route ("/back_to_school/")
   (root:main (bts-view-page)))
+
+;; (restas:define-route elka-2011-route ("/elka2012")
+;;   (soy.elka2012:base (list :days 23
+;;                            :orders (ceiling (- *order-id* 66070) 5)
+;;                            :sharebuttons (soy.articles:share-buttons))))
+
+
+;; (restas:define-route elka-2011/-route ("/elka2012/")
+;;     (soy.elka2012:base (list :days 23
+;;                            :orders (ceiling (- *order-id* 66070) 5)
+;;                            :sharebuttons (soy.articles:share-buttons))))

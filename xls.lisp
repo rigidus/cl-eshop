@@ -8,6 +8,10 @@
 
 (in-package #:eshop)
 
+(defvar *xls.product-table* (make-hash-table :test #'equal))
+(defvar *xls.errors* nil)
+(defvar *xls.errors-num* 0)
+
 
 (defclass nko ()
   ((folder  :initarg :folder  :initform nil :accessor folder)
@@ -82,7 +86,9 @@
 
 
 (defmethod ƒ ((ifl pathname) (obn nko))
-  (let ((rs) (otp))
+  (let ((rs)
+        (otp)
+        (log-output *standard-output*))
     (setf otp (with-output-to-string (*standard-output*)
                    (let* ((proc (sb-ext:run-program
                                  (xls2csv obn)
@@ -90,39 +96,41 @@
                           (optgroups)
                           (fields))
                      (with-open-stream (in (sb-ext:process-output proc))
-                       (loop :for i from 1 do
-                          (tagbody loop-body
-                             (handler-case
-                                 (let ((ist (read-line in)))
-                                   (tagbody dec
-                                      (multiple-value-bind (line esf)
-                                          (ƒ ist px)
-                                        (when esf
-                                          (setf ist (concatenate 'string ist (read-line in)))
-                                          (incf i)
-                                          (go dec))
-                                        (unless (null line)
-                                          (cond ((null optgroups) (setf optgroups line))
-                                                ((null fields) (setf fields line))
-                                                (t (handler-case
-                                                       (let ((val (ƒ (list :line line
-                                                                           :optgroups optgroups
-                                                                           :fields fields)
-                                                                     px)))
-                                                         (wlog "")
-                                                         (wlog val)
-                                                         (push val rs))
-                                                     (SB-INT:SIMPLE-PARSE-ERROR () nil))))))))
-                               (END-OF-FILE () (return i)))))))))
+                       (loop
+                          :for ist = (read-line in nil)
+                          :until (or (null ist)
+                                     (string= "" (string-trim "#\," ist)))
+                          :do (progn
+                                (multiple-value-bind (line esf)
+                                    (ƒ ist px)
+                                  (when esf
+                                    (format log-output "~&~a|~a:~a" ifl line esf)
+                                    (error "DTD"))
+                                  (unless (null line)
+                                    (cond ((null optgroups) (setf optgroups line))
+                                          ((null fields) (setf fields line))
+                                          (t (handler-case
+                                                 (let ((val (ƒ (list :line line
+                                                                     :optgroups optgroups
+                                                                     :fields fields)
+                                                               px)))
+                                                   (print "")
+                                                   (print val)
+                                                   (push val rs))
+                                               (SB-INT:SIMPLE-PARSE-ERROR () nil))))))))))))
     rs))
 
 
 (defmethod ƒ ((jct nko) (obn nko))
   (wlog "Processing DTD: {...")
-  (let ((cnt 0))
+  (let ((cnt 0)
+        (items nil)
+        (num-all 0))
     (loop :for file :in (directory (format nil "~a/*.xls" (folder obn))) :do
-       (format t "~%~a. Processing file: ~a" (incf cnt) file)
-       (loop :for item :in (ƒ file px) :do
+       (setf items (reverse (ƒ file px)))
+       (setf num-all (+ num-all (length items)))
+       (wlog (format nil "~a. Processing file: ~a | ~a" (incf cnt) file (length items)))
+       (loop :for item :in items :do
           (let* ((articul (getf item :articul))
                  (realname (getf item :realname))
                  (optgroups (loop :for optgroup :in (getf item :result-options) :collect
@@ -133,9 +141,12 @@
                                                                          :name (getf option :name)
                                                                          :value (getf option :value))))))
                  (product (gethash (format nil "~a" articul) *storage*)))
-            ;; (if (and (not (null articul))
-            ;;               (= articul 145951))
-            ;;          (wlog file))
+            (let ((pr (gethash articul *xls.product-table*)))
+              (if pr
+                  (wlog (format nil "WARN:~a | ~a | ~a" articul pr file))
+                  (setf (gethash articul *xls.product-table*) file)))
+            ;; (if (equal articul 151299)
+            ;;     (wlog "!!!"))
             (if (null product)
                 (format nil "warn: product ~a (articul ~a) not found, ignore (file: ~a)" realname articul file)
                 (progn
@@ -144,12 +155,67 @@
                   (if (not (string= "" (string-trim '(#\Space #\Tab #\Newline)
                                                     (format nil "~@[~a~]" realname))))
                       (setf (realname product) realname)))))))
-    (wlog (format nil "~%...} successfully processed ~a files" cnt))
+    (wlog (format nil "...} successfully processed ~a files | ~a products" cnt num-all))
     ;;создаем новый yml файл
     (create-yml-file)))
 
 
+(defmethod xls.process-all-dtd ((jct nko) (obn nko))
+  (wlog "Processing DTD: {...")
+  (let ((cnt 0)
+        (items nil)
+        (num-all 0))
+    (loop :for file :in (directory (format nil "~a/*.xls" (folder obn))) :do
+       (setf items (reverse (ƒ file px)))
+       (setf num-all (+ num-all (length items)))
+       (wlog (format nil "~a. Processing file: ~a | ~a" (incf cnt) file (length items)))
+       (loop :for item :in items :do
+          (let* ((articul (getf item :articul))
+                 (realname (getf item :realname))
+                 (optgroups (loop :for optgroup :in (getf item :result-options) :collect
+                               (list :name (getf optgroup :optgroup_name)
+                                     :options (loop :for option :in (getf optgroup :options) :collect
+                                                 (list  :name (getf option :name)
+                                                        :value (getf option :value))))))
+                 (product (gethash (format nil "~a" articul) (storage *global-storage*))))
+            (if (equal articul 170992)
+                (wlog item))
+            (let ((pr (gethash articul *xls.product-table*)))
+              (if pr
+                  (progn
+                    (wlog (format nil "WARN:~a | ~a | ~a" articul pr file))
+                    (setf *xls.errors* (concatenate 'string (format nil "<tr><td>~a</td>
+                                                                         <td><a href=\"http://320-8080.ru/~a\">~a</a></td>
+                                                                         <td>~a</td>
+                                                                         <td>~a</td></tr>" articul articul realname
+                                                                         (car (last (split-sequence:split-sequence #\/ (format nil "~a" pr))))
+                                                                         (car (last (split-sequence:split-sequence #\/ (format nil "~a" file))))) *xls.errors*))
+                    (setf *xls.errors-num* (+ *xls.errors-num* 1)))
+                  (setf (gethash articul *xls.product-table*) file)))
+            (if (null product)
+                (format nil "warn: product ~a (articul ~a) not found, ignore (file: ~a)" realname articul file)
+                (progn
+                  (setf (optgroups product) optgroups)
+                  (with-option1 product "Общие характеристики" "Производитель"
+                                (setf (vendor product) (getf option :value)))
+                  ;; Если есть значимое realname - перезаписать в продукте
+                  (if (not (string= "" (string-trim '(#\Space #\Tab #\Newline)
+                                                    (format nil "~@[~a~]" realname))))
+                      (setf (name-seo product) realname))
+                  )))))
+    (wlog (format nil "...} successfully processed ~a files | ~a products" cnt num-all))))
+
+
 (defun dtd ()
-  (ƒ px px))
+  (let ((*xls.errors* "<table>")
+        (*xls.errors-num* 0))
+    (setf *xls.product-table* (make-hash-table :test #'equal))
+    (xls.process-all-dtd px px)
+    (setf *xls.errors* (concatenate 'string "</table>" *xls.errors*))
+    (mapcar #'(lambda (email)
+                (email.send-mail-warn (list email) *xls.errors* (format nil "дубли в dtd: ~a" *xls.errors-num*)))
+            *conf.emails.xls.warn*)
+    ;; *xls.errors*
+    ))
 
 (export 'dtd)

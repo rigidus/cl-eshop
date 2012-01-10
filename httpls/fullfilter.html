@@ -1,3 +1,5 @@
+// -*- mode: closure-template-html; fill-column: 140 -*-
+
 {namespace fullfilter}
 
 {template container}
@@ -6,14 +8,14 @@
     {if $sort}<input type="hidden" name="sort" value="{$sort}">{/if}
 	<p class="h2">{$name}</p>
     {$base |noAutoescape}
-	<div id="param-advanced" class="switch-block  {if not $isshowadvanced}switch-block-hidden{/if}">
+	<div id="param-advanced" class="switch-block {if not $isshowadvanced} switch-block-hidden {/if}">
 	  <hr/>
       {$advanced |noAutoescape}
 	</div>
 	<p class="submit">
       <input type="hidden" name="fullfilter" value="1" />
 	  <input type="submit" class="submit" value="Подобрать"/>
-	  <span class="more switch {if $isshowadvanced}switch-collapsed{else}switch-full{/if}">
+	  <span class="more switch {if $isshowadvanced} switch-collapsed {else} switch-full {/if}">
         <a class="js" rel="switch" href="#param-advanced">
           Расширенный<br/>поиск
         </a>
@@ -22,6 +24,7 @@
   </form>
 </div>
 {/template}
+
 
 {template groupelt}
 <p>
@@ -34,60 +37,79 @@
 </p>
 {/template}
 
-{template group}
-<p class="h2">{$name}</p>
-{foreach $elt in $elts}
-{$elt |noAutoescape}
-{/foreach}
-{/template}
 
-{call groupelt data="$elt" /}
+{template group}
+  <p class="h2">{$name}</p>
+  {foreach $elt in $elts}
+    {$elt |noAutoescape}
+  {/foreach}
+{/template}
 
 
 {template range}
-<p>
-  <label class="title">{$name}</label>
-  <label>от</label>
-  <input name="{$key}-f" class="text text-wide" type="text" {if not $from==''}value="{$from}"{/if}/>
-  <label>до</label>
-  <input name="{$key}-t" class="text text-wide" type="text" {if not $to==''}value="{$to}"{/if}/>
-  <label>{$unit}</label>
-</p>
+  <p>
+    <label class="title">{$name}</label>
+    <label>от</label>
+    <input name="{$key}-f" class="text text-wide" type="text" {if not $from==''}value="{$from}"{/if}/>
+    <label>до</label>
+    <input name="{$key}-t" class="text text-wide" type="text" {if not $to==''}value="{$to}"{/if}/>
+    <label>{$unit}</label>
+  </p>
 {/template}
 
 
 {template hiddencontainer}
-<p class="h2">
-  <span class="switch {if $isshow}switch-collapsed{else}switch-full{/if}">
+  <p class="h2">
+    <span class="switch {if $isshow}switch-collapsed{else}switch-full{/if}">
     <a rel="switch" href="#{$key}">{$name}</a>
-  </span>
-</p>
-<div id="{$key}" class="switch-block {if not $isshow}switch-block-hidden{/if}">
+    </span>
+  </p>
+  <div id="{$key}" class="switch-block {if not $isshow}switch-block-hidden{/if}">
   {$contents |noAutoescape}
-</div>
+  </div>
 {/template}
 
 
 {template radioelt}
-<label class="{$key}">
-  <input id="{$key}" class="radio" type="radio" name="{$key}" value="{$value}"
-         {if $checked}
-         checked
-         {/if} />
-  {$name}
-</label>
+  <label class="{$key}">
+    <input id="{$key}" class="radio" type="radio" name="{$key}" value="{$value}"
+           {if $checked}
+             checked
+           {/if} />
+    {$name}
+  </label>
 {/template}
 
+
 {template checkboxelt}
-<label for="{$key}-{$value}" class="checkbox">
-  <input id="{$key}-{$value}" class="checkbox" type="checkbox"
-         name="{$key}-{$i}" value="1"
-         {if $checked}
-         checked
-         {/if}
->{$value}</input>
-</label>
+  <label for="{$key}-{$value}" class="checkbox">
+    <input id="{$key}-{$value}" class="checkbox" type="checkbox"
+           name="{$key}-{$i}" value="1"
+           {if $checked}
+             checked
+           {/if}
+           >{$value}</input>
+  </label>
 {/template}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {template box}

@@ -1,6 +1,3 @@
-(defpackage #:wolfor-stuff
-  (:use #:cl))
-
 (in-package #:wolfor-stuff)
 
 
@@ -64,16 +61,16 @@
              eshop:*storage*)
     routs))
 
-(defun get-group-ymlshow ()
-  (let ((routs))
-    (maphash #'(lambda (k g)
-                 (declare (ignore k))
-                 (if (and (equal (type-of g)
-                                 'eshop::group)
-                          (eshop::ymlshow g))
-                     (setf routs (cons g routs))))
-             eshop:*storage*)
-    routs))
+;; (defun get-group-ymlshow ()
+;;   (let ((routs))
+;;     (maphash #'(lambda (k g)
+;;                  (declare (ignore k))
+;;                  (if (and (equal (type-of g)
+;;                                  'eshop::group)
+;;                           (eshop::ymlshow g))
+;;                      (setf routs (cons g routs))))
+;;              eshop:*storage*)
+;;     routs))
 
 (defun show-group (g n)
   (format t "~&~Va: ~a  | yml:~a active:~a  продуктов:~a  (key:~a)"
@@ -158,11 +155,11 @@
 ;; (let ((num 0))
 ;;   (maphash
 ;;    #'(lambda (k product)
-;;        (if (and (not (null (product:parent product)))
-;;                 (group:ymlshow (product:parent product))
-;;                 (product:active product)
-;;                 (not (null (product:price product)))
-;;                 (> (product:price product) 0))
+;;        (if (and (not (null (eshop::parent product)))
+;;                 (group:ymlshow (eshop::parent product))
+;;                 (eshop::active product)
+;;                 (not (null (eshop::price product)))
+;;                 (> (eshop::price product) 0))
 ;;            (incf num)))
 ;;    trans:*product*) num)
 
@@ -178,7 +175,7 @@
 
 ;; (length
 ;;  (mapcar #'(lambda (v)
-;;              (format nil "> ~a" (product:parent v)))
+;;              (format nil "> ~a" (eshop::parent v)))
 ;;          (group:products (gethash "pamyat-dlya-noutbukov" trans:*group*))))
 
 
@@ -199,3 +196,27 @@
           (eshop::childs group)))
 
 
+;; (remove-if-not #'(lambda (v) (search "worker" (sb-thread:thread-name v))) (sb-thread:list-all-threads))
+;; (mapcar #'sb-thread:terminate-thread (remove-if-not #'(lambda (v) (search "worker" (sb-thread:thread-name v))) (sb-thread:list-all-threads)))
+
+;; (mapcar #'sb-thread:terminate-thread
+;;         (remove-if-not #'(lambda (v) (or (search "contro" (sb-thread:thread-name v))
+;;                                  (search "repl" (sb-thread:thread-name v))
+;;                                  (search "auto-flush" (sb-thread:thread-name v))
+;;                                  (search "reader" (sb-thread:thread-name v))
+;;                                  ))
+;;                (sb-thread:list-all-threads)))
+
+
+;; (length (mapcar #'(lambda (v) (equal (type-of v) 'products) (products *global-storage*))))
+;; (length (products *global-storage*))
+
+
+;; (in-package :eshop)
+;; (let ((prs))
+;;   (maphash #'(lambda (k v)
+;;                (declare (ignore k))
+;;                (if (equal (type-of v) 'group)
+;;                    (push v prs)))
+;;    (storage *global-storage*))
+;;   (length prs))
