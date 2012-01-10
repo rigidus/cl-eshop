@@ -1,3 +1,11 @@
+;;;; object-fields.lisp
+;;;;
+;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
+;;;; See file COPYING for details.
+;;;;
+;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
+
+
 (in-package #:eshop)
 
 (defun object-fields.string-escaping (string)
@@ -91,9 +99,9 @@
 ;;тип поля указывается в :type при создании класса (см. classes.lisp)
 
 ;;string - универсальный тип, так же используется как undefined
-(defun object-fields.string-field-view (value name disabled)
-  (soy.class_forms:string-field
-   (list :name name :disabled disabled :value value)))
+;; (defun object-fields.string-field-view (value name disabled)
+;;   (soy.class_forms:string-field
+;;    (list :name name :disabled disabled :value value)))
 
 (defun object-fields.string-field-get-data (string)
   string)
@@ -115,11 +123,11 @@
 
 
 ;;textedit, онлайновый WYSIWYG редактор текста
-(defun object-fields.textedit-field-view (value name disabled)
-  (if disabled
-      (object-fields.string-field-view value name disabled)
-      (soy.class_forms:texteditor
-       (list :name name :value value))))
+;; (defun object-fields.textedit-field-view (value name disabled)
+;;   (if disabled
+;;       (object-fields.string-field-view value name disabled)
+;;       (soy.class_forms:texteditor
+;;        (list :name name :value value))))
 
 (defun object-fields.textedit-field-get-data (string)
   string)
@@ -159,9 +167,9 @@
 
 
 ;;bool
-(defun object-fields.bool-field-view (value name disabled)
-  (soy.class_forms:bool-field
-   (list :name name :checked value :disabled disabled)))
+;; (defun object-fields.bool-field-view (value name disabled)
+;;   (soy.class_forms:bool-field
+;;    (list :name name :checked value :disabled disabled)))
 
 (defun object-fields.bool-field-get-data (string)
   (string= string "T"))
@@ -173,52 +181,52 @@
 ;;генерация дерева групп
 ;;open - список групп до которых нужно раскрыть дерево
 ;;field-name - название поля, нужно для проставления в name в radio
-(defun object-fields.group-tree (open-groups field-name)
-  (let ((roots (root-groups *global-storage*)))
-    (soy.class_forms:group-tree
-     (list :roots
-           (mapcar #'(lambda (child)
-                       (object-fields.group-branch child open-groups field-name))
-                   roots)))))
+;; (defun object-fields.group-tree (open-groups field-name)
+;;   (let ((roots (root-groups *global-storage*)))
+;;     (soy.class_forms:group-tree
+;;      (list :roots
+;;            (mapcar #'(lambda (child)
+;;                        (object-fields.group-branch child open-groups field-name))
+;;                    roots)))))
 
 
 ;;group, список групп, генерируется из списка с проставленными уровнями глубины
-(defun object-fields.group-list-field-view (value name disabled)
-  (soy.class_forms:group-field (list :name name
-                                     :tree (object-fields.group-tree value name)
-                                     :disabled disabled)))
+;; (defun object-fields.group-list-field-view (value name disabled)
+;;   (soy.class_forms:group-field (list :name name
+;;                                      :tree (object-fields.group-tree value name)
+;;                                      :disabled disabled)))
 
 ;;генерация ветви дерева с корнем в данной группе
 ;;group - корень ветви, open-groups - список групп, до которых нужно раскрыть дерево
 ;;field-name - имя поля, нужно для проставления в name в radio
-(defun object-fields.group-branch (group open-groups field-name)
-  (let ((open nil)
-        (child-open nil)
-        (children)
-        (checked nil))
-    ;; (log5:log-for test "~&GROUP:~a ~{~a~}" (key group) (groups group))
-    ;;выясняем нужно ли открывать группу
-    (mapcar #'(lambda (open-group)
-                (when (eq (key group) (key open-group))
-                    (setf open t)
-                    (setf checked t)))
-            open-groups)
-    ;;строим список дочерних ветвей и проверяем нужно ли открыть данный узел
-    (setf children
-          (mapcar #'(lambda (child)
-                      (multiple-value-bind (branch branch-opened)
-                          (object-fields.group-branch child open-groups field-name)
-                        (setf child-open (or child-open branch-opened))
-                        branch))
-                  (groups group)))
-    (values-list (list
-                  (soy.class_forms:group-tree-branch (list :opened child-open
-                                                           :hashkey (key group)
-                                                           :name (name group)
-                                                           :checked checked
-                                                           :children children
-                                                           :fieldname field-name))
-                  (or open child-open)))))
+;; (defun object-fields.group-branch (group open-groups field-name)
+;;   (let ((open nil)
+;;         (child-open nil)
+;;         (children)
+;;         (checked nil))
+;;     ;; (log5:log-for test "~&GROUP:~a ~{~a~}" (key group) (groups group))
+;;     ;;выясняем нужно ли открывать группу
+;;     (mapcar #'(lambda (open-group)
+;;                 (when (eq (key group) (key open-group))
+;;                     (setf open t)
+;;                     (setf checked t)))
+;;             open-groups)
+;;     ;;строим список дочерних ветвей и проверяем нужно ли открыть данный узел
+;;     (setf children
+;;           (mapcar #'(lambda (child)
+;;                       (multiple-value-bind (branch branch-opened)
+;;                           (object-fields.group-branch child open-groups field-name)
+;;                         (setf child-open (or child-open branch-opened))
+;;                         branch))
+;;                   (groups group)))
+;;     (values-list (list
+;;                   (soy.class_forms:group-tree-branch (list :opened child-open
+;;                                                            :hashkey (key group)
+;;                                                            :name (name group)
+;;                                                            :checked checked
+;;                                                            :children children
+;;                                                            :fieldname field-name))
+;;                   (or open child-open)))))
 
 
 (defun object-fields.group-list-field-get-data (string-list)
@@ -287,20 +295,20 @@
 
 
 ;;keyoptions
-(defun object-fields.keyoptions-field-view (value name disabled)
-  (soy.class_forms:keyoptions-field
-   (list :keyoptions (let ((cnt 0))
-                       (mapcar #'(lambda (keyoption)
-                                   (incf cnt)
-                                   (soy.class_forms:keyoption-field
-                                    (append keyoption (list :number (- cnt 1)))))
-                               value))
-         :emptyfield (soy.class_forms:keyoption-field (list
-                                                        :number (format nil "' + $~aCnt + '"
-                                                                        name)))
-         :name name
-         :number (- (length value) 1)
-         :disabled disabled)))
+;; (defun object-fields.keyoptions-field-view (value name disabled)
+;;   (soy.class_forms:keyoptions-field
+;;    (list :keyoptions (let ((cnt 0))
+;;                        (mapcar #'(lambda (keyoption)
+;;                                    (incf cnt)
+;;                                    (soy.class_forms:keyoption-field
+;;                                     (append keyoption (list :number (- cnt 1)))))
+;;                                value))
+;;          :emptyfield (soy.class_forms:keyoption-field (list
+;;                                                         :number (format nil "' + $~aCnt + '"
+;;                                                                         name)))
+;;          :name name
+;;          :number (- (length value) 1)
+;;          :disabled disabled)))
 
 
 (defun object-fields.keyoptions-field-get-data (string)
@@ -316,20 +324,20 @@
                   keyoptions)))
 
 
-(defun object-fields.catalog-keyoptions-field-view (value name disabled)
-  (soy.class_forms:catalog-keyoptions-field
-   (list :keyoptions (let ((cnt 0))
-                       (mapcar #'(lambda (keyoption)
-                                   (incf cnt)
-                                   (soy.class_forms:catalog-keyoption-field
-                                    (append keyoption (list :number (- cnt 1)))))
-                               value))
-         :emptyfield (soy.class_forms:catalog-keyoption-field (list
-                                                               :number (format nil "' + $~aCnt + '"
-                                                                               name)))
-         :name name
-         :number (- (length value) 1)
-         :disabled disabled)))
+;; (defun object-fields.catalog-keyoptions-field-view (value name disabled)
+;;   (soy.class_forms:catalog-keyoptions-field
+;;    (list :keyoptions (let ((cnt 0))
+;;                        (mapcar #'(lambda (keyoption)
+;;                                    (incf cnt)
+;;                                    (soy.class_forms:catalog-keyoption-field
+;;                                     (append keyoption (list :number (- cnt 1)))))
+;;                                value))
+;;          :emptyfield (soy.class_forms:catalog-keyoption-field (list
+;;                                                                :number (format nil "' + $~aCnt + '"
+;;                                                                                name)))
+;;          :name name
+;;          :number (- (length value) 1)
+;;          :disabled disabled)))
 
 (defun object-fields.catalog-keyoptions-field-get-data (string)
    string)

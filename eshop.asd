@@ -42,18 +42,11 @@
      (:file "prerender")
      (:file "storage")
      (:file "filters")
-     ;; ((:module "src"
-     ;;          :components
-     ;;          (
-     ;;           (:file "oneclickcart" :depends-on ("filters"))
-     ;;           (:file "images" :depends-on ("oneclickcart")) ;; imagemagic
-     ;;           (:file "spike" :depends-on ("images"))
-     ;;           (:file "static-pages" :depends-on ("spike"))
-     ;;           (:file "list-filters" :depends-on ("static-pages"))
-     ;;           (:file "object-fields" :depends-on ("list-filters"))
-     ;;           (:file "new-classes" :depends-on ("storage"))
-     ;;           (:file "admin-gateway" :depends-on ("new-classes"))
-     ;;           (:file "gateway" :depends-on ("admin-gateway"))
-     ;;           (:file "email" :depends-on ("gateway"))
-     ;;           )))
-     ))
+     (:file "oneclickcart")
+     (:file "images")
+     (:file "static-pages")
+     (:file "list-filters")
+     (:file "object-fields")
+     (:file "admin-gateway")
+     (:file "gateway")
+     (:file "email")))
