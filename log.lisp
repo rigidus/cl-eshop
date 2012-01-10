@@ -1,4 +1,12 @@
+;;;; log.asd
+;;;;
+;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
+;;;; See file COPYING for details.
+;;;;
+;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
+
 (in-package #:eshop)
+
 (log5:defcategory test)
 (log5:defcategory debug-console)
 (log5:defcategory debug-file)
@@ -7,12 +15,7 @@
 (log5:defcategory error)
 (log5:defcategory warn+ (or error warning))
 
-
-
-
-
 (log5:defoutput human-time (time.get-full-human-time))
-
 
 (log5:start-sender 'general-file
                    (log5:stream-sender :location (format nil "~a/general.log" *path-to-logs*))
@@ -34,7 +37,6 @@
                    (log5:stream-sender :location (format nil "~a/debug.log" *path-to-logs*))
                    :category-spec '(or debug-file)
                    :output-spec '(log5:message))
-
 
 ;;example of call
 ;;(log5:log-for debug-console "First log msg")

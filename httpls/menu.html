@@ -1,0 +1,44 @@
+// -*- mode: closure-template-html; fill-column: 140 -*-
+
+{namespace leftmenu}
+
+{template ordinal}
+  <li>
+    <p class="block menu-p1 menu-level1">
+      <a href="/{$key}">
+        {$name}
+      </a>
+      <var style="background: url('{$icon}') no-repeat;"></var>
+    </p>
+ </li>
+{/template}
+
+{template sub}
+  <li><a href="/{$key}">{$name}</a></li>
+{/template}
+
+{template selected}
+  <li class="active">
+	<p class="block menu-p3 menu-level1">
+      <a href="{$key}">{$name}</a>
+      <var style="background: url('{$icon}') no-repeat;"></var>
+    </p>
+	<div class="block menu-level2">
+	  <ul>
+        {foreach $sub in $subs}{\n}
+        {call sub data="$sub" /}{\n}
+        {/foreach}{\n}
+	  </ul>
+	</div>
+  </li>
+{/template}
+
+
+{template main}
+  <ul class="catalog-menu">
+    {foreach $elt in $elts}{\n}
+    {$elt |noAutoescape}{\n}
+    {/foreach}{\n}
+    <li><p class="block menu-all menu-level1"><a href="catalog">Весь каталог</a><var></var></p></li>
+  </ul>
+{/template}
