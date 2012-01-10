@@ -1,15 +1,9 @@
-;;;; gateway.lisp
-;;;;
-;;;; This file is part of the eshop project, released under GNU Affero General Public License, Version 3.0
-;;;; See file COPYING for details.
-;;;;
-;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
-
 (in-package #:eshop)
 
 (defparameter *history* nil)
 (defparameter *load-list* nil)
 (defparameter *order* nil)
+(defparameter *serialize-check-flag* t)
 
 ;; (length *history*)
 ;; (length (json:decode-json-from-string
@@ -131,10 +125,11 @@ Content-Transfer-Encoding: base64
       (sb-ext:process-close sendmail-process))))
 
 
-(defun gateway-check-price (product price siteprice &optional flag)
+(defun gateway-check-price (product price siteprice)
   (let ((price-old (price product))
         (siteprice-old (siteprice product))
-        (mailbody))
+        (mailbody)
+        (rs))
     (if (or (and (< 3000 siteprice-old)
                  (<= 0.2 (float (/ (abs (- siteprice-old siteprice 1)) siteprice-old))))
             (and (< 3000 price-old)
@@ -149,47 +144,28 @@ Content-Transfer-Encoding: base64
                                  (name product)
                                  siteprice-old siteprice
                                  price-old price))
-          (when flag
-            (setf (siteprice product) siteprice)
-            (setf (price product) price)
-            (serialize product))
-            (gateway-send-error-mail (list "CallCenter@alpha-pc.com"
-                                         "Supplers@alpha-pc.com"
-                                         "web_design@alpha-pc.com"
-                                         "wolforus@gmail.com"
-                                         "slamly@gmail.com") mailbody (format nil "price ~a" (articul product)))
-          nil)
+          (if *serialize-check-flag*
+            (progn (wlog mailbody)
+                   (setf (siteprice product) siteprice)
+                   (setf (price product) price)
+                   (serialize product)
+                   (gateway-send-error-mail (list "CallCenter@alpha-pc.com"
+                                                  "Supplers@alpha-pc.com"
+                                                  "web_design@alpha-pc.com"
+                                                  "wolforus@gmail.com"
+                                                  "slamly@gmail.com") mailbody (format nil "price ~a" (articul product)))
+                   t)
+            (progn
+              (gateway-send-error-mail (list "CallCenter@alpha-pc.com"
+                                             "Supplers@alpha-pc.com"
+                                             "web_design@alpha-pc.com"
+                                             "wolforus@gmail.com"
+                                             "slamly@gmail.com") mailbody (format nil "price ~a" (articul product)))
+              nil)))
         t)))
 
 (defun gateway-check-1c-name (product name-new)
-  (let ((name-old (price product))
-        (siteprice-old (siteprice product))
-        (mailbody))
-    (if (or (and (< 3000 siteprice-old)
-                 (<= 0.2 (float (/ (abs (- siteprice-old siteprice 1)) siteprice-old))))
-            (and (< 3000 price-old)
-                 (<= 0.2 (float (/ (abs (- price-old price 1)) price-old)))))
-        (progn
-          (setf mailbody (format nil "~&<a href=\"http://www.320-8080.ru/~a\">~a: ~a</a>
-                                        <br/>Изменение цены боллее чем на 20%
-                                        <br/>Старая цене на сайте:~a |  новая:~a
-                                        <br/>Разница в цене в магазине:~a | новая:~a"
-                                 (articul product)
-                                 (articul product)
-                                 (name product)
-                                 siteprice-old siteprice
-                                 price-old price))
-          (when flag
-            (setf (siteprice product) siteprice)
-            (setf (price product) price)
-            (serialize product))
-          (gateway-send-error-mail (list "CallCenter@alpha-pc.com"
-                                         "Supplers@alpha-pc.com"
-                                         "web_design@alpha-pc.com"
-                                         "wolforus@gmail.com"
-                                         "slamly@gmail.com") mailbody (format nil "price ~a" (articul product)))
-          nil)
-        t)))
+    (print "TEST"))
 
 (defun process-product (articul price siteprice ekkprice isnew isspec name realname count-total count-transit bonuscount)
   (let ((product (aif (gethash (format nil "~a" articul) *storage*)
@@ -238,3 +214,8 @@ Content-Transfer-Encoding: base64
 ;;                  (incf a)))
 ;;            *storage*)
 ;;   a)
+
+(defun use-unchecked-revert-history ()
+    (let ((*serialize-check-flag* t))
+      (use-revert-history)))
+

@@ -2,7 +2,7 @@
 (in-package #:eshop)
 
 ;; хранилище статей
-(defparameter *storage-articles* (make-hash-table :test #'equal))
+(defvar *storage-articles* (make-hash-table :test #'equal))
 
 ;; описание полей статьи
 (defclass article ()
@@ -111,7 +111,6 @@
 ;; загрузить статьи
 ;; (articles-update)
 (print ">> Articles <<")
-(restore-articles-from-files)
 
 
 ;; (defun get-date-time ()
@@ -132,7 +131,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;; RENDER ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun get-articles-list (request-get-plist)
+(defun get-articles-list (&optional request-get-plist)
   (let ((articles)
         (showall (getf request-get-plist :showall))
         (date (getf request-get-plist :showall)))
@@ -163,6 +162,13 @@
                      articles-list))
             ))
     articles))
+
+(defun articles-view-articles (articles)
+  (mapcar #'(lambda (v)
+              (list  :name (name v)
+                     :date (article-encode-data v)
+                     :key (key v)))
+          articles))
 
 ;; отображение списка статей
 (defun articles-page (request-get-plist)
