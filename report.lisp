@@ -196,30 +196,8 @@
     (loop :for packet :in (reverse (caddr (car *history*))) :do
        (format stream "~a" (sb-ext:octets-to-string packet :external-format :cp1251)))))
 
-(mapcar #'(lambda (v)
-            (let ((p (gethash v *storage*)))
-              (when (not (null p))
-                  (setf (predzakaz p) t)
-                  (serialize p))))
-        (list "166545"
-              "166578"
-              "166579"
-              "166580"
-              "166581"
-              "167530"
-              "167531"
-              "167532"
-              "167533"
-              "167534"
-              "167535"))
 
-(mapcar #'(lambda (v)
-            (let ((p (gethash v *storage*)))
-              (when (not (null p))
-                  (setf (predzakaz p) nil)
-                  (serialize p))))
-        (list "167310"
-              "167475"))
+
 
 
 (defun error-price-report ()
@@ -253,9 +231,98 @@
 ;; (setf (active (gethash "153599" *storage*)) nil)
 ;; (serialize (gethash "153599" *storage*))
 
+
+
+(defparameter *special-products* (make-hash-table :test #'equal))
+
+
+
+(defun post-proccess-gateway ()
+    (mapcar #'(lambda (v)
+                (let ((p (gethash v *storage*))
+                  ;; (p (make-instance 'product
+                  ;;                   :key v
+                  ;;                   :articul v))
+                  )
+              ;; (if p1
+                  ;; (setf p p1))
+              (when (not (null p))
+                  (setf (predzakaz p) t)
+                  (setf (active p) t)
+                  (serialize p)
+                  (setf (gethash v *storage*) p)
+                  (setf (gethash v *special-products*) p))))
+        (list
+         "711265"
+         "834786"
+         "938111"
+         "777888"
+         "888777"
+         "999111"
+         "999777"
+         ))
+  (mapcar #'(lambda (v)
+              (let ((p (gethash v *storage*)))
+                (when (not (null p))
+                  (setf (predzakaz p) t)
+                  (serialize p))))
+          (list "166545"
+                "166578"
+              "166579"
+              "166580"
+              "166581"
+              "167530"
+              "167531"
+              "167532"
+              "167533"
+              "167534"
+              "167535"))
+
+  ;; (maphash #'(lambda (k v)
+  ;;              (declare (ignore k))
+  ;;              (when (equal (type-of v)
+  ;;                             'group)
+  ;;                (when (not (delivery-price v))
+  ;;                    (wlog (name v))
+  ;;                    (setf (delivery-price v) 300))))
+  ;;          *storage*)
+  )
+
+
+
+(defun product-delivery (p)
+  (let ((g (parent p))
+        (daily (gethash (articul p) (daily *main-page.storage*))))
+    (if daily
+        0
+        (aif (delivery-price p)
+             it
+             (if (and (not (null g))
+                      (delivery-price g))
+                 (delivery-price g)
+                 300))))
+  )
+
+
+;; (with-open-file (stream "/home/webadmin/Dropbox/htconf/test.csv")
+;;     (do ((line (read-line stream nil)
+;;                (read-line stream nil)))
+;;         ((null line))
+;;       ;; (print line)
+;;       (let* ((words (split-sequence:split-sequence #\, line))
+;;              (article (car words))
+;;              (price (parse-integer (cadr words)))
+;;              (siteprice (parse-integer (caddr words)))
+;;              (prod (gethash article *storage*)))
+;;         (format t "~&~a: ~a ~a" article price siteprice)
+;;         (if prod
+;;             (setf (price prod) price)
+;;             (setf (siteprice prod) siteprice))
+;;       )))
+
+
 ;; (create-report "seo/last-gateway-string.txt" #'show-last-history)
 ;; (create-report "xls/products.csv" #'write-products-report)
 ;; (create-report "seo/report-groups.csv" #'write-groups)
 ;; (create-report "seo/report-products.csv" #'write-products)
 ;; (create-report "seo/report-vendors.csv" #'write-vendors)
-

@@ -1,9 +1,5 @@
 ;;;; trans.lisp
-;;;;
-;;;; This file is part of the eshop project, released under GNU Affero General Public License, Version 3.0
-;;;; See file COPYING for details.
-;;;;
-;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
+
 
 (in-package #:eshop)
 
@@ -24,6 +20,7 @@
             (directory (format nil "~a/*.vendor" path))
             )))
 
+
 (defun recursive-explore (path)
   (multiple-value-bind (dirs files filters vendors)
       (explore-dir path)
@@ -38,12 +35,16 @@
   (let* ((string-filename (format nil "~a" file))
          (group (car (last (split-sequence #\/ string-filename) 2)))
          (vendor (regex-replace-all ".vendor" (pathname-name file) "")))
+    ;; (format t "~&~a: ~a ~a" file vendor group)
     (setf (gethash vendor (vendors (gethash group *storage*)))
         (read-file-into-string file))))
 
 
+;; (maphash
+
 (defun process-filter (file)
   (unserialize (format nil "~a" file) (make-instance 'filter)))
+
 
 (defun process-file (file)
   (let* ((name (pathname-name file))
@@ -51,6 +52,7 @@
     (if (string= (format nil "~a" candidat) name)
         (unserialize (format nil "~a" file) (make-instance 'product))
         nil)))
+
 
 (defun process-dir (file)
   (let* ((string-filename (format nil "~a" file))
@@ -94,13 +96,13 @@
   (when nil
     ;; Этот код не должен применяться необдуманно! :)
     (maphash #'(lambda (k v)
-                 (when (equal 'group (type-of v))
-                   (serialize v)))
+                   (when (equal 'group (type-of v))
+                     (serialize v)))
              *storage*)
     (print "done"))
   "deprecated")
 
-;;w
+
 (defun store-products ()
   (let ((cnt 0))
     (maphash #'(lambda (k v)
@@ -115,7 +117,6 @@
              eshop:*storage*)
     (format t "~& Num of products was serializes: ~a" cnt)))
 
-;; w
 (defun copy-price-to-siteprice()
   (maphash #'(lambda(k v)
                (declare (ignore k))
@@ -132,24 +133,20 @@
                      (serialize v))))
            *storage*))
 
-;; w
 (defun safely-restore()
   (restore-from-files)
   (use-revert-history)
   (copy-price-to-siteprice)
-  (dtd))
-
-;; w
-(defun safely-store()
-  (restore-from-files)
-  (use-revert-history)
-  (copy-price-to-siteprice)
   (dtd)
+  (create-sitemap-file))
+
+(defun safely-store()
+  (safely-restore)
   (store-products))
 
 
-;; (store-to-files)
 
+;; (store-to-files)
 
 
 ;; Кое-какие заготовки для переноса данных - удалить после переезда

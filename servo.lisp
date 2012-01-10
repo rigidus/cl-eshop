@@ -1,9 +1,4 @@
 ;;;; servo.lisp
-;;;;
-;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
-;;;; See file COPYING for details.
-;;;;
-;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
 
 (in-package #:eshop)
 
@@ -26,7 +21,6 @@
                                     (product-sort products #'< #'siteprice))
                                    ((string= sorting "pb")
                                     (product-sort products #'> #'siteprice))
-                                   ((string= sorting "pt1") products)
                                    (t products))))
      (multiple-value-bind (paginated pager)
          (paginator ,request-get-plist sorted-products)
@@ -71,13 +65,8 @@
                            ""
                            (catalog:seotext (list :text descr))))))))))
 
+;; (maphash #'(lambda (k v ) (print k)) (vendors (gethash "monobloki" *storage*)))
 
-
-(defmacro tradehits ()
-  `(catalog:tradehits (list :reviews (list *trade-hits-1*
-                                           *trade-hits-2*
-                                           *trade-hits-1*
-                                           *trade-hits-2*))))
 
 
 
@@ -127,7 +116,6 @@
        (and (<= value-f value-x)
             (>= value-t value-x)))))
 
-
 (defun sklonenie (name skl)
   (setf name (string-downcase name)))
 
@@ -165,7 +153,6 @@
 ;; (filter-test (gethash "noutbuki" *storage*)  "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
 ;; ( make-get-str "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-13=1&producer-14=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&harddrive-f=&harddrive-t=&screen-resolution-f=&screen-resolution-t=&ram-f=&ram-t=&os-0=1&os-1=1&fullfilter=1#producer")
 ;; (filter-test (gethash "noutbuki" *storage*) "http://www.320-8080.ru/noutbuki?&warranty-1=1&fullfilter=1")
-
 
 ;;фильтрация по значениям опции
 (defun filter-with-check-values (key-name option-group-name option-name product request-plist filter-options)
@@ -248,18 +235,6 @@
               (if (string= opt-val "Любой")
                   t
                   (string= value-x opt-val)))))))))
-
-
-(defun get-date-time ()
-  (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-    (declare (ignore second))
-    (format nil
-            "~d-~2,'0d-~2,'0d ~2,'0d:~2,'0d"
-            year
-            month
-            date
-            hour
-            minute)))
 
 
 (defun paginator-page-line (request-get-plist start stop current)
@@ -372,7 +347,7 @@
 (defun menu (&optional current-object)
   (let ((root-groups)
         (current-key (let* ((breadcrumbs (breadcrumbs current-object))
-                            (first (getf (car (getf breadcrumbs :breadcrumbelts)) :key)) )
+                            (first       (getf (car (getf breadcrumbs :breadcrumbelts)) :key)) )
                        (if (not (null first))
                            first
                            (getf (getf breadcrumbs :breadcrumbtail) :key)
@@ -414,7 +389,7 @@
                                                                         ))
                                                                    (childs val)) #'menu-sort)
                                                    :collect
-                                                   (list :key (key child) :name (name child)))
+                                                   (list :key  (key child) :name (name child)))
                                           ))
                                    ;; else - this is ordinal
                                    (leftmenu:ordinal (list :divider (or
@@ -463,9 +438,6 @@
   (root:main (list :keywords keywords
                    :description description
                    :title title
-                   :header (root:header (list :logged (root:notlogged)
-                                              :cart (if (not no-need-cart)
-                                                        (root:cart))));; (root:cart)))
                    :header (root:header (append (list :logged (root:notlogged)
                                                       :cart (if (not no-need-cart)
                                                                 (root:cart)))
@@ -504,7 +476,7 @@
 
 
 (defun request-str ()
-  (let* ((request-full-str (hunchentoot:url-decode (hunchentoot:request-uri hunchentoot:*request*))) ;;  (url-to-request-get-plist "http://www.320-8080.ru/komputery?vendor=%D0%A6%D0%B8F%D1%80%D1%8B")
+  (let* ((request-full-str (hunchentoot:url-decode (hunchentoot:request-uri hunchentoot:*request*)))
          (request-parted-list (split-sequence:split-sequence #\? request-full-str))
          (request-str (string-right-trim "\/" (car request-parted-list)))
          (request-list (split-sequence:split-sequence #\/ request-str))
@@ -694,16 +666,18 @@ is replaced with replacement."
                   ))
             (keyoptions parent))))
 
-
-
+;; (defun get-format-price (p)
+;;   (let ((rs (format nil "~a" p))
+;;         (str (reverse (format nil "~a" p))))
+;;     (when (< 3 (length str))
+;;       (let ((st1 (reverse (subseq str 0 3)))
+;;             (st2 (reverse (subseq str 3))))
+;;         (setf rs (format nil "~a ~a" st2 st1))))
+;;     rs))
+;; Теперь немного короче
 (defun get-format-price (p)
-  (let ((rs (format nil "~a" p))
-        (str (reverse (format nil "~a" p))))
-    (when (< 3 (length str))
-      (let ((st1 (reverse (subseq str 0 3)))
-            (st2 (reverse (subseq str 3))))
-        (setf rs (format nil "~a ~a" st2 st1))))
-    rs))
+  (format nil "~,,' ,3:d" p))
+
 
 
 (defmethod view ((object product))
@@ -730,6 +704,8 @@ is replaced with replacement."
                            (soy.buttons:add-product-cart (list :articul (articul object)
                                                                :name (realname object)
                                                                :pic (if (null pics) nil (car pics))
+                                                               :deliveryprice (delivery-price object)
+                                                               :siteprice (price object)
                                                                :price (siteprice object))))
             ))))
 
@@ -764,21 +740,21 @@ is replaced with replacement."
       (return-from relink rs))
     ;;2 случайных товара из списка
     (setf temp-rs1 (get-randoms-from-list
-                    ;; список активных товаров той же группы и того же производителя
-                    ;; кроме его самого
-                    (let* ((base-vendor))
-                      (with-option object "Общие характеристики" "Производитель"
-                                   (setf base-vendor (value option)))
-                      (remove-if-not
-                       #'(lambda (x)
-                           (and (not (equal x object))
-                                (active x)
-                                (let ((vendor))
-                                  (with-option x "Общие характеристики" "Производитель"
-                                               (setf vendor (value option)))
-                                  (equal vendor base-vendor))))
-                       (products (parent object))))
-                    2))
+                   ;; список активных товаров той же группы и того же производителя
+                   ;; кроме его самого
+                   (let* ((base-vendor))
+                     (with-option object "Общие характеристики" "Производитель"
+                                  (setf base-vendor (value option)))
+                     (remove-if-not
+                      #'(lambda (x)
+                          (and (not (equal x object))
+                               (active x)
+                               (let ((vendor))
+                                 (with-option x "Общие характеристики" "Производитель"
+                                              (setf vendor (value option)))
+                                 (equal vendor base-vendor))))
+                      (products (parent object))))
+                   2))
     ;;4 случайных товара из списка
     (setf temp-rs2 (get-randoms-from-list
                     ;;список всех активных товаров кроме object
@@ -799,26 +775,6 @@ is replaced with replacement."
        :for n
        :from 1 to 4
        :collect item)))
-
-
-(defparameter *trade-hits-1*
-  (list :pic "/img/temp/s1.jpg"
-        :name "Lenovo E43-4S-B"
-        :price 19990
-        :ico "/img/temp/u2.jpg"
-        :user "Борис"
-        :text "Отличный ноутбук для работы, здорово помогает! Главное - мощная батарея, хватает на 4 часа"
-        :more "Еще 12 отзывов о ноутбуке"))
-
-(defparameter *trade-hits-2*
-  (list :pic "/img/temp/s3.jpg"
-        :name "ASUS UL30Vt"
-        :price 32790
-        :ico "/img/temp/u3.jpg"
-        :user "Тамара"
-        :text "Не плохой ноутбук, рабочая лошадка. Хорошие углы обзора, шустрый проц, без подзарядки работает часа 3, легкий и удобный в переноске. В общем, советую."
-        :more "Еще 12 отзывов о ноутбуке"))
-
 
 
 
@@ -914,7 +870,6 @@ is replaced with replacement."
               product-list)
       result-products)))
 
-
 (defun url-to-request-get-plist (url)
   (let* ((request-full-str url)
          (request-parted-list (split-sequence:split-sequence #\? request-full-str))
@@ -929,31 +884,33 @@ is replaced with replacement."
     request-get-plist))
 
 
+
+;; (fullfilter (gethash "noutbuki" *storage*))
 (defun if-need-to-show-hidden-block (elt request-get-plist)
   (let ((key (string-downcase (format nil "~a" (nth 0 elt))))
         (showflag nil))
     ;; проверку нужно ли раскрывать hidden блока
-    (cond
-      ((equal :radio (nth 2 elt))
-       (loop
-          :for nameelt
-          :in  (nth 3 elt)
-          :for i from 0
-          :do (if (string= (format nil "~a" i)
-                           (getf request-get-plist (intern
-                                                    (string-upcase key))))
-                  (setf showflag t))))
-      ((equal :checkbox (nth 2 elt))
-       (loop
-          :for nameelt
-          :in  (nth 3 elt)
-          :for i from 0
-          :do (if  (string= "1" (getf request-get-plist (intern
-                                                         (string-upcase
-                                                          (format nil "~a-~a" key i))
-                                                         :keyword)))
-                   (setf showflag t)))))
-    showflag))
+      (cond
+        ((equal :radio (nth 2 elt))
+         (loop
+            :for nameelt
+            :in  (nth 3 elt)
+            :for i from 0
+            :do (if (string= (format nil "~a" i)
+                             (getf request-get-plist (intern
+                                                      (string-upcase key))))
+                    (setf showflag t))))
+        ((equal :checkbox (nth 2 elt))
+         (loop
+            :for nameelt
+            :in  (nth 3 elt)
+            :for i from 0
+            :do (if  (string= "1" (getf request-get-plist (intern
+                                                           (string-upcase
+                                                            (format nil "~a-~a" key i))
+                                                           :keyword)))
+                     (setf showflag t)))))
+      showflag))
 
 ;; (is-need-to-show-advanced (fullfilter (gethash "noutbuki" *storage*)) (url-to-request-get-plist "http://dev.320-8080.ru/noutbuki?price-f=&price-t=&producer-0=1&screen-size-f=&screen-size-t=&work-on-battery-f=&work-on-battery-t=&weight-f=&weight-t=&frequency-f=&frequency-t=&ram-f=&ram-t=&harddrive-f=&harddrive-t=&videoram-f=&videoram-t=&fullfilter=1#producer"))
 
@@ -966,7 +923,6 @@ is replaced with replacement."
                         (cadr elt)))
             (advanced fullfilter))
     flag))
-
 
 (defun filter-element (elt request-get-plist)
   (let* ((key (string-downcase (format nil "~a" (nth 0 elt))))
@@ -1027,6 +983,7 @@ is replaced with replacement."
         contents)))
 
 
+;; (url-to-request-get-plist "http://www.320-8080.ru/komputery?vendor=%D0%A6%D0%B8F%D1%80%D1%8B")
 
 (defmethod vendor-controller ((object group) request-get-plist)
   (let* ((result-products))
@@ -1075,9 +1032,8 @@ is replaced with replacement."
             (string-trim '(#\Space #\Tab #\Newline)
                          (ppcre:regex-replace-all "%20" (getf request-get-plist :vendor) " ")))))
 
-
-
-;;; Функция, добавляющая в хлебные крошки вендора, если он присутствует в get запросе.
+;;; Функция, добавляющая в хлебные крошки вендора, если он присутствует
+;;; в get запросе.
 (defun breadcrumbs-add-vendor (breadcrumbs)
   (let ((belts (getf breadcrumbs :breadcrumbelts))
         (tail (getf breadcrumbs :breadcrumbtail))
@@ -1099,6 +1055,8 @@ is replaced with replacement."
               (string-upcase (subseq title 0 1))
               (subseq title 1))))
 
-
-(defun wlog (s)
-  (format t "~&~a> ~a" (get-date-time) s))
+(defun alist-to-plist (alist)
+  (loop
+     :for (key . value)
+     :in alist
+     :nconc (list (intern (format nil "~a" key) :keyword) value)))

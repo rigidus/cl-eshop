@@ -14,26 +14,11 @@
   (mapcar #'(lambda (fname)
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
                 (closure-template:compile-template :common-lisp-backend pathname)))
-          '("index.html"
+          '(
+            ;;"index.html"
             "main-page.soy"
             )))
 
-
-;; (defun main-page-button-add-card (articul)
-;;   (let ((product (gethash articul *storage*)))
-;;     (if (not (null articul))
-;;         (soy.main-page:button-add-card
-;;          (list :articul ""
-;;                :groupid "0" ;;id группы -- это поле устарело
-;;                :name ""
-;;                :price ""  ;;цена вида 8999.00
-;;                :number ""  ;;количество
-;;                :productlink ""  ;;cсылка на товар сейчас это и есть артикул
-;;                :pic ""))
-;;         ;; (log5:log-for (or log5::test-warr
-;;         ;;                   :main-page-log
-;;         ;;                   log5:error+) "trying to show button for articul:~a" articul)
-;;         )))
 
 
 ;; Имя берется из объявления
@@ -49,8 +34,11 @@
                        :showprice (get-format-price (price p))
                        :url (articul p)
                        :options (opts dp)
-                       :grouplink (key (parent p))
-                       :groupname (name (parent p))
+                       :grouplink (aif (parent p)
+                                       (key it))
+                       :groupname (aif (parent p)
+                                       (name it))
+                       ;; :deliveryprice (delivery-price p)
                        :pic (car (get-pics (articul p)))))
          (button-add (list :buttonaddcart (soy.buttons:add-product-cart p-list))))
     (append p-list button-add)))
@@ -116,8 +104,8 @@
              :lastreview (soy.main-page:lastreview (main-page-show-lastreview (review *main-page.storage*)))
              :best (soy.main-page:best (list :items (main-page-products-show (best *main-page.storage*) 12)))
              :hit (soy.main-page:hit (list :items (main-page-products-show (hit *main-page.storage*) 2)))
-             :new (soy.main-page:new (list :items (main-page-products-show (new *main-page.storage*) 6)))
-             :post (soy.main-page:post (list :items (articles-view-articles (subseq (articles-sort (get-articles-list)) 0 6))))
+             :new  (soy.main-page:new (list :items (main-page-products-show (new *main-page.storage*) 6)))
+             :post (soy.main-page:post (list :items (articles-view-articles (subseq (articles.sort (get-articles-list)) 0 6))))
              :plus (soy.main-page:plus)))
       :KEYWORDS "компьютеры, купить компьютер, компьютерная техника, Петербург, Спб, Питер, Санкт-Петербург, продажа компьютеров, магазин компьютерной техники, магазин компьютеров, интернет магазин компьютеров, интернет магазин компьютерной техники, продажа компьютерной техники, магазин цифровой техники, цифровая техника, Цифры, 320-8080"
       :DESCRIPTION "Купить компьютер и другую технику вы можете в Цифрах. Цифровая техника в Интернет-магазине 320-8080.ru"
@@ -150,13 +138,14 @@
 (defun main-page-get-active-product-list (storage)
   (let ((rs))
     (maphash #'(lambda (k v)
-                 (let ((p (gethash (key v) *storage*)))
-                   (if (and (not (null p))
+                 (when v
+                   (let ((p (gethash (key v) *storage*)))
+                     (if (and (not (null p))
                               (active p)
                               (< (date-start v) (get-universal-time) (date-finish v)))
-                     (push (cons k (weight v)) rs)
-                     ;;(wlog (format nil "WARN:~a" k))
-                     )))
+                         (push (cons k (weight v)) rs)
+                         ;;(wlog (format nil "WARN:~a" k))
+                         ))))
              storage)
     rs))
 
@@ -164,11 +153,12 @@
 (defun main-page-get-active-banners (storage place)
   (let ((rs))
     (maphash #'(lambda (k v)
-                 (if (and (equal (key v) place)
-                          (< (date-start v) (get-universal-time) (date-finish v)))
-                      (push (cons k (weight v)) rs)
-                      ;;(wlog (format nil "WARN:~a" k))
-                      ))
+                 (when v
+                   (if (and (equal (key v) place)
+                            (< (date-start v) (get-universal-time) (date-finish v)))
+                       (push (cons k (weight v)) rs)
+                       ;;(wlog (format nil "WARN:~a" k))
+                       )))
              storage)
     rs))
 
@@ -176,9 +166,10 @@
 (defun main-page-get-active-items (storage)
   (let ((rs))
     (maphash #'(lambda (k v)
-                 (if (< (date-start v) (get-universal-time) (date-finish v))
-                     (push (cons k (weight v)) rs)
-                     (wlog (format nil "WARN:~a" k))))
+                 (when v
+                   (if (< (date-start v) (get-universal-time) (date-finish v))
+                       (push (cons k (weight v)) rs)
+                       (wlog (format nil "WARN:~a" k)))))
              storage)
     rs))
 
@@ -262,8 +253,8 @@
                      (make-instance 'main-page-product
                                     :key key
                                     :name (nth 1 skls)
-                                    :date-start (article-decode-date (nth 2 skls))
-                                    :date-finish  (article-decode-date (nth 3 skls))
+                                    :date-start (time.article-decode-date (nth 2 skls))
+                                    :date-finish  (time.article-decode-date (nth 3 skls))
                                     :weight (parse-integer (aif (nth 4 skls) it "0"))
                                     :opts (nthcdr 5 skls)
                                     :banner-type (nth 5 skls)))

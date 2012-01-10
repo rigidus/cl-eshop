@@ -6,12 +6,16 @@
 
 ;; описание полей статьи
 (defclass article ()
-  ((key               :initarg :key       :initform nil       :accessor key)
-   (name              :initarg :name      :initform nil       :accessor name)
-   (descr             :initarg :descr     :initform nil       :accessor descr)
-   (body              :initarg :body      :initform nil       :accessor body)
-   (date              :initarg :date      :initform nil       :accessor date)
-   (tags               :initarg :tags     :initform (make-hash-table :test #'equal) :accessor tags)
+  ((key         :initarg :key       :initform nil       :accessor key)
+   (name        :initarg :name      :initform nil       :accessor name)
+   (descr       :initarg :descr     :initform nil       :accessor descr)
+   (bredcrumbs  :initarg :bredcrumbs :initform nil      :accessor bredcrumbs)
+   (rightblock  :initarg :rightblock :initform nil      :accessor rightblock)
+   (title       :initarg :title      :initform nil      :accessor title)
+   (body        :initarg :body      :initform nil       :accessor body)
+   (date        :initarg :date      :initform nil       :accessor date)
+   (ctype        :initarg :ctype    :initform "article"  :accessor ctype) ;; article / static
+   (tags        :initarg :tags    :initform (make-hash-table :test #'equal) :accessor tags)
    ))
 
 ;;тэги через запятую
@@ -24,30 +28,6 @@
     ;; (format t "~&~a: ~{~a~^,~}" key skls)
     ))
 
-(defun article-decode-date(input-string)
-  (let ((r 0)
-        (counts)
-        (date)
-        (month)
-        (year))
-    (when (and (not (null input-string))
-               (not (string= ""
-                     (stripper input-string))))
-      (setf counts (split-sequence:split-sequence #\. input-string))
-      (setf date (parse-integer (first counts)))
-      (setf month (parse-integer (second counts)))
-      (setf year (parse-integer (third counts)))
-      (setf r (encode-universal-time 0 0 0 date month year)))
-    r))
-
-(defun article-encode-data(article)
-  (multiple-value-bind (second minute hour date month year) (decode-universal-time (date article))
-    (declare (ignore second))
-    (format nil
-            "~2,'0d.~2,'0d.~d"
-            date
-            month
-            year)))
 
 ;;
 (defmethod unserialize (filepath (dummy article))
@@ -55,15 +35,22 @@
            (raw (decode-json-from-string file-content))
            (key (pathname-name filepath))
            (body (cdr (assoc :body raw)))
+           (breadcrumbs (cdr (assoc :breadcrumbs raw)))
+           (rightblock (cdr (assoc :rightblock raw)))
            (name (cdr (assoc :name raw)))
-           (date (article-decode-date (cdr (assoc :date raw))))
+           (date (time.article-decode-date (cdr (assoc :date raw))))
            (descr (cdr (assoc :descr raw)))
            (tags-line (cdr (assoc :tags raw)))
+           (title (cdr (assoc :title raw)))
            (new (make-instance 'article
                                :key key
                                :name name
                                :descr descr
+                               :bredcrumbs breadcrumbs
                                :body body
+                               :rightblock rightblock
+                               :title title
+                               :ctype (ctype dummy)
                                :date date)))
       (make-tags-table (tags new) tags-line)
       (setf (gethash key *storage-articles*) new)
@@ -72,35 +59,32 @@
 
 
 ;; загрузка статей из папки
-(defun process-articles-dir (path)
+(defun process-articles-dir (path &optional (ctype "article"))
   (let ((files))
     (mapcar #'(lambda (x)
                 (if (not (cl-fad:directory-pathname-p x))
                     (push x files)))
             (directory (format nil "~a/*" path)))
     (mapcar #'(lambda (file)
-                (unserialize (format nil "~a" file) (make-instance 'article)))
+                (wlog ctype)
+                (unserialize (format nil "~a" file) (make-instance 'article :ctype ctype)))
             files)))
 
 
 ;;
 (defun restore-articles-from-files ()
   (let ((t-storage))
-      (print "start load articles....{")
+      (wlog "start load articles....{")
       (sb-ext:gc :full t)
       (let ((*storage-articles* (make-hash-table :test #'equal)))
-        (process-articles-dir *path-to-articles*)
+        (process-articles-dir *path-to-articles* "article")
         (setf t-storage *storage-articles*))
       (setf *storage-articles* t-storage)
       (sb-ext:gc :full t)
-      (print "...} finish load articles")))
-
-;;обновление страницы
-(defun articles-update ()
-  (articles-compile-templates))
+      (wlog "...} finish load articles")))
 
 ;;шаблоны
-(defun articles-compile-templates ()
+(defun articles.update ()
   (mapcar #'(lambda (fname)
               (let ((pathname (pathname (format nil "~a/~a" *path-to-tpls* fname))))
                 (closure-template:compile-template :common-lisp-backend pathname)))
@@ -108,34 +92,22 @@
             "articles.soy"
             "footer.html")))
 
-;; загрузить статьи
-;; (articles-update)
-(print ">> Articles <<")
 
-
-;; (defun get-date-time ()
-;;   (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-;;     (declare (ignore second))
-;;     (format nil
-;;             "~d-~2,'0d-~2,'0d ~2,'0d:~2,'0d"
-;;             year
-;;             month
-;;             date
-;;             hour
-;;             minute)))
-
-
-(defun articles-sort (unsort-articles)
+(defun articles.sort (unsort-articles)
   (sort unsort-articles #'> :key #'date))
 
 
 ;;;;;;;;;;;;;;;;;;;;; RENDER ;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+
 (defun get-articles-list (&optional request-get-plist)
   (let ((articles)
         (showall (getf request-get-plist :showall))
         (date (getf request-get-plist :showall)))
+    (declare (ignore date))
     (maphash #'(lambda (k v)
+                 (declare (ignore k))
                  (if (or (not (null showall))
                           (not (= (date v) 0)))
                      (push v articles)))
@@ -166,7 +138,7 @@
 (defun articles-view-articles (articles)
   (mapcar #'(lambda (v)
               (list  :name (name v)
-                     :date (article-encode-data v)
+                     :date (time.article-encode-date v)
                      :key (key v)))
           articles))
 
@@ -184,7 +156,7 @@
                                   Материалы"))
     (multiple-value-bind (paginated pager)
         (paginator request-get-plist
-                   (articles-sort
+                   (articles.sort
                     (get-articles-by-tags
                      (get-articles-list request-get-plist) tags))
                    10)
@@ -199,7 +171,7 @@
                                                       :articles
                                                       (mapcar #'(lambda (v)
                                                                   (list :name (name v)
-                                                                        :date (article-encode-data v)
+                                                                        :date (time.article-encode-date v)
                                                                         :descr (descr v)
                                                                         :key (key v)
                                                                         :tags
@@ -222,29 +194,43 @@
 
 ;; отображение страницы статьи
 (defmethod restas:render-object ((designer eshop-render) (object article))
-  (root:main (list :keywords "" ;;keywords
-                   :description "" ;;description
-                   :title  (name object)
-                   :headext (soy.articles:head-share-buttons (list :key (key object)))
-                   :header (root:header (list :logged (root:notlogged)
-                                              :cart (root:cart)))
-                   :footer (root:footer)
-                   :content (static:main
-                             (list :menu (menu)
-                                   :breadcrumbs (get-article-breadcrumbs object)
-                                   :subcontent  (soy.articles:article-big (list :sharebuttons (soy.articles:share-buttons
-                                                                                               (list :key (key object)))
-                                                                                :name (name object)
-                                                                                :date (article-encode-data object)
-                                                                                :body (prerender-string-replace (body object))
-                                                                                :tags
-                                                                                (if (< 0 (hash-table-count (tags object)))
-                                                                                    (soy.articles:articles-tags
-                                                                                     (list :tags
+  (if (equal (ctype object) "static")
+      (root:main (list :keywords "" ;;keywords
+                       :description "" ;;description
+                       :title "test" ;(title object)
+                       :header (root:header (append (list :logged (root:notlogged)
+                                                          :cart (root:cart))
+                                                    (main-page-show-banner "line" (banner *main-page.storage*))))
+                       :footer (root:footer)
+                       :content  (static:main
+                                 (list :menu (menu)
+                                       :breadcrumbs (bredcrumbs object)
+                                       :subcontent  (body object)
+                                       :rightblock  (rightblock object)))
+                 ))
+      (root:main (list :keywords "" ;;keywords
+                       :description "" ;;description
+                       :title  (name object)
+                       :headext (soy.articles:head-share-buttons (list :key (key object)))
+                       :header (root:header (list :logged (root:notlogged)
+                                                  :cart (root:cart)))
+                       :footer (root:footer)
+                       :content (static:main
+                                 (list :menu (menu)
+                                       :breadcrumbs (get-article-breadcrumbs object)
+                                       :subcontent  (soy.articles:article-big (list :sharebuttons (soy.articles:share-buttons
+                                                                                                   (list :key (key object)))
+                                                                                    :name (name object)
+                                                                                    :date (time.article-encode-date object)
+                                                                                    :body (prerender-string-replace (body object))
+                                                                                    :tags
+                                                                                    (if (< 0 (hash-table-count (tags object)))
+                                                                                        (soy.articles:articles-tags
+                                                                                         (list :tags
                                                                                            (loop
                                                                                               :for key being the hash-keys
                                                                                               :of (tags object)
                                                                                               :collect key)))
-                                                                                    "")
-                                                                                ))
-                                   :rightblock  "")))))
+                                                                                        "")
+                                                                                    ))
+                                       :rightblock  ""))))))

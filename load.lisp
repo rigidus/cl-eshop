@@ -1,5 +1,6 @@
 (require 'asdf)
 (print "LOAD LIBS:")
+
 (defun cl-eshop-path (&rest filenames)
   (pathname (format nil "~{~a~^/~}" (append (list (user-homedir-pathname) "cl-restas-eshop") filenames))))
 
@@ -11,6 +12,7 @@
 
 (defparameter cl-eshop-libs
   (list
+   ;; "slime-2011-09-01" ;; актуальный swank
    "slime-archimag" ;; SWANK
    "alexandria"     ;; hunch
    "bordeaux-threads" ;; hunch
@@ -47,7 +49,7 @@
    "anaphora-0.9.4" ;; closure-template | macro collection from Hell http://www.cliki.net/Anaphora
    "esrap" ;; closure-template | packrat parser http://nikodemus.github.com/esrap/
    "log5" ;; логирование | logging framework http://common-lisp.net/project/log5/
-   "cl-store" ;; сохранение данных | Serialization Package http://common-lisp.net/project/cl-store/
+   ;; "cl-store" ;; сохранение данных | Serialization Package http://common-lisp.net/project/cl-store/
    ))
 
 (defparameter cl-eshop-modules
@@ -91,11 +93,13 @@
 
 (defparameter cl-eshop-lisp-files
   (list
-   ;; "start.lisp"
+   "time.lisp"
    "eshop-config.lisp"
    "errors.lisp"
-   "spike.lisp"
+   "log.lisp"
+   "new-classes.lisp"
    "classes.lisp"
+   "spike.lisp"
    "serializers.lisp"
    "servo.lisp"
    "trans.lisp"
@@ -105,15 +109,15 @@
    "generics.lisp"
    "gateway.lisp"
    "search.lisp"
-   "xls.lisp" ;;необходима xls2csv |  sudo apt-get install catdoc
+   "xls.lisp" ;;необходима xls2csv | sudo apt-get install catdoc
    "yml.lisp"
    "articles.lisp"
+   "wolfor-stuff.lisp"
    "report.lisp"
    "sklonenie.lisp"
    "newcart.lisp"
    "main-page.lisp"
    "sitemap.lisp"
-   "wolfor-stuff.lisp"
    "report.lisp"
    "rename.lisp"
    "catalog.lisp"
@@ -123,13 +127,15 @@
    "images.lisp"))
 
 
-;;закрузка файлов
-(mapcar #'(lambda (filename) (load (cl-eshop-path filename)))
+;; закрузка файлов
+(mapcar #'(lambda (filename)
+            (print (format nil "load ~a" filename))
+            (load (cl-eshop-path filename)))
         cl-eshop-lisp-files)
 
-;; (print "Restoring data from files")
+(print "Restoring data from files")
 (eshop::restore-skls-from-files)
 (eshop::restore-articles-from-files)
 (eshop::main-page-restore)
-(eshop::restore-from-files)
+;; (eshop::restore-from-files)
 

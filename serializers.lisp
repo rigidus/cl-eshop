@@ -1,9 +1,4 @@
 ;;;; serializers.lisp
-;;;;
-;;;; This file is part of the eshop project, released under GNU Affero General Public License, Version 3.0
-;;;; See file COPYING for details.
-;;;;
-;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
 
 (in-package #:eshop)
 
@@ -37,6 +32,7 @@
                              :order (cdr (assoc :order raw))
                              :fullfilter (unserialize (cdr (assoc :fullfilter raw)) (make-instance 'group-filter))
                              :keyoptions keyoptions
+                             :delivery-price (cdr (assoc :delivery-price raw))
                              :pic (cdr (assoc :pic raw))
                              :icon (cdr (assoc :icon raw))
                              :ymlshow (cdr (assoc :ymlshow raw))
@@ -49,7 +45,6 @@
 
 
 (defmethod serialize ((object group))
-  (format t "~&unserialize:~a" filepath)
   (let* ((raw-breadcrumbs (breadcrumbs object))
          (path-list (mapcar #'(lambda (elt)
                                 (getf elt :key))
@@ -89,6 +84,7 @@
     (re-assoc dumb :empty (empty object))
     (re-assoc dumb :active (active object))
     (re-assoc dumb :name (name object))
+    (re-assoc dumb :delivery-price (delivery-price object))
     ;; assembly json-string
     (let ((json-string
            (format nil "~{~a~}"
@@ -130,15 +126,16 @@
 
 
 ;; GROUP-FILTER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; (defun eliminate-malform (malformed-filter)
+;;   (mapcar #'(lambda (malform) (append (butlast malform)
+;;                                       (list :func (car (last malform)))))
+;;           malformed-filter))
 
-  ;; (defun eliminate-malform (malformed-filter)
-  ;;   (mapcar #'(lambda (malform) (append (butlast malform)
-  ;;                                       (list :func (car (last malform)))))
-  ;;           malformed-filter))
+;; (defun eliminate-malform-advanced (malformed-filter-list)
+;;   (append (butlast malformed-filter)
+;;           (list :func (last malformed-filter))))
 
-  ;; (defun eliminate-malform-advanced (malformed-filter-list)
-  ;;   (append (butlast malformed-filter)
-  ;;           (list :func (last malformed-filter))))
 
 (defmethod unserialize (in-string (dummy group-filter))
   (if (null in-string)
@@ -185,7 +182,8 @@
                                              realname)
                                :price (cdr (assoc :price raw))
                                :siteprice (cdr (assoc :siteprice raw))
-                               :ekkprice (cdr (assoc :ekkprice raw))
+                               :date-modified (cdr (assoc :date-modified raw))
+                               :date-created (cdr (assoc :date-created raw))
                                :bonuscount (cdr (assoc :bonuscount raw))
                                :predzakaz (cdr (assoc :predzakaz raw))
                                :active (let ((active (cdr (assoc :active raw))))
@@ -198,6 +196,7 @@
                                :sale (cdr (assoc :sale raw))
                                :descr (cdr (assoc :descr raw))
                                :shortdescr (cdr (assoc :shortdescr raw))
+                               :delivery-price (cdr (assoc :delivery-price raw))
                                :count-transit (cdr (assoc :count-transit raw))
                                :count-total count-total
                                :optgroups (let* ((optgroups (cdr (assoc :optgroups raw))))
@@ -226,13 +225,14 @@
     ;; Создаем директорию, если ее нет
     (ensure-directories-exist current-dir)
     ;; Сохраняем файл продукта
-    (let* ((json-string (format nil "{~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"ekkprice\": ~a,~%  \"bonuscount\": ~a,~% \"predzakaz\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"optgroups\": ~a~%}"
+    (let* ((json-string (format nil "{~%   \"articul\": ~a,~%   \"name\": ~a,~%   \"realname\": ~a,~%   \"price\": ~a,~%   \"siteprice\": ~a,~%   \"date-modified\": ~a,~%  \"date-created\": ~a,~%  \"bonuscount\": ~a,~% \"predzakaz\": ~a,~%   \"active\": ~a,~%   \"newbie\": ~a,~%   \"sale\": ~a,~%   \"descr\": ~a,~%   \"shortdescr\": ~a,~%   \"countTransit\": ~a,~%   \"countTotal\": ~a,~%   \"optgroups\": ~a, \"delivery-price\": ~a~%}"
                                 (encode-json-to-string (articul object))
                                 (format nil "\"~a\"" (stripper (name object)))
                                 (format nil "\"~a\"" (stripper (realname object)))
                                 (encode-json-to-string (price object))
                                 (encode-json-to-string (siteprice object))
-                                (encode-json-to-string (ekkprice object))
+                                (encode-json-to-string (date-modified object))
+                                (encode-json-to-string (date-created object))
                                 (encode-json-to-string (bonuscount object))
                                 (encode-json-to-string (predzakaz object))
                                 (encode-json-to-string (active object))
@@ -249,6 +249,7 @@
                                                         (serialize optgroup))
                                                     (optgroups object)))
                                     )
+                                (encode-json-to-string (delivery-price object))
                                 )))
       ;; (print (descr object))
       (with-open-file (file pathname

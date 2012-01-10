@@ -1,6 +1,7 @@
 (in-package #:eshop)
 
 (defparameter *history* nil)
+(defparameter *single-history* nil)
 (defparameter *load-list* nil)
 (defparameter *order* nil)
 (defparameter *serialize-check-flag* t)
@@ -37,8 +38,9 @@
                    ;; Заполняем siteprice если он равен 0
                    (copy-price-to-siteprice)
                    ;; Сохраняем *load-list* и *order* для истории
-                   (push (list (get-date-time) *order* *load-list*) *history*)
+                   (push (list (time.get-date-time) *order* *load-list*) *history*)
                    ;; Обнуляем *load-list* и *order* (если приходит 1 пакет, то он num=0)
+                   (post-proccess-gateway)
                    (setf *load-list* nil)
                    (setf *order* nil)
                    "last"))
@@ -53,7 +55,17 @@
                    (push raw *load-list*)
                    (push (hunchentoot:get-parameter "num") *order*)
                    "first"))
-
+                ((string= "1" (hunchentoot:get-parameter "single"))
+                 ;; Обработка одиночного изменения, для экстренного внесения изменений на небольшое количество товаров
+                 (progn
+                   (let ((name (hunchentoot:get-parameter "user")))
+                     (wlog "GATEWAY::Single")
+                     ;; сохраняем запрос
+                     (push (list (time.get-date-time) name raw) *single-history*)
+                     ;; обрабатываем данные пришедшие в одиночном запросе
+                     (process raw)
+                     ;; возможно тут необходимо пересчитать списки активных товаров или еще что-то
+                     "single")))
                 (t
                  ;; Обработка промежуточных пакетов
                  (progn
@@ -70,25 +82,24 @@
                (sb-ext:octets-to-string raw :external-format :cp1251))))
     ;; dbg
     ;; (format nil "~a" data)
-
      ;; Перебираем продукты
     (loop :for elt  :in data :collect
        (block iteration
          (let ((articul   (ceiling (arnesi:parse-float (cdr (assoc :id elt)))))
                (price     (ceiling (arnesi:parse-float (cdr (assoc :price elt)))))
                (siteprice (ceiling (arnesi:parse-float (cdr (assoc :price--site elt)))))
-               (ekkprice  (ceiling (arnesi:parse-float (cdr (assoc :price--ekk elt)))))
                (bonuscount  (ceiling (arnesi:parse-float (cdr (assoc :bonuscount elt)))))
                (isnew     (cdr (assoc :isnew  elt)))
                (isspec    (cdr (assoc :isspec elt)))
                (name      (cdr (assoc :name elt)))
                (realname  (cdr (assoc :realname elt)))
-               (count-total    (ceiling (arnesi:parse-float (cdr (assoc :count--total elt)))))
+               (count-total    (cdr (assoc :count--total elt)))
                (count-transit  (ceiling (arnesi:parse-float (cdr (assoc :count--transit elt))))))
+           ;;(wlog data)
            ;; Нам не нужны продукты с нулевой ценой (вероятно это группы продуктов)
            (when (equal 0 price)
              (return-from iteration))
-           (process-product articul price siteprice ekkprice isnew isspec name realname count-total count-transit bonuscount))))))
+           (process-product articul price siteprice isnew isspec name realname count-total count-transit bonuscount))))))
 
 
 (defun gateway-send-error-mail (to mailbody error-name)
@@ -128,8 +139,7 @@ Content-Transfer-Encoding: base64
 (defun gateway-check-price (product price siteprice)
   (let ((price-old (price product))
         (siteprice-old (siteprice product))
-        (mailbody)
-        (rs))
+        (mailbody))
     (if (or (and (< 3000 siteprice-old)
                  (<= 0.2 (float (/ (abs (- siteprice-old siteprice 1)) siteprice-old))))
             (and (< 3000 price-old)
@@ -145,15 +155,16 @@ Content-Transfer-Encoding: base64
                                  siteprice-old siteprice
                                  price-old price))
           (if *serialize-check-flag*
-            (progn (wlog mailbody)
-                   (setf (siteprice product) siteprice)
-                   (setf (price product) price)
-                   (serialize product)
-                   (gateway-send-error-mail (list "CallCenter@alpha-pc.com"
-                                                  "Supplers@alpha-pc.com"
-                                                  "web_design@alpha-pc.com"
-                                                  "wolforus@gmail.com"
-                                                  "slamly@gmail.com") mailbody (format nil "price ~a" (articul product)))
+            (progn
+              ;; (wlog mailbody)
+              (setf (siteprice product) siteprice)
+              (setf (price product) price)
+              (serialize product)
+              (gateway-send-error-mail (list "CallCenter@alpha-pc.com"
+                                             "Supplers@alpha-pc.com"
+                                             "web_design@alpha-pc.com"
+                                             "wolforus@gmail.com"
+                                             "slamly@gmail.com") mailbody (format nil "price ~a" (articul product)))
                    t)
             (progn
               (gateway-send-error-mail (list "CallCenter@alpha-pc.com"
@@ -165,16 +176,40 @@ Content-Transfer-Encoding: base64
         t)))
 
 (defun gateway-check-1c-name (product name-new)
-    (print "TEST"))
+  (if (and (not (null name-new))
+           (not (equal "" name-new))
+           (not (null (name product)))
+           (not (equal "" (name product)))
+           (not (equal name-new (name product))))
+      (let ((mailbody (format nil "~&<a href=\"http://www.320-8080.ru/~a\">~a: ~a</a>
+                                        <br/>Изменение 1С имени
+                                        <br/>Старое имя 1С на сайте:~a |  новое:~a"
+                              (articul product)
+                              (articul product)
+                              (name product)
+                              (name product)
+                              name-new)))
+        (gateway-send-error-mail (list ;;"CallCenter@alpha-pc.com"
+                                       ;;"Supplers@alpha-pc.com"
+                                       "web_design@alpha-pc.com"
+                                       "wolforus@gmail.com"
+                                       "slamly@gmail.com" ) mailbody (format nil "1C name ~a" (articul product))))))
 
-(defun process-product (articul price siteprice ekkprice isnew isspec name realname count-total count-transit bonuscount)
+
+(defun process-product (articul price siteprice isnew isspec name realname count-total count-transit bonuscount)
   (let ((product (aif (gethash (format nil "~a" articul) *storage*)
                       it
                       (make-instance 'product :articul articul))))
+    ;; (wlog product)
+    ;; (wlog count-total)
     (when (and (equal (type-of product) 'product)
                (gateway-check-price product price siteprice))
+      ;; (gateway-check-1c-name product name)
       (setf (articul product)         articul
-            (name product)            name
+            (name product)            (if (and (not (null name))
+                                               (not (equal "" name)))
+                                          name
+                                          (name product))
             (realname product)        (if (or (null (realname product))
                                               (string= ""  (realname product)))
                                           (if (or (null realname)
@@ -185,11 +220,15 @@ Content-Transfer-Encoding: base64
             (price product)           price
             (siteprice product)       siteprice
             (bonuscount product)      bonuscount
-            (ekkprice product)        ekkprice
-            (active product)          (if (= count-total 0) nil t)
+            ;; (ekkprice product)        ekkprice
+            (count-total product)     (if count-total
+                                          (ceiling (arnesi:parse-float count-total))
+                                          (if (count-total product)
+                                              (count-total product)
+                                              0))
+            (active product)          (if (= (count-total product) 0) nil t)
             (newbie product)	        (if (string= "0" isnew) nil t)
             (sale product)            (if (string= "0" isspec) nil t)
-            (count-total product)     count-total
             (count-transit  product)  count-transit)
       (setf (gethash (format nil "~a" articul) *storage*) product))))
 
@@ -206,7 +245,8 @@ Content-Transfer-Encoding: base64
                    (setf (active v) nil)))
              *storage*)
     (loop :for packet :in (reverse (caddr (car *history*))) :do
-       (process packet))))
+       (process packet))
+    (post-proccess-gateway)))
 
 ;; (let ((a 0))
 ;;   (maphash #'(lambda (k v)

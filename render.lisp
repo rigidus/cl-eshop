@@ -1,9 +1,5 @@
 ;;;; render.lisp
-;;;;
-;;;; This file is part of the cl-eshop project, released under GNU Affero General Public License, Version 3.0
-;;;; See file COPYING for details.
-;;;;
-;;;; Author: Glukhov Michail aka Rigidus <i.am.rigidus@gmail.com>
+
 
 (in-package #:eshop)
 
@@ -12,7 +8,6 @@
 
 (setf *default-render-method* (make-instance 'eshop-render))
 
-
 (defmethod restas:render-object ((designer eshop-render) (object group))
   (default-page
       (catalog:content
@@ -20,27 +15,27 @@
              :breadcrumbs (catalog:breadcrumbs (breadcrumbs-add-vendor (breadcrumbs object)))
              :menu (menu object)
              :rightblocks (append
-                           (if (= 0 (num-nonempty-filters object))
-                               nil
-                               (list (fullfilter:rightfilter
-                                      (list :filters (loop :for filter
-                                                        :in (remove-if
-                                                             #'(lambda (fil)
-                                                                 (is-empty-filtered-list object fil))
-                                                             (filters object))
-                                                        :collect (make-string-filter object filter))))))
-                           ;;fullfilter
-                           (let ((ret (rightblocks)))
-                             (if (not (null (fullfilter object)))
-                                 (push (restas:render-object designer (fullfilter object)) ret))
-                             ret))
+                            (if (= 0 (num-nonempty-filters object))
+                                nil
+                                (list (fullfilter:rightfilter
+                                       (list :filters (loop :for filter
+                                                         :in (remove-if
+                                                              #'(lambda (fil)
+                                                                  (is-empty-filtered-list object fil))
+                                                              (filters object))
+                                                         :collect (make-string-filter object filter))))))
+                            ;;fullfilter
+                            (let ((ret (rightblocks)))
+                              (if (not (null (fullfilter object)))
+                                  (push (restas:render-object designer (fullfilter object)) ret))
+                              ret))
              :subcontent (if (and (null (products object))
                                   (null (getf (request-get-plist) :fullfilter))
                                   (null (getf (request-get-plist) :vendor)))
                              ;; Отображаем группы
                              (catalog:centergroup
                               (list
-                               :producers nil ;; (restas:render-object designer (make-producers object))
+                               :producers nil;;(restas:render-object designer (make-producers object))
                                :accessories (catalog:accessories)
                                :groups (remove-if ;; удаляем пустые и неактивные группы
                                         #'(lambda (x)
@@ -54,7 +49,7 @@
                                             :cnt (let ((products (get-recursive-products child)))
                                                    (if (null products)
                                                        "-"
-                                                       (length (remove-if-not #'(lambda (product)
+                                                      (length (remove-if-not #'(lambda (product)
                                                                                   (active product))
                                                                               products))))
                                             :pic (pic child)
@@ -115,7 +110,6 @@
                             (sklonenie (name object) 3)))))))
 
 
-
 (defmethod restas:render-object ((designer eshop-render) (object group-filter))
   (fullfilter:container
    (list :name (name object)
@@ -157,15 +151,15 @@
                          :subst (format nil "/~a" (articul object))
                          :pics (cdr pics)
                          :firstpic (if (null pics) nil (car pics))
-                         :optlist (if (null (optgroups object))
-                                      ""
-                                      (product:optlist
-                                       (list :optgroups (mapcar #'(lambda (optgroup)
-                                                                    ;;не отображать группу опций с именем "Secret"
-                                                                    (if (not (string= (name optgroup)
+                         :optlist (let ((optlist  (remove-if #'null (mapcar #'(lambda (optgroup)
+                                                                     ;;не отображать группу опций с именем "Secret"
+                                                                     (if (not (string= (name optgroup)
                                                                                       "Secret"))
                                                                         (restas:render-object designer optgroup)))
-                                                                (optgroups object)))))
+                                                                           (optgroups object)))))
+                                    (if (null optlist)
+                                        nil
+                                        (product:optlist (list :optgroups optlist))))
                          :accessories (product:accessories)
                          :reviews (product:reviews)
                          :simular (product:simulars)
@@ -184,6 +178,11 @@
                          :active (active object)
                          :descr (descr object)
                          :shortdescr (shortdescr object)
+                         :dontshdev (gethash (articul object) *special-products*)
+                         :seotextflag (or (and (descr object)
+                                               (not (string= "" (stripper (descr object)))))
+                                          (and (shortdescr object)
+                                               (not (string= "" (stripper (shortdescr object))))))
                          :predzakaz (predzakaz object)
                          :addproductcart (if (predzakaz object)
                                              (soy.buttons:add-predzakaz (list :articul (articul object)))
@@ -191,7 +190,9 @@
                                                                                  :name (realname object)
                                                                                  :pic (if (null pics) nil (car pics))
                                                                                  :siteprice (siteprice object)
-                                                                                 :price (price object))))
+                                                                                 :price (price object)
+                                                                                 ;; :deliveryprice (delivery-price object)
+                                                                                 )))
                          :addoneclick (if (not (predzakaz object))
                                           (soy.buttons:add-one-click (list :articul (articul object))))))
           :keywords (format nil "~a"
@@ -236,8 +237,8 @@
 
 (defmethod restas:render-object ((designer eshop-render) (object filter))
   (let ((products-list (remove-if-not (func object)
-                                      (remove-if-not #'active
-                                                     (get-recursive-products (parent object)))))
+                                     (remove-if-not #'active
+                                                    (get-recursive-products (parent object)))))
         (request-get-plist (request-get-plist))
         (fltr-name  (name object))
         (grname (name (parent object))))
@@ -268,8 +269,7 @@
                                                             :collect (make-string-filter (parent object)
                                                                                          filter
                                                                                          (equal object filter)))))))
-                               (rightblocks))
-                 :tradehits (tradehits)
+                                   (rightblocks))
                  :subcontent (catalog:centerproduct
                               (list
                                :sorts (sorts request-get-plist)
@@ -294,6 +294,7 @@
                         (format nil "~a ~a ~a - купить ~a ~a ~a по низкой цене, продажа ~a ~a ~a с доставкой и гарантией в ЦиFры 320-8080"
                                 grname-1
                                 name-1
+                                vendor
                                 grname-2
                                 name-2
                                 vendor
@@ -307,6 +308,7 @@
                                 name-2
                                 grname-3
                                 name-3))))))))
+
 
 
 (defmethod restas:render-object ((designer eshop-render) (object optgroup))

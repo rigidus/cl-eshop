@@ -55,14 +55,36 @@
               (articul (nth 5 args))
               (product (gethash articul *storage*))
               (name (realname product))
-              (price (price product))
+              (siteprice (siteprice product))
+              ;; (delivery-price (delivery-price product))
               (picname (car (get-pics articul))))
          (format nil "<area shape=\"rect\" coords=\"~a,~a,~a,~a\"
-                     href=\"#add\" onclick=\"return rAddCart('~a', '',
-                     '~a', ~a, 1,'/~a','/pic/small/~a/~a');\">"
+                     href=\"#add\" ~a>"
                  c1 c2 c3 c4
-                 articul name price articul articul picname)))
-
+                 (soy.buttons:add-product-onclick
+                  (list :articul articul
+                        :name name
+                        :siteprice siteprice
+                        ;; :deliveryprice delivery-price
+                        :pic picname
+                        )))))
+      ((string= type "buy")
+       (let* ((articul (nth 1 args))
+              (product (gethash articul *storage*)))
+         (when product
+           (let ((name (realname product))
+                 (siteprice (siteprice product))
+                 ;; (delivery-price (delivery-price product))
+                 (picname (car (get-pics articul))))
+             (format nil "<big class=\"price\"><b>~a</b><var> руб.</var></big>~a"
+                     (get-format-price siteprice)
+                     (soy.buttons:add-product-cart
+                               (list :articul articul
+                                     :name name
+                                     :siteprice siteprice
+                                     ;; :deliveryprice delivery-price
+                                     :pic picname
+                                     )))))))
       (t
        (format nil "<!-- unknown format -->~%")))))
 

@@ -27,7 +27,7 @@
       (setf pricesum sm))
     (setf client-mail
           (sendmail:clientmail
-           (list :datetime (get-date-time)
+           (list :datetime (time.get-date-time)
                  :order_id order-id
                  :name name
                  :family "" ;; Фамилия не передается отдельно
@@ -49,18 +49,10 @@
                 :addr "Левашовский пр., д.12"
                 :phone phone
                 :email ""
-                :date (get-date-time)
+                :date (time.get-date-time)
                 :comment (format nil "Заказ через форму один клик ~@[!!! Предзаказ !!!~]" (predzakaz (gethash articul *storage*)))
                 :products products))
-    (setf filename (multiple-value-bind (second minute hour date month year) (get-decoded-time)
-                     (declare (ignore second))
-                     (format nil
-                             "~d~2,'0d~2,'0d_~a.txt"
-                             year
-                             month
-                             date
-                             order-id
-                             )))
+    (setf filename (format nil "~a_~a.txt" (time.get-short-date) order-id))
             ;;сорханение заказа
     (save-order-text order-id client-mail)
     ;; удаление страных символов
@@ -70,7 +62,7 @@
     (send-mail (list "stetoscop@gmail.com") client-mail filename  tks-mail order-id)
     (send-mail (list "shop@320-8080.ru") client-mail filename  tks-mail order-id)
     (send-mail (list "zakaz320@yandex.ru") client-mail filename  tks-mail order-id)
-    ;;(send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
+    (send-mail (list "wolforus@gmail.com") client-mail filename tks-mail order-id)
     order-id))
 
 

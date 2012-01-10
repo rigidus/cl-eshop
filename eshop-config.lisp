@@ -33,10 +33,14 @@
 (defparameter *path-to-conf* (format nil "~aDropbox/htconf" (user-homedir-pathname)))
 (defparameter *path-to-pics* (format nil "~ahtpics" (user-homedir-pathname)))
 
-
+(defparameter *path-to-static-pages* (format nil "~aDropbox/content/static-pages" (user-homedir-pathname)))
+(export '*path-to-static-pages*)
 
 (defparameter *path-order-id-file* "order-id.txt")
 (export '*path-order-id-file*)
+
+(defparameter *path-to-logs* (format nil "~aeshop-logs" (user-homedir-pathname)))
+(export '*path-to-logs*)
 
 
 (defun compile-templates ()
