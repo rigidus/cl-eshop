@@ -1,2 +1,1 @@
-*.txt filter=private diff=private
-*-.lisp filter=private diff=private
+*-.* filter=private diff=private
