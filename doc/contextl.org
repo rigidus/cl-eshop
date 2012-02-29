@@ -1,0 +1,820 @@
+
+http://popcornnews.ru/news/128410
+
+http://www.p-cos.net/documents/contextl-overview.pdf
+
+http://common-lisp.net/project/closer/index.html
+http://www.jot.fm/issues/issue_2008_03/article4/
+http://www.p-cos.net/index.html
+================================================
+
+
+ABSTRACT
+
+There is a wide range of scenarios where software systems
+have to be able to behave differently according to their context of
+use. In Context-oriented Programming (COP), programs can be
+partitioned into behavioral variations that can be freely activated
+and combined at runtime with well-defined scopes, such that the
+program behavior is affected depending on context. About four years
+ago, we have introduced our vision of Context-oriented Programming and
+have presented the programming language ContextL as an extension to
+the Common Lisp Object System (CLOS), as our first language extension
+that explicitly realizes this vision. Since then, ContextL has been
+picked up by various developers world-wide, is now in use in several
+software systems, and has been continuously improved to meet the
+demands of its users. For these reasons, ContextL can currently be
+regarded as the most mature realization of COP concepts. In this
+paper, we give an overview of the major ingredients of ContextL,
+describe the developments in ContextL of the last four years, and
+sketch some future work.
+
+Существует широкий диапазон сценариев, где программное обеспечение
+системы должны быть в состоянии вести себя по-разному в зависимости от
+их контекста использования. В контекстно-ориентированное
+программирование (КС), программы можно разбить на поведенческие
+изменения, которые могут быть активированы и свободно сочетаются во
+время выполнения четко определенных областях, таких, что поведение
+программы зависит в зависимости от контекста. Около четырех лет назад,
+мы ввели нашего видения Контекст-ориентированное программирование и
+представили ContextL языка программирования в качестве дополнения к
+общей цели Lisp System (CLOS), а наш первый расширение языка, который
+явно понимает, что это видение. С тех пор, ContextL была подхвачена
+различными разработчиками по всему миру, в настоящее время
+используется несколько программных систем, и постоянно обновляется в
+соответствии с требованиями пользователей. По этим причинам, ContextL
+в настоящее время можно рассматривать как наиболее зрелый реализации
+концепции КС. В этой статье мы даем обзор основных компонентов
+ContextL, описывают события в ContextL последних четырех лет, и
+наметить некоторые будущей работы.
+
+
+Categories and Subject Descriptors
+D.1 [Software]: Programming Techniques—Object-oriented Programming; D.3.3 [Programming Languages]: Language Constructs and Features
+
+
+Keywords
+Context-oriented programming, behavioral variations, layer activation, dynamic scoping
+
+1. CONTEXT-ORIENTED PROGRAMMING
+
+There is a wide range of scenarios where software systems have to be
+able to behave differently according to their context of use [2, 3, 4,
+6, 16, 23, 25, 28]. In Context-oriented Programming (COP), programs
+can be partitioned into behavioral variations that can be freely
+activated and combined at runtime with well-defined scopes. Such
+behavioral variations consist of partial definitions for typical
+program entities, like classes, methods, functions, procedures, and so
+on. The essential ingredients of Context-oriented Programming are as
+follows:
+
+Существует широкий диапазон сценариев, где программное обеспечение
+системы должны быть в состоянии вести себя по-разному в зависимости от
+их контекста использования [2, 3, 4, 6, 16, 23, 25, 28]. В
+контекстно-ориентированное программирование (КС), программы можно
+разбить на поведенческие изменения, которые могут быть активированы и
+свободно сочетаются во время работы с четко определенными
+областями. Такие поведенческие изменения состоят из частичного
+определения типичных лиц программы, как классы, методы, функции,
+процедуры и так далее.Основные составляющие контекстно-ориентированное
+программирование в следующем:
+
+
+
+Context is any information that can be computationally accessed in a
+software system.
+
+Контекст является любая информация, которая может быть вычислительно
+доступ в программное обеспечение системы.
+
+
+Behavioral variations describe the context-dependent behavior of a
+software system as increments on the underlying context-independent
+program definitions.
+
+Поведенческие изменения описания контекстно-зависимого поведения
+программной системы, как шагом на основной контекстно-независимые
+определения программы.
+
+
+Layers group such behavioral variations as first-class entities that
+can be referenced in a program at runtime.
+
+Слои группы, такие поведенческие изменения как первоклассные объекты,
+которые могут быть ссылки в программе во время выполнения.
+
+
+Layer activation is achieved by language constructs that ensure that
+such layers are added at runtime, such that the respective partial
+program definitions have an inﬂuence on the actual behavior of a
+program.
+
+Слой активация достигается за счет языковых конструкций, которые
+гарантируют, что такие слои добавляются во время выполнения, например,
+что соответствующие частичные определения программы влияют на реальное
+поведение программы.
+
+
+Scoping of layer activation and deactivation ensures that the
+behavioral variations are only effective for well-defined parts of a
+program, and for well-defined durations.
+
+Предварительное активации и деактивации слой гарантирует, что
+поведенческие изменения вступают в силу только для четко определенных
+частей программы, а также для четкой длительности.
+
+
+  Context-oriented Programming focuses on programming constructs to
+  enable grouping, referencing, and activation and deactivation of
+  layers of behavioral variations. It should thus be seen as a
+  complement to the (equally important) research on context
+  acquisition and reasoning, where the focus is on sensing (low-level)
+  context data and inferring (high-level) context information (for
+  example [25]). Our definition of context is open and pragmatic, in
+  that it treats any computationally accessible information as
+  potential parameters for inﬂuencing the behavior of a program. In
+  contrast, the widely cited definition for context of Dey at al. [17]
+  states that “Context is any information that can be used to
+  characterize the situation of an entity. An entity is a person,
+  place, or object that is considered relevant to the interaction
+  between a user and an application, including the user and
+  applications themselves.” That definition distinguishes between
+  relevant and irrelevant information, which is important when
+  modelling systems for context acquisition and context reasoning. It
+  differs in this regard from our definition that is targeted at
+  structured ways of how to affect program behavior depending on
+  context, which should be addressed by general-purpose constructs and
+  thus independent of the kinds of context information they may or may
+  not depend on.
+
+Контекст-ориентированное программирование сосредотачивается на
+программные конструкции включить группировку, ссылки, и включение и
+выключение слоев поведенческие изменения. Таким образом, следует
+рассматривать как дополнение к (не менее важно) исследования по
+приобретению контекста и рассуждения, где акцент делается на
+зондирование (низкий уровень) контекст данных и выведения (высокого
+уровня), контекстной информации (например, [25]) . Наше определение
+контексте открытого и прагматичного, в том, что оно относится к любой
+вычислительной доступную информацию как потенциальные параметры,
+влияющие на поведение программы. В отличие от широко цитируется
+определение контекста Дей и соавт. [17] говорится, что «Контекст
+является любая информация, которая может быть использована для
+характеристики ситуации в организации. Предприятие является лицо,
+место или объект, который считается соответствующим взаимодействия
+между пользователем и приложением, в том числе пользователей и сами
+приложения. "Это определение различия между актуальной и неактуальной
+информации, что важно при моделировании системы контексте приобретения
+и контекст рассуждений. Он отличается в этом отношении от нашего
+определения, которые направлены на структурированные способы, как
+повлиять на поведение программы в зависимости от контекста, которые
+должны быть решены общего назначения, конструкции и, следовательно,
+зависят от вида контекста информации, которую они могут и не зависеть.
+
+
+  About four years ago, we have introduced our vision of
+  Context-oriented Programming and have presented the programming
+  language ContextL as an extension to the Common Lisp Object System
+  (CLOS), as our first language extension that explicitly realizes
+  this vision [8]. Since then we have implemented the underlying ideas
+  as extensions for various other programming languages, like
+  Smalltalk [19], Java [9], Ruby and Python, together with various use
+  cases. During the course of these experiments, the essential
+  ingredients of context, behavioral variations and scoped layer
+  activation have proved to be stable corner stones.1
+
+Около четырех лет назад, мы ввели нашего видения
+Контекст-ориентированное программирование и представили ContextL языка
+программирования в качестве дополнения к общей цели Lisp System
+(CLOS), а наш первый расширение языка, который явно понимает, что это
+видение [8]. С тех пор мы реализовали основные идеи, как расширение
+для различных других языков программирования, таких как Smalltalk
+[19], Java [9], Ruby и Python, а также с различными вариантами
+использования. В ходе этих экспериментов, основные составляющие
+контекста, поведенческие изменения и областью активации слоя оказались
+стабильными углу stones.1
+
+
+  On top of that, ContextL has been picked up by various developers
+  world-wide since its public release as an opensource language
+  extension, is now in use in several software systems in the “real
+  world,” and has been continuously improved to meet the demands of
+  its users. For these reasons, ContextL can currently be regarded as
+  the most mature realization of COP concepts.2
+
+Кроме того, ContextL была подхвачена различными разработчиками всем
+мире с момента его обнародования, как с открытым исходным кодом
+расширение языка, в настоящее время используется в нескольких системах
+программное обеспечение в "реальном мире", и был постоянно
+совершенствуется в соответствии с требованиями своих пользователей. По
+этим причинам, ContextL в настоящее время можно рассматривать как
+наиболее зрелая реализация КС concepts.2
+
+
+2. CONTEXTL: STATE OF THE ART
+
+2.1 Essential Features ContextL is an extension to the Common Lisp
+  Object System (CLOS), and thus includes object-oriented features
+  like classes with multiple inheritance, slots (fields) and methods
+  with multiple dispatch. Like CLOS, ContextL is not based on message
+  sending, but on generic functions [5].3 For each of the core
+  defining constructs in CLOS, there is a corresponding defining
+  construct in ContextL: For definining classes, ContextL provides
+  define-layered-class as an analogue to CLOS’s defclass. Likewise,
+  ContextL provides define-layered-function and define-layered-method
+  as analogues to CLOS’s defgeneric and defmethod for defining generic
+  functions and methods.
+
+ContextL является дополнением к общей цели Lisp System (CLOS), и,
+следовательно, включает в себя объектно-ориентированных функций, таких
+как классы с множественным наследованием, слоты (поля) и методы, с
+множественной диспетчеризации. Как CLOS, ContextL не основывается на
+посылке сообщения, но на общих функций [5] 3 Для каждого из основных
+определяющих конструкций в CLOS, есть соответствующая определяющая
+конструкцию в ContextL: Для definining классов, ContextL обеспечивает
+определить, слоисто-класса как аналог defclass CLOS в. Кроме того,
+предусматривается определить ContextL слоев функции и определить,
+слоисто-метод аналогов defgeneric CLOS и defmethod для определения
+общих функций и методов.
+
+
+  Layers can be introduced in ContextL with deflayer and an associated
+  name, as follows.
+
+(deflayer layer-name )
+
+Such layers can then be further specified with partial class and
+method definitions, which can be explicitly associated with such
+layers, as follows.  Такие слои могут быть уточнено с частичным
+определениям классов и методов, которые могут быть явно связаны с
+такими слоями, следующим образом.
+
+(define-layered-class class-name [:in-layer layer-name ] ({superclass
+   }∗ ) ({slot-specification }∗ ) {class-option }∗ )
+
+(defmethod function-name [:in-layer layer-name ] {method-qualifier }∗
+   parameters method-body )
+
+There is always a root layer present that defines the
+context-independent behavior of a program, and class and method
+definitions can be associated with the root layer by either omitting
+the :in-layer specification, or by using t as the layer name.4
+
+Существует всегда настоящий корень слой, который определяет контекст,
+независимое поведение программы, а также класс и метод определения
+могут быть связаны с корневого слоя либо опустить: в слое
+спецификации, либо с помощью т как слой name.4
+
+
+  By default, only the root layer is active at runtime, which means
+  that only definitions associated with the root layer effect the
+  behavior of a program. Other layers can be activated at runtime by
+  way of with-active-layers, as follows.
+
+По умолчанию, только корневого слоя активна во время выполнения, что
+означает, что только определений, связанных с действием корневого слоя
+поведение программы. Другие слои могут быть активированы во время
+выполнения путем с активных слоев, следующим образом.
+
+ (with-active-layers ({layer-name }∗ ) body )
+
+Such a layer activation ensures that all the named layers affect the
+program behavior for the dynamic extent of the enclosed program code
+(body). Layer activation is dynamically scoped: Both direct and
+indirect invocations of generic functions (methods) and slot accesses
+in the control ﬂow of the layer activation are affected. Furthermore,
+layer activation is restricted to the current thread of execution in
+multithreaded Common Lisp implementations, to avoid race conditions
+and interferences between different contexts.
+
+Такой слой активации гарантирует, что все названные слои влияют на
+поведение программы для динамического степени закрытый программный код
+(тело). Слой активации динамической областью видимости: прямые и
+косвенные вызовы общие функции (методы) и слот для доступа в потоке
+управления слоя активации страдают. Кроме того, уровень активации
+ограничен текущим потоком выполнения в многопоточной общей реализации
+Lisp, чтобы избежать гонки условий и помех между различными
+контекстами.
+
+  Furthermore, layers can be deactivated at runtime by way of
+with-inactive-layers, as follows.  Кроме того, слои могут быть
+отключены во время выполнения путем с неактивного слоев, следующим
+образом.
+
+ (with-inactive-layers ({layer-name }∗ ) body )
+
+Such a layer deactivation ensures that none of the named layers affect
+the program behavior for the dynamic extent of the enclosed program
+code anymore. As with with-active-layers, layer deactivation is
+dynamically scoped and restricted to the current thread of execution.
+
+Такой слой дезактивации гарантирует, что ни один из названных слоев
+влияют на поведение программы для динамического степени закрытый
+программный код больше. Как и с-активного слоя: дезактивация
+динамической областью видимости и ограничения на текущий поток
+выполнения.
+
+
+  Layer activations and deactivations can be nested arbitrarily in the
+  control ﬂow of the program. Both multiple activations and
+  deactivations of the same layer are ignored, each layer is only
+  active or inactive at most once. Furthermore, the order of layer
+  activation determines method specificity when generic functions are
+  invoked: Methods from more recently activated layers in the control
+  ﬂow of a program are executed before methods from less recently
+  activated layers and the root layer.
+
+Слой активации и деактиваций могут быть вложены в произвольно потока
+управления программы. И несколько активаций и деактиваций одного и
+того же слоя игнорируются, каждый слой только активным или неактивным
+более одного раза. Кроме того, порядок определяет уровень активации
+метод специфику, когда общие функции, которые вызываются: ​​Методы из
+недавно активированных слоях потока управления программы выполняются
+до методы менее в последнее время активировать слоев и корневого слоя.
+
+
+  The above constructs allow referencing layers at runtime, but only
+  as second-class citizens. However, for each of the above constructs,
+  there exist corresponding first-class constructs: The functions
+  ensure-layered-function, ensure-layered-method and ensure-layer
+  enable defining layered functions, layered methods and layers at
+  runtime. Furthermore, funcall-with-layer-context and
+  apply-with-layer-context enable activating and deactivating computed
+  combinations of layers, and adjoin-layer and remove-layer enable
+  computing such combinations of layers from first-class layer
+  representations.
+
+Выше конструкции позволяют ссылаться слоев во время выполнения, но
+только как к гражданам второго сорта. Тем не менее, для каждого из
+перечисленных конструкций, существуют соответствующие первого класса
+конструкции: функции обеспечения слоев, функции, обеспечить слоев
+методом и обеспечить слоя позволяют определении слоистой функции,
+методы и слоистых слоев во время выполнения. Кроме того,
+funcall-с-слой контекста и применять-с-слой контекста позволяет
+включение и выключение компьютерной комбинации слоев, примыкающих слоя
+и удалить слой позволяет расчета такой комбинации слоев с первого
+класса представления слоя.
+
+
+  Finally, there are cases where it is useful that layers are
+  activated or deactivated globally for all threads without dynamic
+  scope, for example for interactive testing and development, or for
+  program deployment (at system startup time). The functions
+  ensure-active-layer and ensure-inactive-layer enable such global
+  activation and deactivation of layers.
+
+Наконец, бывают случаи, когда это полезно, что слои активировать или
+деактивировать глобально для всех потоков без динамической области,
+например, для интерактивного тестирования и развития, или программа
+развертывания (на время запуска системы). Функции обеспечения,
+активного слоя и обеспечить неактивного слоя позволяют такие
+глобальные включение и выключение слоев.
+
+
+
+ 2.2 Efficient Layer Activation Context-oriented Programming
+  encourages continually changing program behavior. For example, we
+  have illustrated a use case in [9] where side effects on graphical
+  objects trigger updates of their representations on the
+  screen. Context-oriented Programming can successfully be used in
+  such a scenario to avoid invalid screen updates in situations where
+  graphical objects are in intermediate states during composite
+  changes. This use case is characterized by repeated activation and
+  deactivation of a layer that is responsible for the necessary screen
+  updates.
+
+Контекст-ориентированное программирование рекомендует постоянно
+меняется поведение программы. Например, мы проиллюстрировали вариант
+использования в работе [9], где побочные эффекты на графических
+объектов вызвать обновление их представления на
+экране. Контекст-ориентированное программирование может быть успешно
+использован в такой ситуации, чтобы избежать недействительным
+обновления экрана в ситуациях, когда графические объекты находятся в
+промежуточных состояниях во время композитный изменения. Этот вариант
+характеризуется повторной активации и деактивации слой, который
+отвечает за необходимые обновления экрана.
+
+
+  Such examples show that it must be possible to implement layer
+  activation and deactivation efficiently in order to make
+  Context-oriented Programming a sane option in a programmer’s
+  toolbox. It is indeed not obvious that layer activation and
+  deactivation can be efficient. However, we have found an
+  implementation for ContextL on top of CLOS with competitive
+  performance. The key ingredients are as follows.
+
+Такие примеры показывают, что она должна быть возможность реализовать
+активации и деактивации слой эффективно для того, чтобы сделать
+контекстно-ориентированное программирование разумный вариант в
+арсенале программиста. Это действительно не очевидно, что активация и
+отключение слой может быть эффективным. Тем не менее, мы нашли
+реализацию ContextL на вершине CLOS с конкурентоспособной
+производительности. Основными ингредиентами являются следующие.
+
+
+
+    • Layer activation and deactivation leads to a runtime composition
+    of multiple, arbitrary layers. Such layer composition is realized
+    internally in ContextL by reusing CLOS’s support for multiple
+    inheritance. This can be achieved by representing composed layers
+    as dynamically created classes that multiply inherit from other
+    layers, on top of which they are activated and which are
+    themselves represented as classes. Dynamic class creation is
+    supported by way of the CLOS Metaobject Protocol [20], and
+    although dynamic class creation is costly in terms of performance,
+    such classes can be cached in a way such that each combination of
+    a given sequence of layers needs to be created only once, and can
+    be looked up very efficiently from then on.
+
+Активация и деактивация слоя приводит к времени выполнения составе
+нескольких, произвольных слоев. Такой состав слой реализуется внутри
+страны в ContextL за счет повторного использования поддержки CLOS для
+множественного наследования. Это может быть достигнуто путем
+представления состоит слои динамически создаваемых классов, которые
+многократно наследовать от других слоев, на вершине которой они
+активируются и которые сами по себе представляют, как
+класса. Динамическое создание класса поддерживается путем протокол
+CLOS метаобъектов [20], и, хотя динамического создания класса является
+дорогостоящим с точки зрения производительности, такие классы можно
+кэшировать таким образом, что каждая комбинация заданной
+последовательности слоев должна быть создана только один раз, и может
+быть найден очень эффективно с тех пор.
+
+
+    • In ContextL, method selection and combination must depend on the
+    current sequence of active layers. Since layer combinations are
+    already represented as classes, we can internally represent the
+    current sequence of active layers as a (prototypical) instance of
+    such a combined class, and drive method selection and combination
+    by implicitly passing such an instance as an argument to an
+    appropriately specialized parameter that is added to each layered
+    method internally.5 In this case, efficiency also comes from
+    caches that allow for fast lookup of applicable methods, which is
+    already provided by typical CLOS implementations [21].
+
+В ContextL, выбор метода и сочетание должно зависеть от текущей
+последовательности активных слоев. Так как слой комбинации уже
+представлены в виде классов, мы можем внутренне представлять текущей
+последовательности активных слоях (прототип), например таких
+комбинированных класса, и выбор метода диска и комбинации, неявно
+принятия такого экземпляра в качестве аргумента соответствующим
+специализированным параметр, который добавляется к каждому слоистых
+метод internally.5 в этом случае эффективность также исходит из кэша,
+что позволяет для быстрого поиска применимых методов, которые уже
+предоставлены типичных реализаций CLOS [21].
+
+
+    • Layer activation and deactivation must modify the current
+    sequence of active layers in such a way that the change is only
+    visible in the current thread of execu tion, to ensure that they
+    do not interfere with other threads in multithreaded Common Lisp
+    implementations. To achieve this, the representation of the
+    current sequence of active layers is bound to a dynamically
+    scoped, thread-local variable, which are directly supported by
+    Common Lisp and for which implementation alternatives with
+    well-understood performance characteristics exist [1].
+
+Активация и деактивация слоя необходимо изменить текущую
+последовательность активных слоев таким образом, что изменения видны
+только в текущем потоке Тиона исполнительной, чтобы они не мешали
+другим потокам в многопоточных общей реализации Lisp. Для достижения
+этого, представление текущей последовательности активных слоев связан
+с динамической областью видимости, потоков локальных переменных,
+которые непосредственно поддерживают Common Lisp и для которых
+реализация альтернатив с хорошо понятной характеристики существует
+[1].
+
+
+In [9], we discuss our overall implementation strategy in more detail,
+together with some benchmarks that indeed show a low overhead for
+layer activation and deactivation in terms of performance.
+
+В работе [9], мы обсуждаем наши общие реализации стратегии более
+подробно, а также некоторые критерии, которые действительно показывают
+низкие накладные расходы для активации и деактивации слой с точки
+зрения производительности.
+
+
+
+2.3 Reﬂective Layer Activation Organizing a program into layers may
+  lead to dependencies between layers: Layers may require each other’s
+  presence, or may be mutually exclusive. For example, a typicaluse
+  case for Context-oriented Programming is to separate the generation
+  of different output formats (html, pdf, json, etc.) from the same
+  document tree into several layers. Activating a layer for one output
+  format should thus deactivate the layers for other output
+  formats. In [10], we illustrated this idea with another example,
+  where different tariffs for cell phone usage are separated into
+  different layers, which must be mutually exclusive and, at the same
+  time, all require the presence of another base tariff layer.
+
+Организация программы в слоях может привести к зависимости между
+слоями: Слои могут потребовать присутствии друг друга, или может быть
+взаимоисключающими. Например, typicaluse случае
+контекстно-ориентированное программирование является разделение
+генерации различных форматах (HTML, PDF, JSON и др.) из того же дерева
+документа в несколько слоев. Активация слоя один выходной формат таким
+образом отключить слои для других форматов. В работе [10],
+иллюстрирует эту идею с другой пример, где разные тарифы для
+мобильного использования телефона разделена на разные слои, которые
+должны быть взаимоисключающими, и в то же время, все это требует
+наличия еще один уровень тарифов базы.
+
+
+  In principle, it is possible to make such dependencies explicit by
+  simply activating and deactivating all the involved layers in all
+  the places where layer activation or deactivation occurs. However,
+  this turns out cumbersome. In [10], we introduce a reﬂective API for
+  ContextL that can be used to make layer activations and
+  deactivations automatically trigger other layer activations and
+  deactivations behind the scenes. The essential idea is that each
+  layer activation computes the resulting sequence of active layers by
+  invoking the function adjoin-layer-using-class, and each layer
+  deactivation computes the resulting sequence of active layers by
+  invoking remove-layer-using-class. These two functions are exposed
+  by the ContextL API, are themselves layered functions, and can thus
+  themselves be specialized by user-provided layered methods. Such
+  layered methods can inspect the layers to be activated or
+  deactivated, inspect the current sequence of active layers, and
+  ensure that other required layers are implicitly activated as well,
+  other excluded layers are implicitly deactivated, or invalid layer
+  activations or deactivations are rejected.
+
+В принципе, это можно сделать такой явной зависимости просто включение
+и выключение всех заинтересованных слоев во всех местах, где слой
+активации или деактивации происходит. Однако это оказывается
+громоздкой. В работе [10], введем отражающий API для ContextL, который
+может быть использован для активации слоя и деактиваций автоматически
+запускать другие активации слоя и деактиваций за кулисами. Основная
+идея в том, что каждый слой активации вычисляет результирующую
+последовательность активного слоя путем вызова функции примыкают слоя
+с использованием класса, и каждый слой дезактивации вычисляет
+результирующую последовательность активных слоев, вызывая удалить
+слой-с-класса. Эти две функции, доступные в ContextL API, сами
+слоистых функций, и таким образом себя будет специализироваться на
+предоставленные пользователем слоистых методами. Такие слоистые методы
+могут проверить слои должны быть включена или выключена, проверить
+текущую последовательность активных слоев, а также обеспечить другие
+необходимые слои неявно активирован, а также, других исключенных слоев
+неявно отключен, или недействительными активации слоя или деактиваций
+отвергаются.
+
+
+  In [10], we discuss the details of ContextL’s reﬂective
+  architecture, illustrate its use by giving examples, and show that
+  it can be implemented without affecting the performance achieved by
+  the implementation strategy discussed in [9] (see above).
+
+В [10], мы обсуждаем детали отражающие архитектуру ContextL, в
+иллюстрирует его использование, давая примеры и показать, что он может
+быть реализован без ущерба для производительности достигнут в
+результате внедрения стратегии обсуждаются в [9] (см. выше).
+
+
+
+ 2.4 Description of Layer Dependencies In spite of the usefulness of
+  reﬂective layer activation, implementing extensions on top of
+  ContextL’s reﬂective API proves to be a complex task. In [12], we
+  show a first step of how feature diagrams, or better the feature
+  description language (FDL, [15]) as their textual counterpart, can
+  be used to provide a high-level description of layer dependencies,
+  such as requirement and exclusion dependencies. FDL can be added as
+  an extension on top of ContextL’s reﬂective API without changing any
+  of ContextL’s internal implementation details, and without affecting
+  its essential efficiency characteristics.
+
+Несмотря на полезность отражающий слой активации, внедрения расширений
+на вершине отражающей API в ContextL оказывается сложной задачей. В
+[12], мы show первого step о how diagrams feature или better language
+feature description (FDL, [15]), как their textual counterpart, может
+быть used к provide высокий-level description из dependencies layer,
+таких как requirement и зависимостей исключения. FDL могут быть
+добавлены как расширение в верхней части отражающий API ContextL без
+изменения любой внутренней детали ContextL в реализации и не влияя на
+его основные характеристики эффективности.
+
+
+  We have also gained some first experience with using feature
+  diagrams for the requirements elicitation and design phases of
+  context-oriented systems. Context-Oriented Domain Analysis (CODA)
+  [14] is a notation and methodology for describing both the
+  context-independent behavior and the context-dependent behaviorial
+  variations of a system. This notation is based on feature diagrams,
+  but extends it to include – potentially dynamically changing –
+  conditions under which layers are required or excluded. We are
+  currently working on mapping CODA diagrams to context-oriented
+  programming languages such as ContextL.
+
+Мы также получили некоторые первый опыт работы с помощью функции
+диаграмм требованиям выявление и этапах проектирования
+контекстно-ориентированных систем. Контекстно-ориентированный анализ
+домена (CODA) [14] нотация и методология описания и
+контекстно-независимое поведение и контекстно-зависимой behaviorial
+изменения системы. Эта нотация основана на функции диаграмм, но
+расширяет его включить - потенциально динамически меняется - условия,
+при которых требуется слои или исключены. В настоящее время мы
+работаем над CODA отображения диаграмм контекстно-ориентированных
+языков программирования, таких как ContextL.
+
+
+
+ 2.5 Impact Since its original release in 2005, ContextL has been
+  picked up by several developers world-wide, and is now used in a
+  number of software systems in the “real world.” ContextL is
+  typically employed in web applications, where layers are used to
+  separate generation of different output formats from the same
+  document tree, and to provide different views and modes to different
+  kinds of users depending on their respective tasks. For a
+  description of one exemplary case see
+  http://p-cos.blogspot.com/2007_11_01_archive.html.
+
+С момента своего первого выпуска в 2005 году, ContextL была подхвачена
+несколькими разработчиками по всему миру, и в настоящее время
+используется в ряде программных систем в "реальном мире". ContextL
+обычно используется в веб-приложениях, где слои используются для
+разделения генерация различных форматах из того же дерева документа, а
+также поддерживать различные виды и режимы для различных видов
+пользователей в зависимости от своих задач. Для описания одного
+образцовый случай увидеть
+http://p-cos.blogspot.com/2007_11_01_archive.html.
+
+
+  Furthermore, Context-oriented Programming has started to impact
+  other researchers who have picked up the term and the concepts as
+  starting points for their own work [7, 13, 18, 26]. A detailed
+  discussion of such related work is outside the scope of the overview
+  given here.
+
+Кроме того, контекстно-ориентированное программирование начал
+воздействовать на другие исследователи, которые подобрали термин и
+понятия в качестве отправной точки для своих работ [7, 13, 18,
+26]. Подробное обсуждение таких смежных работа выходит за рамки
+данного обзора здесь.
+
+
+
+3. FUTURE WORK AND CONCLUSIONS There are several ways in which
+  ContextL can be extended to broaden its scope of applicability:
+
+   • ContextL’s reﬂective API can be extended to support first-class
+   dynamic enviroments. The idea is to support capturing the current
+   sequence of active layers as a first-class entity such that it can
+   be reeinstated later for a different context. For example, this
+   would allow passing context from one thread to another and storing
+   the current context of a suspended computation to be later resumed,
+   for example in continuation-based web applications [24]. Since
+   frameworks for such continuation-based web applications are
+   typically based on partial continuations, we actually need support
+   for delimited dynamic bindings, as in [22]. Since there are
+   different continuation frameworks available for Common Lisp, we
+   have to design the reﬂective API for first-class dynamic
+   environments in such a way that they are compatible with different
+   kinds of partial continuations.
+
+ContextL в отражающей API могут быть расширены для поддержки
+первоклассных динамических сред где. Идея состоит в том, чтобы
+поддерживать захват текущей последовательности активных слоев в
+качестве первого класса сущности, что она может быть reeinstated позже
+в другом контексте. Например, это позволит переход контексте одного
+потока в другой и хранения нынешних условиях приостановил вычислений,
+которые затем будут возобновлены, например, в продолжение на основе
+веб-приложений [24]. Так как основу для продолжения таких
+веб-приложений, как правило, на основе частичного продолжения, мы на
+самом деле нуждаются в поддержке для разделителями динамической
+привязки, как в [22]. Так как существуют различные рамки для
+продолжения Common Lisp, мы должны разработать отражающий API для
+первоклассных динамических сред таким образом, что они совместимы с
+различными видами частичного продолжения.
+
+
+   • Currently, layers in ContextL contain partial class and method
+   definitions, where the method definitions are typically specialized
+   on classes. Although CLOS supports method specialization on single
+   objects as well, somewhat similar to what is provided in
+   prototype-based object systems, the actual use of layer activation
+   or deactivation for single objects is not straight-forward, but
+   would sometimes be useful. After some experimentation with
+   different ideas, we have come up with a generalization of generic
+   function dispatch called filtered dispatch which allows for
+   filtering arguments before method selection and combination, while
+   passing the original unfiltered arguments to the thus selected
+   methods for execution [11]. This results in a very powerful and
+   expressive dispatch mechanism, which has a potential to serve as a
+   basis for context-dependent behavior of single objects.
+
+В настоящее время в слоях ContextL содержать частичный класс и метод
+определения, где этот метод определения, как правило, специализируются
+на классы. Несмотря на то, CLOS поддерживает метод специализации на
+отдельных объектах, а также, подобный тому, что содержится в базе
+прототипов систем объекта, фактическое использование активации или
+деактивации слой для отдельных объектов, не прямо вперед, но иногда
+полезно. После нескольких экспериментов с разными идеями, мы пришли с
+обобщением общий отправки функция называется фильтром, который
+позволяет отправки для фильтрации аргументы перед выбором метода и
+комбинации, при прохождении оригинального нефильтрованного аргументы
+таким образом выбранных методов исполнения [11]. Это приводит к очень
+мощной и выразительной механизм диспетчеризации, которая имеет
+потенциал, чтобы служить основой для контекстно-зависимого поведения
+одного объекта.
+
+
+   • Context-dependent behavior is also important in distributed
+   settings, especially in the case of ad-hoc mobile networks between
+   mobile devices. Some first experiments in using COP concepts in
+   such a setting are very promising. Interesting research topics are
+   how to distribute layer activation across several nodes of such a
+   network, and how to deal with potentially different context
+   parameters from different interacting nodes. We have described
+   first steps in that regard in the Context-Dependent Role Model
+   [27], and are currently working on integrating a full-ﬂedged
+   distributed architecture with ContextL.
+
+Контекстно-зависимого поведения также важно в распределенных средах,
+особенно в случае специальных мобильных сетей между мобильными
+устройствами. Некоторые первые опыты в использовании КС понятий в
+таких условиях очень перспективным. Интересные темы исследований, как
+распределить слой активации через несколько узлов такой сети, и как
+иметь дело с потенциально другом контексте параметров различных узлов
+взаимодействии. Мы описали первые шаги в этом направлении в
+контекстно-зависимые роли модели [27], и в настоящее время работает
+над включением полноценной распределенной архитектуры с ContextL.
+
+
+  Other important areas of research need to address questions such as:
+
+    • What are good software architectures that can take advantage of
+    Context-oriented Programming? There is now a considerable amount
+    of pratical experience with languages like ContextL, and some
+    design principles have started to emerge, but they have not been
+    codified yet, for example in the form of design patterns and
+    architectural patterns, or in the form of libraries and frameworks
+    that take advantage of Context-oriented Programming.
+
+Что такое хороший архитектуры программного обеспечения, которое может
+воспользоваться контекстно-ориентированное программирование?
+Существует в настоящее время значительное количество практичное опыт
+работы с языками, как ContextL, и некоторые принципы проектирования
+начали появляться, но они не были кодифицированы еще, например, в виде
+шаблонов проектирования и архитектурных шаблонов, либо в виде
+библиотек и структур, которые используют преимущества
+контекстно-ориентированного программирования.
+
+
+    • What are good methodologies for eliciting requirements for, and
+    designing context-oriented software systems? We have made some
+    first steps with CODA [14] (see above), and current research in
+    the field of Software Product Lines and especially Dynamic
+    Software Product Lines are very promising starting points.
+
+Какие хорошие методики для выявления требований, проектирование и
+контекстно-ориентированные программные системы? Мы сделали первые шаги
+с CODA [14] (см. выше), и современные исследования в области
+программных продуктов линии и особенно динамичные линии программных
+продуктов являются весьма перспективными отправной точки.
+
+
+    • How can context-aware systems be tested and verified? This is an
+    inherently hard issue because of the combinatorial explosion of
+    possibilities induced by the presence of multiple context
+    parameters, which is reﬂected in Context-oriented Programming by
+    the presence of multiple layers that can be arbitrarily combined
+    with each other in the general case.
+
+Как можно контекстно-зависимых систем будут протестированы и
+проверены? Само собой, это тяжело, потому что проблема комбинаторного
+взрыва возможности индуцированного наличии нескольких параметров
+связи, что нашло отражение в контекстно-ориентированное
+программирование в присутствии нескольких слоев, которые можно
+произвольно комбинировать друг с другом в общем случае.
+
+
+  At this stage in time, we can rightfully claim that Context-oriented
+  Programming has reached a certain level of maturity, has fostered
+  some interesting research results, and has started to gain traction
+  in industry. ContextL, as based on the Common Lisp Object System,
+  has proved to be a viable tool both for research and for industrial
+  use, and will therefore remain one of our main vehicles for
+  exploring the field in more depth.
+
+На данном этапе времени, мы можем по праву утверждать, что
+контекстно-ориентированное программирование достигла определенного
+уровня зрелости, способствовала некоторые интересные результаты
+исследований, и начал набирать обороты в промышленности. ContextL, а
+на основе общей системы объектов Lisp, оказался действенным
+инструментом как для научных исследований и для промышленного
+использования, и, следовательно, остаются одним из основных средств
+для изучения области более подробно.
+
+
+======================= note
+
+1 All this work has been performed in close collaboration with Robert
+  Hirschfeld.  2 ContextL can be downloaded from
+  http://common-lisp.net/project/closer/contextl.html 3 Note, however,
+  that our experiments with similar extensions for other
+  object-oriented programming languages show that COP is compatible
+  with message sending as well.  4 The symbol t is traditionally used
+  in Lisp dialects to denote “general” concepts, like the boolan truth
+  value, the super-type of all types, the standard output stream, and
+  so on.  5 Due to the fact that CLOS supports multiple dispatch,
+  adding such a specialized parameter to a method does not prevent
+  users from dispatching on other arguments.
