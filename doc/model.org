@@ -196,3 +196,5 @@
 m.gluhov@ravta.ru
 jabber: i.am.rigidus@jabber.ru (можно добавлять в qip)
 skype: i.am.rigidus
+
+
